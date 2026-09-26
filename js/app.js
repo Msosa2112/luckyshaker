@@ -1,18 +1,19 @@
 /**
- * LUCKY SHAKER BARTENDER — CONTINUOUS SCROLLING CINEMATIC SEQUENCE
+ * LUCKY SHAKER BARTENDER — CONTINUOUS SCROLL-DRIVEN CINEMATIC TRANSFORMATION
  * 
- * Behavior:
- * - Starts at SCROLL 0 with MOJITO filling the entire screen.
- * - On the VERY FIRST scroll, the cinematic scene transition begins immediately.
- * - MOJITO moves upward (translateY 0% -> -100%) while OLD FASHIONED enters from below (translateY 100% -> 0%).
- * - At 45%, OLD FASHIONED fully fills the viewport.
- * - From 45% -> 90%, OLD FASHIONED moves upward while WHISKEY CREAM enters from below.
- * - At 90% -> 100%, WHISKEY CREAM settles into position.
- * - Video Playheads are scrubbed simultaneously during their overlap windows:
- *     MOJITO:        0% -> 45%  (currentTime: 0 -> 4s)
- *     OLD FASHIONED: 25% -> 70% (currentTime: 0 -> 4s)
- *     WHISKEY CREAM: 55% -> 100% (currentTime: 0 -> 4s)
- * - Scrolling back up reverses the entire sequence frame by frame.
+ * Architecture: Prime Stone Builders Cinematic Scroll Engine
+ * - ONE Pinned Viewport (position: sticky, top: 0, height: 100vh)
+ * - ONE Continuous Scroll Timeline (0% -> 100% across container)
+ * - Master Timeline Mapping:
+ *     MOJITO:        0% -> ~38% (scrubs 0s -> 4s through transition)
+ *     TRANSITION 1:  25% -> 45% (overlapping simultaneous scenes)
+ *     OLD FASHIONED: 38% -> ~70% (scrubs 0s -> 4s through transition)
+ *     TRANSITION 2:  60% -> 78% (overlapping simultaneous scenes)
+ *     WHISKEY CREAM: 70% -> 100% (scrubs 0s -> 4s)
+ * - Multi-layered Physical Transformation (scale, opacity, blur, depth rack focus, ambient lighting)
+ * - requestAnimationFrame with targetProgress / currentProgress smoothing physics
+ * - NO autoplay, NO slide translations up/down, NO scroll hijacking.
+ * - Bidirectional, reversible frame-by-frame scrub.
  */
 
 // --------------------------------------------------------------------------
@@ -69,12 +70,8 @@ const AppState = {
 // 3. INITIALIZATION ON DOM READY
 // --------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-  }
-
   initNavbarScroll();
-  initContinuousCinematicSequence();
+  initPrimeStoneCinematicEngine();
   initCartDrawer();
   initNewsletterForm();
 });
@@ -86,47 +83,50 @@ function initNavbarScroll() {
   const navbar = document.querySelector(".navbar");
   if (!navbar) return;
 
-  ScrollTrigger.create({
-    start: "top -40",
-    end: 99999,
-    toggleClass: { className: "scrolled", targets: navbar }
-  });
+  const onScroll = () => {
+    if (window.scrollY > 40) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 }
 
 // --------------------------------------------------------------------------
-// 5. MASTER CONTINUOUS SCROLL CINEMATIC ENGINE
+// 5. PRIME STONE BUILDERS CINEMATIC SCROLL TRANSFORMATION ENGINE
 // --------------------------------------------------------------------------
-function initContinuousCinematicSequence() {
+function initPrimeStoneCinematicEngine() {
   const sequenceSection = document.getElementById("cinematic-sequence");
   const viewport = document.getElementById("cinematic-viewport");
 
-  const panelMojito = document.getElementById("panel-mojito");
-  const panelOF = document.getElementById("panel-old-fashioned");
-  const panelWC = document.getElementById("panel-whiskey-cream");
+  // Scene Layers (co-planar depth stack)
+  const sceneMojito = document.getElementById("scene-mojito");
+  const sceneOF = document.getElementById("scene-old-fashioned");
+  const sceneWC = document.getElementById("scene-whiskey-cream");
 
+  // Video Elements
   const videoMojito = document.getElementById("video-mojito");
   const videoOF = document.getElementById("video-old-fashioned");
   const videoWC = document.getElementById("video-whiskey-cream");
 
-  if (!sequenceSection || !viewport || !videoMojito || !videoOF || !videoWC) return;
+  // Atmospheric Lighting Overlay
+  const atmosphere = document.getElementById("cinematic-atmosphere");
 
-  // 1. Ensure NO AUTOPLAY & initial video state
-  [videoMojito, videoOF, videoWC].forEach(v => {
-    v.muted = true;
-    v.pause();
-    v.currentTime = 0;
-    v.load();
-  });
+  // Editorial Floating Cards
+  const cardMojito = document.getElementById("card-mojito");
+  const cardOF = document.getElementById("card-old-fashioned");
+  const cardWC = document.getElementById("card-whiskey-cream");
 
-  // Initial Panel States
-  // Mojito: 100% visible at scroll 0
-  gsap.set(panelMojito, { yPercent: 0, scale: 1.0, opacity: 1, filter: "blur(0px)", zIndex: 10 });
-  // Old Fashioned: waiting below at 100%
-  gsap.set(panelOF, { yPercent: 100, scale: 0.94, opacity: 0, filter: "blur(5px)", zIndex: 20 });
-  // Whiskey Cream: waiting below at 100%
-  gsap.set(panelWC, { yPercent: 100, scale: 0.94, opacity: 0, filter: "blur(5px)", zIndex: 30 });
+  // Scrubber Elements
+  const fillBar = document.getElementById("timeline-fill-bar");
+  const markerMojito = document.getElementById("marker-mojito");
+  const markerOF = document.getElementById("marker-oldfashioned");
+  const markerWC = document.getElementById("marker-whiskeycream");
 
-  // HUD Elements
+  // Telemetry HUD Elements
   const debugMaster = document.getElementById("debug-master-progress");
   const debugDirection = document.getElementById("debug-direction");
   const debugActive = document.getElementById("debug-active-cocktail");
@@ -140,160 +140,386 @@ function initContinuousCinematicSequence() {
     });
   }
 
-  // Scrubber Markers
-  const markerMojito = document.getElementById("marker-mojito");
-  const markerOF = document.getElementById("marker-oldfashioned");
-  const markerWC = document.getElementById("marker-whiskeycream");
+  if (!sequenceSection || !viewport || !videoMojito || !videoOF || !videoWC) {
+    console.warn("Cinematic elements missing from DOM.");
+    return;
+  }
 
-  // Helper for safe video seeking
-  function seekFrame(video, targetSeconds) {
-    if (!video || isNaN(video.duration) || video.duration === 0) return;
+  // 1. Ensure NO AUTOPLAY & initialize videos
+  const allVideos = [videoMojito, videoOF, videoWC];
+  allVideos.forEach(v => {
+    v.muted = true;
+    v.playsInline = true;
+    v.pause();
+    v.preload = "auto";
+  });
+
+  // Explicitly prime Mojito at frame 0 on load
+  function primeVideo(video) {
+    if (video.readyState >= 1) {
+      video.currentTime = 0;
+    } else {
+      video.addEventListener("loadedmetadata", () => {
+        video.currentTime = 0;
+      }, { once: true });
+    }
+  }
+  allVideos.forEach(primeVideo);
+
+  // 2. Mathematical Utilities
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function smoothstep(edge0, edge1, x) {
+    const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+    return t * t * (3 - 2 * t);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  // Safe frame seeking avoiding decoder thrashing
+  function scrubVideo(video, targetSeconds) {
+    if (!video || !video.duration || isNaN(video.duration)) return;
     const clamped = Math.max(0, Math.min(video.duration - 0.02, targetSeconds));
-    if (Math.abs(video.currentTime - clamped) > 0.02) {
+    if (Math.abs(video.currentTime - clamped) > 0.015) {
       video.currentTime = clamped;
     }
   }
 
-  // Video proxy scrub objects (Duration: 4.00s for each clip)
-  const mojitoProxy = { time: 0 };
-  const ofProxy = { time: 0 };
-  const wcProxy = { time: 0 };
+  // 3. Physics State: targetProgress & currentProgress with rAF smoothing
+  let targetProgress = 0;
+  let currentProgress = 0;
+  let prevTargetProgress = 0;
+  let scrollDirection = "IDLE";
+  let isLoopActive = false;
+  const SMOOTHING_FACTOR = 0.09; // Buttery smooth physical response
 
-  // ------------------------------------------------------------------------
-  // 2. MASTER GSAP SCROLLTRIGGER TIMELINE (100 Units of Progress)
-  // ------------------------------------------------------------------------
-  const sequenceTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: "#cinematic-sequence",
-      start: "top top",
-      end: "+=350%", // 350vh scroll distance
-      pin: viewport,
-      scrub: 0.6, // Fast, responsive, smooth scrub
-      anticipatePin: 1,
-      onUpdate: (self) => {
-        const P = self.progress;
+  function computeScrollProgress() {
+    const rect = sequenceSection.getBoundingClientRect();
+    const scrollDistance = sequenceSection.offsetHeight - window.innerHeight;
+    if (scrollDistance <= 0) return 0;
+    const raw = -rect.top / scrollDistance;
+    return clamp(raw, 0, 1);
+  }
 
-        // Telemetry Update in HUD
-        if (debugMaster) debugMaster.textContent = `${(P * 100).toFixed(1)}%`;
-        if (debugDirection) {
-          debugDirection.textContent = self.direction > 0 ? "SCROLLING DOWN (▼)" : "SCROLLING UP (▲)";
-          debugDirection.style.color = self.direction > 0 ? "#48E587" : "#F0A500";
-        }
+  function onScrollOrResize() {
+    const newTarget = computeScrollProgress();
+    if (newTarget !== targetProgress) {
+      scrollDirection = newTarget >= targetProgress ? "SCROLLING DOWN (▼)" : "SCROLLING UP (▲)";
+      prevTargetProgress = targetProgress;
+      targetProgress = newTarget;
 
-        // Active Scene Tracking & Markers
-        if (P < 0.45) {
-          if (debugActive) debugActive.textContent = "MOJITO";
-          if (debugTimecode) debugTimecode.textContent = `${videoMojito.currentTime.toFixed(2)}s / 4.00s`;
-          markerMojito?.classList.add("active");
-          markerOF?.classList.remove("active");
-          markerWC?.classList.remove("active");
-        } else if (P < 0.90) {
-          if (debugActive) debugActive.textContent = "OLD FASHIONED";
-          if (debugTimecode) debugTimecode.textContent = `${videoOF.currentTime.toFixed(2)}s / 4.00s`;
-          markerMojito?.classList.remove("active");
-          markerOF?.classList.add("active");
-          markerWC?.classList.remove("active");
-        } else {
-          if (debugActive) debugActive.textContent = "WHISKEY CREAM";
-          if (debugTimecode) debugTimecode.textContent = `${videoWC.currentTime.toFixed(2)}s / 4.00s`;
-          markerMojito?.classList.remove("active");
-          markerOF?.classList.remove("active");
-          markerWC?.classList.add("active");
-        }
+      if (!isLoopActive) {
+        isLoopActive = true;
+        requestAnimationFrame(renderLoop);
       }
     }
-  });
+  }
 
-  // ------------------------------------------------------------------------
-  // 3. SCENE TRANSITION 1: MOJITO -> OLD FASHIONED [0% -> 45%]
-  // Starts on the VERY FIRST SCROLL!
-  // ------------------------------------------------------------------------
-  // Mojito moves upward and fades out
-  sequenceTl.to(panelMojito, {
-    yPercent: -100,
-    scale: 0.92,
-    opacity: 0.1,
-    filter: "blur(6px)",
-    ease: "none",
-    duration: 45
-  }, 0);
+  window.addEventListener("scroll", onScrollOrResize, { passive: true });
+  window.addEventListener("resize", onScrollOrResize, { passive: true });
 
-  // Old Fashioned enters from below into full view
-  sequenceTl.fromTo(panelOF, {
-    yPercent: 100,
-    scale: 0.94,
-    opacity: 0,
-    filter: "blur(5px)"
-  }, {
-    yPercent: 0,
-    scale: 1.0,
-    opacity: 1,
-    filter: "blur(0px)",
-    ease: "none",
-    duration: 45
-  }, 0);
+  // 4. Continuous Animation Loop (requestAnimationFrame)
+  function renderLoop() {
+    const diff = targetProgress - currentProgress;
+    
+    if (Math.abs(diff) > 0.0001) {
+      currentProgress += diff * SMOOTHING_FACTOR;
+      applyCinematicTransformation(currentProgress);
+      requestAnimationFrame(renderLoop);
+    } else {
+      currentProgress = targetProgress;
+      applyCinematicTransformation(currentProgress);
+      isLoopActive = false;
+    }
+  }
 
-  // ------------------------------------------------------------------------
-  // 4. SCENE TRANSITION 2: OLD FASHIONED -> WHISKEY CREAM [45% -> 90%]
-  // ------------------------------------------------------------------------
-  // Old Fashioned moves upward and fades out
-  sequenceTl.to(panelOF, {
-    yPercent: -100,
-    scale: 0.92,
-    opacity: 0.1,
-    filter: "blur(6px)",
-    ease: "none",
-    duration: 45
-  }, 45);
+  // 5. Master Multi-layered Cinematic Transformation
+  function applyCinematicTransformation(p) {
+    // -----------------------------------------------------------------------
+    // A. VIDEO SCRUBBING TIMELINE
+    // -----------------------------------------------------------------------
+    // Mojito: 0% -> ~42% (duration: 3.98s)
+    const mojitoT = clamp(p / 0.42, 0, 1) * 3.98;
+    scrubVideo(videoMojito, mojitoT);
 
-  // Whiskey Cream enters from below into full view
-  sequenceTl.fromTo(panelWC, {
-    yPercent: 100,
-    scale: 0.94,
-    opacity: 0,
-    filter: "blur(5px)"
-  }, {
-    yPercent: 0,
-    scale: 1.0,
-    opacity: 1,
-    filter: "blur(0px)",
-    ease: "none",
-    duration: 45
-  }, 45);
+    // Old Fashioned: 25% -> 75% (duration: 3.98s)
+    const ofT = clamp((p - 0.25) / 0.50, 0, 1) * 3.98;
+    if (p >= 0.22 && p <= 0.80) {
+      scrubVideo(videoOF, ofT);
+    }
 
-  // ------------------------------------------------------------------------
-  // 5. OVERLAPPING VIDEO SCRUB PLAYHEADS
-  // ------------------------------------------------------------------------
-  // Mojito Video: 0% -> 45% (currentTime: 0s -> 3.98s)
-  sequenceTl.to(mojitoProxy, {
-    time: 3.98,
-    ease: "none",
-    duration: 45,
-    onUpdate: () => seekFrame(videoMojito, mojitoProxy.time)
-  }, 0);
+    // Whiskey Cream: 60% -> 98% (duration: 3.98s)
+    const wcT = clamp((p - 0.60) / 0.38, 0, 1) * 3.98;
+    if (p >= 0.56) {
+      scrubVideo(videoWC, wcT);
+    }
 
-  // Old Fashioned Video: 25% -> 70% (currentTime: 0s -> 3.98s)
-  // Starts scrub-playing at 25% while entering from below!
-  sequenceTl.fromTo(ofProxy, { time: 0 }, {
-    time: 3.98,
-    ease: "none",
-    duration: 45,
-    onUpdate: () => seekFrame(videoOF, ofProxy.time)
-  }, 25);
+    // -----------------------------------------------------------------------
+    // B. SCENE 1: MOJITO VISUAL TRANSFORMATION
+    // -----------------------------------------------------------------------
+    if (sceneMojito) {
+      let mojitoOpacity = 1;
+      let mojitoScale = 1.0;
+      let mojitoBlur = 0;
 
-  // Whiskey Cream Video: 55% -> 100% (currentTime: 0s -> 3.98s)
-  // Starts scrub-playing at 55% while entering from below!
-  sequenceTl.fromTo(wcProxy, { time: 0 }, {
-    time: 3.98,
-    ease: "none",
-    duration: 45,
-    onUpdate: () => seekFrame(videoWC, wcProxy.time)
-  }, 55);
+      if (p < 0.25) {
+        // Steady cinematic forward camera travel
+        mojitoScale = 1.00 + (p / 0.25) * 0.05;
+        mojitoOpacity = 1;
+        mojitoBlur = 0;
+      } else if (p <= 0.45) {
+        // Transition 1: camera accelerates push-in, racks focus, and dissolves
+        const t = (p - 0.25) / 0.20;
+        const tSmooth = smoothstep(0, 1, t);
+        mojitoScale = 1.05 + tSmooth * 0.12; // 1.05 -> 1.17
+        mojitoOpacity = 1.0 - tSmooth;       // 1.0 -> 0.0
+        mojitoBlur = tSmooth * 12;           // 0px -> 12px depth blur
+      } else {
+        mojitoOpacity = 0;
+        mojitoScale = 1.17;
+        mojitoBlur = 12;
+      }
 
-  // ------------------------------------------------------------------------
-  // 6. BOTTOM TIMELINE FILL PROGRESS (0% -> 100%)
-  // ------------------------------------------------------------------------
-  sequenceTl.fromTo("#timeline-fill-bar", { width: "0%" }, { width: "100%", duration: 100, ease: "none" }, 0);
+      sceneMojito.style.opacity = mojitoOpacity.toFixed(3);
+      sceneMojito.style.transform = `scale(${mojitoScale.toFixed(4)})`;
+      sceneMojito.style.filter = mojitoBlur > 0.3 ? `blur(${mojitoBlur.toFixed(1)}px)` : "none";
+      sceneMojito.style.display = mojitoOpacity <= 0.001 ? "none" : "block";
+    }
+
+    // -----------------------------------------------------------------------
+    // C. SCENE 2: OLD FASHIONED VISUAL TRANSFORMATION
+    // -----------------------------------------------------------------------
+    if (sceneOF) {
+      let ofOpacity = 0;
+      let ofScale = 0.92;
+      let ofBlur = 12;
+
+      if (p < 0.25) {
+        // Waiting in depth
+        ofOpacity = 0;
+        ofScale = 0.92;
+        ofBlur = 12;
+      } else if (p < 0.45) {
+        // Transition 1: emerging organically from depth into full focus
+        const tIn = smoothstep(0.25, 0.45, p);
+        ofOpacity = tIn;                        // 0.0 -> 1.0
+        ofScale = lerp(0.92, 1.00, tIn);        // 0.92 -> 1.00
+        ofBlur = (1.0 - tIn) * 12;              // 12px -> 0px
+      } else if (p <= 0.60) {
+        // Dominant Phase: continuous subtle camera momentum
+        ofOpacity = 1;
+        ofScale = 1.00 + ((p - 0.45) / 0.15) * 0.04; // 1.00 -> 1.04
+        ofBlur = 0;
+      } else if (p <= 0.78) {
+        // Transition 2: camera pushes deeper and racks focus as Whiskey Cream emerges
+        const tOut = smoothstep(0.60, 0.78, p);
+        ofOpacity = 1.0 - tOut;                 // 1.0 -> 0.0
+        ofScale = 1.04 + tOut * 0.12;           // 1.04 -> 1.16
+        ofBlur = tOut * 12;                     // 0px -> 12px
+      } else {
+        ofOpacity = 0;
+        ofScale = 1.16;
+        ofBlur = 12;
+      }
+
+      sceneOF.style.opacity = ofOpacity.toFixed(3);
+      sceneOF.style.transform = `scale(${ofScale.toFixed(4)})`;
+      sceneOF.style.filter = ofBlur > 0.3 ? `blur(${ofBlur.toFixed(1)}px)` : "none";
+      sceneOF.style.display = ofOpacity <= 0.001 ? "none" : "block";
+    }
+
+    // -----------------------------------------------------------------------
+    // D. SCENE 3: WHISKEY CREAM VISUAL TRANSFORMATION
+    // -----------------------------------------------------------------------
+    if (sceneWC) {
+      let wcOpacity = 0;
+      let wcScale = 0.92;
+      let wcBlur = 12;
+
+      if (p < 0.60) {
+        // Waiting in depth
+        wcOpacity = 0;
+        wcScale = 0.92;
+        wcBlur = 12;
+      } else if (p < 0.78) {
+        // Transition 2: emerging organically from depth into full focus
+        const tIn = smoothstep(0.60, 0.78, p);
+        wcOpacity = tIn;                        // 0.0 -> 1.0
+        wcScale = lerp(0.92, 1.00, tIn);        // 0.92 -> 1.00
+        wcBlur = (1.0 - tIn) * 12;              // 12px -> 0px
+      } else {
+        // Final Dominant Phase: majestic presence
+        wcOpacity = 1;
+        wcScale = 1.00 + ((p - 0.78) / 0.22) * 0.04; // 1.00 -> 1.04
+        wcBlur = 0;
+      }
+
+      sceneWC.style.opacity = wcOpacity.toFixed(3);
+      sceneWC.style.transform = `scale(${wcScale.toFixed(4)})`;
+      sceneWC.style.filter = wcBlur > 0.3 ? `blur(${wcBlur.toFixed(1)}px)` : "none";
+      sceneWC.style.display = wcOpacity <= 0.001 ? "none" : "block";
+    }
+
+    // -----------------------------------------------------------------------
+    // E. ATMOSPHERIC ENVIRONMENTAL LIGHTING TRANSITIONS
+    // -----------------------------------------------------------------------
+    if (atmosphere) {
+      if (p >= 0.25 && p <= 0.45) {
+        // Transition 1: Amber bourbon lens flare blooming
+        const flare = Math.sin(((p - 0.25) / 0.20) * Math.PI);
+        atmosphere.style.background = "radial-gradient(ellipse at 58% 45%, rgba(229, 164, 84, 0.38) 0%, rgba(229, 164, 84, 0.1) 45%, transparent 75%)";
+        atmosphere.style.opacity = (flare * 0.45).toFixed(3);
+      } else if (p >= 0.60 && p <= 0.78) {
+        // Transition 2: Velvet cream & amber atmospheric illumination
+        const flare = Math.sin(((p - 0.60) / 0.18) * Math.PI);
+        atmosphere.style.background = "radial-gradient(ellipse at 48% 52%, rgba(245, 230, 204, 0.48) 0%, rgba(232, 43, 125, 0.16) 45%, transparent 75%)";
+        atmosphere.style.opacity = (flare * 0.45).toFixed(3);
+      } else {
+        atmosphere.style.opacity = "0";
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // F. EDITORIAL NARRATIVE CARDS (Participating in the Cinematic Space)
+    // -----------------------------------------------------------------------
+    // Card 1: Mojito
+    if (cardMojito) {
+      let cardOp = 1;
+      let cardY = 0;
+      let cardBl = 0;
+
+      if (p < 0.22) {
+        cardOp = 1;
+        cardY = 0;
+        cardBl = 0;
+      } else if (p <= 0.38) {
+        const t = smoothstep(0.22, 0.38, p);
+        cardOp = 1.0 - t;
+        cardY = -t * 30;
+        cardBl = t * 6;
+      } else {
+        cardOp = 0;
+        cardY = -30;
+        cardBl = 6;
+      }
+
+      cardMojito.style.opacity = cardOp.toFixed(3);
+      cardMojito.style.transform = `translate3d(0, ${cardY.toFixed(1)}px, 0)`;
+      cardMojito.style.filter = cardBl > 0.3 ? `blur(${cardBl.toFixed(1)}px)` : "none";
+      cardMojito.style.display = cardOp <= 0.001 ? "none" : "block";
+    }
+
+    // Card 2: Old Fashioned
+    if (cardOF) {
+      let cardOp = 0;
+      let cardY = 30;
+      let cardBl = 6;
+
+      if (p < 0.28) {
+        cardOp = 0;
+        cardY = 30;
+        cardBl = 6;
+      } else if (p <= 0.44) {
+        const t = smoothstep(0.28, 0.44, p);
+        cardOp = t;
+        cardY = (1.0 - t) * 30;
+        cardBl = (1.0 - t) * 6;
+      } else if (p <= 0.58) {
+        cardOp = 1;
+        cardY = 0;
+        cardBl = 0;
+      } else if (p <= 0.72) {
+        const t = smoothstep(0.58, 0.72, p);
+        cardOp = 1.0 - t;
+        cardY = -t * 30;
+        cardBl = t * 6;
+      } else {
+        cardOp = 0;
+        cardY = -30;
+        cardBl = 6;
+      }
+
+      cardOF.style.opacity = cardOp.toFixed(3);
+      cardOF.style.transform = `translate3d(0, ${cardY.toFixed(1)}px, 0)`;
+      cardOF.style.filter = cardBl > 0.3 ? `blur(${cardBl.toFixed(1)}px)` : "none";
+      cardOF.style.display = cardOp <= 0.001 ? "none" : "block";
+    }
+
+    // Card 3: Whiskey Cream
+    if (cardWC) {
+      let cardOp = 0;
+      let cardY = 30;
+      let cardBl = 6;
+
+      if (p < 0.64) {
+        cardOp = 0;
+        cardY = 30;
+        cardBl = 6;
+      } else if (p <= 0.78) {
+        const t = smoothstep(0.64, 0.78, p);
+        cardOp = t;
+        cardY = (1.0 - t) * 30;
+        cardBl = (1.0 - t) * 6;
+      } else {
+        cardOp = 1;
+        cardY = 0;
+        cardBl = 0;
+      }
+
+      cardWC.style.opacity = cardOp.toFixed(3);
+      cardWC.style.transform = `translate3d(0, ${cardY.toFixed(1)}px, 0)`;
+      cardWC.style.filter = cardBl > 0.3 ? `blur(${cardBl.toFixed(1)}px)` : "none";
+      cardWC.style.display = cardOp <= 0.001 ? "none" : "block";
+    }
+
+    // -----------------------------------------------------------------------
+    // G. SCRUBBER PROGRESS TRACKER & ACTIVE MARKERS
+    // -----------------------------------------------------------------------
+    if (fillBar) {
+      fillBar.style.width = `${(p * 100).toFixed(2)}%`;
+    }
+
+    let activeCocktail = "MOJITO";
+    let activeTime = videoMojito.currentTime;
+
+    if (p < 0.38) {
+      activeCocktail = "MOJITO";
+      activeTime = videoMojito.currentTime;
+      markerMojito?.classList.add("active");
+      markerOF?.classList.remove("active");
+      markerWC?.classList.remove("active");
+    } else if (p < 0.70) {
+      activeCocktail = "OLD FASHIONED";
+      activeTime = videoOF.currentTime;
+      markerMojito?.classList.remove("active");
+      markerOF?.classList.add("active");
+      markerWC?.classList.remove("active");
+    } else {
+      activeCocktail = "WHISKEY CREAM";
+      activeTime = videoWC.currentTime;
+      markerMojito?.classList.remove("active");
+      markerOF?.classList.remove("active");
+      markerWC?.classList.add("active");
+    }
+
+    // -----------------------------------------------------------------------
+    // H. LIVE TELEMETRY HUD
+    // -----------------------------------------------------------------------
+    if (debugMaster) debugMaster.textContent = `${(p * 100).toFixed(1)}%`;
+    if (debugDirection) {
+      debugDirection.textContent = scrollDirection;
+      debugDirection.style.color = scrollDirection.includes("DOWN") ? "#E82B7D" : "#4A4D57";
+    }
+    if (debugActive) debugActive.textContent = activeCocktail;
+    if (debugTimecode) debugTimecode.textContent = `${activeTime.toFixed(2)}s / 4.00s`;
+  }
+
+  // Initial call on load to guarantee pristine state at scroll 0
+  applyCinematicTransformation(0);
 }
 
 // --------------------------------------------------------------------------

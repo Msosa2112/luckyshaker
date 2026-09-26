@@ -61,22 +61,50 @@
   <!-- =========================================================================
        2. CONTINUOUS SCROLLING CINEMATIC SEQUENCE (STARTS FROM SCROLL 0)
        ========================================================================= -->
+  <!-- =========================================================================
+       2. CONTINUOUS SCROLLING CINEMATIC EXPERIENCE (PRIME STONE ARCHITECTURE)
+       ========================================================================= -->
   <section class="cinematic-sequence" id="cinematic-sequence">
     <div class="cinematic-viewport" id="cinematic-viewport">
       
-      <!-- ==========================================
-           PANEL 1: MOJITO (Initial Full Viewport)
-           ========================================== -->
-      <div class="video-panel panel-mojito" id="panel-mojito">
-        <video id="video-mojito" class="panel-video" muted playsinline preload="auto" poster="assets/posters/mojito_desktop.jpg">
+      <!-- =====================================================================
+           LAYER 1: SCENE VIDEO LAYERS (Pinned Co-planar Depth Stack)
+           ===================================================================== -->
+      <div class="scene-layer scene-mojito" id="scene-mojito">
+        <video id="video-mojito" class="scene-video" muted playsinline preload="auto" poster="assets/posters/mojito_desktop.jpg">
           <source media="(max-width: 768px)" src="videos para web/Mojito/Mojito_product_video mobile.mp4" type="video/mp4">
           <source src="videos para web/Mojito/Cinematic_mojito_desktop.mp4" type="video/mp4">
         </video>
-        <div class="panel-vignette"></div>
-        <div class="panel-watermark">MOJITO</div>
+      </div>
 
-        <div class="panel-content">
-          <div class="eyebrow">CRAFTED COCKTAILS • READY TO POUR</div>
+      <div class="scene-layer scene-old-fashioned" id="scene-old-fashioned">
+        <video id="video-old-fashioned" class="scene-video" muted playsinline preload="auto" poster="assets/posters/old_fashioned_desktop.jpg">
+          <source media="(max-width: 768px)" src="videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4" type="video/mp4">
+          <source src="videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="scene-layer scene-whiskey-cream" id="scene-whiskey-cream">
+        <video id="video-whiskey-cream" class="scene-video" muted playsinline preload="auto" poster="assets/posters/whiskey_cream_desktop.jpg">
+          <source media="(max-width: 768px)" src="videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4" type="video/mp4">
+          <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <!-- =====================================================================
+           LAYER 2: ATMOSPHERIC & LIGHTING TRANSITION LAYERS
+           ===================================================================== -->
+      <div class="cinematic-atmosphere" id="cinematic-atmosphere"></div>
+      <div class="cinematic-vignette"></div>
+
+      <!-- =====================================================================
+           LAYER 3: EDITORIAL CARDS (Coordinated Cinematic Depth & Reveal)
+           ===================================================================== -->
+      <div class="cinematic-editorial-container">
+        
+        <!-- CARD 1: MOJITO -->
+        <article class="editorial-card card-mojito" id="card-mojito">
+          <div class="eyebrow"><img src="assets/lucky_shaker_glass_icon.png" alt="" class="card-glass-icon"> CRAFTED COCKTAILS • READY TO POUR</div>
           <h1 class="panel-title">LUCKY SHAKER</h1>
           <div class="panel-subtitle">MOJITO</div>
           <p class="panel-desc">
@@ -91,22 +119,11 @@
               </svg>
             </button>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <!-- ==========================================
-           PANEL 2: OLD FASHIONED (Enters from Below)
-           ========================================== -->
-      <div class="video-panel panel-old-fashioned" id="panel-old-fashioned">
-        <video id="video-old-fashioned" class="panel-video" muted playsinline preload="auto" poster="assets/posters/old_fashioned_desktop.jpg">
-          <source media="(max-width: 768px)" src="videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4" type="video/mp4">
-          <source src="videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4" type="video/mp4">
-        </video>
-        <div class="panel-vignette"></div>
-        <div class="panel-watermark">OLD FASHIONED</div>
-
-        <div class="panel-content">
-          <div class="eyebrow">THE TIMELESS CLASSIC</div>
+        <!-- CARD 2: OLD FASHIONED -->
+        <article class="editorial-card card-old-fashioned" id="card-old-fashioned">
+          <div class="eyebrow"><img src="assets/lucky_shaker_glass_icon.png" alt="" class="card-glass-icon"> THE TIMELESS CLASSIC</div>
           <h2 class="panel-title">LUCKY SHAKER</h2>
           <div class="panel-subtitle">OLD FASHIONED</div>
           <p class="panel-desc">
@@ -121,22 +138,11 @@
               </svg>
             </button>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <!-- ==========================================
-           PANEL 3: WHISKEY CREAM (Enters from Below)
-           ========================================== -->
-      <div class="video-panel panel-whiskey-cream" id="panel-whiskey-cream">
-        <video id="video-whiskey-cream" class="panel-video" muted playsinline preload="auto" poster="assets/posters/whiskey_cream_desktop.jpg">
-          <source media="(max-width: 768px)" src="videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4" type="video/mp4">
-          <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
-        </video>
-        <div class="panel-vignette"></div>
-        <div class="panel-watermark">WHISKEY CREAM</div>
-
-        <div class="panel-content">
-          <div class="eyebrow">CREATED BY KATHERIN</div>
+        <!-- CARD 3: WHISKEY CREAM -->
+        <article class="editorial-card card-whiskey-cream" id="card-whiskey-cream">
+          <div class="eyebrow"><img src="assets/lucky_shaker_glass_icon.png" alt="" class="card-glass-icon"> CREATED BY KATHERIN</div>
           <h2 class="panel-title">LUCKY SHAKER</h2>
           <div class="panel-subtitle">WHISKEY CREAM</div>
           <p class="panel-desc">
@@ -151,10 +157,13 @@
               </svg>
             </button>
           </div>
-        </div>
+        </article>
+
       </div>
 
-      <!-- Persistent Timeline Scrubber Tracker -->
+      <!-- =====================================================================
+           LAYER 4: TIMELINE SCRUBBER & LIVE TELEMETRY HUD
+           ===================================================================== -->
       <div class="film-timeline-scrubber">
         <div class="timeline-track">
           <div class="timeline-fill" id="timeline-fill-bar"></div>
@@ -166,11 +175,11 @@
         </div>
       </div>
 
-      <!-- Live Developer Telemetry HUD -->
+      <!-- Live Telemetry HUD -->
       <div id="cinematic-debug-hud" class="cinematic-debug-hud">
         <div class="debug-header">
           <span class="debug-dot"></span>
-          <span class="debug-title">GSAP SEQUENCE HUD</span>
+          <span class="debug-title">CINEMATIC TIMELINE HUD</span>
           <button id="toggle-debug-hud" class="debug-close-btn" title="Toggle HUD" aria-label="Close HUD">×</button>
         </div>
         <div class="debug-row"><span>PROGRESS:</span><strong id="debug-master-progress">0.0%</strong></div>

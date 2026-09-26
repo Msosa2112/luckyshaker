@@ -331,12 +331,12 @@ button {
 }
 
 /* ==========================================================================
-   2. CONTINUOUS SCROLLING CINEMATIC SEQUENCE (STARTS FROM SCROLL 0)
+   2. CONTINUOUS SCROLLING CINEMATIC EXPERIENCE (PRIME STONE ARCHITECTURE)
    ========================================================================== */
 .cinematic-sequence {
   position: relative;
   width: 100%;
-  height: 350vh;
+  height: 450vh; /* Deliberate, smooth, tactile scroll distance */
   background-color: var(--bg-deep);
 }
 
@@ -349,10 +349,11 @@ button {
   height: 100dvh;
   overflow: hidden;
   background-color: #0E0F14;
+  perspective: 1200px;
 }
 
-/* Three Large Cinematic Panels Stacked in Depth */
-.video-panel {
+/* Three Co-planar Cinematic Scene Layers (Pinned in 3D Depth, NO Translation away) */
+.scene-layer {
   position: absolute;
   top: 0;
   left: 0;
@@ -360,26 +361,29 @@ button {
   height: 100%;
   overflow: hidden;
   will-change: transform, opacity, filter;
+  transform-origin: center center;
+  pointer-events: none;
 }
 
-.panel-mojito {
+.scene-mojito {
   z-index: 10;
-  transform: translateY(0%);
+  opacity: 1;
+  transform: scale(1.0);
 }
 
-.panel-old-fashioned {
+.scene-old-fashioned {
   z-index: 20;
-  transform: translateY(100%);
   opacity: 0;
+  transform: scale(0.92);
 }
 
-.panel-whiskey-cream {
+.scene-whiskey-cream {
   z-index: 30;
-  transform: translateY(100%);
   opacity: 0;
+  transform: scale(0.92);
 }
 
-.panel-video {
+.scene-video {
   position: absolute;
   top: 0;
   left: 0;
@@ -388,50 +392,77 @@ button {
   object-fit: cover;
   object-position: center;
   filter: brightness(0.96) contrast(1.04);
+  will-change: transform;
 }
 
-/* Atmospheric Vignettes — Seamless Bottom Fade to Light Page */
-.panel-vignette {
+/* Atmospheric Environmental Light Transitions (Optical Flare / Amber / Velvet Glow) */
+.cinematic-atmosphere {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 35;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(250, 250, 252, 0.4) 0%, rgba(250, 250, 252, 0) 25%, rgba(0, 0, 0, 0.12) 65%, rgba(250, 250, 252, 0.95) 100%);
+  opacity: 0;
+  will-change: opacity, background;
 }
 
-/* Subtle Watermark */
-.panel-watermark {
-  font-family: var(--font-brand);
-  font-size: clamp(4rem, 15vw, 14rem);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.08);
+/* Seamless Vignette framing the cinematic footage */
+.cinematic-vignette {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 36;
   pointer-events: none;
-  z-index: 3;
-  user-select: none;
+  background: linear-gradient(180deg, rgba(250, 250, 252, 0.35) 0%, rgba(250, 250, 252, 0) 20%, rgba(0, 0, 0, 0.12) 65%, rgba(250, 250, 252, 0.98) 100%);
 }
 
-/* Panel Editorial Narrative Content (Architectural Frosted Card) */
-.panel-content {
+/* Editorial Floating Content Container */
+.cinematic-editorial-container {
   position: absolute;
   bottom: clamp(3.5rem, 8vh, 6rem);
   left: var(--gutter);
-  z-index: 4;
-  max-width: 620px;
+  z-index: 40;
+  width: min(620px, calc(100vw - var(--gutter) * 2));
+  height: 380px;
+  pointer-events: none;
+}
+
+/* Individual Editorial Cards Participating in the Cinematic Transformation */
+.editorial-card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  padding: clamp(2rem, 3.5vw, 2.75rem);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
   border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.04);
+  pointer-events: auto;
+  will-change: transform, opacity, filter;
+  transform-origin: left bottom;
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+}
+
+.card-mojito {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0px);
+}
+
+.card-glass-icon {
+  height: 18px;
+  width: auto;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 0.35rem;
 }
 
 .panel-title {
