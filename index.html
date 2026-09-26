@@ -18,18 +18,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/lucky_shaker_glass_icon.png">
+
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <!-- =========================================================================
-       1. LUXURY STICKY NAVIGATION
+       1. LUXURY STICKY NAVIGATION (Official Brand Logo)
        ========================================================================= -->
   <header class="navbar" id="main-nav">
     <a href="#cinematic-sequence" class="nav-brand" aria-label="Lucky Shaker Bartender Home">
-      <span class="nav-logo-text">LUCKY SHAKER</span>
-      <span class="nav-logo-sub">BARTENDER</span>
+      <img src="assets/lucky_shaker_logo_white.png" alt="Lucky Shaker Bartender" class="nav-logo-img">
     </a>
 
     <nav aria-label="Main Navigation">
@@ -316,12 +318,13 @@
        ========================================================================= -->
   <section class="final-cta-section">
     <div class="final-cta-content">
+      <img src="assets/lucky_shaker_stacked_white.png" alt="Lucky Shaker Bartender" class="cta-stacked-logo">
       <div class="eyebrow">YOUR INVITATION</div>
       <h2 class="final-cta-headline">READY TO SHAKE?</h2>
       <p class="final-cta-subtitle">
         Elevate your home ritual with bottled cocktail perfection. Delivered safely to your door in custom temperature-stable packaging.
       </p>
-      <a href="#shop" class="btn btn-gold">
+      <a href="#shop" class="btn btn-pink">
         <span>SHOP ALL COCKTAILS</span>
         <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -336,8 +339,9 @@
   <footer class="luxury-footer">
     <div class="footer-top">
       <div class="footer-brand-col">
-        <div class="nav-logo-text">LUCKY SHAKER</div>
-        <div class="nav-logo-sub" style="margin-bottom: 1rem;">BARTENDER</div>
+        <a href="#cinematic-sequence" aria-label="Lucky Shaker Bartender Home">
+          <img src="assets/lucky_shaker_logo_white.png" alt="Lucky Shaker Bartender" class="footer-logo-img">
+        </a>
         <p>
           Ultra-premium ready-to-pour cocktails formulated by master mixologists. Shaken with passion, poured with intention.
         </p>
@@ -393,7 +397,10 @@
   <div id="cart-backdrop" class="cart-drawer-backdrop"></div>
   <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping Cart">
     <div class="cart-drawer-header">
-      <span class="cart-title">YOUR SELECTION</span>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <img src="assets/lucky_shaker_glass_icon.png" alt="" style="height: 22px; width: auto; object-fit: contain;">
+        <span class="cart-title">YOUR SELECTION</span>
+      </div>
       <button id="close-cart-btn" class="close-drawer-btn" aria-label="Close Shopping Cart">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -414,7 +421,7 @@
         <span class="subtotal-label">SUBTOTAL</span>
         <span id="drawer-subtotal" class="subtotal-val">$0.00</span>
       </div>
-      <button id="checkout-btn" class="btn btn-gold" style="width: 100%;">
+      <button id="checkout-btn" class="btn btn-pink" style="width: 100%;">
         <span>PROCEED TO CHECKOUT</span>
         <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M1 7h12M8 2l5 5-5 5"/>
