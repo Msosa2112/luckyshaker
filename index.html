@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucky Shaker Bartender | Crafted Cocktails. Ready to Pour.</title>
+  <meta name="description" content="Lucky Shaker Bartender marries master mixologist craftsmanship with small-batch spirits. Explore our signature collection: Mojito, Old Fashioned, and Whiskey Cream.">
+  <meta name="keywords" content="Lucky Shaker, craft cocktails, ready to pour, premium spirits, bottled mojito, bottled old fashioned, whiskey cream">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="Lucky Shaker Bartender | Crafted Cocktails">
+  <meta property="og:description" content="Small-batch craft cocktails bottled to perfection. Real spirits, fresh botanicals, zero compromise.">
+  <meta property="og:image" content="assets/posters/whiskey_cream_desktop.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. LUXURY STICKY NAVIGATION
+       ========================================================================= -->
+  <header class="navbar" id="main-nav">
+    <a href="#hero" class="nav-brand" aria-label="Lucky Shaker Bartender Home">
+      <span class="nav-logo-text">LUCKY SHAKER</span>
+      <span class="nav-logo-sub">BARTENDER</span>
+    </a>
+
+    <nav aria-label="Main Navigation">
+      <ul class="nav-menu">
+        <li><a href="#flavors" class="nav-link">Flavors</a></li>
+        <li><a href="#shop" class="nav-link">Shop</a></li>
+        <li><a href="#story" class="nav-link">Our Story</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="viewer/index.html" class="nav-3d-pill" title="Explore Interactive 3D Bottle">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+          <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+        <span>3D Studio</span>
+      </a>
+
+      <button class="cart-toggle-btn open-cart-btn" aria-label="View Shopping Bag">
+        <span>BAG</span>
+        <span class="cart-badge">0</span>
+      </button>
+
+      <button class="mobile-menu-btn open-cart-btn" aria-label="Open Cart on Mobile">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. HERO SECTION — CINEMATIC FULLSCREEN VIDEO
+       ========================================================================= -->
+  <section id="hero" class="hero-section">
+    <div class="hero-video-container">
+      <video id="hero-video" class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="assets/posters/whiskey_cream_desktop.jpg">
+        <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
+        Your browser does not support high-definition video playback.
+      </video>
+      <div class="hero-gradient-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-text-block">
+        <div class="eyebrow">Crafted Cocktails • Ready to Pour</div>
+        <h1 class="hero-title">LUCKY SHAKER</h1>
+        <div class="hero-subtitle">BARTENDER</div>
+        <p class="hero-statement">Master mixology distilled into timeless glass. Shake, chill, and pour world-class perfection.</p>
+        
+        <div class="hero-cta-group">
+          <a href="#shop" class="btn btn-primary">
+            <span>SHOP COCKTAILS</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </a>
+          <a href="#flavors" class="btn btn-secondary">
+            <span>EXPLORE FLAVORS</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-side-selector">
+        <div class="hero-selector-label">FEATURED PREVIEW</div>
+        <div class="hero-flavor-tabs" role="tablist" aria-label="Select hero cocktail video">
+          <button class="flavor-tab-btn active" data-flavor="whiskey-cream" role="tab">Whiskey Cream</button>
+          <button class="flavor-tab-btn" data-flavor="old-fashioned" role="tab">Old Fashioned</button>
+          <button class="flavor-tab-btn" data-flavor="mojito" role="tab">Mojito</button>
+        </div>
+      </div>
+    </div>
+
+    <a href="#editorial-manifesto" class="hero-scroll-indicator" aria-label="Scroll to Discover">
+      <span>DISCOVER</span>
+      <div class="scroll-line-container">
+        <div class="scroll-line-runner"></div>
+      </div>
+    </a>
+  </section>
+
+  <!-- =========================================================================
+       3. EDITORIAL MANIFESTO / TRANSITION
+       ========================================================================= -->
+  <section id="editorial-manifesto" class="editorial-statement-section">
+    <div class="eyebrow" style="margin-bottom: 1.5rem;">THE LUCKY SHAKER STANDARD</div>
+    <blockquote class="statement-quote">
+      "World-class cocktails shouldn't require a master mixologist on call. <em>Just the right bottle.</em>"
+    </blockquote>
+    <p class="statement-desc">
+      Every Lucky Shaker release is formulated at cask-strength standards, marrying triple-distilled spirits, cold-extracted botanicals, and artisanal bitters. Shaken, balanced, and sealed at the peak of flavor harmony.
+    </p>
+  </section>
+
+  <!-- =========================================================================
+       4. CINEMATIC FLAVOR STORYTELLING CHAPTER
+       ========================================================================= -->
+  <section id="flavors" class="flavors-section">
+    
+    <div class="flavor-chapter-header">
+      <div class="eyebrow">THE SIGNATURE COLLECTION</div>
+      <h2 class="flavor-chapter-title">THREE ICONIC RITUALS</h2>
+    </div>
+
+    <!-- FLAVOR 1: MOJITO -->
+    <article class="flavor-block" data-flavor="mojito" id="flavor-mojito">
+      <div class="flavor-watermark">MOJITO</div>
+      
+      <div class="flavor-video-wrapper">
+        <video class="flavor-video" muted loop playsinline preload="metadata" poster="assets/posters/mojito_desktop.jpg">
+          <source src="videos para web/Mojito/Cinematic_mojito_desktop.mp4" type="video/mp4">
+        </video>
+        <div class="flavor-overlay"></div>
+      </div>
+
+      <div class="flavor-inner">
+        <div class="flavor-narrative">
+          <div class="flavor-badge-row">
+            <span class="flavor-tag">CRISP & BOTANICAL</span>
+            <span class="flavor-specs-inline">12% ABV • 750 ML</span>
+          </div>
+
+          <h3 class="flavor-title">MOJITO</h3>
+          <div class="flavor-subtitle">Spearmint • Caribbean Rum • Crisp Lime Zest</div>
+          
+          <p class="flavor-description">
+            An effervescent masterpiece balancing triple-filtered Caribbean rum, hand-bruised garden spearmint, cold-pressed Persian limes, and pure cane sweetness. Finished with fine effervescence for an unmistakably invigorating pour.
+          </p>
+
+          <div class="tasting-notes-box">
+            <div class="tasting-label">TASTING NOTES</div>
+            <div class="tasting-items">Fresh Spearmint Leaf, Caribbean White Rum, Tahitian Lime Oil, Demerara Sugar</div>
+          </div>
+
+          <div class="flavor-actions">
+            <a href="#shop" class="btn btn-primary" data-action="quick-add" data-flavor="mojito">
+              <span>SHOP MOJITO</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 7h12M8 2l5 5-5 5"/>
+              </svg>
+            </a>
+            <span class="product-price" style="font-size: 1.25rem;">$36.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrub-indicator-pill">
+        <span class="scrub-dot"></span>
+        <span>CINEMATIC SCRUB: <span class="scrub-val">0%</span></span>
+      </div>
+    </article>
+
+    <!-- FLAVOR 2: OLD FASHIONED -->
+    <article class="flavor-block layout-reverse" data-flavor="old-fashioned" id="flavor-old-fashioned">
+      <div class="flavor-watermark" style="right: 5%; left: auto;">OLD FASHIONED</div>
+
+      <div class="flavor-video-wrapper">
+        <video class="flavor-video" muted loop playsinline preload="metadata" poster="assets/posters/old_fashioned_desktop.jpg">
+          <source src="videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4" type="video/mp4">
+        </video>
+        <div class="flavor-overlay"></div>
+      </div>
+
+      <div class="flavor-inner">
+        <div class="flavor-narrative">
+          <div class="flavor-badge-row">
+            <span class="flavor-tag">BOLD & TIMELESS</span>
+            <span class="flavor-specs-inline">24% ABV • 750 ML</span>
+          </div>
+
+          <h3 class="flavor-title">OLD FASHIONED</h3>
+          <div class="flavor-subtitle">Aged Kentucky Bourbon • Aromatic Bitters • Orange Oils</div>
+          
+          <p class="flavor-description">
+            The undisputed sovereign of classic cocktails. Bold Kentucky straight bourbon gently stirred with bespoke aromatic bitters, rich caramelized demerara sugar, and cold-expressed orange oils. Deep, smoky, and timeless.
+          </p>
+
+          <div class="tasting-notes-box">
+            <div class="tasting-label">TASTING NOTES</div>
+            <div class="tasting-items">Oak-Aged Bourbon, Angostura Bark, Blood Orange Rind, Caramelized Demerara</div>
+          </div>
+
+          <div class="flavor-actions">
+            <a href="#shop" class="btn btn-primary" data-action="quick-add" data-flavor="old-fashioned">
+              <span>SHOP OLD FASHIONED</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 7h12M8 2l5 5-5 5"/>
+              </svg>
+            </a>
+            <span class="product-price" style="font-size: 1.25rem;">$42.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrub-indicator-pill">
+        <span class="scrub-dot"></span>
+        <span>CINEMATIC SCRUB: <span class="scrub-val">0%</span></span>
+      </div>
+    </article>
+
+    <!-- FLAVOR 3: WHISKEY CREAM -->
+    <article class="flavor-block" data-flavor="whiskey-cream" id="flavor-whiskey-cream">
+      <div class="flavor-watermark">WHISKEY CREAM</div>
+
+      <div class="flavor-video-wrapper">
+        <video class="flavor-video" muted loop playsinline preload="metadata" poster="assets/posters/whiskey_cream_desktop.jpg">
+          <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
+        </video>
+        <div class="flavor-overlay"></div>
+      </div>
+
+      <div class="flavor-inner">
+        <div class="flavor-narrative">
+          <div class="flavor-badge-row">
+            <span class="flavor-tag">VELVETY & DECADENT</span>
+            <span class="flavor-specs-inline">17% ABV • 750 ML</span>
+          </div>
+
+          <h3 class="flavor-title">WHISKEY CREAM</h3>
+          <div class="flavor-subtitle">Crafted by Katherin • Rich Cream • Madagascar Vanilla</div>
+          
+          <p class="flavor-description">
+            A sumptuous indulgence marrying triple-distilled whiskeys with rich dairy cream, toasted cocoa, and bourbon vanilla bean. Velvety, warm, and supremely decadent with a satin mouthfeel that lingers beautifully.
+          </p>
+
+          <div class="tasting-notes-box">
+            <div class="tasting-label">TASTING NOTES</div>
+            <div class="tasting-items">Irish Whiskey, Single-Origin Cocoa, Double Cream, Bourbon Vanilla Bean</div>
+          </div>
+
+          <div class="flavor-actions">
+            <a href="#shop" class="btn btn-primary" data-action="quick-add" data-flavor="whiskey-cream">
+              <span>SHOP WHISKEY CREAM</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 7h12M8 2l5 5-5 5"/>
+              </svg>
+            </a>
+            <span class="product-price" style="font-size: 1.25rem;">$38.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrub-indicator-pill">
+        <span class="scrub-dot"></span>
+        <span>CINEMATIC SCRUB: <span class="scrub-val">0%</span></span>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- =========================================================================
+       5. INTERACTIVE 3D VESSEL SPOTLIGHT (Linking to Three.js Studio)
+       ========================================================================= -->
+  <section class="feature-3d-section">
+    <div class="feature-3d-container">
+      <div class="feature-3d-visual">
+        <img src="renders/lucky_shaker_hero_9_16.png" alt="Lucky Shaker Whiskey Cream 3D Bottle" loading="lazy">
+        <div class="feature-badge-360">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          <span>360° 3D STUDIO</span>
+        </div>
+      </div>
+
+      <div class="feature-3d-info">
+        <div class="eyebrow">VESSEL ARCHITECTURE</div>
+        <h2 class="feature-3d-title">THE ANATOMY OF CRAFT</h2>
+        <p class="feature-3d-p">
+          Crafted from heavy European flint glass with a tailored shoulder profile, tactile tactile wax ribbon neck sleeve, and embossed foil typography. Explore the physical packaging in real-time WebGL.
+        </p>
+
+        <div class="feature-specs-grid">
+          <div class="spec-item">
+            <div class="spec-item-num">750 ML</div>
+            <div class="spec-item-label">BOTTLE CAPACITY</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-item-num">4K PBR</div>
+            <div class="spec-item-label">PHYSICAL SHADERS</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-item-num">UV-BLOCK</div>
+            <div class="spec-item-label">FLAVOR PRESERVATION</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-item-num">SEALED</div>
+            <div class="spec-item-label">AIRTIGHT CRIMP CAP</div>
+          </div>
+        </div>
+
+        <a href="viewer/index.html" class="btn btn-secondary">
+          <span>ENTER 3D BOTTLE STUDIO</span>
+          <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. CURATED DISCOVERY SHOP SECTION (Shopify Architecture Ready)
+       ========================================================================= -->
+  <section id="shop" class="shop-section">
+    <div class="shop-header">
+      <div class="eyebrow">RESERVE BOTTLES</div>
+      <h2 class="shop-headline">CURATE YOUR BAR</h2>
+      <p class="shop-subheadline">
+        Individually formulated, hand-batched, and sealed for exceptional shelf stability. Each bottle pours 6–8 full-sized luxury cocktails.
+      </p>
+    </div>
+
+    <div class="products-catalog">
+      
+      <!-- Product 1: Mojito -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <img src="assets/posters/mojito_desktop.jpg" alt="Lucky Shaker Mojito 750ml" loading="lazy">
+          <span class="product-visual-badge">12% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name">MOJITO</h3>
+          <p class="product-desc">Caribbean white rum, fresh mint leaf, Tahitian lime oil, and demerara cane sugar.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Spearmint</span>
+            <span class="pill-note">Tahitian Lime</span>
+            <span class="pill-note">Rum</span>
+          </div>
+          <button class="btn btn-primary" onclick="addToCart('mojito')" aria-label="Add Mojito to Bag">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- Product 2: Old Fashioned -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <img src="assets/posters/old_fashioned_desktop.jpg" alt="Lucky Shaker Old Fashioned 750ml" loading="lazy">
+          <span class="product-visual-badge">24% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name">OLD FASHIONED</h3>
+          <p class="product-desc">Aged Kentucky bourbon, house aromatic bitters, caramelized demerara, and citrus zest oils.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Kentucky Bourbon</span>
+            <span class="pill-note">Bitters</span>
+            <span class="pill-note">Orange Oil</span>
+          </div>
+          <button class="btn btn-primary" onclick="addToCart('old-fashioned')" aria-label="Add Old Fashioned to Bag">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- Product 3: Whiskey Cream -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <img src="renders/lucky_shaker_hero_9_16.png" alt="Lucky Shaker Whiskey Cream by Katherin" loading="lazy">
+          <span class="product-visual-badge">17% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name">WHISKEY CREAM</h3>
+          <p class="product-desc">Triple-distilled whiskey, velvet fresh dairy cream, cocoa, and Madagascar vanilla bean.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Artisan Whiskey</span>
+            <span class="pill-note">Double Cream</span>
+            <span class="pill-note">Vanilla Bean</span>
+          </div>
+          <button class="btn btn-primary" onclick="addToCart('whiskey-cream')" aria-label="Add Whiskey Cream to Bag">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. BRAND STORY ("OUR STORY")
+       ========================================================================= -->
+  <section id="story" class="brand-story-section">
+    <div class="brand-story-inner">
+      <div class="story-lead">
+        COCKTAILS,<br>
+        <span>WITHOUT THE BAR.</span>
+      </div>
+
+      <div class="story-content">
+        <p>
+          We founded Lucky Shaker Bartender to eliminate the compromise between high-end cocktail lounge craftsmanship and spontaneous at-home enjoyment. Every bottle is hand-blended with authentic spirits, real botanicals, and zero shortcuts. Simply chill, shake, and pour.
+        </p>
+
+        <div class="story-pillars">
+          <div class="pillar">
+            <h4>THE SPIRITS</h4>
+            <p>Authentic small-batch distillates aged to peak character in charred oak casks.</p>
+          </div>
+          <div class="pillar">
+            <h4>THE BOTANICALS</h4>
+            <p>Cold-pressed citrus oils, hand-picked garden herbs, and pure caramelized sugars.</p>
+          </div>
+          <div class="pillar">
+            <h4>THE VESSEL</h4>
+            <p>UV-shielded heavy European flint glass designed for optimal flavor preservation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. FINAL CINEMATIC CTA
+       ========================================================================= -->
+  <section class="final-cta-section">
+    <div class="final-cta-content">
+      <div class="eyebrow">YOUR INVITATION</div>
+      <h2 class="final-cta-headline">READY TO SHAKE?</h2>
+      <p class="final-cta-subtitle">
+        Elevate your home ritual with bottled cocktail perfection. Delivered safely to your door in custom temperature-stable packaging.
+      </p>
+      <a href="#shop" class="btn btn-gold">
+        <span>SHOP ALL COCKTAILS</span>
+        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M1 7h12M8 2l5 5-5 5"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       9. FOOTER
+       ========================================================================= -->
+  <footer class="luxury-footer">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <div class="nav-logo-text">LUCKY SHAKER</div>
+        <div class="nav-logo-sub" style="margin-bottom: 1rem;">BARTENDER</div>
+        <p>
+          Ultra-premium ready-to-pour cocktails formulated by master mixologists. Shaken with passion, poured with intention.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">COLLECTION</h4>
+        <ul class="footer-links">
+          <li><a href="#flavor-mojito">Mojito (750ml)</a></li>
+          <li><a href="#flavor-old-fashioned">Old Fashioned (750ml)</a></li>
+          <li><a href="#flavor-whiskey-cream">Whiskey Cream (750ml)</a></li>
+          <li><a href="#shop">Gift Sets & Trio</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">EXPERIENCE</h4>
+        <ul class="footer-links">
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="viewer/index.html">3D Bottle Studio</a></li>
+          <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">PRIVATE RESERVE</h4>
+        <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Subscribe to receive invitation-only access to small-batch single-barrel releases.
+        </p>
+        <form id="newsletter-form" class="newsletter-form">
+          <div class="newsletter-input-group">
+            <input type="email" class="newsletter-input" placeholder="Your email address" required aria-label="Email address for newsletter">
+            <button type="submit" class="newsletter-submit" aria-label="Subscribe to Private Reserve">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="copyright">© 2026 LUCKY SHAKER BARTENDER LLC. ALL RIGHTS RESERVED.</div>
+      <div class="legal-notice">PLEASE ENJOY RESPONSIBLY. MUST BE 21+ YEARS OF AGE TO PURCHASE.</div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       10. CART SLIDE-OUT DRAWER (Shopify Ready Model)
+       ========================================================================= -->
+  <div id="cart-backdrop" class="cart-drawer-backdrop"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping Cart">
+    <div class="cart-drawer-header">
+      <span class="cart-title">YOUR SELECTION</span>
+      <button id="close-cart-btn" class="close-drawer-btn" aria-label="Close Shopping Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div id="cart-items-list" class="cart-items-container">
+      <div class="cart-empty-message">
+        <p>Your cocktail bar is empty.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-dim);">Explore our signature collection to begin.</p>
+      </div>
+    </div>
+
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <span class="subtotal-label">SUBTOTAL</span>
+        <span id="drawer-subtotal" class="subtotal-val">$0.00</span>
+      </div>
+      <button id="checkout-btn" class="btn btn-gold" style="width: 100%;">
+        <span>PROCEED TO CHECKOUT</span>
+        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M1 7h12M8 2l5 5-5 5"/>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+</body>
+</html>
