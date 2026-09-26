@@ -1,13 +1,18 @@
 /**
- * LUCKY SHAKER BARTENDER — GSAP 3.12 & SCROLLTRIGGER MASTER VIDEO ENGINE
+ * LUCKY SHAKER BARTENDER — CONTINUOUS SCROLLING CINEMATIC SEQUENCE
  * 
- * Architecture:
- * - GSAP ScrollTrigger Pinned Timeline (450% scroll runway)
- * - True Frame-by-Frame Scrubbing via GSAP Proxy Objects
- * - Seamless Dual-Video Scrubbing in Transition Windows (28%-38% & 61%-71%)
- * - Reverse Scrubbing & Absolute Frame Locking on Scroll Stop
- * - Staggered Text Reveals & Atmospheric Depth Glow
- * - Real-Time Developer Telemetry HUD
+ * Behavior:
+ * - Starts at SCROLL 0 with MOJITO filling the entire screen.
+ * - On the VERY FIRST scroll, the cinematic scene transition begins immediately.
+ * - MOJITO moves upward (translateY 0% -> -100%) while OLD FASHIONED enters from below (translateY 100% -> 0%).
+ * - At 45%, OLD FASHIONED fully fills the viewport.
+ * - From 45% -> 90%, OLD FASHIONED moves upward while WHISKEY CREAM enters from below.
+ * - At 90% -> 100%, WHISKEY CREAM settles into position.
+ * - Video Playheads are scrubbed simultaneously during their overlap windows:
+ *     MOJITO:        0% -> 45%  (currentTime: 0 -> 4s)
+ *     OLD FASHIONED: 25% -> 70% (currentTime: 0 -> 4s)
+ *     WHISKEY CREAM: 55% -> 100% (currentTime: 0 -> 4s)
+ * - Scrolling back up reverses the entire sequence frame by frame.
  */
 
 // --------------------------------------------------------------------------
@@ -24,8 +29,6 @@ const LUCKY_SHAKER_DATA = {
       id: "mojito",
       name: "Mojito",
       subtitle: "Fresh Spearmint • Caribbean Rum • Crisp Lime Zest",
-      tag: "Crisp & Botanical",
-      description: "An effervescent masterpiece balancing triple-filtered Caribbean rum, hand-bruised garden spearmint, cold-pressed Persian limes, and pure cane sweetness.",
       price: "$36.00",
       numericPrice: 36.00,
       productImage: "assets/posters/mojito_desktop.jpg",
@@ -36,8 +39,6 @@ const LUCKY_SHAKER_DATA = {
       id: "old-fashioned",
       name: "Old Fashioned",
       subtitle: "Aged Kentucky Bourbon • Aromatic Bitters • Demerara • Orange Oils",
-      tag: "Bold & Timeless",
-      description: "The undisputed sovereign of classic cocktails. Bold Kentucky straight bourbon gently stirred with artisanal aromatic bitters, rich caramelized demerara sugar, and cold-expressed orange oils.",
       price: "$42.00",
       numericPrice: 42.00,
       productImage: "assets/posters/old_fashioned_desktop.jpg",
@@ -48,8 +49,6 @@ const LUCKY_SHAKER_DATA = {
       id: "whiskey-cream",
       name: "Whiskey Cream",
       subtitle: "Small-Batch Whiskey • Velvet Fresh Cream • Madagascar Vanilla",
-      tag: "Velvety & Decadent",
-      description: "Created by Katherin. A sumptuous indulgence marrying triple-distilled whiskeys with rich dairy cream, toasted cocoa, and bourbon vanilla bean.",
       price: "$38.00",
       numericPrice: 38.00,
       productImage: "assets/posters/whiskey_cream_desktop.jpg",
@@ -60,27 +59,22 @@ const LUCKY_SHAKER_DATA = {
 };
 
 // --------------------------------------------------------------------------
-// 2. APPLICATION STATE
+// 2. STATE MANAGEMENT
 // --------------------------------------------------------------------------
 const AppState = {
-  cart: [],
-  heroFlavor: "whiskey-cream"
+  cart: []
 };
 
 // --------------------------------------------------------------------------
 // 3. INITIALIZATION ON DOM READY
 // --------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  // Register GSAP Plugin
   if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
-  } else {
-    console.error("GSAP or ScrollTrigger not loaded.");
   }
 
   initNavbarScroll();
-  initHeroVideoControls();
-  initGsapMasterCinematicEngine();
+  initContinuousCinematicSequence();
   initCartDrawer();
   initNewsletterForm();
 });
@@ -100,117 +94,43 @@ function initNavbarScroll() {
 }
 
 // --------------------------------------------------------------------------
-// 5. HERO VIDEO CONTROLS
+// 5. MASTER CONTINUOUS SCROLL CINEMATIC ENGINE
 // --------------------------------------------------------------------------
-function initHeroVideoControls() {
-  const heroVideo = document.getElementById("hero-video");
-  const tabButtons = document.querySelectorAll(".flavor-tab-btn");
-  if (!heroVideo) return;
+function initContinuousCinematicSequence() {
+  const sequenceSection = document.getElementById("cinematic-sequence");
+  const viewport = document.getElementById("cinematic-viewport");
 
-  heroVideo.play().catch(() => {});
+  const panelMojito = document.getElementById("panel-mojito");
+  const panelOF = document.getElementById("panel-old-fashioned");
+  const panelWC = document.getElementById("panel-whiskey-cream");
 
-  const videoMap = {
-    "whiskey-cream": {
-      desktop: "videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4",
-      mobile: "videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4",
-      poster: "assets/posters/whiskey_cream_desktop.jpg"
-    },
-    "old-fashioned": {
-      desktop: "videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4",
-      mobile: "videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4",
-      poster: "assets/posters/old_fashioned_desktop.jpg"
-    },
-    "mojito": {
-      desktop: "videos para web/Mojito/Cinematic_mojito_desktop.mp4",
-      mobile: "videos para web/Mojito/Mojito_product_video mobile.mp4",
-      poster: "assets/posters/mojito_desktop.jpg"
-    }
-  };
+  const videoMojito = document.getElementById("video-mojito");
+  const videoOF = document.getElementById("video-old-fashioned");
+  const videoWC = document.getElementById("video-whiskey-cream");
 
-  tabButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const flavorId = btn.dataset.flavor;
-      if (!flavorId || flavorId === AppState.heroFlavor) return;
+  if (!sequenceSection || !viewport || !videoMojito || !videoOF || !videoWC) return;
 
-      tabButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      AppState.heroFlavor = flavorId;
-
-      const info = videoMap[flavorId];
-      if (!info) return;
-
-      const isMobile = window.innerWidth <= 768;
-      const targetSrc = isMobile ? info.mobile : info.desktop;
-
-      gsap.to(heroVideo, {
-        opacity: 0.2,
-        duration: 0.15,
-        onComplete: () => {
-          heroVideo.poster = info.poster;
-          heroVideo.src = targetSrc;
-          heroVideo.load();
-          heroVideo.play().catch(() => {});
-          gsap.to(heroVideo, { opacity: 1, duration: 0.25 });
-        }
-      });
-    });
-  });
-}
-
-// --------------------------------------------------------------------------
-// 6. GSAP SCROLLTRIGGER MASTER CINEMATIC ENGINE
-// --------------------------------------------------------------------------
-function initGsapMasterCinematicEngine() {
-  const filmSection = document.getElementById("cinematic-film");
-  if (!filmSection) return;
-
-  const mojitoVideo = document.getElementById("video-mojito");
-  const ofVideo = document.getElementById("video-old-fashioned");
-  const wcVideo = document.getElementById("video-whiskey-cream");
-
-  if (!mojitoVideo || !ofVideo || !wcVideo) return;
-
-  // 1. Strict No-Autoplay Setup & Initial Properties
-  [mojitoVideo, ofVideo, wcVideo].forEach(v => {
+  // 1. Ensure NO AUTOPLAY & initial video state
+  [videoMojito, videoOF, videoWC].forEach(v => {
     v.muted = true;
     v.pause();
     v.currentTime = 0;
     v.load();
   });
 
-  // Initial Visibility States
-  gsap.set(mojitoVideo, { opacity: 1, scale: 1.0, filter: "brightness(0.88) contrast(1.08)" });
-  gsap.set(ofVideo, { opacity: 0, scale: 1.04, filter: "brightness(0.7) blur(6px) contrast(1.08)" });
-  gsap.set(wcVideo, { opacity: 0, scale: 1.04, filter: "brightness(0.7) blur(6px) contrast(1.08)" });
-
-  // DOM Elements
-  const watermarkMojito = document.getElementById("watermark-mojito");
-  const watermarkOF = document.getElementById("watermark-oldfashioned");
-  const watermarkWC = document.getElementById("watermark-whiskeycream");
-
-  const storyMojito = document.getElementById("story-overlay-mojito");
-  const storyOF = document.getElementById("story-overlay-old-fashioned");
-  const storyWC = document.getElementById("story-overlay-whiskey-cream");
-
-  const markerMojito = document.getElementById("marker-mojito");
-  const markerOF = document.getElementById("marker-oldfashioned");
-  const markerWC = document.getElementById("marker-whiskeycream");
-
-  // Initial Content Placement
-  gsap.set(storyMojito, { opacity: 1, y: 0 });
-  gsap.set(storyOF, { opacity: 0, y: 25 });
-  gsap.set(storyWC, { opacity: 0, y: 25 });
-
-  gsap.set(watermarkMojito, { opacity: 1, scale: 1.0 });
-  gsap.set(watermarkOF, { opacity: 0, scale: 0.96 });
-  gsap.set(watermarkWC, { opacity: 0, scale: 0.96 });
+  // Initial Panel States
+  // Mojito: 100% visible at scroll 0
+  gsap.set(panelMojito, { yPercent: 0, scale: 1.0, opacity: 1, filter: "blur(0px)", zIndex: 10 });
+  // Old Fashioned: waiting below at 100%
+  gsap.set(panelOF, { yPercent: 100, scale: 0.94, opacity: 0, filter: "blur(5px)", zIndex: 20 });
+  // Whiskey Cream: waiting below at 100%
+  gsap.set(panelWC, { yPercent: 100, scale: 0.94, opacity: 0, filter: "blur(5px)", zIndex: 30 });
 
   // HUD Elements
   const debugMaster = document.getElementById("debug-master-progress");
   const debugDirection = document.getElementById("debug-direction");
   const debugActive = document.getElementById("debug-active-cocktail");
   const debugTimecode = document.getElementById("debug-timecode");
-  const debugState = document.getElementById("debug-state");
   const toggleHudBtn = document.getElementById("toggle-debug-hud");
   const hudContainer = document.getElementById("cinematic-debug-hud");
 
@@ -220,7 +140,12 @@ function initGsapMasterCinematicEngine() {
     });
   }
 
-  // Safe Frame Seeker Helper
+  // Scrubber Markers
+  const markerMojito = document.getElementById("marker-mojito");
+  const markerOF = document.getElementById("marker-oldfashioned");
+  const markerWC = document.getElementById("marker-whiskeycream");
+
+  // Helper for safe video seeking
   function seekFrame(video, targetSeconds) {
     if (!video || isNaN(video.duration) || video.duration === 0) return;
     const clamped = Math.max(0, Math.min(video.duration - 0.02, targetSeconds));
@@ -229,21 +154,21 @@ function initGsapMasterCinematicEngine() {
     }
   }
 
-  // Proxy scrub targets (Duration = 4.0s for all 3 clips)
+  // Video proxy scrub objects (Duration: 4.00s for each clip)
   const mojitoProxy = { time: 0 };
   const ofProxy = { time: 0 };
   const wcProxy = { time: 0 };
 
   // ------------------------------------------------------------------------
-  // 2. MASTER GSAP SCROLLTRIGGER TIMELINE (100 Units of Cinematic Time)
+  // 2. MASTER GSAP SCROLLTRIGGER TIMELINE (100 Units of Progress)
   // ------------------------------------------------------------------------
-  const masterTl = gsap.timeline({
+  const sequenceTl = gsap.timeline({
     scrollTrigger: {
-      trigger: "#cinematic-film",
+      trigger: "#cinematic-sequence",
       start: "top top",
-      end: "+=450%", // 450vh of natural scroll distance
-      pin: true,
-      scrub: 0.8, // 0.8s buttery smooth lag smoothing
+      end: "+=350%", // 350vh scroll distance
+      pin: viewport,
+      scrub: 0.6, // Fast, responsive, smooth scrub
       anticipatePin: 1,
       onUpdate: (self) => {
         const P = self.progress;
@@ -255,22 +180,22 @@ function initGsapMasterCinematicEngine() {
           debugDirection.style.color = self.direction > 0 ? "#48E587" : "#F0A500";
         }
 
-        // Active cocktail name & markers
-        if (P < 0.33) {
+        // Active Scene Tracking & Markers
+        if (P < 0.45) {
           if (debugActive) debugActive.textContent = "MOJITO";
-          if (debugTimecode) debugTimecode.textContent = `${mojitoVideo.currentTime.toFixed(2)}s / 4.00s`;
+          if (debugTimecode) debugTimecode.textContent = `${videoMojito.currentTime.toFixed(2)}s / 4.00s`;
           markerMojito?.classList.add("active");
           markerOF?.classList.remove("active");
           markerWC?.classList.remove("active");
-        } else if (P < 0.66) {
+        } else if (P < 0.90) {
           if (debugActive) debugActive.textContent = "OLD FASHIONED";
-          if (debugTimecode) debugTimecode.textContent = `${ofVideo.currentTime.toFixed(2)}s / 4.00s`;
+          if (debugTimecode) debugTimecode.textContent = `${videoOF.currentTime.toFixed(2)}s / 4.00s`;
           markerMojito?.classList.remove("active");
           markerOF?.classList.add("active");
           markerWC?.classList.remove("active");
         } else {
           if (debugActive) debugActive.textContent = "WHISKEY CREAM";
-          if (debugTimecode) debugTimecode.textContent = `${wcVideo.currentTime.toFixed(2)}s / 4.00s`;
+          if (debugTimecode) debugTimecode.textContent = `${videoWC.currentTime.toFixed(2)}s / 4.00s`;
           markerMojito?.classList.remove("active");
           markerOF?.classList.remove("active");
           markerWC?.classList.add("active");
@@ -280,140 +205,99 @@ function initGsapMasterCinematicEngine() {
   });
 
   // ------------------------------------------------------------------------
-  // 3. SEGMENT 1: MOJITO DOMINANCE [0s -> 28s]
+  // 3. SCENE TRANSITION 1: MOJITO -> OLD FASHIONED [0% -> 45%]
+  // Starts on the VERY FIRST SCROLL!
   // ------------------------------------------------------------------------
-  // Mojito scrubs from 0.00s to 2.95s
-  masterTl.to(mojitoProxy, {
-    time: 2.95,
+  // Mojito moves upward and fades out
+  sequenceTl.to(panelMojito, {
+    yPercent: -100,
+    scale: 0.92,
+    opacity: 0.1,
+    filter: "blur(6px)",
     ease: "none",
-    duration: 28,
-    onUpdate: () => seekFrame(mojitoVideo, mojitoProxy.time)
+    duration: 45
+  }, 0);
+
+  // Old Fashioned enters from below into full view
+  sequenceTl.fromTo(panelOF, {
+    yPercent: 100,
+    scale: 0.94,
+    opacity: 0,
+    filter: "blur(5px)"
+  }, {
+    yPercent: 0,
+    scale: 1.0,
+    opacity: 1,
+    filter: "blur(0px)",
+    ease: "none",
+    duration: 45
   }, 0);
 
   // ------------------------------------------------------------------------
-  // 4. TRANSITION ZONE 1: MOJITO -> OLD FASHIONED [28s -> 38s]
-  // (Both clips scrub simultaneously: Mojito ends, Old Fashioned begins)
+  // 4. SCENE TRANSITION 2: OLD FASHIONED -> WHISKEY CREAM [45% -> 90%]
   // ------------------------------------------------------------------------
-  // Mojito scrubs final frames (2.95s -> 4.00s) while fading out & scaling
-  masterTl.to(mojitoProxy, {
-    time: 4.00,
+  // Old Fashioned moves upward and fades out
+  sequenceTl.to(panelOF, {
+    yPercent: -100,
+    scale: 0.92,
+    opacity: 0.1,
+    filter: "blur(6px)",
     ease: "none",
-    duration: 10,
-    onUpdate: () => seekFrame(mojitoVideo, mojitoProxy.time)
-  }, 28);
+    duration: 45
+  }, 45);
 
-  masterTl.to(mojitoVideo, {
+  // Whiskey Cream enters from below into full view
+  sequenceTl.fromTo(panelWC, {
+    yPercent: 100,
+    scale: 0.94,
     opacity: 0,
-    scale: 1.05,
-    filter: "brightness(0.7) blur(6px) contrast(1.08)",
-    ease: "none",
-    duration: 10
-  }, 28);
-
-  // Old Fashioned simultaneously scrubs first frames (0.00s -> 0.93s) while fading in
-  masterTl.to(ofProxy, {
-    time: 0.93,
-    ease: "none",
-    duration: 10,
-    onUpdate: () => seekFrame(ofVideo, ofProxy.time)
-  }, 28);
-
-  masterTl.fromTo(ofVideo, {
-    opacity: 0,
-    scale: 1.05,
-    filter: "brightness(0.7) blur(6px) contrast(1.08)"
+    filter: "blur(5px)"
   }, {
-    opacity: 1,
+    yPercent: 0,
     scale: 1.0,
-    filter: "brightness(0.88) blur(0px) contrast(1.08)",
-    ease: "none",
-    duration: 10
-  }, 28);
-
-  // Content Crossfade: Mojito -> Old Fashioned
-  masterTl.to(storyMojito, { opacity: 0, y: -25, duration: 6, ease: "power1.in" }, 28);
-  masterTl.fromTo(storyOF, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 6, ease: "power1.out" }, 32);
-
-  // Watermark Crossfade
-  masterTl.to(watermarkMojito, { opacity: 0, scale: 1.04, duration: 6, ease: "none" }, 28);
-  masterTl.fromTo(watermarkOF, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1.0, duration: 6, ease: "none" }, 32);
-
-  // ------------------------------------------------------------------------
-  // 5. SEGMENT 2: OLD FASHIONED DOMINANCE [38s -> 61s]
-  // ------------------------------------------------------------------------
-  // Old Fashioned scrubs from 0.93s to 3.07s
-  masterTl.to(ofProxy, {
-    time: 3.07,
-    ease: "none",
-    duration: 23,
-    onUpdate: () => seekFrame(ofVideo, ofProxy.time)
-  }, 38);
-
-  // ------------------------------------------------------------------------
-  // 6. TRANSITION ZONE 2: OLD FASHIONED -> WHISKEY CREAM [61s -> 71s]
-  // (Both clips scrub simultaneously: Old Fashioned ends, Whiskey Cream begins)
-  // ------------------------------------------------------------------------
-  // Old Fashioned scrubs final frames (3.07s -> 4.00s) while fading out
-  masterTl.to(ofProxy, {
-    time: 4.00,
-    ease: "none",
-    duration: 10,
-    onUpdate: () => seekFrame(ofVideo, ofProxy.time)
-  }, 61);
-
-  masterTl.to(ofVideo, {
-    opacity: 0,
-    scale: 1.05,
-    filter: "brightness(0.7) blur(6px) contrast(1.08)",
-    ease: "none",
-    duration: 10
-  }, 61);
-
-  // Whiskey Cream simultaneously scrubs first frames (0.00s -> 1.02s) while fading in
-  masterTl.to(wcProxy, {
-    time: 1.02,
-    ease: "none",
-    duration: 10,
-    onUpdate: () => seekFrame(wcVideo, wcProxy.time)
-  }, 61);
-
-  masterTl.fromTo(wcVideo, {
-    opacity: 0,
-    scale: 1.05,
-    filter: "brightness(0.7) blur(6px) contrast(1.08)"
-  }, {
     opacity: 1,
-    scale: 1.0,
-    filter: "brightness(0.88) blur(0px) contrast(1.08)",
+    filter: "blur(0px)",
     ease: "none",
-    duration: 10
-  }, 61);
-
-  // Content Crossfade: Old Fashioned -> Whiskey Cream
-  masterTl.to(storyOF, { opacity: 0, y: -25, duration: 6, ease: "power1.in" }, 61);
-  masterTl.fromTo(storyWC, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 6, ease: "power1.out" }, 65);
-
-  // Watermark Crossfade
-  masterTl.to(watermarkOF, { opacity: 0, scale: 1.04, duration: 6, ease: "none" }, 61);
-  masterTl.fromTo(watermarkWC, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1.0, duration: 6, ease: "none" }, 65);
+    duration: 45
+  }, 45);
 
   // ------------------------------------------------------------------------
-  // 7. SEGMENT 3: WHISKEY CREAM DOMINANCE [71s -> 100s]
+  // 5. OVERLAPPING VIDEO SCRUB PLAYHEADS
   // ------------------------------------------------------------------------
-  // Whiskey Cream scrubs from 1.02s to 4.00s
-  masterTl.to(wcProxy, {
-    time: 4.00,
+  // Mojito Video: 0% -> 45% (currentTime: 0s -> 3.98s)
+  sequenceTl.to(mojitoProxy, {
+    time: 3.98,
     ease: "none",
-    duration: 29,
-    onUpdate: () => seekFrame(wcVideo, wcProxy.time)
-  }, 71);
+    duration: 45,
+    onUpdate: () => seekFrame(videoMojito, mojitoProxy.time)
+  }, 0);
 
-  // Bottom Timeline Scrubber Track fill (0% -> 100%)
-  masterTl.fromTo("#timeline-fill-bar", { width: "0%" }, { width: "100%", duration: 100, ease: "none" }, 0);
+  // Old Fashioned Video: 25% -> 70% (currentTime: 0s -> 3.98s)
+  // Starts scrub-playing at 25% while entering from below!
+  sequenceTl.fromTo(ofProxy, { time: 0 }, {
+    time: 3.98,
+    ease: "none",
+    duration: 45,
+    onUpdate: () => seekFrame(videoOF, ofProxy.time)
+  }, 25);
+
+  // Whiskey Cream Video: 55% -> 100% (currentTime: 0s -> 3.98s)
+  // Starts scrub-playing at 55% while entering from below!
+  sequenceTl.fromTo(wcProxy, { time: 0 }, {
+    time: 3.98,
+    ease: "none",
+    duration: 45,
+    onUpdate: () => seekFrame(videoWC, wcProxy.time)
+  }, 55);
+
+  // ------------------------------------------------------------------------
+  // 6. BOTTOM TIMELINE FILL PROGRESS (0% -> 100%)
+  // ------------------------------------------------------------------------
+  sequenceTl.fromTo("#timeline-fill-bar", { width: "0%" }, { width: "100%", duration: 100, ease: "none" }, 0);
 }
 
 // --------------------------------------------------------------------------
-// 7. CART DRAWER & SHOPIFY ARCHITECTURE
+// 6. CART DRAWER & SHOPIFY ARCHITECTURE
 // --------------------------------------------------------------------------
 function initCartDrawer() {
   const drawer = document.getElementById("cart-drawer");
@@ -548,7 +432,7 @@ window.modifyCartQty = function(id, delta) {
 };
 
 // --------------------------------------------------------------------------
-// 8. TOAST NOTIFICATION MICRO-INTERACTION
+// 7. TOAST NOTIFICATION MICRO-INTERACTION
 // --------------------------------------------------------------------------
 let toastTimeout = null;
 function showToast(message) {
@@ -576,7 +460,7 @@ function showToast(message) {
 }
 
 // --------------------------------------------------------------------------
-// 9. NEWSLETTER & PRIVATE RESERVE FORM
+// 8. NEWSLETTER & PRIVATE RESERVE FORM
 // --------------------------------------------------------------------------
 function initNewsletterForm() {
   const form = document.getElementById("newsletter-form");

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lucky Shaker Bartender | Crafted Cocktails. Ready to Pour.</title>
-  <meta name="description" content="Lucky Shaker Bartender marries master mixologist craftsmanship with small-batch spirits. Experience our continuous scroll-controlled cocktail film: Mojito, Old Fashioned, and Whiskey Cream.">
+  <meta name="description" content="Lucky Shaker Bartender marries master mixologist craftsmanship with small-batch spirits. Experience our continuous scroll-controlled cocktail sequence: Mojito, Old Fashioned, and Whiskey Cream.">
   <meta name="keywords" content="Lucky Shaker, craft cocktails, ready to pour, premium spirits, bottled mojito, bottled old fashioned, whiskey cream">
   
   <!-- Open Graph / Meta -->
@@ -27,14 +27,14 @@
        1. LUXURY STICKY NAVIGATION
        ========================================================================= -->
   <header class="navbar" id="main-nav">
-    <a href="#hero" class="nav-brand" aria-label="Lucky Shaker Bartender Home">
+    <a href="#cinematic-sequence" class="nav-brand" aria-label="Lucky Shaker Bartender Home">
       <span class="nav-logo-text">LUCKY SHAKER</span>
       <span class="nav-logo-sub">BARTENDER</span>
     </a>
 
     <nav aria-label="Main Navigation">
       <ul class="nav-menu">
-        <li><a href="#cinematic-film" class="nav-link">Cinematic Film</a></li>
+        <li><a href="#cinematic-sequence" class="nav-link">Film</a></li>
         <li><a href="#shop" class="nav-link">Shop</a></li>
         <li><a href="#story" class="nav-link">Our Story</a></li>
       </ul>
@@ -57,118 +57,32 @@
   </header>
 
   <!-- =========================================================================
-       2. HERO SECTION — CINEMATIC FULLSCREEN VIDEO
+       2. CONTINUOUS SCROLLING CINEMATIC SEQUENCE (STARTS FROM SCROLL 0)
        ========================================================================= -->
-  <section id="hero" class="hero-section">
-    <div class="hero-video-container">
-      <video id="hero-video" class="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="assets/posters/whiskey_cream_desktop.jpg">
-        <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
-        Your browser does not support high-definition video playback.
-      </video>
-      <div class="hero-gradient-overlay"></div>
-    </div>
-
-    <div class="hero-content">
-      <div class="hero-text-block">
-        <div class="eyebrow">Crafted Cocktails • Ready to Pour</div>
-        <h1 class="hero-title">LUCKY SHAKER</h1>
-        <div class="hero-subtitle">BARTENDER</div>
-        <p class="hero-statement">Master mixology distilled into timeless glass. Shake, chill, and pour world-class perfection.</p>
-        
-        <div class="hero-cta-group">
-          <a href="#shop" class="btn btn-primary">
-            <span>SHOP COCKTAILS</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M1 7h12M8 2l5 5-5 5"/>
-            </svg>
-          </a>
-          <a href="#cinematic-film" class="btn btn-secondary">
-            <span>SCROLL THE FILM</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="hero-side-selector">
-        <div class="hero-selector-label">FEATURED PREVIEW</div>
-        <div class="hero-flavor-tabs" role="tablist" aria-label="Select hero cocktail video">
-          <button class="flavor-tab-btn active" data-flavor="whiskey-cream" role="tab">Whiskey Cream</button>
-          <button class="flavor-tab-btn" data-flavor="old-fashioned" role="tab">Old Fashioned</button>
-          <button class="flavor-tab-btn" data-flavor="mojito" role="tab">Mojito</button>
-        </div>
-      </div>
-    </div>
-
-    <a href="#editorial-manifesto" class="hero-scroll-indicator" aria-label="Scroll to Discover">
-      <span>SCROLL TO SCRUB</span>
-      <div class="scroll-line-container">
-        <div class="scroll-line-runner"></div>
-      </div>
-    </a>
-  </section>
-
-  <!-- =========================================================================
-       3. EDITORIAL MANIFESTO / TRANSITION INTO MASTER FILM
-       ========================================================================= -->
-  <section id="editorial-manifesto" class="editorial-statement-section">
-    <div class="eyebrow" style="margin-bottom: 1.5rem;">THE LUCKY SHAKER STANDARD</div>
-    <blockquote class="statement-quote">
-      "World-class cocktails shouldn't require a master mixologist on call. <em>Just the right bottle.</em>"
-    </blockquote>
-    <p class="statement-desc">
-      Scroll down to command the master timeline. Your scroll position physically controls the playback playhead, transforming each cocktail world frame by frame.
-    </p>
-  </section>
-
-  <!-- =========================================================================
-       4. CINEMATIC SCROLL-CONTROLLED MASTER FILM (GSAP PINNED STAGE)
-       ========================================================================= -->
-  <section id="cinematic-film" class="cinematic-story">
-    <div class="cinematic-sticky" id="cinematic-sticky-stage">
+  <section class="cinematic-sequence" id="cinematic-sequence">
+    <div class="cinematic-viewport" id="cinematic-viewport">
       
-      <!-- Video Stage: 3 Stacked Video Planes Controlled by GSAP ScrollTrigger Playhead -->
-      <div class="video-stage">
-        <video id="video-mojito" class="timeline-video" muted playsinline preload="auto" poster="assets/posters/mojito_desktop.jpg">
+      <!-- ==========================================
+           PANEL 1: MOJITO (Initial Full Viewport)
+           ========================================== -->
+      <div class="video-panel panel-mojito" id="panel-mojito">
+        <video id="video-mojito" class="panel-video" muted playsinline preload="auto" poster="assets/posters/mojito_desktop.jpg">
           <source media="(max-width: 768px)" src="videos para web/Mojito/Mojito_product_video mobile.mp4" type="video/mp4">
           <source src="videos para web/Mojito/Cinematic_mojito_desktop.mp4" type="video/mp4">
         </video>
+        <div class="panel-vignette"></div>
+        <div class="panel-watermark">MOJITO</div>
 
-        <video id="video-old-fashioned" class="timeline-video" muted playsinline preload="auto" poster="assets/posters/old_fashioned_desktop.jpg">
-          <source media="(max-width: 768px)" src="videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4" type="video/mp4">
-          <source src="videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4" type="video/mp4">
-        </video>
-
-        <video id="video-whiskey-cream" class="timeline-video" muted playsinline preload="auto" poster="assets/posters/whiskey_cream_desktop.jpg">
-          <source media="(max-width: 768px)" src="videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4" type="video/mp4">
-          <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
-        </video>
-      </div>
-
-      <!-- Dynamic Ambient Lighting Vignette (Tint shifts per cocktail) -->
-      <div class="cinematic-vignette" id="cinematic-ambient-vignette"></div>
-
-      <!-- Watermark Background Titles (Reacts to master GSAP timeline) -->
-      <div class="film-watermark-container">
-        <div class="film-watermark watermark-mojito" id="watermark-mojito">MOJITO</div>
-        <div class="film-watermark watermark-oldfashioned" id="watermark-oldfashioned">OLD FASHIONED</div>
-        <div class="film-watermark watermark-whiskeycream" id="watermark-whiskeycream">WHISKEY CREAM</div>
-      </div>
-
-      <!-- Narrative Overlay (GSAP Staggered Reveals) -->
-      <div class="cinematic-content">
-        
-        <!-- Story Card: Mojito -->
-        <div class="story-overlay story-mojito" id="story-overlay-mojito">
-          <div class="story-eyebrow">CRISP & BOTANICAL • 12% ABV</div>
-          <h2 class="story-title">MOJITO</h2>
-          <div class="story-subtitle">Spearmint • Caribbean Rum • Crisp Lime Zest</div>
-          <p class="story-desc">
+        <div class="panel-content">
+          <div class="eyebrow">CRAFTED COCKTAILS • READY TO POUR</div>
+          <h1 class="panel-title">LUCKY SHAKER</h1>
+          <div class="panel-subtitle">MOJITO</div>
+          <p class="panel-desc">
             An effervescent masterpiece balancing triple-filtered Caribbean rum, hand-bruised garden spearmint, cold-pressed Persian limes, and pure cane sweetness.
           </p>
-          <div class="story-tasting">
-            <span>TASTING NOTES:</span> Fresh Spearmint Leaf, Tahitian Lime Oil, Demerara Sugar
-          </div>
-          <div class="story-actions">
-            <button class="btn btn-primary" onclick="addToCart('mojito')">
+          <div class="panel-specs">12% ABV • 750 ML • SERVE OVER CRACKED ICE WITH MINT</div>
+          <div class="panel-actions">
+            <button class="btn btn-primary" onclick="addToCart('mojito')" aria-label="Shop Mojito">
               <span>SHOP MOJITO — $36.00</span>
               <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -176,20 +90,29 @@
             </button>
           </div>
         </div>
+      </div>
 
-        <!-- Story Card: Old Fashioned -->
-        <div class="story-overlay story-old-fashioned" id="story-overlay-old-fashioned">
-          <div class="story-eyebrow">BOLD & TIMELESS • 24% ABV</div>
-          <h2 class="story-title">OLD FASHIONED</h2>
-          <div class="story-subtitle">Aged Kentucky Bourbon • Aromatic Bitters • Orange Oils</div>
-          <p class="story-desc">
-            The undisputed sovereign of classic cocktails. Bold Kentucky straight bourbon gently stirred with bespoke aromatic bitters, rich caramelized demerara sugar, and cold-expressed citrus oils.
+      <!-- ==========================================
+           PANEL 2: OLD FASHIONED (Enters from Below)
+           ========================================== -->
+      <div class="video-panel panel-old-fashioned" id="panel-old-fashioned">
+        <video id="video-old-fashioned" class="panel-video" muted playsinline preload="auto" poster="assets/posters/old_fashioned_desktop.jpg">
+          <source media="(max-width: 768px)" src="videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4" type="video/mp4">
+          <source src="videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4" type="video/mp4">
+        </video>
+        <div class="panel-vignette"></div>
+        <div class="panel-watermark">OLD FASHIONED</div>
+
+        <div class="panel-content">
+          <div class="eyebrow">THE TIMELESS CLASSIC</div>
+          <h2 class="panel-title">LUCKY SHAKER</h2>
+          <div class="panel-subtitle">OLD FASHIONED</div>
+          <p class="panel-desc">
+            The undisputed sovereign of classic cocktails. Bold Kentucky straight bourbon gently stirred with bespoke aromatic bitters, rich caramelized demerara, and citrus zest oils.
           </p>
-          <div class="story-tasting">
-            <span>TASTING NOTES:</span> Oak-Aged Bourbon, Angostura Bark, Blood Orange Rind
-          </div>
-          <div class="story-actions">
-            <button class="btn btn-primary" onclick="addToCart('old-fashioned')">
+          <div class="panel-specs">24% ABV • 750 ML • SERVE OVER CLEAR ICE SPHERE</div>
+          <div class="panel-actions">
+            <button class="btn btn-primary" onclick="addToCart('old-fashioned')" aria-label="Shop Old Fashioned">
               <span>SHOP OLD FASHIONED — $42.00</span>
               <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -197,20 +120,29 @@
             </button>
           </div>
         </div>
+      </div>
 
-        <!-- Story Card: Whiskey Cream -->
-        <div class="story-overlay story-whiskey-cream" id="story-overlay-whiskey-cream">
-          <div class="story-eyebrow">VELVETY & DECADENT • 17% ABV</div>
-          <h2 class="story-title">WHISKEY CREAM</h2>
-          <div class="story-subtitle">Crafted by Katherin • Rich Cream • Madagascar Vanilla</div>
-          <p class="story-desc">
-            A sumptuous indulgence marrying triple-distilled whiskeys with rich dairy cream, toasted cocoa, and bourbon vanilla bean. Velvety, warm, and supremely decadent.
+      <!-- ==========================================
+           PANEL 3: WHISKEY CREAM (Enters from Below)
+           ========================================== -->
+      <div class="video-panel panel-whiskey-cream" id="panel-whiskey-cream">
+        <video id="video-whiskey-cream" class="panel-video" muted playsinline preload="auto" poster="assets/posters/whiskey_cream_desktop.jpg">
+          <source media="(max-width: 768px)" src="videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4" type="video/mp4">
+          <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
+        </video>
+        <div class="panel-vignette"></div>
+        <div class="panel-watermark">WHISKEY CREAM</div>
+
+        <div class="panel-content">
+          <div class="eyebrow">CREATED BY KATHERIN</div>
+          <h2 class="panel-title">LUCKY SHAKER</h2>
+          <div class="panel-subtitle">WHISKEY CREAM</div>
+          <p class="panel-desc">
+            A sumptuous indulgence marrying triple-distilled whiskeys with rich dairy cream, toasted cocoa, and bourbon vanilla bean. Velvety, warm, and decadent.
           </p>
-          <div class="story-tasting">
-            <span>TASTING NOTES:</span> Irish Whiskey, Single-Origin Cocoa, Double Cream, Bourbon Vanilla
-          </div>
-          <div class="story-actions">
-            <button class="btn btn-primary" onclick="addToCart('whiskey-cream')">
+          <div class="panel-specs">17% ABV • 750 ML • SERVE NEAT OR ON THE ROCKS</div>
+          <div class="panel-actions">
+            <button class="btn btn-primary" onclick="addToCart('whiskey-cream')" aria-label="Shop Whiskey Cream">
               <span>SHOP WHISKEY CREAM — $38.00</span>
               <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -218,40 +150,38 @@
             </button>
           </div>
         </div>
-
       </div>
 
-      <!-- Scrubber Track & Markers -->
+      <!-- Persistent Timeline Scrubber Tracker -->
       <div class="film-timeline-scrubber">
         <div class="timeline-track">
           <div class="timeline-fill" id="timeline-fill-bar"></div>
         </div>
         <div class="timeline-markers">
-          <span class="marker marker-mojito" id="marker-mojito">01 MOJITO</span>
+          <span class="marker marker-mojito active" id="marker-mojito">01 MOJITO</span>
           <span class="marker marker-oldfashioned" id="marker-oldfashioned">02 OLD FASHIONED</span>
           <span class="marker marker-whiskeycream" id="marker-whiskeycream">03 WHISKEY CREAM</span>
         </div>
       </div>
 
-      <!-- Live Developer Playhead HUD (GSAP Telemetry Monitor) -->
+      <!-- Live Developer Telemetry HUD -->
       <div id="cinematic-debug-hud" class="cinematic-debug-hud">
         <div class="debug-header">
           <span class="debug-dot"></span>
-          <span class="debug-title">GSAP PLAYHEAD HUD</span>
+          <span class="debug-title">GSAP SEQUENCE HUD</span>
           <button id="toggle-debug-hud" class="debug-close-btn" title="Toggle HUD" aria-label="Close HUD">×</button>
         </div>
-        <div class="debug-row"><span>MASTER:</span><strong id="debug-master-progress">0.0%</strong></div>
+        <div class="debug-row"><span>PROGRESS:</span><strong id="debug-master-progress">0.0%</strong></div>
         <div class="debug-row"><span>DIRECTION:</span><strong id="debug-direction">IDLE</strong></div>
-        <div class="debug-row"><span>ACTIVE:</span><strong id="debug-active-cocktail">MOJITO</strong></div>
+        <div class="debug-row"><span>ACTIVE SCENE:</span><strong id="debug-active-cocktail">MOJITO</strong></div>
         <div class="debug-row"><span>TIMECODE:</span><strong id="debug-timecode">0.00s / 4.00s</strong></div>
-        <div class="debug-row"><span>ENGINE:</span><strong id="debug-state">GSAP SCROLLTRIGGER</strong></div>
       </div>
 
     </div>
   </section>
 
   <!-- =========================================================================
-       5. CURATED DISCOVERY SHOP SECTION (Shopify Architecture Ready)
+       3. CURATED DISCOVERY SHOP SECTION (Shopify Architecture Ready)
        ========================================================================= -->
   <section id="shop" class="shop-section">
     <div class="shop-header">
@@ -349,7 +279,7 @@
   </section>
 
   <!-- =========================================================================
-       6. BRAND STORY ("OUR STORY")
+       4. BRAND STORY ("OUR STORY")
        ========================================================================= -->
   <section id="story" class="brand-story-section">
     <div class="brand-story-inner">
@@ -382,7 +312,7 @@
   </section>
 
   <!-- =========================================================================
-       7. FINAL CINEMATIC CTA
+       5. FINAL CINEMATIC CTA
        ========================================================================= -->
   <section class="final-cta-section">
     <div class="final-cta-content">
@@ -401,7 +331,7 @@
   </section>
 
   <!-- =========================================================================
-       8. FOOTER
+       6. FOOTER
        ========================================================================= -->
   <footer class="luxury-footer">
     <div class="footer-top">
@@ -416,9 +346,9 @@
       <div>
         <h4 class="footer-col-title">COLLECTION</h4>
         <ul class="footer-links">
-          <li><a href="#cinematic-film">Mojito (750ml)</a></li>
-          <li><a href="#cinematic-film">Old Fashioned (750ml)</a></li>
-          <li><a href="#cinematic-film">Whiskey Cream (750ml)</a></li>
+          <li><a href="#cinematic-sequence">Mojito (750ml)</a></li>
+          <li><a href="#cinematic-sequence">Old Fashioned (750ml)</a></li>
+          <li><a href="#cinematic-sequence">Whiskey Cream (750ml)</a></li>
           <li><a href="#shop">Gift Sets & Trio</a></li>
         </ul>
       </div>
@@ -458,7 +388,7 @@
   </footer>
 
   <!-- =========================================================================
-       9. CART SLIDE-OUT DRAWER (Shopify Ready Model)
+       7. CART SLIDE-OUT DRAWER (Shopify Ready Model)
        ========================================================================= -->
   <div id="cart-backdrop" class="cart-drawer-backdrop"></div>
   <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping Cart">
