@@ -1,0 +1,18 @@
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Blender files (not used)
+*.blend*
+*.blend1
+*.blend2
+
+# Large raw camera dump files (exceeds GitHub 100MB limit)
+*.MOV
+*.mov
+
+# Python cache
+__pycache__/
+*.pyc

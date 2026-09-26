@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucky Shaker | Whiskey Cream by Katherin — 3D Commercial Product Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="viewer.css">
+  
+  <!-- Three.js and Loaders -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+</head>
+<body class="mode-scroll">
+
+  <!-- Main 3D Canvas Container -->
+  <div id="canvas-container">
+    <canvas id="webgl-canvas"></canvas>
+  </div>
+
+  <!-- 9:16 Aspect Ratio Frame Overlay (Mobile/Shopify Simulation) -->
+  <div id="aspect-frame" class="aspect-9-16 active">
+    <div class="frame-border top-left"></div>
+    <div class="frame-border top-right"></div>
+    <div class="frame-border bottom-left"></div>
+    <div class="frame-border bottom-right"></div>
+    <div class="aspect-badge">9:16 SHOPIFY MOBILE COMPOSITION</div>
+  </div>
+
+  <!-- Background Ambient Atmosphere Elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Navigation / Brand Header -->
+  <header class="luxury-header">
+    <div class="brand-block">
+      <span class="brand-surtitle">ARTISANAL LIQUEUR</span>
+      <h1 class="brand-title">LUCKY SHAKER</h1>
+      <span class="brand-signature">Whiskey Cream <em>by Katherin</em></span>
+    </div>
+    
+    <div class="header-controls">
+      <div class="toggle-group">
+        <button id="btn-mode-scroll" class="toggle-btn active" title="Scroll-driven Shopify sequence">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+          Scroll Story
+        </button>
+        <button id="btn-mode-orbit" class="toggle-btn" title="Free 360 Interactive Orbit">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          Interactive 360°
+        </button>
+      </div>
+
+      <button id="btn-toggle-frame" class="icon-btn active" title="Toggle 9:16 Format Guide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </button>
+
+      <button id="btn-snapshot" class="action-btn" title="Download High-Res Snapshot">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Snapshot
+      </button>
+    </div>
+  </header>
+
+  <!-- Scroll-Driven Storytelling Chapters -->
+  <main id="scroll-story" class="scroll-container">
+    
+    <!-- Chapter 1: The Hero Silhouette -->
+    <section class="story-card" data-stage="0" id="card-0">
+      <div class="card-inner">
+        <span class="stage-tag">CHAPTER 01</span>
+        <h2>The Iconic Silhouette</h2>
+        <p>A physically precise 3D reconstruction of the real <strong>Lucky Shaker Whiskey Cream</strong> bottle. From its solid crystal base to the handcrafted red satin ribbon.</p>
+        <div class="specs-grid">
+          <div class="spec-pill"><strong>Proportions:</strong> 750ml Nordic Heel</div>
+          <div class="spec-pill"><strong>Material:</strong> Flint Glass & Solid Heel</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 2: The Glide & Volume -->
+    <section class="story-card" data-stage="1" id="card-1">
+      <div class="card-inner">
+        <span class="stage-tag">CHAPTER 02</span>
+        <h2>Creamy Indulgence</h2>
+        <p>Rich, warm whiskey cream liquid with authentic density, natural opacity, and physically plausible subsurface light transmission.</p>
+        <div class="specs-grid">
+          <div class="spec-pill"><strong>Liquid:</strong> Warm Irish Cream</div>
+          <div class="spec-pill"><strong>ABV:</strong> 17% Alc. Vol.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 3: Neck Finish & Ribbon -->
+    <section class="story-card" data-stage="2" id="card-2">
+      <div class="card-inner">
+        <span class="stage-tag">CHAPTER 03</span>
+        <h2>The Red Satin Ribbon & Foil</h2>
+        <p>Adorned with an exact crimson satin bow, gold-embossed filigree collar, and deep red foil capsule featuring the signature gold <em>Katherin</em> calligraphy.</p>
+        <div class="specs-grid">
+          <div class="spec-pill"><strong>Cap:</strong> Brushed Champagne Gold</div>
+          <div class="spec-pill"><strong>Neck:</strong> Red Foil & Gold Calligraphy</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 4: 110° Turntable & Glass Thickness -->
+    <section class="story-card" data-stage="3" id="card-3">
+      <div class="card-inner">
+        <span class="stage-tag">CHAPTER 04</span>
+        <h2>Solid Glass Architecture</h2>
+        <p>Notice the 22mm solid glass heel at the bottom, creating weight, luxury refraction, and commercial stability. Structural geometry matches physical glass manufacturing.</p>
+        <div class="specs-grid">
+          <div class="spec-pill"><strong>Punt:</strong> Concave Push-Up Heel</div>
+          <div class="spec-pill"><strong>Refraction:</strong> IOR 1.517 Flint</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 5: Return to Front -->
+    <section class="story-card" data-stage="4" id="card-4">
+      <div class="card-inner">
+        <span class="stage-tag">CHAPTER 05</span>
+        <h2>Front Emblem Re-Alignment</h2>
+        <p>The packaging elements remain rigidly anchored in full physical fidelity as the bottle returns smoothly into centered hero positioning.</p>
+        <div class="specs-grid">
+          <div class="spec-pill"><strong>Stability:</strong> Zero Morphing / Locked Mesh</div>
+          <div class="spec-pill"><strong>Rig:</strong> Hierarchical Master Group</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 6: Original Artwork Macro -->
+    <section class="story-card" data-stage="5" id="card-5">
+      <div class="card-inner highlight-gold">
+        <span class="stage-tag">CHAPTER 06 — LOCKED ORIGINAL ARTWORK</span>
+        <h2>By Katherin — Signature Label</h2>
+        <p>100% faithful application of the original printed label artwork: exact typography, scalloped gold border, gold foil gleam, and official Lucky Shaker cocktail shaker logo.</p>
+        <div class="specs-grid">
+          <div class="spec-pill"><strong>Text:</strong> "By Katherin" (Exact)</div>
+          <div class="spec-pill"><strong>Print:</strong> Scalloped Gold Foil & Coated Paper</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sticky Bottom Interactive Dock -->
+  <aside class="interactive-dock">
+    <div class="dock-row">
+      
+      <!-- Camera Presets -->
+      <div class="dock-section">
+        <span class="dock-label">Camera Framing</span>
+        <div class="dock-btn-group">
+          <button class="dock-btn active" data-cam="hero">Hero 9:16</button>
+          <button class="dock-btn" data-cam="cap">Cap & Bow</button>
+          <button class="dock-btn" data-cam="label">Label Macro</button>
+          <button class="dock-btn" data-cam="base">Glass Heel</button>
+        </div>
+      </div>
+
+      <!-- Studio Lighting Presets -->
+      <div class="dock-section">
+        <span class="dock-label">Studio Lighting</span>
+        <div class="dock-btn-group">
+          <button class="dock-btn active" data-light="studio">Commercial Clean</button>
+          <button class="dock-btn" data-light="warm">Golden Hour</button>
+          <button class="dock-btn" data-light="dramatic">Dramatic Rim</button>
+        </div>
+      </div>
+
+      <!-- Atmospheric Cream Particles (Req 11) -->
+      <div class="dock-section">
+        <span class="dock-label">Atmosphere</span>
+        <div class="dock-btn-group">
+          <button id="btn-toggle-particles" class="dock-btn active">Cream Droplets ON</button>
+          <button id="btn-toggle-float" class="dock-btn active">Floating Float ON</button>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-tracker">
+    <div class="tracker-line">
+      <div id="tracker-fill" class="tracker-fill"></div>
+    </div>
+    <div class="tracker-steps">
+      <div class="step-dot active" data-step="0"><span>01</span></div>
+      <div class="step-dot" data-step="1"><span>02</span></div>
+      <div class="step-dot" data-step="2"><span>03</span></div>
+      <div class="step-dot" data-step="3"><span>04</span></div>
+      <div class="step-dot" data-step="4"><span>05</span></div>
+      <div class="step-dot" data-step="5"><span>06</span></div>
+    </div>
+  </div>
+
+  <script src="viewer.js"></script>
+</body>
+</html>
