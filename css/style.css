@@ -23,14 +23,8 @@
 
   /* Flavor Accent Palettes */
   --mojito-accent: #86C19F;
-  --mojito-bg-glow: rgba(46, 90, 68, 0.25);
-  
   --oldfashioned-accent: #E5A454;
-  --oldfashioned-bg-glow: rgba(166, 101, 36, 0.25);
-  
   --whiskeycream-accent: #D8BA78;
-  --whiskeycream-ribbon: #B51B2E;
-  --whiskeycream-bg-glow: rgba(181, 27, 46, 0.18);
 
   /* Typography */
   --font-brand: 'Cinzel', serif;
@@ -135,7 +129,7 @@ button {
 }
 
 /* --------------------------------------------------------------------------
-   BUTTONS & CTAS — LAYOUT STABLE (Micro-interactions skill)
+   BUTTONS & CTAS — LAYOUT STABLE (Micro-interactions)
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
@@ -150,10 +144,9 @@ button {
   padding: 1.125rem 2.25rem;
   position: relative;
   overflow: hidden;
-  border-radius: 0; /* Luxury sharp edge, avoiding generic SaaS rounding */
+  border-radius: 0; /* Luxury crisp edge */
   cursor: pointer;
   white-space: nowrap;
-  /* Sacred Rule: Layout stable, no scale, no margin shifts */
   transition: background-color var(--duration-medium) var(--ease-natural),
               color var(--duration-medium) var(--ease-natural),
               border-color var(--duration-medium) var(--ease-natural),
@@ -207,30 +200,6 @@ button {
   background-color: var(--accent-gold-light);
   border-color: var(--accent-gold-light);
   box-shadow: 0 4px 24px rgba(216, 186, 120, 0.35);
-}
-
-.btn-text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent-gold);
-  font-weight: 600;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--duration-fast) var(--ease-natural),
-              color var(--duration-fast) var(--ease-natural);
-}
-
-.btn-text-link:hover {
-  color: var(--accent-gold-light);
-  border-bottom-color: var(--accent-gold-light);
-}
-
-.btn-text-link:hover .btn-arrow {
-  transform: translateX(4px);
 }
 
 /* --------------------------------------------------------------------------
@@ -322,38 +291,10 @@ button {
   width: 100%;
 }
 
-.nav-link.active {
-  color: var(--accent-gold);
-}
-
-.nav-link.active::after {
-  width: 100%;
-}
-
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 1.25rem;
-}
-
-.nav-3d-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.6875rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.45rem 0.9rem;
-  border: 1px solid var(--border-gold-subtle);
-  color: var(--accent-gold);
-  background: rgba(216, 186, 120, 0.05);
-  transition: border-color var(--duration-fast) var(--ease-natural),
-              background var(--duration-fast) var(--ease-natural);
-}
-
-.nav-3d-pill:hover {
-  border-color: var(--accent-gold);
-  background: rgba(216, 186, 120, 0.15);
 }
 
 .cart-toggle-btn {
@@ -602,7 +543,7 @@ button {
 }
 
 /* --------------------------------------------------------------------------
-   BRAND MANIFESTO / CONTINUOUS TRANSITION SECTION
+   BRAND MANIFESTO / TRANSITION INTO MASTER FILM
    -------------------------------------------------------------------------- */
 .editorial-statement-section {
   padding: clamp(5rem, 12vh, 9rem) var(--gutter);
@@ -636,43 +577,29 @@ button {
   font-weight: 300;
 }
 
-/* --------------------------------------------------------------------------
-   CINEMATIC FLAVOR STORYTELLING CHAPTER
-   -------------------------------------------------------------------------- */
-.flavors-section {
+/* ==========================================================================
+   4. CINEMATIC SCROLL-CONTROLLED MASTER FILM (PINNED VIEWPORT)
+   ========================================================================== */
+.cinematic-story {
   position: relative;
+  width: 100%;
+  height: 450vh; /* Master timeline scroll runway */
   background-color: var(--bg-deep);
 }
 
-.flavor-chapter-header {
-  padding: 4rem var(--gutter) 2rem;
-  text-align: center;
-  max-width: var(--container-max);
-  margin: 0 auto;
-}
-
-.flavor-chapter-title {
-  font-family: var(--font-brand);
-  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
-  letter-spacing: 0.2em;
-  color: var(--text-primary);
-  text-transform: uppercase;
-  margin-top: 0.75rem;
-}
-
-/* Immersive Flavor Section Wrapper */
-.flavor-block {
-  position: relative;
+.cinematic-sticky {
+  position: sticky;
+  top: 0;
+  left: 0;
   width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
-  border-top: 1px solid var(--border-subtle);
+  background-color: #070709;
 }
 
-/* Scroll-Driven Video Viewport Container */
-.flavor-video-wrapper {
+/* Video Stage with Absolute Full-Cover Video Planes */
+.video-stage {
   position: absolute;
   top: 0;
   left: 0;
@@ -681,16 +608,29 @@ button {
   z-index: 1;
 }
 
-.flavor-video {
+.timeline-video {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.85) contrast(1.08);
-  transition: opacity var(--duration-slow) var(--ease-natural);
+  filter: brightness(0.88) contrast(1.08);
+  opacity: 0;
+  transform: scale(1.0);
+  pointer-events: none;
+  will-change: opacity, transform, filter;
+  transition: opacity 0.04s linear;
 }
 
-.flavor-overlay {
+/* Initial visible video */
+#video-mojito {
+  opacity: 1;
+}
+
+/* Atmospheric Vignette & Depth Mask */
+.cinematic-vignette {
   position: absolute;
   top: 0;
   left: 0;
@@ -698,291 +638,252 @@ button {
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(7, 7, 9, 0.15) 30%, rgba(7, 7, 9, 0.75) 100%),
+              linear-gradient(180deg, rgba(7, 7, 9, 0.6) 0%, transparent 20%, transparent 75%, rgba(7, 7, 9, 0.85) 100%);
 }
 
-/* Atmospheric Gradients by Flavor */
-.flavor-block[data-flavor="mojito"] .flavor-overlay {
-  background: radial-gradient(circle at 75% 50%, transparent 20%, rgba(8, 18, 12, 0.75) 80%),
-              linear-gradient(90deg, rgba(8, 18, 12, 0.92) 0%, rgba(8, 18, 12, 0.55) 45%, rgba(8, 18, 12, 0.2) 100%);
-}
-
-.flavor-block[data-flavor="old-fashioned"] .flavor-overlay {
-  background: radial-gradient(circle at 25% 50%, transparent 20%, rgba(18, 10, 5, 0.75) 80%),
-              linear-gradient(270deg, rgba(18, 10, 5, 0.92) 0%, rgba(18, 10, 5, 0.55) 45%, rgba(18, 10, 5, 0.2) 100%);
-}
-
-.flavor-block[data-flavor="whiskey-cream"] .flavor-overlay {
-  background: radial-gradient(circle at 75% 50%, transparent 20%, rgba(12, 10, 8, 0.75) 80%),
-              linear-gradient(90deg, rgba(12, 10, 8, 0.92) 0%, rgba(12, 10, 8, 0.55) 45%, rgba(12, 10, 8, 0.2) 100%);
-}
-
-/* Flavor Narrative Content Layout */
-.flavor-inner {
-  position: relative;
+/* Floating Watermark behind content */
+.film-watermark-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 3;
   width: 100%;
   max-width: var(--container-max);
-  margin: 0 auto;
-  padding: clamp(4rem, 10vh, 7rem) var(--gutter);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  min-height: 80vh;
-}
-
-.flavor-block.layout-reverse .flavor-inner {
-  direction: rtl;
-}
-
-.flavor-block.layout-reverse .flavor-narrative {
-  direction: ltr;
-}
-
-.flavor-narrative {
-  max-width: 580px;
-}
-
-/* Watermark Background Title Behind Product */
-.flavor-watermark {
-  font-family: var(--font-brand);
-  font-size: clamp(4rem, 14vw, 13rem);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.04);
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  padding: 0 var(--gutter);
   pointer-events: none;
-  z-index: 1;
-  white-space: nowrap;
   user-select: none;
 }
 
-.flavor-badge-row {
+.film-watermark {
+  font-family: var(--font-brand);
+  font-size: clamp(4rem, 15vw, 14rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.05);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-natural), transform 0.4s var(--ease-natural);
+}
+
+.film-watermark.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.0);
+}
+
+/* Narrative Editorial Story Overlay */
+.cinematic-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  margin-bottom: 1.25rem;
+  padding: 0 var(--gutter);
+  max-width: var(--container-max);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.flavor-tag {
+.story-overlay {
+  position: absolute;
+  max-width: 540px;
+  opacity: 0;
+  transform: translateY(24px);
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-natural), transform 0.35s var(--ease-natural);
+}
+
+.story-overlay.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.story-eyebrow {
   font-size: 0.6875rem;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   font-weight: 600;
-  padding: 0.35rem 0.85rem;
-  border: 1px solid;
-}
-
-.flavor-block[data-flavor="mojito"] .flavor-tag {
-  color: var(--mojito-accent);
-  border-color: rgba(134, 193, 159, 0.3);
-  background-color: rgba(134, 193, 159, 0.05);
-}
-
-.flavor-block[data-flavor="old-fashioned"] .flavor-tag {
-  color: var(--oldfashioned-accent);
-  border-color: rgba(229, 164, 84, 0.3);
-  background-color: rgba(229, 164, 84, 0.05);
-}
-
-.flavor-block[data-flavor="whiskey-cream"] .flavor-tag {
   color: var(--accent-gold);
-  border-color: rgba(216, 186, 120, 0.3);
-  background-color: rgba(216, 186, 120, 0.05);
+  margin-bottom: 0.75rem;
 }
 
-.flavor-specs-inline {
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.flavor-title {
+.story-title {
   font-family: var(--font-brand);
   font-size: clamp(2.5rem, 5.5vw, 4.5rem);
   font-weight: 700;
   letter-spacing: 0.12em;
-  line-height: 1.02;
+  line-height: 1.0;
   color: var(--text-primary);
   text-transform: uppercase;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
-.flavor-subtitle {
+.story-subtitle {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-size: clamp(1.125rem, 1.8vw, 1.4rem);
   color: var(--accent-gold);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   line-height: 1.3;
 }
 
-.flavor-description {
-  font-size: clamp(0.9375rem, 1.1vw, 1.0625rem);
-  line-height: 1.75;
+.story-desc {
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
   color: var(--text-secondary);
+  line-height: 1.7;
   font-weight: 300;
+  margin-bottom: 1.75rem;
+}
+
+.story-tasting {
+  border-left: 2px solid var(--accent-gold);
+  padding-left: 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
   margin-bottom: 2rem;
 }
 
-.tasting-notes-box {
-  border-left: 2px solid var(--accent-gold);
-  padding-left: 1.25rem;
-  margin-bottom: 2.25rem;
+.story-tasting span {
+  color: var(--accent-gold);
+  font-weight: 600;
+  letter-spacing: 0.1em;
 }
 
-.tasting-label {
+/* Timeline Scrubber Bar at Bottom */
+.film-timeline-scrubber {
+  position: absolute;
+  bottom: 2rem;
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 5;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.timeline-track {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: var(--accent-gold);
+  transition: width 0.04s linear;
+}
+
+.timeline-markers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline-markers .marker {
   font-size: 0.6875rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 500;
+  transition: color 0.25s var(--ease-natural);
+}
+
+.timeline-markers .marker.active {
   color: var(--accent-gold);
-  font-weight: 600;
-  margin-bottom: 0.35rem;
-}
-
-.tasting-items {
-  font-size: 0.875rem;
-  color: var(--text-primary);
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-}
-
-.flavor-actions {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-/* Scrub Control Float Pill */
-.scrub-indicator-pill {
-  position: absolute;
-  bottom: 2rem;
-  right: var(--gutter);
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 1rem;
-  background: rgba(14, 14, 18, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.scrub-indicator-pill .scrub-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent-gold);
+  font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------
-   INTERACTIVE 3D FEATURETTE — STUDIO BOTTLE LINK
+   DEVELOPER HUD (DEBUG MODE)
    -------------------------------------------------------------------------- */
-.feature-3d-section {
-  padding: clamp(5rem, 10vh, 8rem) var(--gutter);
-  background: linear-gradient(180deg, var(--bg-deep) 0%, #0C0C10 50%, var(--bg-deep) 100%);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.feature-3d-container {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  align-items: center;
-  gap: clamp(3rem, 6vw, 6rem);
-}
-
-.feature-3d-visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.feature-3d-visual img {
-  width: 100%;
-  max-width: 480px;
-  height: auto;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
-  transition: transform var(--duration-slow) var(--ease-natural);
-}
-
-.feature-3d-visual:hover img {
-  transform: translateY(-8px);
-}
-
-.feature-badge-360 {
-  position: absolute;
-  top: 10%;
-  right: 15%;
-  background: rgba(14, 14, 18, 0.85);
-  backdrop-filter: blur(16px);
+.cinematic-debug-hud {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background: rgba(10, 10, 14, 0.92);
   border: 1px solid var(--border-gold-subtle);
-  padding: 0.6rem 1.1rem;
+  backdrop-filter: blur(16px);
+  padding: 0.85rem 1.25rem;
+  z-index: 999;
+  font-family: 'SF Mono', Consolas, Monaco, monospace;
   font-size: 0.6875rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent-gold);
+  letter-spacing: 0.08em;
+  color: #D8BA78;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+  border-radius: 4px;
+}
+
+.debug-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(216, 186, 120, 0.2);
 }
 
-.feature-3d-info {
-  max-width: 520px;
+.debug-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #48E587;
+  display: inline-block;
+  box-shadow: 0 0 8px #48E587;
 }
 
-.feature-3d-title {
-  font-family: var(--font-brand);
-  font-size: clamp(2rem, 3.8vw, 3.25rem);
-  letter-spacing: 0.12em;
-  line-height: 1.1;
-  color: var(--text-primary);
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.feature-3d-p {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  line-height: 1.8;
-  font-weight: 300;
-  margin-bottom: 2rem;
-}
-
-.feature-specs-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.spec-item {
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 1rem;
-}
-
-.spec-item-num {
-  font-family: var(--font-brand);
-  font-size: 1.35rem;
-  color: var(--accent-gold);
+.debug-title {
   font-weight: 700;
-  margin-bottom: 0.25rem;
+  color: #FBF8F2;
+  letter-spacing: 0.12em;
 }
 
-.spec-item-label {
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
+.debug-close-btn {
+  background: none;
+  border: none;
   color: var(--text-muted);
-  text-transform: uppercase;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.debug-close-btn:hover {
+  color: #FBF8F2;
+}
+
+.debug-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  color: #A0A0A8;
+}
+
+.debug-row strong {
+  color: #FBF8F2;
 }
 
 /* --------------------------------------------------------------------------
@@ -1053,8 +954,7 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform var(--duration-slow) var(--ease-natural),
-              filter var(--duration-slow) var(--ease-natural);
+  transition: transform var(--duration-slow) var(--ease-natural);
 }
 
 .product-item:hover .product-visual-box img {
@@ -1373,7 +1273,7 @@ button {
 }
 
 /* --------------------------------------------------------------------------
-   CART SLIDE-OUT DRAWER (Shopify MVP Integration)
+   CART SLIDE-OUT DRAWER
    -------------------------------------------------------------------------- */
 .cart-drawer-backdrop {
   position: fixed;
@@ -1590,35 +1490,12 @@ button {
     grid-template-columns: repeat(2, 1fr);
   }
   
-  .feature-3d-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  
-  .feature-specs-grid {
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .feature-3d-info {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
   .footer-top {
     grid-template-columns: 1fr 1fr;
   }
   
-  .flavor-inner {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-
-  .flavor-watermark {
-    font-size: 8rem;
+  .film-watermark {
+    font-size: 9vw;
   }
 }
 
@@ -1627,7 +1504,7 @@ button {
     --nav-height: 70px;
   }
   
-  .nav-menu, .nav-3d-pill {
+  .nav-menu {
     display: none;
   }
   
@@ -1671,17 +1548,16 @@ button {
     text-align: center;
   }
 
-  .flavor-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
   .btn {
     width: 100%;
   }
 
-  .scrub-indicator-pill {
-    display: none;
+  .cinematic-debug-hud {
+    display: none; /* Hide HUD on small mobile screens */
+  }
+
+  .story-overlay {
+    max-width: 100%;
   }
 }
 

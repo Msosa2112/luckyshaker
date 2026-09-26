@@ -1,6 +1,10 @@
 /**
- * LUCKY SHAKER BARTENDER — LUXURY BEVERAGE WEB EXPERIENCE
- * Architecture: Data-driven, Shopify-ready, Performance-first
+ * LUCKY SHAKER BARTENDER — MASTER CINEMATIC SCROLL-CONTROLLED VIDEO ENGINE
+ * 
+ * Concept:
+ * SCROLL POSITION = VIDEO PLAYHEAD
+ * The 3 cocktail clips form ONE continuous cinematic film.
+ * Scroll progress (0 to 1) directly scrubs video.currentTime with RAF lerp smoothing.
  */
 
 // --------------------------------------------------------------------------
@@ -10,8 +14,7 @@ const LUCKY_SHAKER_DATA = {
   brand: {
     name: "Lucky Shaker",
     subtitle: "Bartender",
-    tagline: "Crafted Cocktails. Ready to Pour.",
-    statement: "An elevated cocktail experience crafted by master mixologists. Real spirits. Pure botanicals. Zero compromise."
+    tagline: "Crafted Cocktails. Ready to Pour."
   },
   flavors: [
     {
@@ -19,95 +22,93 @@ const LUCKY_SHAKER_DATA = {
       name: "Mojito",
       subtitle: "Fresh Spearmint • Caribbean Rum • Crisp Lime Zest",
       tag: "Crisp & Botanical",
-      description: "An effervescent masterpiece balancing triple-filtered Caribbean rum, hand-bruised garden spearmint, cold-pressed Persian limes, and pure cane sweetness. Finished with fine effervescence for an unmistakably invigorating pour.",
-      tastingNotes: "Spearmint Leaf, Caribbean Rum, Crisp Lime Zest, Demerara Sugar",
-      specs: {
-        abv: "12% ABV",
-        volume: "750 ML",
-        serve: "Chilled over crushed ice with mint"
-      },
+      description: "An effervescent masterpiece balancing triple-filtered Caribbean rum, hand-bruised garden spearmint, cold-pressed Persian limes, and pure cane sweetness.",
       price: "$36.00",
       numericPrice: 36.00,
-      videoDesktop: "videos para web/Mojito/Cinematic_mojito_desktop.mp4",
-      videoMobile: "videos para web/Mojito/Mojito_product_video mobile.mp4",
-      posterDesktop: "assets/posters/mojito_desktop.jpg",
-      posterMobile: "assets/posters/mojito_mobile.jpg",
       productImage: "assets/posters/mojito_desktop.jpg",
-      shopifyVariantId: "gid://shopify/ProductVariant/89102341",
-      notes: ["Fresh Mint", "Tahitian Lime", "White Rum"]
+      volume: "750 ML",
+      shopifyVariantId: "gid://shopify/ProductVariant/89102341"
     },
     {
       id: "old-fashioned",
       name: "Old Fashioned",
       subtitle: "Aged Kentucky Bourbon • Aromatic Bitters • Demerara • Orange Oils",
       tag: "Bold & Timeless",
-      description: "The undisputed sovereign of classic cocktails. Bold Kentucky straight bourbon gently stirred with artisanal aromatic bitters, rich caramelized demerara sugar, and cold-expressed orange oils. Deep, smoky, and timeless.",
-      tastingNotes: "Kentucky Bourbon, Angostura Bark, Blood Orange Peel, Toasted Sugar",
-      specs: {
-        abv: "24% ABV",
-        volume: "750 ML",
-        serve: "Over large clear ice sphere with orange twist"
-      },
+      description: "The undisputed sovereign of classic cocktails. Bold Kentucky straight bourbon gently stirred with artisanal aromatic bitters, rich caramelized demerara sugar, and cold-expressed orange oils.",
       price: "$42.00",
       numericPrice: 42.00,
-      videoDesktop: "videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4",
-      videoMobile: "videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4",
-      posterDesktop: "assets/posters/old_fashioned_desktop.jpg",
-      posterMobile: "assets/posters/old_fashioned_mobile.jpg",
       productImage: "assets/posters/old_fashioned_desktop.jpg",
-      shopifyVariantId: "gid://shopify/ProductVariant/89102342",
-      notes: ["Kentucky Bourbon", "Citrus Oils", "Aromatic Bitters"]
+      volume: "750 ML",
+      shopifyVariantId: "gid://shopify/ProductVariant/89102342"
     },
     {
       id: "whiskey-cream",
       name: "Whiskey Cream",
       subtitle: "Small-Batch Whiskey • Velvet Fresh Cream • Madagascar Vanilla",
       tag: "Velvety & Decadent",
-      description: "Created by Katherin. A sumptuous indulgence marrying triple-distilled whiskeys with rich dairy cream, toasted cocoa, and bourbon vanilla bean. Velvety, warm, and supremely decadent with a satin mouthfeel.",
-      tastingNotes: "Irish Whiskey, Single-Origin Cocoa, Double Cream, Madagascar Vanilla",
-      specs: {
-        abv: "17% ABV",
-        volume: "750 ML",
-        serve: "Neat, on the rocks, or floated in craft espresso"
-      },
+      description: "Created by Katherin. A sumptuous indulgence marrying triple-distilled whiskeys with rich dairy cream, toasted cocoa, and bourbon vanilla bean.",
       price: "$38.00",
       numericPrice: 38.00,
-      videoDesktop: "videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4",
-      videoMobile: "videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4",
-      posterDesktop: "assets/posters/whiskey_cream_desktop.jpg",
-      posterMobile: "assets/posters/whiskey_cream_mobile.jpg",
-      productImage: "renders/lucky_shaker_hero_9_16.png",
-      shopifyVariantId: "gid://shopify/ProductVariant/89102343",
-      notes: ["Artisan Whiskey", "Rich Cream", "Vanilla Bean"]
+      productImage: "assets/posters/whiskey_cream_desktop.jpg",
+      volume: "750 ML",
+      shopifyVariantId: "gid://shopify/ProductVariant/89102343"
     }
   ]
 };
 
 // --------------------------------------------------------------------------
-// 2. STATE MANAGEMENT & CART
+// 2. TIMELINE SPECIFICATION & BOUNDARIES
 // --------------------------------------------------------------------------
-const AppState = {
-  cart: [],
-  isScrubbingEnabled: true,
-  currentHeroFlavor: "whiskey-cream",
-  isMobile: window.innerWidth <= 768
+const TIMELINE_CONFIG = {
+  // Master Timeline Segments & Transition Windows
+  mojito: {
+    start: 0.00,
+    end: 0.38,
+    fadeStart: 0.28,
+    fadeEnd: 0.38
+  },
+  oldFashioned: {
+    start: 0.28,
+    end: 0.71,
+    fadeInStart: 0.28,
+    fadeInEnd: 0.38,
+    fadeOutStart: 0.61,
+    fadeOutEnd: 0.71
+  },
+  whiskeyCream: {
+    start: 0.61,
+    end: 1.00,
+    fadeInStart: 0.61,
+    fadeInEnd: 0.71
+  }
 };
 
 // --------------------------------------------------------------------------
-// 3. INITIALIZATION
+// 3. APPLICATION STATE
+// --------------------------------------------------------------------------
+const AppState = {
+  cart: [],
+  targetProgress: 0,
+  currentProgress: 0,
+  smoothingFactor: 0.16, // Buttery smooth lerp tracking
+  isHudVisible: true,
+  isFilmInView: false,
+  heroFlavor: "whiskey-cream"
+};
+
+// --------------------------------------------------------------------------
+// 4. INITIALIZATION
 // --------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
   initNavbarScroll();
   initHeroVideoControls();
-  initFlavorSections();
-  initScrollDrivenVideoArchitecture();
+  initMasterCinematicEngine();
   initCartDrawer();
   initNewsletterForm();
-  initWindowResizeHandler();
 });
 
 // --------------------------------------------------------------------------
-// 4. NAVBAR SCROLL EFFECT
+// 5. NAVBAR SCROLL EFFECT
 // --------------------------------------------------------------------------
 function initNavbarScroll() {
   const navbar = document.querySelector(".navbar");
@@ -126,159 +127,362 @@ function initNavbarScroll() {
 }
 
 // --------------------------------------------------------------------------
-// 5. HERO VIDEO SELECTION & PERFORMANCE
+// 6. HERO VIDEO CONTROLS
 // --------------------------------------------------------------------------
 function initHeroVideoControls() {
   const heroVideo = document.getElementById("hero-video");
   const tabButtons = document.querySelectorAll(".flavor-tab-btn");
   if (!heroVideo) return;
 
-  // Ensure autoplay starts smoothly
-  const playPromise = heroVideo.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(err => {
-      // Autoplay fallback: muted video is guaranteed, but handle gracefully
-      console.log("Hero autoplay initialized muted:", err);
-    });
-  }
+  heroVideo.play().catch(() => {});
+
+  const videoMap = {
+    "whiskey-cream": {
+      desktop: "videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4",
+      mobile: "videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4",
+      poster: "assets/posters/whiskey_cream_desktop.jpg"
+    },
+    "old-fashioned": {
+      desktop: "videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4",
+      mobile: "videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4",
+      poster: "assets/posters/old_fashioned_desktop.jpg"
+    },
+    "mojito": {
+      desktop: "videos para web/Mojito/Cinematic_mojito_desktop.mp4",
+      mobile: "videos para web/Mojito/Mojito_product_video mobile.mp4",
+      poster: "assets/posters/mojito_desktop.jpg"
+    }
+  };
 
   tabButtons.forEach(btn => {
     btn.addEventListener("click", () => {
       const flavorId = btn.dataset.flavor;
-      if (!flavorId || flavorId === AppState.currentHeroFlavor) return;
+      if (!flavorId || flavorId === AppState.heroFlavor) return;
 
       tabButtons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
+      AppState.heroFlavor = flavorId;
 
-      const flavor = LUCKY_SHAKER_DATA.flavors.find(f => f.id === flavorId);
-      if (!flavor) return;
+      const info = videoMap[flavorId];
+      if (!info) return;
 
-      AppState.currentHeroFlavor = flavorId;
       const isMobile = window.innerWidth <= 768;
-      const targetSrc = isMobile ? flavor.videoMobile : flavor.videoDesktop;
-      const targetPoster = isMobile ? flavor.posterMobile : flavor.posterDesktop;
+      const targetSrc = isMobile ? info.mobile : info.desktop;
 
-      // Smooth switch
       heroVideo.style.opacity = "0.2";
       setTimeout(() => {
-        heroVideo.poster = targetPoster;
+        heroVideo.poster = info.poster;
         heroVideo.src = targetSrc;
         heroVideo.load();
         heroVideo.play().catch(() => {});
         heroVideo.style.opacity = "1";
-      }, 200);
+      }, 150);
     });
   });
 }
 
 // --------------------------------------------------------------------------
-// 6. SCROLL-DRIVEN VIDEO ARCHITECTURE
+// 7. MASTER CINEMATIC SCROLL-CONTROLLED VIDEO ENGINE
 // --------------------------------------------------------------------------
-function initScrollDrivenVideoArchitecture() {
-  // Respect prefers-reduced-motion
-  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (mediaQuery.matches) {
-    console.log("Reduced motion preference detected. Scroll-driven scrub deactivated.");
-    return;
+function initMasterCinematicEngine() {
+  const filmSection = document.getElementById("cinematic-film");
+  if (!filmSection) return;
+
+  // Video elements
+  const mojitoVideo = document.getElementById("video-mojito");
+  const ofVideo = document.getElementById("video-old-fashioned");
+  const wcVideo = document.getElementById("video-whiskey-cream");
+
+  if (!mojitoVideo || !ofVideo || !wcVideo) return;
+
+  // Explicitly guarantee NO AUTOPLAY on all timeline videos
+  [mojitoVideo, ofVideo, wcVideo].forEach(v => {
+    v.muted = true;
+    v.pause();
+    v.currentTime = 0;
+    // Preload
+    v.load();
+  });
+
+  // Track metadata ready states
+  const readyMap = {
+    mojito: mojitoVideo.readyState >= 1,
+    oldFashioned: ofVideo.readyState >= 1,
+    whiskeyCream: wcVideo.readyState >= 1
+  };
+
+  mojitoVideo.addEventListener("loadedmetadata", () => { readyMap.mojito = true; });
+  ofVideo.addEventListener("loadedmetadata", () => { readyMap.oldFashioned = true; });
+  wcVideo.addEventListener("loadedmetadata", () => { readyMap.whiskeyCream = true; });
+
+  // DOM Elements for synchronized UI
+  const watermarkMojito = document.getElementById("watermark-mojito");
+  const watermarkOF = document.getElementById("watermark-oldfashioned");
+  const watermarkWC = document.getElementById("watermark-whiskeycream");
+
+  const storyMojito = document.getElementById("story-overlay-mojito");
+  const storyOF = document.getElementById("story-overlay-old-fashioned");
+  const storyWC = document.getElementById("story-overlay-whiskey-cream");
+
+  const timelineFill = document.getElementById("timeline-fill-bar");
+  const markerMojito = document.getElementById("marker-mojito");
+  const markerOF = document.getElementById("marker-oldfashioned");
+  const markerWC = document.getElementById("marker-whiskeycream");
+
+  // HUD Elements
+  const debugMaster = document.getElementById("debug-master-progress");
+  const debugActive = document.getElementById("debug-active-cocktail");
+  const debugLocal = document.getElementById("debug-local-progress");
+  const debugTimecode = document.getElementById("debug-timecode");
+  const debugState = document.getElementById("debug-state");
+  const toggleHudBtn = document.getElementById("toggle-debug-hud");
+  const hudContainer = document.getElementById("cinematic-debug-hud");
+
+  if (toggleHudBtn && hudContainer) {
+    toggleHudBtn.addEventListener("click", () => {
+      hudContainer.style.display = "none";
+    });
   }
 
-  const flavorBlocks = document.querySelectorAll(".flavor-block");
-  if (!flavorBlocks.length) return;
-
-  // IntersectionObserver to only process videos in or near viewport
-  const observerOptions = {
-    root: null,
-    rootMargin: "15% 0px",
-    threshold: [0, 0.25, 0.5, 0.75, 1.0]
-  };
-
-  const activeBlocks = new Set();
-
+  // IntersectionObserver to activate/deactivate RAF loop when section is near
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      const video = entry.target.querySelector("video");
-      if (!video) return;
-
-      if (entry.isIntersecting) {
-        activeBlocks.add(entry.target);
-        // Ensure video is ready to play or scrub
-        if (video.paused && !entry.target.dataset.scrubbing) {
-          video.play().catch(() => {});
-        }
-      } else {
-        activeBlocks.delete(entry.target);
-        if (!video.paused) {
-          video.pause();
-        }
-      }
+      AppState.isFilmInView = entry.isIntersecting;
     });
-  }, observerOptions);
+  }, {
+    root: null,
+    rootMargin: "20% 0px",
+    threshold: 0
+  });
 
-  flavorBlocks.forEach(block => observer.observe(block));
+  observer.observe(filmSection);
 
-  // Throttled Scroll Engine for Smooth Video Scrubbing
-  let isTicking = false;
-
-  const onScroll = () => {
-    if (!isTicking) {
-      window.requestAnimationFrame(() => {
-        updateActiveVideoScrub(activeBlocks);
-        isTicking = false;
-      });
-      isTicking = true;
-    }
-  };
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-}
-
-function updateActiveVideoScrub(activeBlocks) {
-  if (!activeBlocks.size) return;
-
-  const windowHeight = window.innerHeight;
-  const scrollY = window.scrollY;
-
-  activeBlocks.forEach(block => {
-    const video = block.querySelector(".flavor-video");
+  // Safe seek helper: avoids microscopic stutter while strictly following timeline
+  function seekVideoFrame(video, targetSeconds) {
     if (!video || isNaN(video.duration) || video.duration === 0) return;
+    const clamped = Math.max(0, Math.min(video.duration - 0.02, targetSeconds));
+    if (Math.abs(video.currentTime - clamped) > 0.018) {
+      video.currentTime = clamped;
+    }
+  }
 
-    const rect = block.getBoundingClientRect();
-    const blockTop = rect.top;
-    const blockHeight = rect.height;
+  // Scroll Position Calculation (SCROLL POSITION = MASTER PLAYHEAD)
+  function calculateMasterProgress() {
+    const rect = filmSection.getBoundingClientRect();
+    const scrollableDistance = rect.height - window.innerHeight;
+    
+    if (scrollableDistance <= 0) return 0;
 
-    // Calculate normalized progress (0.0 to 1.0) while scrolling through the block
-    const progress = Math.min(Math.max((windowHeight - blockTop) / (windowHeight + blockHeight), 0), 1);
+    if (rect.top > 0) {
+      return 0; // Above film section
+    } else if (rect.top < -scrollableDistance) {
+      return 1; // Past film section
+    } else {
+      return (-rect.top) / scrollableDistance;
+    }
+  }
 
-    // Apply scrub smoothly if video is loaded
-    if (video.readyState >= 2) {
-      // Calculate target time based on normalized progress
-      const targetTime = progress * video.duration;
-      // Seek if difference is significant enough to avoid micro-stutter
-      if (Math.abs(video.currentTime - targetTime) > 0.08) {
-        video.currentTime = targetTime;
+  // Master Render Loop (requestAnimationFrame with Lerp Smoothing)
+  function renderTimeline() {
+    // Calculate current scroll target
+    AppState.targetProgress = calculateMasterProgress();
+
+    // Lerp smooth towards target
+    const diff = AppState.targetProgress - AppState.currentProgress;
+    AppState.currentProgress += diff * AppState.smoothingFactor;
+
+    // Snap if very close
+    if (Math.abs(diff) < 0.0003) {
+      AppState.currentProgress = AppState.targetProgress;
+    }
+
+    const P = Math.max(0, Math.min(1, AppState.currentProgress));
+
+    // Active Cocktail Identification for UI
+    let activeName = "MOJITO";
+    let activeLocalProgress = 0;
+    let activeCurrentTime = 0;
+    let activeDuration = 4.0;
+
+    // ------------------------------------------------------------------------
+    // 1. MOJITO VIDEO SCRUB & TRANSITION [0.00 -> 0.38]
+    // ------------------------------------------------------------------------
+    if (P <= TIMELINE_CONFIG.mojito.end) {
+      const localP = (P - TIMELINE_CONFIG.mojito.start) / (TIMELINE_CONFIG.mojito.end - TIMELINE_CONFIG.mojito.start);
+      const clampedP = Math.max(0, Math.min(1, localP));
+      const dur = mojitoVideo.duration || 4.0;
+      const targetTime = clampedP * dur;
+
+      seekVideoFrame(mojitoVideo, targetTime);
+
+      if (P <= TIMELINE_CONFIG.mojito.fadeStart) {
+        // Pure Mojito dominance
+        mojitoVideo.style.opacity = "1";
+        mojitoVideo.style.transform = "scale(1.0)";
+        mojitoVideo.style.filter = "brightness(0.88) contrast(1.08)";
+      } else {
+        // Transition Mojito -> Old Fashioned [0.28 -> 0.38]
+        // Mojito scrubs its final frames while fading out & scaling slightly
+        const t = (P - TIMELINE_CONFIG.mojito.fadeStart) / (TIMELINE_CONFIG.mojito.fadeEnd - TIMELINE_CONFIG.mojito.fadeStart);
+        mojitoVideo.style.opacity = (1 - t).toFixed(3);
+        mojitoVideo.style.transform = `scale(${(1.0 + t * 0.04).toFixed(3)})`;
+        mojitoVideo.style.filter = `brightness(${(0.88 - t * 0.15).toFixed(2)}) blur(${(t * 4).toFixed(1)}px) contrast(1.08)`;
       }
+
+      if (P < 0.33) {
+        activeName = "MOJITO";
+        activeLocalProgress = clampedP;
+        activeCurrentTime = mojitoVideo.currentTime;
+        activeDuration = dur;
+      }
+    } else {
+      mojitoVideo.style.opacity = "0";
     }
 
-    // Update pill text indicator if present
-    const pillSpan = block.querySelector(".scrub-val");
-    if (pillSpan) {
-      pillSpan.textContent = `${Math.round(progress * 100)}%`;
-    }
-  });
-}
+    // ------------------------------------------------------------------------
+    // 2. OLD FASHIONED VIDEO SCRUB & TRANSITION [0.28 -> 0.71]
+    // ------------------------------------------------------------------------
+    if (P >= TIMELINE_CONFIG.oldFashioned.start && P <= TIMELINE_CONFIG.oldFashioned.end) {
+      const localP = (P - TIMELINE_CONFIG.oldFashioned.start) / (TIMELINE_CONFIG.oldFashioned.end - TIMELINE_CONFIG.oldFashioned.start);
+      const clampedP = Math.max(0, Math.min(1, localP));
+      const dur = ofVideo.duration || 4.0;
+      const targetTime = clampedP * dur;
 
-// --------------------------------------------------------------------------
-// 7. FLAVOR SECTION RENDERING & ACTIONS
-// --------------------------------------------------------------------------
-function initFlavorSections() {
-  // Bind Shop buttons in flavor sections
-  document.querySelectorAll("[data-action='quick-add']").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const flavorId = btn.dataset.flavor;
-      addToCart(flavorId);
-    });
-  });
+      seekVideoFrame(ofVideo, targetTime);
+
+      if (P < TIMELINE_CONFIG.oldFashioned.fadeInEnd) {
+        // Transition In from Mojito [0.28 -> 0.38]
+        // Old Fashioned scrubs its first frames simultaneously!
+        const t = (P - TIMELINE_CONFIG.oldFashioned.fadeInStart) / (TIMELINE_CONFIG.oldFashioned.fadeInEnd - TIMELINE_CONFIG.oldFashioned.fadeInStart);
+        ofVideo.style.opacity = t.toFixed(3);
+        ofVideo.style.transform = `scale(${(1.04 - t * 0.04).toFixed(3)})`;
+        ofVideo.style.filter = `brightness(${(0.73 + t * 0.15).toFixed(2)}) blur(${((1 - t) * 4).toFixed(1)}px) contrast(1.08)`;
+      } else if (P <= TIMELINE_CONFIG.oldFashioned.fadeOutStart) {
+        // Pure Old Fashioned dominance [0.38 -> 0.61]
+        ofVideo.style.opacity = "1";
+        ofVideo.style.transform = "scale(1.0)";
+        ofVideo.style.filter = "brightness(0.88) contrast(1.08)";
+      } else {
+        // Transition Out into Whiskey Cream [0.61 -> 0.71]
+        // Old Fashioned scrubs its final frames while fading out
+        const t = (P - TIMELINE_CONFIG.oldFashioned.fadeOutStart) / (TIMELINE_CONFIG.oldFashioned.fadeOutEnd - TIMELINE_CONFIG.oldFashioned.fadeOutStart);
+        ofVideo.style.opacity = (1 - t).toFixed(3);
+        ofVideo.style.transform = `scale(${(1.0 + t * 0.04).toFixed(3)})`;
+        ofVideo.style.filter = `brightness(${(0.88 - t * 0.15).toFixed(2)}) blur(${(t * 4).toFixed(1)}px) contrast(1.08)`;
+      }
+
+      if (P >= 0.33 && P < 0.66) {
+        activeName = "OLD FASHIONED";
+        activeLocalProgress = clampedP;
+        activeCurrentTime = ofVideo.currentTime;
+        activeDuration = dur;
+      }
+    } else {
+      ofVideo.style.opacity = "0";
+    }
+
+    // ------------------------------------------------------------------------
+    // 3. WHISKEY CREAM VIDEO SCRUB & DOMINANCE [0.61 -> 1.00]
+    // ------------------------------------------------------------------------
+    if (P >= TIMELINE_CONFIG.whiskeyCream.start) {
+      const localP = (P - TIMELINE_CONFIG.whiskeyCream.start) / (TIMELINE_CONFIG.whiskeyCream.end - TIMELINE_CONFIG.whiskeyCream.start);
+      const clampedP = Math.max(0, Math.min(1, localP));
+      const dur = wcVideo.duration || 4.0;
+      const targetTime = clampedP * dur;
+
+      seekVideoFrame(wcVideo, targetTime);
+
+      if (P < TIMELINE_CONFIG.whiskeyCream.fadeInEnd) {
+        // Transition In from Old Fashioned [0.61 -> 0.71]
+        // Whiskey Cream scrubs its beginning frames simultaneously!
+        const t = (P - TIMELINE_CONFIG.whiskeyCream.fadeInStart) / (TIMELINE_CONFIG.whiskeyCream.fadeInEnd - TIMELINE_CONFIG.whiskeyCream.fadeInStart);
+        wcVideo.style.opacity = t.toFixed(3);
+        wcVideo.style.transform = `scale(${(1.04 - t * 0.04).toFixed(3)})`;
+        wcVideo.style.filter = `brightness(${(0.73 + t * 0.15).toFixed(2)}) blur(${((1 - t) * 4).toFixed(1)}px) contrast(1.08)`;
+      } else {
+        // Pure Whiskey Cream dominance [0.71 -> 1.00]
+        wcVideo.style.opacity = "1";
+        wcVideo.style.transform = "scale(1.0)";
+        wcVideo.style.filter = "brightness(0.88) contrast(1.08)";
+      }
+
+      if (P >= 0.66) {
+        activeName = "WHISKEY CREAM";
+        activeLocalProgress = clampedP;
+        activeCurrentTime = wcVideo.currentTime;
+        activeDuration = dur;
+      }
+    } else {
+      wcVideo.style.opacity = "0";
+    }
+
+    // ------------------------------------------------------------------------
+    // 4. OVERLAYS & WATERMARKS SYNCHRONIZATION
+    // ------------------------------------------------------------------------
+    if (P < 0.33) {
+      // Mojito active
+      storyMojito?.classList.add("active");
+      storyOF?.classList.remove("active");
+      storyWC?.classList.remove("active");
+
+      watermarkMojito?.classList.add("active");
+      watermarkOF?.classList.remove("active");
+      watermarkWC?.classList.remove("active");
+
+      markerMojito?.classList.add("active");
+      markerOF?.classList.remove("active");
+      markerWC?.classList.remove("active");
+    } else if (P < 0.66) {
+      // Old Fashioned active
+      storyMojito?.classList.remove("active");
+      storyOF?.classList.add("active");
+      storyWC?.classList.remove("active");
+
+      watermarkMojito?.classList.remove("active");
+      watermarkOF?.classList.add("active");
+      watermarkWC?.classList.remove("active");
+
+      markerMojito?.classList.remove("active");
+      markerOF?.classList.add("active");
+      markerWC?.classList.remove("active");
+    } else {
+      // Whiskey Cream active
+      storyMojito?.classList.remove("active");
+      storyOF?.classList.remove("active");
+      storyWC?.classList.add("active");
+
+      watermarkMojito?.classList.remove("active");
+      watermarkOF?.classList.remove("active");
+      watermarkWC?.classList.add("active");
+
+      markerMojito?.classList.remove("active");
+      markerOF?.classList.remove("active");
+      markerWC?.classList.add("active");
+    }
+
+    // Timeline Progress Bar
+    if (timelineFill) {
+      timelineFill.style.width = `${(P * 100).toFixed(1)}%`;
+    }
+
+    // ------------------------------------------------------------------------
+    // 5. DEVELOPER HUD TELEMETRY UPDATE
+    // ------------------------------------------------------------------------
+    if (debugMaster) debugMaster.textContent = `${(P * 100).toFixed(1)}%`;
+    if (debugActive) debugActive.textContent = activeName;
+    if (debugLocal) debugLocal.textContent = `${(activeLocalProgress * 100).toFixed(1)}%`;
+    if (debugTimecode) debugTimecode.textContent = `${activeCurrentTime.toFixed(2)}s / ${activeDuration.toFixed(2)}s`;
+    if (debugState) {
+      debugState.textContent = Math.abs(diff) > 0.001 ? "SCRUBBING" : "LOCKED AT FRAME";
+      debugState.style.color = Math.abs(diff) > 0.001 ? "#D8BA78" : "#48E587";
+    }
+
+    // Request next animation frame
+    window.requestAnimationFrame(renderTimeline);
+  }
+
+  // Kick off RAF loop
+  window.requestAnimationFrame(renderTimeline);
 }
 
 // --------------------------------------------------------------------------
@@ -313,7 +517,6 @@ function initCartDrawer() {
   if (closeButton) closeButton.addEventListener("click", closeDrawer);
   if (backdrop) backdrop.addEventListener("click", closeDrawer);
 
-  // Esc key to close
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && drawer && drawer.classList.contains("open")) {
       closeDrawer();
@@ -322,20 +525,20 @@ function initCartDrawer() {
 
   if (checkoutButton) {
     checkoutButton.addEventListener("click", () => {
-      // Simulation of Shopify Cart Permalink Redirect
       if (!AppState.cart.length) {
         showToast("Your selection is currently empty.");
         return;
       }
       showToast("Redirecting to secure Shopify checkout...");
       setTimeout(() => {
-        alert("Shopify Integration Endpoint: In production, this forwards the cart payload directly to https://checkout.luckyshaker.com with variant tokens.");
+        alert("Shopify Integration Endpoint: In production, forwards payload directly to https://checkout.luckyshaker.com");
       }, 400);
     });
   }
 }
 
-function addToCart(flavorId, quantity = 1) {
+// Global addToCart
+window.addToCart = function(flavorId, quantity = 1) {
   const flavor = LUCKY_SHAKER_DATA.flavors.find(f => f.id === flavorId);
   if (!flavor) return;
 
@@ -349,7 +552,7 @@ function addToCart(flavorId, quantity = 1) {
       price: flavor.numericPrice,
       priceString: flavor.price,
       image: flavor.productImage,
-      volume: flavor.specs.volume,
+      volume: flavor.volume,
       shopifyVariantId: flavor.shopifyVariantId,
       quantity: quantity
     });
@@ -358,34 +561,24 @@ function addToCart(flavorId, quantity = 1) {
   updateCartUI();
   showToast(`Added ${flavor.name} to your selection`);
 
-  // Cart Badge Bloom Micro-Interaction
   const badge = document.querySelector(".cart-badge");
   if (badge) {
     badge.classList.remove("pulse");
-    void badge.offsetWidth; // Trigger reflow
+    void badge.offsetWidth;
     badge.classList.add("pulse");
   }
-}
+};
 
 function updateCartUI() {
   const container = document.getElementById("cart-items-list");
-  const subtotalEl = document.getElementById("cart-subtotal");
   const badge = document.querySelector(".cart-badge");
   const drawerSubtotal = document.getElementById("drawer-subtotal");
 
   const totalItems = AppState.cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = AppState.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  if (badge) {
-    badge.textContent = totalItems;
-  }
-
-  if (subtotalEl) {
-    subtotalEl.textContent = `$${totalPrice.toFixed(2)}`;
-  }
-  if (drawerSubtotal) {
-    drawerSubtotal.textContent = `$${totalPrice.toFixed(2)}`;
-  }
+  if (badge) badge.textContent = totalItems;
+  if (drawerSubtotal) drawerSubtotal.textContent = `$${totalPrice.toFixed(2)}`;
 
   if (!container) return;
 
@@ -416,7 +609,6 @@ function updateCartUI() {
   `).join("");
 }
 
-// Global hook for inline quantity adjustments in drawer
 window.modifyCartQty = function(id, delta) {
   const itemIndex = AppState.cart.findIndex(i => i.id === id);
   if (itemIndex === -1) return;
@@ -471,21 +663,4 @@ function initNewsletterForm() {
     showToast("Welcome to the Lucky Shaker Private Reserve.");
     input.value = "";
   });
-}
-
-// --------------------------------------------------------------------------
-// 11. RESPONSIVE VIDEO SWITCHER ON RESIZE
-// --------------------------------------------------------------------------
-function initWindowResizeHandler() {
-  let resizeTimeout;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      const isMobileNow = window.innerWidth <= 768;
-      if (isMobileNow !== AppState.isMobile) {
-        AppState.isMobile = isMobileNow;
-        // Optionally swap sources for active videos if orientation changed significantly
-      }
-    }, 250);
-  }, { passive: true });
 }
