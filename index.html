@@ -115,17 +115,17 @@
       "World-class cocktails shouldn't require a master mixologist on call. <em>Just the right bottle.</em>"
     </blockquote>
     <p class="statement-desc">
-      Scroll down to physicalize the timeline. Your scroll position directly commands the master cinematic film, transforming each cocktail world frame by frame.
+      Scroll down to command the master timeline. Your scroll position physically controls the playback playhead, transforming each cocktail world frame by frame.
     </p>
   </section>
 
   <!-- =========================================================================
-       4. CINEMATIC SCROLL-CONTROLLED MASTER FILM (PINNED VIEWPORT)
+       4. CINEMATIC SCROLL-CONTROLLED MASTER FILM (GSAP PINNED STAGE)
        ========================================================================= -->
   <section id="cinematic-film" class="cinematic-story">
-    <div class="cinematic-sticky">
+    <div class="cinematic-sticky" id="cinematic-sticky-stage">
       
-      <!-- Video Stage: 3 Stacked Video Planes Controlled by Scroll Playhead -->
+      <!-- Video Stage: 3 Stacked Video Planes Controlled by GSAP ScrollTrigger Playhead -->
       <div class="video-stage">
         <video id="video-mojito" class="timeline-video" muted playsinline preload="auto" poster="assets/posters/mojito_desktop.jpg">
           <source media="(max-width: 768px)" src="videos para web/Mojito/Mojito_product_video mobile.mp4" type="video/mp4">
@@ -143,21 +143,21 @@
         </video>
       </div>
 
-      <!-- Atmospheric Vignette & Depth Mask -->
-      <div class="cinematic-vignette"></div>
+      <!-- Dynamic Ambient Lighting Vignette (Tint shifts per cocktail) -->
+      <div class="cinematic-vignette" id="cinematic-ambient-vignette"></div>
 
-      <!-- Watermark Background Titles (Reacts to master timeline) -->
+      <!-- Watermark Background Titles (Reacts to master GSAP timeline) -->
       <div class="film-watermark-container">
-        <div class="film-watermark watermark-mojito active" id="watermark-mojito">MOJITO</div>
+        <div class="film-watermark watermark-mojito" id="watermark-mojito">MOJITO</div>
         <div class="film-watermark watermark-oldfashioned" id="watermark-oldfashioned">OLD FASHIONED</div>
         <div class="film-watermark watermark-whiskeycream" id="watermark-whiskeycream">WHISKEY CREAM</div>
       </div>
 
-      <!-- Narrative Overlay (Synchronized to timeline) -->
+      <!-- Narrative Overlay (GSAP Staggered Reveals) -->
       <div class="cinematic-content">
         
         <!-- Story Card: Mojito -->
-        <div class="story-overlay story-mojito active" id="story-overlay-mojito">
+        <div class="story-overlay story-mojito" id="story-overlay-mojito">
           <div class="story-eyebrow">CRISP & BOTANICAL • 12% ABV</div>
           <h2 class="story-title">MOJITO</h2>
           <div class="story-subtitle">Spearmint • Caribbean Rum • Crisp Lime Zest</div>
@@ -227,24 +227,24 @@
           <div class="timeline-fill" id="timeline-fill-bar"></div>
         </div>
         <div class="timeline-markers">
-          <span class="marker marker-mojito active" id="marker-mojito">01 MOJITO</span>
+          <span class="marker marker-mojito" id="marker-mojito">01 MOJITO</span>
           <span class="marker marker-oldfashioned" id="marker-oldfashioned">02 OLD FASHIONED</span>
           <span class="marker marker-whiskeycream" id="marker-whiskeycream">03 WHISKEY CREAM</span>
         </div>
       </div>
 
-      <!-- Live Developer Playhead HUD (Debug Monitor) -->
+      <!-- Live Developer Playhead HUD (GSAP Telemetry Monitor) -->
       <div id="cinematic-debug-hud" class="cinematic-debug-hud">
         <div class="debug-header">
           <span class="debug-dot"></span>
-          <span class="debug-title">PLAYHEAD HUD (DEV)</span>
+          <span class="debug-title">GSAP PLAYHEAD HUD</span>
           <button id="toggle-debug-hud" class="debug-close-btn" title="Toggle HUD" aria-label="Close HUD">×</button>
         </div>
         <div class="debug-row"><span>MASTER:</span><strong id="debug-master-progress">0.0%</strong></div>
+        <div class="debug-row"><span>DIRECTION:</span><strong id="debug-direction">IDLE</strong></div>
         <div class="debug-row"><span>ACTIVE:</span><strong id="debug-active-cocktail">MOJITO</strong></div>
-        <div class="debug-row"><span>LOCAL SCRUB:</span><strong id="debug-local-progress">0.0%</strong></div>
         <div class="debug-row"><span>TIMECODE:</span><strong id="debug-timecode">0.00s / 4.00s</strong></div>
-        <div class="debug-row"><span>STATE:</span><strong id="debug-state">READY</strong></div>
+        <div class="debug-row"><span>ENGINE:</span><strong id="debug-state">GSAP SCROLLTRIGGER</strong></div>
       </div>
 
     </div>
@@ -493,7 +493,10 @@
     </div>
   </aside>
 
-  <!-- JavaScript -->
+  <!-- Vendor Libraries: GSAP 3.12 & ScrollTrigger -->
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <!-- Application Master Logic -->
   <script src="js/app.js"></script>
 </body>
 </html>
