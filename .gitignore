@@ -16,3 +16,10 @@ Thumbs.db
 # Python cache
 __pycache__/
 *.pyc
+
+# Node
+node_modules/
+package-lock.json
+
+# Shopify CLI local state
+.shopify/

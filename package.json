@@ -1,0 +1,33 @@
+{
+  "name": "lucky-shaker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lucky Shaker - Luxury Cocktail Experience",
+  "scripts": {
+    "dev": "node serve.js",
+    "theme:dev": "shopify theme dev --store lucky-shaker.myshopify.com --path \"shopify-theme\"",
+    "theme:push": "shopify theme push --store lucky-shaker.myshopify.com --path \"shopify-theme\" --theme 167149961290"
+  },
+  "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.3",
+    "@radix-ui/react-scroll-area": "^1.2.3",
+    "@radix-ui/react-slider": "^1.2.3",
+    "@radix-ui/react-slot": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "motion": "^12.4.7",
+    "prismjs": "^1.30.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
+    "tw-animate-css": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "@types/prismjs": "^1.26.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "shadcn": "^2.4.0-canary.10",
+    "typescript": "^5.7.3"
+  }
+}
