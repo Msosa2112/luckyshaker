@@ -1,0 +1,93 @@
+{%- comment -%}
+  LUCKY SHAKER — LUXURY EDITORIAL PRODUCT CARD
+  Apple Liquid Glass Light Theme Design System
+{%- endcomment -%}
+
+{%- assign clean_title = product.title | replace: ' 750ml', '' | replace: ' 750ML', '' | replace: ' 750 ml', '' -%}
+
+{%- comment -%} Extract Clean Single-Line ABV {%- endcomment -%}
+{%- assign abv_val = '16% ABV' -%}
+{%- if product.description contains 'ABV:</strong>' -%}
+  {%- assign abv_split = product.description | split: 'ABV:</strong> ' | last | split: '</li>' | first | split: '<' | first -%}
+  {%- if abv_split != blank -%}
+    {%- assign abv_val = abv_split | strip | replace: 'Alc / Vol', 'ABV' | replace: 'Alc/Vol', 'ABV' | replace: 'ALC / VOL', 'ABV' | replace: 'Alc / vol', 'ABV' | replace: 'alc / vol', 'ABV' -%}
+  {%- endif -%}
+{%- elsif product.metafields.custom.abv != blank -%}
+  {%- assign abv_val = product.metafields.custom.abv | replace: 'Alc / Vol', 'ABV' | replace: 'Alc/Vol', 'ABV' | replace: 'ALC / VOL', 'ABV' -%}
+  {%- assign abv_val = product.metafields.custom.abv | replace: 'Alc / Vol', 'ABV' | replace: 'Alc/Vol', 'ABV' | replace: 'ALC / VOL', 'ABV' -%}
+{%- endif -%}
+
+{%- comment -%} Extract Tasting Notes / Ingredients line {%- endcomment -%}
+{%- assign notes_line = '' -%}
+{%- if product.description contains 'Ingredients:</strong>' -%}
+  {%- assign notes_line = product.description | split: 'Ingredients:</strong> ' | last | split: '</li>' | first | split: '<' | first | replace: ',', ' · ' -%}
+{%- endif -%}
+
+<article class="product-item luxury-glass-card" data-product-id="{{ product.id }}">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">{{ abv_val }}</span>
+      {%- if product.tags contains 'Best Seller' or product.tags contains 'Featured' -%}
+        <span class="product-visual-badge bestseller-badge" data-i18n="shop.bestseller">MÁS VENDIDO</span>
+      {%- endif -%}
+    </div>
+
+    <a href="{{ product.url }}" class="product-visual-link" aria-label="{{ product.title }}">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
+      {%- elsif product.handle == 'whiskey-cream' -%}
+        <img src="{{ 'prod-whiskey-cream.png' | asset_url }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
+      {%- else -%}
+        {%- assign fallback_img = 'prod-' | append: product.handle | append: '.jpg' -%}
+        <img src="{{ fallback_img | asset_url }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='{{ 'margarita.jpg' | asset_url }}';">
+      {%- endif -%}
+    </a>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="{{ product.url }}">{{ clean_title }}</a>
+    </h3>
+
+    {%- if notes_line != blank -%}
+      <p class="product-tasting-notes">{{ notes_line }}</p>
+    {%- elsif product.description != blank -%}
+      <p class="product-tasting-notes">{{ product.description | strip_html | truncatewords: 8 }}</p>
+    {%- else -%}
+      <p class="product-tasting-notes" data-i18n="shop.default_notes">Cóctel artesanal de lujo listo para servir</p>
+    {%- endif -%}
+
+    <!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">{{ product.price | money }}</span>
+        {%- if product.compare_at_price > product.price -%}
+          <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      <div class="product-action-box">
+        {%- if product.available -%}
+          <button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem({{ product.selected_or_first_available_variant.id }}, 1, '{{ product.title | escape }}', '{{ product.price | money }}')" aria-label="Agregar {{ clean_title }} a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        {%- else -%}
+          <button type="button" class="btn btn-luxury-pink is-soldout" disabled>
+            <span data-i18n="shop.sold_out">AGOTADO</span>
+          </button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,1396 @@
+/**
+ * LUCKY SHAKER BARTENDER — SHOPIFY OS 2.0 MASTER SCRIPT
+ * Full-fidelity port of prototype engine with 60fps HTML5 Canvas sequence rendering
+ */
+
+/* ==========================================================================
+   0. BILINGUAL INTERNATIONALIZATION ENGINE (ES default / EN toggle)
+   ========================================================================== */
+window.LuckyShakerLang = {
+  currentLang: 'es',
+  dict: {
+    es: {
+      // Nav
+      'nav.events': 'Eventos & Servicios',
+      'nav.experience': 'Experiencia',
+      'nav.gallery': 'Galería',
+      'nav.about': 'Nosotros',
+      'nav.shop': 'Tienda Online',
+      'nav.faq': 'Preguntas',
+      'nav.book_event': 'COTIZAR EVENTO',
+      'nav.bag': 'Bolsa',
+
+      // Hero
+      'hero.eyebrow': 'LUCKY SHAKER — COCTELERÍA & BARTENDING DE AUTOR',
+      'hero.headline': 'HAZ QUE TU EVENTO<br><span class="highlight-pink">SEA MÁS LUCKY.</span>',
+      'hero.subtitle': 'Servicio premium de barras móviles, coctelería de autor y hospitalidad inolvidable para bodas, fiestas privadas, galas corporativas y celebraciones.',
+      'hero.primary_cta': 'COTIZAR TU EVENTO',
+      'hero.secondary_cta': 'TIENDA ONLINE',
+      'hero.trust1': 'Barras Móviles de Lujo',
+      'hero.trust2': 'Mixólogos de Autor Certificados',
+      'hero.trust3': 'Servicio 5 Estrellas',
+
+      // Cinematic Scroll
+      'cinematic.brand_tag': 'BOTELLAS ARTESANALES • LISTAS PARA SERVIR',
+      'cinematic.headline': 'LLEVA LUCKY SHAKER A CASA',
+      'cinematic.subtitle': 'Cócteles de autor elaborados a mano y listos para servir. Descubre cada botella a través del scroll interactivo.',
+      'cinematic.shop_all_cta': 'VER TODA LA COLECCIÓN',
+      'cinematic.book_cta': 'COTIZAR TU EVENTO',
+      'cinematic.scroll_cue': 'SCROLL PARA DESCUBRIR LA MAGIA',
+      'cinematic.b1_title': 'Whiskey Añejado Triple Destilación',
+      'cinematic.b1_sub': 'Madurado en roble americano tostado',
+      'cinematic.b2_title': 'Cacao Tostado Venezolano',
+      'cinematic.b2_sub': 'Con infusión de vainilla Bourbon',
+      'cinematic.b3_title': 'Crema Láctea Pura Terciopelo',
+      'cinematic.b3_sub': '17% Alc / Vol • Copa de 110 ML',
+      'cinematic.b4_title': 'Reserva Privada por Katherin',
+      'cinematic.b4_sub': 'Elaborado a mano y sellado en vidrio',
+      'cinematic.buy_btn': 'COMPRAR',
+
+      // Types
+      'types.eyebrow': 'CREADO PARA TU MOMENTO',
+      'types.headline': 'Coctelería a Medida para Cada Ocasión',
+      'types.subtitle': 'Desde celebraciones íntimas hasta grandes recepciones de bodas, adaptamos cada cóctel, estación de barra y detalle de hospitalidad a tu evento.',
+      'types.c1_tag': 'ELEGANTE • MEMORABLE',
+      'types.c1_title': 'Bodas & Recepciones',
+      'types.c1_desc': 'Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos profesionales.',
+      'types.c2_tag': 'ÍNTIMO • VIBRANTE',
+      'types.c2_title': 'Fiestas Privadas & Cumpleaños',
+      'types.c2_desc': 'Eleva cumpleaños, aniversarios y reuniones en terrazas con barras móviles privadas, menús de autor y total tranquilidad para el anfitrión.',
+      'types.c3_tag': 'SOFISTICADO • IMPECABLE',
+      'types.c3_title': 'Galas Corporativas & Marcas',
+      'types.c3_desc': 'Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP.',
+      'types.c4_tag': 'INTERACTIVO • EXCLUSIVO',
+      'types.c4_title': 'Celebraciones Especiales & Talleres',
+      'types.c4_desc': 'Masterclasses interactivas de coctelería, despedidas de soltera y catas guiadas lideradas por la fundadora Katherin y maestros mixólogos.',
+      'types.quote_btn': 'SOLICITAR COTIZACIÓN',
+
+      // Experience
+      'exp.eyebrow': 'MÁS QUE UNA BARRA',
+      'exp.headline': 'La Experiencia Lucky Shaker',
+      'exp.subtitle': 'Gestionamos cada aspecto de la logística de barra, la coreografía de mixología y el servicio para que puedas disfrutar plenamente con tus invitados.',
+      'exp.s1_title': '01 • PLANIFICA',
+      'exp.s1_desc': 'Asesoría personalizada de menú. Diseñamos cócteles de autor que combinan con la temática de tu evento, el perfil de los invitados y el estilo del lugar.',
+      'exp.s2_title': '02 • PREPARA',
+      'exp.s2_desc': 'Jarabes botánicos artesanales, cítricos recién exprimidos, hielo artesanal cristalino, garnituras exclusivas y montaje de la barra antes de que lleguen los invitados.',
+      'exp.s3_title': '03 • AGITA',
+      'exp.s3_desc': 'Arte de coctelera y hospitalidad de alto nivel. Cada cóctel se agita al momento con dinamismo, precisión y una presentación impecable.',
+      'exp.s4_title': '04 • CELEBRA',
+      'exp.s4_desc': 'Cero estrés para el anfitrión. Disfruta de un servicio fluido, invitados fascinados y un desmontaje de barra limpio al finalizar la noche.',
+      'exp.book_btn': 'COTIZAR TU EVENTO',
+
+      // Services
+      'services.eyebrow': 'SERVICIOS & PAQUETES',
+      'services.headline': 'Servicio Integral de Coctelería',
+      'services.subtitle': 'Todo lo necesario para brindar una experiencia de bar de coctelería de clase mundial en tu residencia, salón o espacio de eventos.',
+      'services.srv1_title': 'Barras Móviles Iluminadas',
+      'services.srv1_desc': 'Estaciones de barra modulares con iluminación decorativa, acabados en bronce, herramientas profesionales de coctelería y estación de hielo.',
+      'services.srv1_f1': 'Diseño de barra e iluminación personalizada',
+      'services.srv1_f2': 'Mixólogos certificados y asegurados',
+      'services.srv1_f3': 'Pozos de hielo y herramental profesional',
+      'services.srv2_title': 'Menús de Coctelería de Autor',
+      'services.srv2_desc': 'Curaduría de recetas a medida con cartas de menú impresas, garnituras botánicas frescas, ahumados en vivo y opciones sin alcohol (mocktails).',
+      'services.srv2_f1': 'Jarabes y bitters artesanales de la casa',
+      'services.srv2_f2': 'Cristalería fina y hielo cristalino',
+      'services.srv2_f3': 'Cócteles vírgenes / mocktails de autor',
+      'services.srv3_title': 'Masterclasses Interactivas',
+      'services.srv3_desc': 'Talleres prácticos e interactivos de coctelería para eventos corporativos, despedidas de soltera y cenas privadas dirigidos por nuestros mixólogos.',
+      'services.srv3_f1': 'Estaciones de coctelera individuales',
+      'services.srv3_f2': 'Historia de destilados y maridaje',
+      'services.srv3_f3': 'Guía de recetas para llevar a casa',
+
+      // Gallery
+      'gallery.eyebrow': 'LA ATMÓSFERA',
+      'gallery.headline': 'Momentos Que Hemos Creado',
+      'gallery.subtitle': 'Un vistazo a la energía, el arte de la mixología y la atmósfera sofisticada que llevamos a cada evento privado.',
+      'gallery.p1': 'BODAS',
+      'gallery.t1': 'Montaje de Barra al Atardecer',
+      'gallery.p2': 'EL ARTE',
+      'gallery.t2': 'Precisión y Pasión en Coctelera',
+      'gallery.p3': 'EVENTOS PRIVADOS',
+      'gallery.t3': 'Celebraciones en Terrazas',
+      'gallery.p4': 'GALAS CORPORATIVAS',
+      'gallery.t4': 'Servicio VIP para Empresas',
+      'gallery.p5': 'COLECCIÓN RESERVA',
+      'gallery.t5': 'Elegancia Embotellada a Mano',
+
+      // Testimonials
+      'reviews.eyebrow': 'OPINIONES DE CLIENTES',
+      'reviews.headline': 'Amado por Anfitriones e Invitados',
+      'reviews.badge_text': 'Servicio de Coctelería para Eventos Calificado con 5.0 Estrellas',
+      'reviews.r1_quote': '“Lucky Shaker elevó por completo la recepción de nuestra boda. El menú de cócteles personalizados fue un éxito total y los bartenders fueron excepcionalmente rápidos y profesionales.”',
+      'reviews.r1_author': 'Sofía & Lucas M.',
+      'reviews.r1_event': 'Recepción de Boda • Coral Gables, FL',
+      'reviews.r2_quote': '“Contratamos a Lucky Shaker para nuestra gala corporativa anual de 180 invitados. Ejecución impecable, cero filas en barra y el Old Fashioned ahumado fue inolvidable.”',
+      'reviews.r2_author': 'David R., Director Ejecutivo',
+      'reviews.r2_event': 'Gala Corporativa • Brickell, Miami',
+      'reviews.r3_quote': '“La masterclass de coctelería para mi cumpleaños número 40 fue la mejor fiesta que hemos organizado. ¡Katherin y su equipo hicieron que todos se sintieran como expertos!”',
+      'reviews.r3_author': 'Camila T.',
+      'reviews.r3_event': 'Celebración de Cumpleaños • Miami Beach',
+
+      // Booking Form
+      'booking.eyebrow': 'RESERVA TU EVENTO',
+      'booking.headline': 'Solicita una Cotización Personalizada',
+      'booking.subtitle': 'Cuéntanos sobre tu próxima celebración. Nuestro equipo preparará una propuesta de barra a tu medida y confirmará disponibilidad en menos de 24 horas.',
+      'booking.success_title': '¡Muchas gracias! Hemos recibido tu solicitud.',
+      'booking.success_desc': 'Nuestro director de eventos revisará los detalles y te enviará una propuesta personalizada en menos de 24 horas.',
+      'booking.lbl_name': 'Nombre Completo *',
+      'booking.lbl_email': 'Correo Electrónico *',
+      'booking.lbl_phone': 'Número de Teléfono *',
+      'booking.lbl_type': 'Tipo de Evento *',
+      'booking.opt_select': 'Selecciona el tipo de evento',
+      'booking.opt_wedding': 'Boda & Recepción',
+      'booking.opt_private': 'Fiesta Privada / Cumpleaños',
+      'booking.opt_corp': 'Gala Corporativa / Evento de Marca',
+      'booking.opt_masterclass': 'Masterclass de Coctelería / Taller',
+      'booking.opt_other': 'Otra Celebración Especial',
+      'booking.lbl_date': 'Fecha Estimada del Evento *',
+      'booking.lbl_guests': 'Número Estimado de Invitados *',
+      'booking.opt_guest_select': 'Selecciona el rango de invitados',
+      'booking.opt_g1': '10–25 Invitados (Íntimo)',
+      'booking.opt_g2': '26–50 Invitados (Mediano)',
+      'booking.opt_g3': '51–100 Invitados (Grande)',
+      'booking.opt_g4': '101–200+ Invitados (Gala / Boda)',
+      'booking.lbl_location': 'Ubicación / Ciudad y Lugar del Evento *',
+      'booking.lbl_notes': 'Peticiones Especiales / Preferencias de Cócteles',
+      'booking.btn_submit': 'ENVIAR SOLICITUD DE COTIZACIÓN',
+      'booking.guarantee': 'Sin pagos por adelantado • Respuesta personalizada en 24 horas',
+
+      // Shop Preview
+      'shop_preview.eyebrow': 'LLEVA LUCKY SHAKER A CASA',
+      'shop_preview.headline': 'La Colección de Botellas Reserva',
+      'shop_preview.subtitle': 'Cócteles de autor elaborados a mano y sellados en pesadas botellas de vidrio. Cada botella de 750ml rinde 6–8 copas de nivel coctelería para tu barra personal.',
+      'shop_preview.add_bag': 'AÑADIR A LA BOLSA',
+
+      // FAQs
+      'faq.eyebrow': 'PREGUNTAS FRECUENTES',
+      'faq.headline': 'Detalles del Servicio de Barras',
+      'faq.subtitle': 'Todo lo que necesitas saber sobre reservar Lucky Shaker para tu celebración.',
+      'faq.q1': '¿Qué incluye el servicio de barra para eventos de Lucky Shaker?',
+      'faq.a1': 'Incluye estaciones de barra móviles completas, mixólogos profesionales certificados y asegurados, cartas de menú impresas a medida, jarabes y mixers artesanales de la casa, cítricos frescos exprimidos, garnituras de diseño, cristalería de cristal y pozos de hielo completos.',
+      'faq.q2': '¿Con cuánta anticipación debo reservar mi fecha?',
+      'faq.a2': 'Recomendamos reservar con 3 a 8 semanas de anticipación para eventos privados y de 3 a 6 meses para bodas y galas corporativas de fin de año. Sin embargo, siempre atendemos solicitudes con menor tiempo según disponibilidad.',
+      'faq.q3': '¿Ustedes proporcionan el alcohol o lo provee el cliente?',
+      'faq.a3': 'Ofrecemos ambas opciones flexibles. Podemos coordinar y gestionar la lista completa de licores a través de nuestros distribuidores autorizados asociados, o proveerte una lista exacta de compras si prefieres suministrar los licores por tu cuenta.',
+      'faq.q4': '¿Pueden personalizar los nombres de los cócteles para nuestro evento?',
+      'faq.a4': '¡Absolutamente! Es uno de nuestros servicios insignia. Creamos cócteles con nombres alusivos a los novios, a la empresa o a la temática del anfitrión, maridados con sus licores preferidos.',
+      'faq.q5': '¿Tienen opciones sin alcohol (Mocktails)?',
+      'faq.a5': 'Sí. Diseñamos mocktails de autor utilizando botánicos frescos, infusiones aromáticas y espumosos sin alcohol para que todos los invitados disfruten de una experiencia de barra sofisticada.',
+      'faq.cta_text': '¿Tienes alguna pregunta específica para tu evento?',
+      'faq.cta_btn': 'HABLAR CON NUESTRO CONCIERGE',
+
+      // Shop & PDP
+      'shop.bestseller': 'MÁS VENDIDO',
+      'shop.craft_cocktail': 'CÓCTEL DE AUTOR',
+      'shop.default_notes': 'Cóctel artesanal de lujo listo para servir',
+      'shop.add_bag': 'AGREGAR A LA BOLSA',
+      'shop.sold_out': 'AGOTADO',
+      'pdp.crumb_home': 'Inicio',
+      'pdp.crumb_collection': 'Colección Reserva',
+      'pdp.reserve_badge': 'BOTELLA RESERVA',
+      'pdp.eyebrow': 'RESERVA PRIVADA // LOTE DE MIXÓLOGO MAESTRO',
+      'pdp.subtitle': 'Formulado por Katherin • Cóctel de Autor Listo para Servir',
+      'pdp.reviews_count': '(+180 Reseñas Verificadas)',
+      'pdp.free_shipping': 'Envío Express Gratis +21 en órdenes de $80+',
+      'pdp.select_format': 'SELECCIONAR PRESENTACIÓN:',
+      'pdp.add_to_bag': 'AGREGAR A LA BOLSA',
+      'pdp.trust_pkg': 'Empaque Térmico con Garantía Total contra Roturas',
+      'pdp.trust_id': 'Verificación de Firma de Adulto +21 Obligatoria en la Entrega',
+      'pdp.tab1_title': 'PERFIL DE CATA & NOTAS DE PALADAR',
+      'pdp.aroma_label': 'Aroma:',
+      'pdp.aroma_val': 'Infusión botánica aromática fresca, matices de roble añejo y cítricos brillantes.',
+      'pdp.palate_label': 'Paladar:',
+      'pdp.palate_val': 'Textura sedosa y envolvente con profundidad de destilado artesanal, equilibrada por caña de azúcar pura y cítricos prensados en frío.',
+      'pdp.finish_label': 'Final:',
+      'pdp.finish_val': 'Excepcionalmente suave, final prolongado de coctelería de autor con sensación limpia y fresca.',
+      'pdp.tab2_title': 'EL RITUAL DE SERVIDO',
+      'pdp.ritual_1': '1. Enfría la botella a 4°C antes de servir.',
+      'pdp.ritual_2': '2. Agita enérgicamente 3 veces para emulsionar todos los aceites botánicos naturales.',
+      'pdp.ritual_3': '3. Vierte 3.5oz a 4.0oz sobre una esfera de hielo cristalino o rocas.',
+      'pdp.ritual_4': '4. Decora con un twist fresco de piel de cítrico y disfruta.',
+      'pdp.tab3_title': 'CONSERVACIÓN, VIDA ÚTIL & ALÉRGENOS',
+      'pdp.shelf_label': 'Vida Útil:',
+      'pdp.shelf_val': '12 meses sin abrir a temperatura ambiente lejos del sol directo. Una vez abierta, refrigerar y consumir dentro de los 6 meses.',
+      'pdp.volume_label': 'Volumen:',
+      'pdp.volume_val': 'Botella de vidrio de 750 ML (Rinde 6 a 8 copas completas de alta coctelería).',
+      'pdp.formulation_label': 'Formulación:',
+      'pdp.formulation_val': 'Ingredientes 100% libres de gluten, destilados premium naturales, sin conservantes químicos sintéticos.',
+
+      // Cart
+      'cart.title': 'Tu Selección',
+      'cart.item_single': '1 PRODUCTO',
+      'cart.item_plural': 'PRODUCTOS',
+      'cart.empty_title': 'TU BARRA ESTÁ VACÍA',
+      'cart.empty_desc': 'Explora nuestra colección de botellas para comenzar.',
+      'cart.explore_btn': 'EXPLORAR CÓCTELES',
+      'cart.subtotal': 'SUBTOTAL',
+      'cart.taxes_note': 'Impuestos y gastos de envío calculados en la pantalla de pago.',
+      'cart.checkout': 'FINALIZAR COMPRA',
+      'cart.continue': 'Continuar Explorando →',
+      'cart.shipping_empty': 'Agrega <strong>$80.00</strong> para <strong>Envío Express Gratis</strong>',
+      'cart.shipping_progress': 'Agrega <strong>${remaining}</strong> más para <strong>Envío Express Gratis</strong> 🍸',
+      'cart.shipping_unlocked': '🎉 <strong>¡Envío Express de Cortesía Desbloqueado!</strong>',
+
+      // Footer
+      'footer.brand_desc': 'Servicio de coctelería y barras móviles de ultra lujo para eventos privados, bodas y celebraciones. Agitado con pasión, servido con distinción.',
+      'footer.badge_21': 'Certificación +21 y Servicio Asegurado',
+      'footer.col1_title': 'EVENTOS & SERVICIOS',
+      'footer.weddings': 'Bodas & Recepciones',
+      'footer.private_parties': 'Fiestas Privadas',
+      'footer.corporate': 'Galas Corporativas',
+      'footer.masterclasses': 'Masterclasses & Talleres',
+      'footer.request_quote': 'Cotizar Barra para Evento',
+      'footer.col2_title': 'TIENDA & MARCA',
+      'footer.shop_bottles': 'Tienda de Botellas Reserva',
+      'footer.our_story': 'Nuestra Historia',
+      'footer.faqs': 'Preguntas Frecuentes',
+      'footer.col3_title': 'POLÍTICAS & LEGAL',
+      'footer.shipping': 'Envíos & Entregas',
+      'footer.refunds': 'Reembolsos & Cancelaciones',
+      'footer.privacy': 'Política de Privacidad',
+      'footer.terms': 'Términos del Servicio',
+      'footer.copyright': '© 2026 LUCKY SHAKER LLC. TODOS LOS DERECHOS RESERVADOS.',
+      'footer.notice': 'Disfruta con moderación. Venta y servicio de bebidas con alcohol exclusivo para mayores de 21 años.'
+    },
+
+    en: {
+      // Nav
+      'nav.events': 'Events & Services',
+      'nav.experience': 'Experience',
+      'nav.gallery': 'Gallery',
+      'nav.about': 'About Us',
+      'nav.shop': 'Online Shop',
+      'nav.faq': 'FAQ',
+      'nav.book_event': 'BOOK EVENT',
+      'nav.bag': 'Bag',
+
+      // Hero
+      'hero.eyebrow': 'LUCKY SHAKER — BESPOKE BARTENDING & EXPERIENCES',
+      'hero.headline': 'MAKE YOUR EVENT<br><span class="highlight-pink">A LITTLE MORE LUCKY.</span>',
+      'hero.subtitle': 'Premium mobile bartending, bespoke cocktail catering, and unforgettable hospitality for weddings, private parties, corporate galas, and celebrations.',
+      'hero.primary_cta': 'BOOK YOUR EVENT',
+      'hero.secondary_cta': 'ONLINE SHOP',
+      'hero.trust1': 'Luxury Mobile Bars',
+      'hero.trust2': 'Certified Master Mixologists',
+      'hero.trust3': '5-Star Hospitality',
+
+      // Cinematic Scroll
+      'cinematic.brand_tag': 'HAND-BATCHED • READY TO POUR',
+      'cinematic.headline': 'BRING LUCKY SHAKER HOME',
+      'cinematic.subtitle': 'Artisan craft cocktails hand-batched and sealed in glass. Scroll to explore each signature reserve creation.',
+      'cinematic.shop_all_cta': 'EXPLORE ALL BOTTLES',
+      'cinematic.book_cta': 'BOOK YOUR EVENT',
+      'cinematic.scroll_cue': 'SCROLL TO EXPLORE THE CRAFT',
+      'cinematic.b1_title': 'Triple-Distilled Aged Whiskey',
+      'cinematic.b1_sub': 'Matured in charred American oak',
+      'cinematic.b2_title': 'Venezuelan Roasted Cocoa',
+      'cinematic.b2_sub': 'Infused with bourbon vanilla beans',
+      'cinematic.b3_title': 'Pure Velvet Dairy Cream',
+      'cinematic.b3_sub': '17% Alc / Vol • 110 ML single pour',
+      'cinematic.b4_title': 'Private Reserve By Katherin',
+      'cinematic.b4_sub': 'Hand-batched & sealed in glass',
+      'cinematic.buy_btn': 'SHOP NOW',
+
+      // Types
+      'types.eyebrow': 'MADE FOR YOUR MOMENT',
+      'types.headline': 'Curated Bartending For Every Occasion',
+      'types.subtitle': 'From intimate terrace celebrations to grand wedding receptions, we tailor every cocktail, bar station, and hospitality detail to your event.',
+      'types.c1_tag': 'ELEGANT • MEMORABLE',
+      'types.c1_title': 'Weddings & Receptions',
+      'types.c1_desc': 'Full luxury cocktail catering featuring signature bride & groom cocktails, crystal glassware, champagne service, and dedicated mixologists.',
+      'types.c2_tag': 'INTIMATE • VIBRANT',
+      'types.c2_title': 'Private Parties & Birthdays',
+      'types.c2_desc': 'Elevate milestone birthdays, anniversaries, and terrace gatherings with private cocktail bars, craft menus, and effortless hosting.',
+      'types.c3_tag': 'SOPHISTICATED • FLAWLESS',
+      'types.c3_title': 'Corporate Galas & Brands',
+      'types.c3_desc': 'High-volume craft cocktail catering, branded bar stations, rapid service flow, and executive-level hospitality for VIP guests.',
+      'types.c4_tag': 'INTERACTIVE • EXCLUSIVE',
+      'types.c4_title': 'Special Celebrations & Workshops',
+      'types.c4_desc': 'Hands-on cocktail masterclasses, bachelorette celebrations, and guided spirit tastings led by founder Katherin and master bartenders.',
+      'types.quote_btn': 'REQUEST A QUOTE',
+
+      // Experience
+      'exp.eyebrow': 'MORE THAN A BAR',
+      'exp.headline': 'The Lucky Shaker Experience',
+      'exp.subtitle': 'We manage every aspect of bar logistics, mixology choreography, and guest hospitality so you can be fully present with your guests.',
+      'exp.s1_title': '01 • PLAN',
+      'exp.s1_desc': 'Personalized menu consultation. We design bespoke craft cocktails tailored to your event theme, guest profile, and venue aesthetic.',
+      'exp.s2_title': '02 • PREP',
+      'exp.s2_desc': 'Handcrafted botanical syrups, fresh-pressed citrus, crystal craft ice, bespoke garnishes, and immaculate bar setup before guests arrive.',
+      'exp.s3_title': '03 • SHAKE',
+      'exp.s3_desc': 'Master mixology flair and top-tier hospitality. Every drink is shaken live to order with energetic pacing, precision, and flawless presentation.',
+      'exp.s4_title': '04 • CELEBRATE',
+      'exp.s4_desc': 'Zero host stress. Enjoy seamless bar service, delighted guests, and a sparkling-clean bar breakdown when the celebration concludes.',
+      'exp.book_btn': 'BOOK YOUR EVENT',
+
+      // Services
+      'services.eyebrow': 'SERVICES & PACKAGES',
+      'services.headline': 'Turnkey Cocktail Catering',
+      'services.subtitle': 'Everything needed to deliver a world-class cocktail lounge experience at your private venue, home, or event space.',
+      'services.srv1_title': 'Illuminated Mobile Bars',
+      'services.srv1_desc': 'Modular designer bar stations with architectural lighting, brushed brass finishes, complete bar toolsets, and self-contained ice wells.',
+      'services.srv1_f1': 'Custom bar styling & ambient illumination',
+      'services.srv1_f2': 'Licensed & insured master mixologists',
+      'services.srv1_f3': 'Self-contained ice stations & premium tools',
+      'services.srv2_title': 'Signature Cocktail Menus',
+      'services.srv2_desc': 'Tailored recipe curation with custom printed bar menus, farm-fresh botanical garnishes, aromatic wood smoking, and elevated zero-proof mocktails.',
+      'services.srv2_f1': 'House-made infusions, syrups & bitters',
+      'services.srv2_f2': 'Crystal glassware & artisan clear ice spheres',
+      'services.srv2_f3': 'Curated non-alcoholic mocktail programs',
+      'services.srv3_title': 'Interactive Masterclasses',
+      'services.srv3_desc': 'Hands-on bartending workshops for corporate team building, bachelorette gatherings, and private dinners led by expert mixologists.',
+      'services.srv3_f1': 'Individual shaker & jigger stations',
+      'services.srv3_f2': 'Spirit history, balance & pairing guide',
+      'services.srv3_f3': 'Take-home recipe keepsake cards',
+
+      // Gallery
+      'gallery.eyebrow': 'THE ATMOSPHERE',
+      'gallery.headline': 'Moments We’ve Crafted',
+      'gallery.subtitle': 'A glimpse into the energy, craftsmanship, and sophisticated cocktail atmospheres we deliver across private events.',
+      'gallery.p1': 'WEDDINGS',
+      'gallery.t1': 'Sunset Reception Bar Setup',
+      'gallery.p2': 'THE CRAFT',
+      'gallery.t2': 'Shaker Action & Live Pouring',
+      'gallery.p3': 'PRIVATE EVENTS',
+      'gallery.t3': 'Rooftop Evening Celebrations',
+      'gallery.p4': 'CORPORATE GALAS',
+      'gallery.t4': 'VIP Corporate Hospitality Station',
+      'gallery.p5': 'RESERVE COLLECTION',
+      'gallery.t5': 'Hand-Batched Elegance',
+
+      // Testimonials
+      'reviews.eyebrow': 'CLIENT REVIEWS',
+      'reviews.headline': 'Loved by Hosts & Guests',
+      'reviews.badge_text': '5.0 Star Rated Event Bartending Experience',
+      'reviews.r1_quote': '“Lucky Shaker completely elevated our wedding reception. The custom bride & groom cocktails were the highlight of the night, and the bartenders were exceptionally fast and warm.”',
+      'reviews.r1_author': 'Sofia & Lucas M.',
+      'reviews.r1_event': 'Wedding Reception • Coral Gables, FL',
+      'reviews.r2_quote': '“We hired Lucky Shaker for our annual corporate gala of 180 guests. Flawless execution, zero lines at the bar, and the smoked Old Fashioned was unforgettable.”',
+      'reviews.r2_author': 'David R., Executive Director',
+      'reviews.r2_event': 'Corporate Gala • Brickell, Miami',
+      'reviews.r3_quote': '“The cocktail masterclass for my 40th birthday was the most fun party we’ve ever hosted. Katherin and her team made everyone feel like a pro mixologist!”',
+      'reviews.r3_author': 'Camila T.',
+      'reviews.r3_event': 'Birthday Celebration • Miami Beach',
+
+      // Booking Form
+      'booking.eyebrow': 'BOOK YOUR EVENT',
+      'booking.headline': 'Request a Personalized Quote',
+      'booking.subtitle': 'Tell us about your upcoming celebration. Our hospitality concierge will tailor a custom bar package and confirm availability within 24 hours.',
+      'booking.success_title': 'Thank you! Your inquiry has been received.',
+      'booking.success_desc': 'Our event director will review your details and send a personalized proposal within 24 hours.',
+      'booking.lbl_name': 'Full Name *',
+      'booking.lbl_email': 'Email Address *',
+      'booking.lbl_phone': 'Phone Number *',
+      'booking.lbl_type': 'Event Type *',
+      'booking.opt_select': 'Select event type',
+      'booking.opt_wedding': 'Wedding & Reception',
+      'booking.opt_private': 'Private Party / Birthday',
+      'booking.opt_corp': 'Corporate Gala / Brand Event',
+      'booking.opt_masterclass': 'Cocktail Masterclass / Workshop',
+      'booking.opt_other': 'Other Special Celebration',
+      'booking.lbl_date': 'Estimated Event Date *',
+      'booking.lbl_guests': 'Estimated Guest Count *',
+      'booking.opt_guest_select': 'Select guest range',
+      'booking.opt_g1': '10–25 Guests (Intimate)',
+      'booking.opt_g2': '26–50 Guests (Medium)',
+      'booking.opt_g3': '51–100 Guests (Large)',
+      'booking.opt_g4': '101–200+ Guests (Gala / Wedding)',
+      'booking.lbl_location': 'Event Location / Venue & City *',
+      'booking.lbl_notes': 'Special Requests / Cocktail Preferences',
+      'booking.btn_submit': 'SUBMIT QUOTE REQUEST',
+      'booking.guarantee': 'No upfront payment required • Personalized response within 24 hours',
+
+      // Shop Preview
+      'shop_preview.eyebrow': 'BRING LUCKY SHAKER HOME',
+      'shop_preview.headline': 'The Bottled Reserve Collection',
+      'shop_preview.subtitle': 'Love our cocktails? Order our hand-batched, shelf-stable ready-to-pour craft bottles delivered directly to your doorstep.',
+      'shop_preview.add_bag': 'ADD TO BAG',
+
+      // FAQs
+      'faq.eyebrow': 'FREQUENTLY ASKED QUESTIONS',
+      'faq.headline': 'Event Bartending Details',
+      'faq.subtitle': 'Everything you need to know about booking Lucky Shaker for your celebration.',
+      'faq.q1': 'What is included with Lucky Shaker event bartending?',
+      'faq.a1': 'Every package includes our mobile bar stations, licensed & insured mixologists, custom printed cocktail menus, house-made craft syrups, fresh-pressed citrus, artisan garnishes, premium glassware, and complete ice wells.',
+      'faq.q2': 'How far in advance should I reserve our date?',
+      'faq.a2': 'We recommend booking 3 to 8 weeks in advance for private events and 3 to 6 months for weddings and peak holiday corporate galas. However, we always accommodate short-notice requests based on calendar availability.',
+      'faq.q3': 'Do you provide the alcohol or does the host provide it?',
+      'faq.a3': 'We offer flexible models. We can coordinate the entire spirit inventory through our licensed delivery partners, or provide you with an exact shopping list if you prefer to furnish spirits yourself.',
+      'faq.q4': 'Can we customize signature cocktail names and ingredients?',
+      'faq.a4': 'Absolutely! That is our signature specialty. We craft custom-named cocktail menus celebrating the bride & groom, corporate brand identity, or host preferences.',
+      'faq.q5': 'Do you offer non-alcoholic mocktail programs?',
+      'faq.a5': 'Yes! We formulate elevated zero-proof craft mocktails using fresh botanical infusions, sparkling spritzes, and fresh citrus so all guests enjoy a luxury bar experience.',
+      'faq.cta_text': 'Have a specific question about your event?',
+      'faq.cta_btn': 'SPEAK WITH OUR CONCIERGE',
+
+      // Shop & PDP
+      'shop.bestseller': 'BEST SELLER',
+      'shop.craft_cocktail': 'CRAFT COCKTAIL',
+      'shop.default_notes': 'Hand-batched luxury ready-to-pour cocktail',
+      'shop.add_bag': 'ADD TO BAG',
+      'shop.sold_out': 'SOLD OUT',
+      'pdp.crumb_home': 'Home',
+      'pdp.crumb_collection': 'Reserve Collection',
+      'pdp.reserve_badge': 'RESERVE BOTTLE',
+      'pdp.eyebrow': 'PRIVATE RESERVE // MASTER MIXOLOGIST BATCH',
+      'pdp.subtitle': 'Formulated by Katherin • Ready to Pour Craft Cocktail',
+      'pdp.reviews_count': '(+180 Verified Reviews)',
+      'pdp.free_shipping': 'Free 21+ Express Delivery on orders $80+',
+      'pdp.select_format': 'SELECT PRESENTATION:',
+      'pdp.add_to_bag': 'ADD TO BAG',
+      'pdp.trust_pkg': 'Insulated Climate Packaging with Breakage Protection Guarantee',
+      'pdp.trust_id': 'Mandatory 21+ Adult ID Signature Verification Upon Delivery',
+      'pdp.tab1_title': 'TASTING PROFILE & PALATE NOTES',
+      'pdp.aroma_label': 'Aroma:',
+      'pdp.aroma_val': 'Fresh aromatic botanical infusion, layered oak undertones, citrus zests.',
+      'pdp.palate_label': 'Palate:',
+      'pdp.palate_val': 'Silky and rich texture with upfront craft distillate depth, harmonized by authentic cane sugars and cold-pressed citrus.',
+      'pdp.finish_label': 'Finish:',
+      'pdp.finish_val': 'Exceptionally smooth, lasting lounge-quality finish with crisp, clean palate clearance.',
+      'pdp.tab2_title': 'THE SERVING RITUAL',
+      'pdp.ritual_1': '1. Chill the bottle thoroughly to 4°C / 40°F before serving.',
+      'pdp.ritual_2': '2. Give the bottle 3 vigorous shakes to homogenize all natural botanical oils.',
+      'pdp.ritual_3': '3. Pour 3.5oz to 4.0oz over a large clear crystal ice sphere or rocks.',
+      'pdp.ritual_4': '4. Garnish with a fresh citrus twist or aromatic peel and enjoy.',
+      'pdp.tab3_title': 'STORAGE, SHELF LIFE & ALLERGENS',
+      'pdp.shelf_label': 'Shelf Life:',
+      'pdp.shelf_val': '12 months unopened at ambient room temperature away from direct sunlight. Refrigerate upon opening and consume within 6 months.',
+      'pdp.volume_label': 'Volume:',
+      'pdp.volume_val': '750 ML glass bottle (Yields 6–8 full-sized luxury pours).',
+      'pdp.formulation_label': 'Formulation:',
+      'pdp.formulation_val': '100% Gluten-Free ingredients, natural spirits, no synthetic chemical stabilizers.',
+
+      // Cart
+      'cart.title': 'Your Bar',
+      'cart.item_single': '1 ITEM',
+      'cart.item_plural': 'ITEMS',
+      'cart.empty_title': 'YOUR BAR IS EMPTY',
+      'cart.empty_desc': 'Explore our signature ready-to-pour craft cocktails to curate your collection.',
+      'cart.explore_btn': 'EXPLORE COCKTAILS',
+      'cart.subtotal': 'SUBTOTAL',
+      'cart.taxes_note': 'Taxes and shipping calculated at checkout.',
+      'cart.checkout': 'PROCEED TO CHECKOUT',
+      'cart.continue': 'Continue Exploring →',
+      'cart.shipping_empty': 'Spend <strong>$80.00</strong> for <strong>Free Express Shipping</strong>',
+      'cart.shipping_progress': 'Add <strong>${remaining}</strong> more for <strong>Free Express Shipping</strong> 🍸',
+      'cart.shipping_unlocked': '🎉 <strong>Complimentary Express Shipping Unlocked!</strong>',
+
+      // Footer
+      'footer.brand_desc': 'Ultra-premium mobile bartending and craft cocktail catering for private events, weddings, and celebrations. Shaken with passion, poured with intention.',
+      'footer.badge_21': '21+ Certified & Fully Insured Bar Service',
+      'footer.col1_title': 'EVENTS & SERVICES',
+      'footer.weddings': 'Weddings & Receptions',
+      'footer.private_parties': 'Private Parties',
+      'footer.corporate': 'Corporate Galas',
+      'footer.masterclasses': 'Masterclasses & Workshops',
+      'footer.request_quote': 'Request an Event Quote',
+      'footer.col2_title': 'SHOP & BRAND',
+      'footer.shop_bottles': 'Bottled Reserve Shop',
+      'footer.our_story': 'Our Story',
+      'footer.faqs': 'Frequently Asked Questions',
+      'footer.col3_title': 'POLICIES & LEGAL',
+      'footer.shipping': 'Shipping & Delivery',
+      'footer.refunds': 'Refunds & Cancellations',
+      'footer.privacy': 'Privacy Policy',
+      'footer.terms': 'Terms of Service',
+      'footer.copyright': '© 2026 LUCKY SHAKER LLC. ALL RIGHTS RESERVED.',
+      'footer.notice': 'Please drink responsibly. Sale and service of alcoholic beverages is strictly 21+.'
+    }
+  },
+
+  get: function(key) {
+    var lang = this.currentLang || 'es';
+    if (this.dict[lang] && this.dict[lang][key] !== undefined) {
+      return this.dict[lang][key];
+    }
+    return (this.dict.es && this.dict.es[key]) || key;
+  },
+
+  setLang: function(lang) {
+    if (lang !== 'es' && lang !== 'en') lang = 'es';
+    this.currentLang = lang;
+    try {
+      localStorage.setItem('lucky_shaker_lang', lang);
+    } catch(e) {}
+
+    document.documentElement.lang = lang;
+
+    // Update buttons
+    var btnEs = document.getElementById('lang-btn-es');
+    var btnEn = document.getElementById('lang-btn-en');
+    if (btnEs && btnEn) {
+      if (lang === 'es') {
+        btnEs.classList.add('active');
+        btnEn.classList.remove('active');
+      } else {
+        btnEn.classList.add('active');
+        btnEs.classList.remove('active');
+      }
+    }
+
+    // Update all data-i18n elements
+    var self = this;
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (key && self.dict[lang] && self.dict[lang][key] !== undefined) {
+        el.innerHTML = self.dict[lang][key];
+      }
+    });
+
+    // Update placeholders
+    var nameInp = document.getElementById('inquiry-name');
+    if (nameInp) nameInp.placeholder = lang === 'es' ? 'Ej. Alejandra Valdés' : 'e.g. Alexander Vance';
+
+    var locInp = document.getElementById('inquiry-location');
+    if (locInp) locInp.placeholder = lang === 'es' ? 'Ej. Residencia Privada en Coral Gables / Salón Biltmore' : 'e.g. Private Residence in Coral Gables / Biltmore Ballroom';
+
+    var msgInp = document.getElementById('inquiry-message');
+    if (msgInp) msgInp.placeholder = lang === 'es' ? 'Cuéntanos sobre tus licores favoritos, temática del evento o ideas especiales de cócteles...' : 'Tell us about your favorite spirits, event theme, or special cocktail ideas...';
+
+    // Dispatch custom event
+    document.dispatchEvent(new CustomEvent('luckyshaker:langchange', { detail: { lang: lang } }));
+  },
+
+  init: function() {
+    var stored = 'es';
+    try {
+      stored = localStorage.getItem('lucky_shaker_lang') || 'es';
+    } catch(e) {}
+    this.setLang(stored);
+  }
+};
+
+/* ==========================================================================
+   1. AJAX CART DRAWER ENGINE
+   ========================================================================== */
+window.LuckyShakerCart = {
+  drawer: null,
+  backdrop: null,
+  badge: null,
+  itemsList: null,
+  subtotalEl: null,
+  toast: null,
+  toastTimer: null,
+
+  init: function() {
+    this.drawer = document.getElementById('cart-drawer');
+    this.backdrop = document.getElementById('cart-backdrop');
+    this.badge = document.getElementById('cart-badge-count');
+    this.itemsList = document.getElementById('cart-items-list');
+    this.subtotalEl = document.getElementById('drawer-subtotal');
+    this.toast = document.getElementById('cart-toast');
+
+    var self = this;
+
+    // Attach open triggers
+    document.querySelectorAll('.open-cart-btn, .cart-toggle-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        self.open();
+      });
+    });
+
+    // Attach close triggers
+    var closeBtn = document.getElementById('close-cart-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        self.close();
+      });
+    }
+
+    if (this.backdrop) {
+      this.backdrop.addEventListener('click', function() {
+        self.close();
+      });
+    }
+
+    // Intercept native product form submission for Ajax
+    var productForm = document.getElementById('pdp-product-form');
+    if (productForm) {
+      productForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var variantId = document.getElementById('selected-variant-id').value;
+        var qty = parseInt(document.getElementById('pdp-qty-input').value) || 1;
+        self.addItem(variantId, qty);
+      });
+    }
+
+    // Checkout triggers: use cart permalink bridging if in local development
+    document.addEventListener('click', function(e) {
+      var checkoutTrigger = e.target.closest('#checkout-btn, .btn-drawer-checkout, .summary-checkout-btn, [name="checkout"]');
+      if (checkoutTrigger) {
+        e.preventDefault();
+        self.proceedToCheckout();
+      }
+    });
+
+    var cartForm = document.getElementById('cart-form');
+    if (cartForm) {
+      cartForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        self.proceedToCheckout();
+      });
+    }
+  },
+
+  proceedToCheckout: function() {
+    var self = this;
+    fetch(window.LuckyShaker?.routes?.cart_url + '.js' || '/cart.js')
+      .then(function(res) { return res.json(); })
+      .then(function(cart) {
+        if (!cart.items || cart.items.length === 0) {
+          self.showToast(window.LuckyShakerLang?.currentLang === 'es' ? 'Tu bolsa está vacía. ¡Agrega un cóctel!' : 'Your bar is empty. Add a cocktail first!');
+          return;
+        }
+
+        var isLocal = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost';
+
+        if (isLocal) {
+          var permalinkParts = cart.items.map(function(item) {
+            return item.variant_id + ':' + item.quantity;
+          }).join(',');
+
+          var shopDomain = (window.LuckyShaker && (window.LuckyShaker.permanentDomain || window.LuckyShaker.shopDomain)) || 'lucky-shaker-bgzxnanx.myshopify.com';
+          var targetUrl = 'https://' + shopDomain + '/cart/' + permalinkParts;
+          window.location.href = targetUrl;
+        } else {
+          window.location.href = '/checkout';
+        }
+      })
+      .catch(function(err) {
+        console.error('Checkout dispatch error:', err);
+        window.location.href = '/checkout';
+      });
+  },
+
+  open: function() {
+    if (this.drawer) this.drawer.classList.add('open');
+    if (this.backdrop) this.backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  },
+
+  close: function() {
+    if (this.drawer) this.drawer.classList.remove('open');
+    if (this.backdrop) this.backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  },
+
+  showToast: function(msg) {
+    if (!this.toast) return;
+    var textEl = document.getElementById('toast-text');
+    if (textEl && msg) textEl.textContent = msg;
+
+    this.toast.classList.add('active');
+    clearTimeout(this.toastTimer);
+    var self = this;
+    this.toastTimer = setTimeout(function() {
+      self.toast.classList.remove('active');
+    }, 2800);
+  },
+
+  addItem: function(variantId, quantity, title, price) {
+    var self = this;
+    quantity = quantity || 1;
+
+    fetch(window.LuckyShaker?.routes?.cart_add_url || '/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: quantity
+      })
+    })
+    .then(function(res) {
+      return res.json();
+    })
+    .then(function(item) {
+      self.refreshCart(true);
+      var lang = window.LuckyShakerLang?.currentLang || 'es';
+      var addedText = lang === 'es' ? 'Agregado a la bolsa' : 'Added to bag';
+      self.showToast((title || item.title || 'Cóctel') + ' • ' + addedText);
+    })
+    .catch(function(err) {
+      console.warn('Shopify Cart Add Fallback:', err);
+      self.showToast('Agregado a la bolsa');
+      self.open();
+    });
+  },
+
+  addItemByHandle: function(handle, qty, fallbackTitle, fallbackPrice) {
+    var self = this;
+    fetch('/products/' + handle + '.js')
+      .then(function(res) { return res.json(); })
+      .then(function(product) {
+        var variantId = product.variants[0].id;
+        self.addItem(variantId, qty || 1, product.title);
+      })
+      .catch(function() {
+        self.showToast('Agregado ' + fallbackTitle + ' a la bolsa');
+        self.open();
+      });
+  },
+
+  changeQuantity: function(lineItemKey, newQty) {
+    var self = this;
+    fetch(window.LuckyShaker?.routes?.cart_change_url || '/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: lineItemKey,
+        quantity: newQty
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(cart) {
+      self.renderCart(cart);
+      if (window.location.pathname.includes('/cart')) {
+        window.location.reload();
+      }
+    })
+    .catch(function(err) {
+      console.error('Cart quantity change failed:', err);
+    });
+  },
+
+  refreshCart: function(openAfter) {
+    var self = this;
+    fetch(window.LuckyShaker?.routes?.cart_url + '.js' || '/cart.js')
+      .then(function(res) { return res.json(); })
+      .then(function(cart) {
+        self.renderCart(cart);
+        if (openAfter) self.open();
+      })
+      .catch(function(err) {
+        console.error('Failed to refresh cart:', err);
+      });
+  },
+
+  renderCart: function(cart) {
+    var lang = window.LuckyShakerLang?.currentLang || 'es';
+    if (this.badge) this.badge.textContent = cart.item_count;
+
+    var countBadge = document.getElementById('drawer-count-badge');
+    if (countBadge) {
+      if (lang === 'es') {
+        countBadge.textContent = cart.item_count === 1 ? '1 PRODUCTO' : cart.item_count + ' PRODUCTOS';
+      } else {
+        countBadge.textContent = cart.item_count === 1 ? '1 ITEM' : cart.item_count + ' ITEMS';
+      }
+    }
+
+    if (this.subtotalEl) {
+      this.subtotalEl.textContent = this.formatMoney(cart.total_price);
+    }
+
+    var shippingText = document.getElementById('shipping-progress-text');
+    var shippingPercent = document.getElementById('shipping-progress-percent');
+    var shippingFill = document.getElementById('shipping-progress-fill');
+    var thresholdCents = 8000;
+
+    if (shippingText && shippingFill) {
+      if (cart.total_price === 0) {
+        shippingText.innerHTML = lang === 'es'
+          ? 'Agrega <strong>$80.00</strong> para <strong>Envío Express Gratis</strong>'
+          : 'Spend <strong>$80.00</strong> for <strong>Free Express Shipping</strong>';
+        if (shippingPercent) shippingPercent.textContent = '0%';
+        shippingFill.style.width = '0%';
+      } else if (cart.total_price < thresholdCents) {
+        var remaining = (thresholdCents - cart.total_price) / 100;
+        var pct = Math.min(100, Math.round((cart.total_price / thresholdCents) * 100));
+        shippingText.innerHTML = lang === 'es'
+          ? 'Agrega <strong>$' + remaining.toFixed(2) + '</strong> más para <strong>Envío Express Gratis</strong> 🍸'
+          : 'Add <strong>$' + remaining.toFixed(2) + '</strong> more for <strong>Free Express Shipping</strong> 🍸';
+        if (shippingPercent) shippingPercent.textContent = pct + '%';
+        shippingFill.style.width = pct + '%';
+      } else {
+        shippingText.innerHTML = lang === 'es'
+          ? '🎉 <strong>¡Envío Express de Cortesía Desbloqueado!</strong>'
+          : '🎉 <strong>Complimentary Express Shipping Unlocked!</strong>';
+        if (shippingPercent) shippingPercent.textContent = '100%';
+        shippingFill.style.width = '100%';
+      }
+    }
+
+    if (!this.itemsList) return;
+
+    if (cart.item_count === 0) {
+      var emptyTitle = lang === 'es' ? 'TU BARRA ESTÁ VACÍA' : 'YOUR BAR IS EMPTY';
+      var emptyDesc = lang === 'es' ? 'Explora nuestra colección de botellas para comenzar.' : 'Explore our signature ready-to-pour craft cocktails to curate your collection.';
+      var exploreBtn = lang === 'es' ? 'EXPLORAR CÓCTELES' : 'EXPLORE COCKTAILS';
+
+      this.itemsList.innerHTML = 
+        '<div class="cart-empty-message">' +
+          '<div class="empty-cart-icon-wrap">' +
+            '<img src="{{ "favicon.svg" | asset_url }}" alt="Lucky Shaker" width="42" height="42">' +
+          '</div>' +
+          '<h4 class="empty-cart-title">' + emptyTitle + '</h4>' +
+          '<p class="empty-cart-desc">' + emptyDesc + '</p>' +
+          '<a href="/collections/all" class="empty-cart-cta">' +
+            '<span>' + exploreBtn + '</span>' +
+            '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 2l5 5-5 5"/></svg>' +
+          '</a>' +
+        '</div>';
+      return;
+    }
+
+    var html = '';
+    var self = this;
+    var defaultVol = lang === 'es' ? '750ml • Listo para Servir' : '750ml • Ready to Pour';
+
+    cart.items.forEach(function(item) {
+      var imgHtml = item.image 
+        ? '<img src="' + item.image + '" alt="' + item.title + '" class="cart-item-img" width="68" height="80">'
+        : '<div class="cart-item-img" style="background: rgba(0,0,0,0.03);"></div>';
+
+      html += 
+        '<div class="cart-item-row" data-line-item-key="' + item.key + '">' +
+          '<div class="cart-item-img-wrap">' +
+            imgHtml +
+          '</div>' +
+          '<div class="cart-item-info">' +
+            '<h5>' + item.product_title + '</h5>' +
+            '<div class="item-vol">' + (item.variant_title || defaultVol) + '</div>' +
+            '<div class="cart-item-actions">' +
+              '<div class="cart-item-qty">' +
+                '<button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity(\'' + item.key + '\', ' + (item.quantity - 1) + ')" aria-label="Decrease quantity">&minus;</button>' +
+                '<span class="qty-count">' + item.quantity + '</span>' +
+                '<button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity(\'' + item.key + '\', ' + (item.quantity + 1) + ')" aria-label="Increase quantity">&plus;</button>' +
+              '</div>' +
+              '<button type="button" class="cart-item-remove-btn" onclick="LuckyShakerCart.changeQuantity(\'' + item.key + '\', 0)" aria-label="Remove item" title="Remove">' +
+                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                  '<path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>' +
+                '</svg>' +
+              '</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="cart-item-right">' +
+            '<div class="cart-item-price">' + self.formatMoney(item.final_line_price) + '</div>' +
+          '</div>' +
+        '</div>';
+    });
+
+    this.itemsList.innerHTML = html;
+  },
+
+  formatMoney: function(cents) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+};
+
+/* ==========================================================================
+   2. PDP VARIANT & QUANTITY CONTROLLER
+   ========================================================================== */
+window.LuckyShakerPDP = {
+  selectVariant: function(variantId, priceFormatted, el) {
+    var input = document.getElementById('selected-variant-id');
+    if (input) input.value = variantId;
+    var priceDisplay = document.getElementById('pdp-price-display');
+    if (priceDisplay) priceDisplay.textContent = priceFormatted;
+    var btnLabel = document.getElementById('pdp-btn-label');
+    if (btnLabel) btnLabel.textContent = 'ADD TO BAG \u2022 ' + priceFormatted;
+
+    document.querySelectorAll('.variant-option-card, .pdp-format-card').forEach(function(c) {
+      c.classList.remove('active');
+    });
+    if (el) el.classList.add('active');
+  },
+
+  adjustQty: function(delta) {
+    var input = document.getElementById('pdp-qty-input');
+    if (!input) return;
+    var val = parseInt(input.value) + delta;
+    if (val < 1) val = 1;
+    if (val > 12) val = 12;
+    input.value = val;
+  }
+};
+
+/* ==========================================================================
+   3. CONTINUOUS SCROLL-DRIVEN 3-ACT CANVAS SEQUENCE ENGINE (60FPS ZERO-LATENCY)
+   ========================================================================== */
+function initPrimeStoneCinematicEngine() {
+  var sequenceSection = document.getElementById("cinematic-sequence");
+  var viewport = document.getElementById("cinematic-viewport");
+
+  if (!sequenceSection || !viewport) return;
+
+  var sceneMojito = document.getElementById("scene-mojito");
+  var sceneOF = document.getElementById("scene-old-fashioned");
+  var sceneWC = document.getElementById("scene-whiskey-cream");
+
+  var wcCanvas = document.getElementById("wc-sequence-canvas");
+  var ofCanvas = document.getElementById("of-sequence-canvas");
+  var mojitoCanvas = document.getElementById("mojito-sequence-canvas");
+
+  var cardMojito = document.getElementById("card-mojito");
+  var cardOF = document.getElementById("card-old-fashioned");
+  var cardWC = document.getElementById("card-whiskey-cream");
+
+  var fillBar = document.getElementById("timeline-fill-bar");
+  var scrollCue = document.getElementById("scroll-cue");
+
+  function isMobileView() {
+    return window.innerWidth <= 768;
+  }
+
+  var cocktails = {
+    wc: {
+      canvas: wcCanvas,
+      totalFrames: 120,
+      prefix: "wc",
+      mobileCache: new Map(),
+      desktopCache: new Map(),
+      mobileLoading: new Set(),
+      desktopLoading: new Set(),
+      displayedFrame: -1
+    },
+    of: {
+      canvas: ofCanvas,
+      totalFrames: 48,
+      prefix: "of",
+      mobileCache: new Map(),
+      desktopCache: new Map(),
+      mobileLoading: new Set(),
+      desktopLoading: new Set(),
+      displayedFrame: -1
+    },
+    mojito: {
+      canvas: mojitoCanvas,
+      totalFrames: 48,
+      prefix: "mojito",
+      mobileCache: new Map(),
+      desktopCache: new Map(),
+      mobileLoading: new Set(),
+      desktopLoading: new Set(),
+      displayedFrame: -1
+    }
+  };
+
+  function getFrameUrl(itemKey, idx, isMobile) {
+    var prefix = isMobile ? (cocktails[itemKey].prefix + "-m-") : (cocktails[itemKey].prefix + "-");
+    var padded = String(idx).padStart(4, "0");
+    var filename = "frame-" + prefix + padded;
+
+    // Production Shopify CDN with asset URL template
+    if (window.LuckyShaker && window.LuckyShaker.assetUrlTemplate) {
+      var tmpl = window.LuckyShaker.assetUrlTemplate;
+      if (tmpl.indexOf("frame-PLACEHOLDER") !== -1) {
+        return tmpl.replace("frame-PLACEHOLDER", filename);
+      }
+      return tmpl.replace(/frame-[a-zA-Z0-9_-]+(?=\.webp)/, filename);
+    }
+
+    return "/assets/" + filename + ".webp";
+  }
+
+  function drawFrameToCanvas(canvas, img) {
+    if (!canvas || !img || !img.complete || img.naturalWidth === 0) return;
+    var ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) return;
+
+    var cw = canvas.width;
+    var ch = canvas.height;
+    var iw = img.naturalWidth;
+    var ih = img.naturalHeight;
+    if (cw === 0 || ch === 0 || iw === 0 || ih === 0) return;
+
+    var imgAspect = iw / ih;
+    var canvasAspect = cw / ch;
+
+    var dw, dh;
+    if (canvasAspect > imgAspect) {
+      dw = cw;
+      dh = cw / imgAspect;
+    } else {
+      dh = ch;
+      dw = ch * imgAspect;
+    }
+
+    var offsetX = (cw - dw) / 2;
+    var offsetY = (ch - dh) / 2;
+    ctx.drawImage(img, offsetX, offsetY, dw, dh);
+  }
+
+  function preloadFrame(itemKey, idx, priority) {
+    var item = cocktails[itemKey];
+    if (!item || idx < 1 || idx > item.totalFrames) return;
+    var isMobile = isMobileView();
+    var cache = isMobile ? item.mobileCache : item.desktopCache;
+    var loading = isMobile ? item.mobileLoading : item.desktopLoading;
+    if (cache.has(idx) || loading.has(idx)) return;
+
+    loading.add(idx);
+    var img = new Image();
+    img.src = getFrameUrl(itemKey, idx, isMobile);
+    img.decoding = "async";
+    if (priority) img.fetchPriority = "high";
+
+    function onReady() {
+      loading.delete(idx);
+      cache.set(idx, img);
+      if (item.displayedFrame === -1 && idx === 1) {
+        drawFrameToCanvas(item.canvas, img);
+        item.displayedFrame = 1;
+      }
+    }
+
+    if ("decode" in img) {
+      img.decode().then(onReady).catch(function() {
+        img.onload = onReady;
+        img.onerror = function() { loading.delete(idx); };
+      });
+    } else {
+      img.onload = onReady;
+      img.onerror = function() { loading.delete(idx); };
+    }
+  }
+
+  function loadNearbyFrames(itemKey, center) {
+    var item = cocktails[itemKey];
+    if (!item) return;
+    var minF = Math.max(1, center - 4);
+    var maxF = Math.min(item.totalFrames, center + 12);
+    for (var f = minF; f <= maxF; f++) {
+      preloadFrame(itemKey, f, false);
+    }
+  }
+
+  function renderCocktailFrame(itemKey, targetFrame) {
+    var item = cocktails[itemKey];
+    if (!item || !item.canvas) return;
+    var isMobile = isMobileView();
+    var cache = isMobile ? item.mobileCache : item.desktopCache;
+
+    if (item.displayedFrame !== targetFrame) {
+      var img = cache.get(targetFrame);
+      if (!img) {
+        var closestDist = Infinity;
+        cache.forEach(function(fImg, fIdx) {
+          var d = Math.abs(fIdx - targetFrame);
+          if (d < closestDist && fImg.complete && fImg.naturalWidth > 0) {
+            closestDist = d;
+            img = fImg;
+          }
+        });
+      }
+      if (img && img.complete && img.naturalWidth > 0) {
+        drawFrameToCanvas(item.canvas, img);
+        item.displayedFrame = targetFrame;
+      }
+      loadNearbyFrames(itemKey, targetFrame);
+    }
+  }
+
+  function startBackgroundPrefetch() {
+    preloadFrame("wc", 1, true);
+    preloadFrame("of", 1, true);
+    preloadFrame("mojito", 1, true);
+
+    for (var i = 1; i <= 24; i++) preloadFrame("wc", i, false);
+    for (var j = 1; j <= 12; j++) preloadFrame("of", j, false);
+    for (var k = 1; k <= 12; k++) preloadFrame("mojito", k, false);
+
+    var seq = ["wc", "of", "mojito"];
+    var seqIdx = 0;
+    var f = 1;
+    var timer = setInterval(function() {
+      if (seqIdx >= seq.length) {
+        clearInterval(timer);
+        return;
+      }
+      var key = seq[seqIdx];
+      preloadFrame(key, f, false);
+      f++;
+      if (f > cocktails[key].totalFrames) {
+        seqIdx++;
+        f = 1;
+      }
+    }, 20);
+  }
+
+  var lastMobileRecorded = isMobileView();
+  function resizeAllCanvases() {
+    var isMobile = isMobileView();
+    var mobileChanged = isMobile !== lastMobileRecorded;
+    if (mobileChanged) {
+      lastMobileRecorded = isMobile;
+      Object.keys(cocktails).forEach(function(k) {
+        cocktails[k].displayedFrame = -1;
+      });
+      startBackgroundPrefetch();
+    }
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var vw = window.innerWidth || document.documentElement.clientWidth;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var targetW = Math.max(1, Math.round(vw * dpr));
+    var targetH = Math.max(1, Math.round(vh * dpr));
+
+    Object.keys(cocktails).forEach(function(k) {
+      var item = cocktails[k];
+      if (!item.canvas) return;
+      if (item.canvas.width !== targetW || item.canvas.height !== targetH || mobileChanged) {
+        item.canvas.width = targetW;
+        item.canvas.height = targetH;
+        var cache = isMobile ? item.mobileCache : item.desktopCache;
+        var curF = item.displayedFrame > 0 ? item.displayedFrame : 1;
+        if (cache.has(curF)) {
+          drawFrameToCanvas(item.canvas, cache.get(curF));
+          item.displayedFrame = curF;
+        }
+      }
+    });
+  }
+
+  window.addEventListener("resize", resizeAllCanvases);
+  window.addEventListener("orientationchange", resizeAllCanvases);
+  resizeAllCanvases();
+  startBackgroundPrefetch();
+
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  var targetProgress = 0;
+  var currentProgress = 0;
+  var isLoopActive = false;
+  var SMOOTHING_FACTOR = 0.09;
+
+  function computeScrollProgress() {
+    var rect = sequenceSection.getBoundingClientRect();
+    var scrollDistance = sequenceSection.offsetHeight - window.innerHeight;
+    if (scrollDistance <= 0) return 0;
+    var raw = -rect.top / scrollDistance;
+    return clamp(raw, 0, 1);
+  }
+
+  function onScrollOrResize() {
+    var newTarget = computeScrollProgress();
+    if (newTarget !== targetProgress) {
+      targetProgress = newTarget;
+      if (!isLoopActive) {
+        isLoopActive = true;
+        requestAnimationFrame(renderLoop);
+      }
+    }
+  }
+
+  window.addEventListener("scroll", onScrollOrResize, { passive: true });
+  window.addEventListener("resize", onScrollOrResize, { passive: true });
+
+  function renderLoop() {
+    var diff = targetProgress - currentProgress;
+    if (Math.abs(diff) > 0.0001) {
+      currentProgress += diff * SMOOTHING_FACTOR;
+      applyCinematicTransformation(currentProgress);
+      requestAnimationFrame(renderLoop);
+    } else {
+      currentProgress = targetProgress;
+      applyCinematicTransformation(currentProgress);
+      isLoopActive = false;
+    }
+  }
+
+  function applyCinematicTransformation(p) {
+    // -----------------------------------------------------------------------
+    // A. ACT 1: WHISKEY CREAM (p: 0.00 -> 0.32)
+    // -----------------------------------------------------------------------
+    var targetFrameWC = 1;
+    if (p <= 0.02) {
+      targetFrameWC = 1;
+    } else if (p >= 0.22) {
+      targetFrameWC = 120;
+    } else {
+      var normWC = (p - 0.02) / 0.20;
+      targetFrameWC = Math.min(120, Math.max(1, Math.round(normWC * 119) + 1));
+    }
+    renderCocktailFrame("wc", targetFrameWC);
+
+    // -----------------------------------------------------------------------
+    // B. TRANSITION 1 -> 2: OLD FASHIONED SLIDES IN FROM RIGHT (p: 0.28 -> 0.33)
+    // -----------------------------------------------------------------------
+    var t1 = clamp((p - 0.28) / 0.05, 0, 1);
+    var e1 = easeInOutCubic(t1);
+
+    if (sceneWC) {
+      if (p < 0.28) {
+        sceneWC.style.display = "block";
+        sceneWC.style.transform = "translateX(0%) scale(" + (1.0 + p * 0.02).toFixed(4) + ")";
+        sceneWC.style.opacity = "1";
+      } else if (p <= 0.34) {
+        sceneWC.style.display = "block";
+        var xOffsetWC = -e1 * 25;
+        sceneWC.style.transform = "translateX(" + xOffsetWC.toFixed(2) + "%) scale(1.0)";
+        sceneWC.style.opacity = (1 - e1 * 0.4).toFixed(3);
+      } else {
+        sceneWC.style.display = "none";
+      }
+    }
+
+    if (sceneOF) {
+      if (p < 0.28) {
+        sceneOF.style.display = "none";
+        sceneOF.style.transform = "translateX(100%)";
+      } else if (p < 0.60) {
+        sceneOF.style.display = "block";
+        var xOffsetOF = (1 - e1) * 100;
+        sceneOF.style.transform = "translateX(" + xOffsetOF.toFixed(2) + "%)";
+        sceneOF.style.opacity = "1";
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // C. ACT 2: OLD FASHIONED SCRUB (p: 0.33 -> 0.64)
+    // -----------------------------------------------------------------------
+    var targetFrameOF = 1;
+    if (p <= 0.35) {
+      targetFrameOF = 1;
+    } else if (p >= 0.53) {
+      targetFrameOF = 48;
+    } else {
+      var normOF = (p - 0.35) / 0.18;
+      targetFrameOF = Math.min(48, Math.max(1, Math.round(normOF * 47) + 1));
+    }
+    renderCocktailFrame("of", targetFrameOF);
+
+    // -----------------------------------------------------------------------
+    // D. TRANSITION 2 -> 3: MOJITO SLIDES IN FROM RIGHT (p: 0.60 -> 0.65)
+    // -----------------------------------------------------------------------
+    var t2 = clamp((p - 0.60) / 0.05, 0, 1);
+    var e2 = easeInOutCubic(t2);
+
+    if (sceneOF && p >= 0.60) {
+      if (p <= 0.66) {
+        sceneOF.style.display = "block";
+        var xOffsetOF2 = -e2 * 25;
+        sceneOF.style.transform = "translateX(" + xOffsetOF2.toFixed(2) + "%) scale(1.0)";
+        sceneOF.style.opacity = (1 - e2 * 0.4).toFixed(3);
+      } else {
+        sceneOF.style.display = "none";
+      }
+    }
+
+    if (sceneMojito) {
+      if (p < 0.60) {
+        sceneMojito.style.display = "none";
+        sceneMojito.style.transform = "translateX(100%)";
+      } else {
+        sceneMojito.style.display = "block";
+        var xOffsetMojito = (1 - e2) * 100;
+        sceneMojito.style.transform = "translateX(" + xOffsetMojito.toFixed(2) + "%)";
+        sceneMojito.style.opacity = "1";
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // E. ACT 3: MOJITO SCRUB (p: 0.65 -> 0.98)
+    // -----------------------------------------------------------------------
+    var targetFrameMojito = 1;
+    if (p <= 0.67) {
+      targetFrameMojito = 1;
+    } else if (p >= 0.85) {
+      targetFrameMojito = 48;
+    } else {
+      var normMojito = (p - 0.67) / 0.18;
+      targetFrameMojito = Math.min(48, Math.max(1, Math.round(normMojito * 47) + 1));
+    }
+    renderCocktailFrame("mojito", targetFrameMojito);
+
+    // -----------------------------------------------------------------------
+    // F. EDITORIAL CARDS REVEALS & ACTIVE STATES
+    // -----------------------------------------------------------------------
+    if (cardWC) {
+      if (p <= 0.28) {
+        cardWC.classList.add("active");
+      } else {
+        cardWC.classList.remove("active");
+      }
+    }
+
+    if (cardOF) {
+      if (p > 0.28 && p <= 0.60) {
+        cardOF.classList.add("active");
+      } else {
+        cardOF.classList.remove("active");
+      }
+    }
+
+    if (cardMojito) {
+      if (p > 0.60) {
+        cardMojito.classList.add("active");
+      } else {
+        cardMojito.classList.remove("active");
+      }
+    }
+
+    // -----------------------------------------------------------------------
+    // G. SCRUBBER & CUES
+    // -----------------------------------------------------------------------
+    if (fillBar) fillBar.style.width = (p * 100).toFixed(1) + "%";
+    if (scrollCue) scrollCue.style.opacity = p > 0.03 ? "0" : "1";
+  }
+
+  // Initial immediate frame 0 render
+  applyCinematicTransformation(0);
+}
+
+/* ==========================================================================
+   4. STICKY LUXURY NAVBAR CONTROLLER
+   ========================================================================== */
+function initStickyNavbar() {
+  var navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  function updateNavbar() {
+    var hero = document.getElementById('hero') || document.querySelector('.event-hero-section') || document.querySelector('.hero-section');
+    if (hero) {
+      var heroBottom = hero.offsetTop + hero.offsetHeight - 80;
+      if (window.scrollY >= heroBottom) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    } else {
+      if (window.scrollY > 20) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', updateNavbar, { passive: true });
+  window.addEventListener('resize', updateNavbar, { passive: true });
+  updateNavbar();
+}
+
+/* ==========================================================================
+   5. DOM INITIALIZATION
+   ========================================================================== */
+function initAllLuckyShaker() {
+  if (window.LuckyShakerLang && typeof window.LuckyShakerLang.init === 'function') {
+    window.LuckyShakerLang.init();
+  }
+  if (window.LuckyShakerCart && typeof window.LuckyShakerCart.init === 'function') {
+    window.LuckyShakerCart.init();
+  }
+  initPrimeStoneCinematicEngine();
+  initStickyNavbar();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAllLuckyShaker);
+} else {
+  initAllLuckyShaker();
+}
+

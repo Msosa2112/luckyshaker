@@ -1,0 +1,128 @@
+<section id="services" class="event-services-section" data-section-id="{{ section.id }}">
+  <div class="event-services-container">
+    <div class="section-header-center">
+      <span class="section-eyebrow" data-i18n="services.eyebrow">{{ section.settings.eyebrow | default: 'SERVICIOS &amp; PAQUETES' }}</span>
+      <h2 class="section-title" data-i18n="services.headline">{{ section.settings.headline | default: 'Servicio Integral de Coctelería' }}</h2>
+      <p class="section-subtitle" data-i18n="services.subtitle">
+        {{ section.settings.subtitle | default: 'Todo lo necesario para brindar una experiencia de bar de coctelería de clase mundial en tu residencia, salón o espacio de eventos.' }}
+      </p>
+    </div>
+
+    <div class="services-columns-grid">
+      <!-- Servicio 1 -->
+      <div class="service-pill-card">
+        <div class="service-icon-box">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3 class="service-heading" data-i18n="services.srv1_title">{{ section.settings.srv1_title | default: 'Barras Móviles Iluminadas' }}</h3>
+        <p class="service-desc" data-i18n="services.srv1_desc">
+          {{ section.settings.srv1_desc | default: 'Estaciones de barra modulares con iluminación decorativa, acabados en bronce, herramientas profesionales de coctelería y estación de hielo.' }}
+        </p>
+        <ul class="service-features-list">
+          <li data-i18n="services.srv1_f1">Diseño de barra e iluminación personalizada</li>
+          <li data-i18n="services.srv1_f2">Mixólogos certificados y asegurados</li>
+          <li data-i18n="services.srv1_f3">Pozos de hielo y herramental profesional</li>
+        </ul>
+      </div>
+
+      <!-- Servicio 2 -->
+      <div class="service-pill-card featured">
+        <div class="service-icon-box">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8"><path d="M7 4h10l-1.5 13a3 3 0 0 1-3 2.5h-1a3 3 0 0 1-3-2.5L7 4z"/><path d="M7.5 9h9"/><path d="M8 14h8"/></svg>
+        </div>
+        <h3 class="service-heading" data-i18n="services.srv2_title">{{ section.settings.srv2_title | default: 'Menús de Coctelería de Autor' }}</h3>
+        <p class="service-desc" data-i18n="services.srv2_desc">
+          {{ section.settings.srv2_desc | default: 'Curaduría de recetas a medida con cartas de menú impresas, garnituras botánicas frescas, ahumados en vivo y opciones sin alcohol (mocktails).' }}
+        </p>
+        <ul class="service-features-list">
+          <li data-i18n="services.srv2_f1">Jarabes y bitters artesanales de la casa</li>
+          <li data-i18n="services.srv2_f2">Cristalería fina y hielo cristalino</li>
+          <li data-i18n="services.srv2_f3">Cócteles vírgenes / mocktails de autor</li>
+        </ul>
+      </div>
+
+      <!-- Servicio 3 -->
+      <div class="service-pill-card">
+        <div class="service-icon-box">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3 class="service-heading" data-i18n="services.srv3_title">{{ section.settings.srv3_title | default: 'Masterclasses Interactivas' }}</h3>
+        <p class="service-desc" data-i18n="services.srv3_desc">
+          {{ section.settings.srv3_desc | default: 'Talleres prácticos e interactivos de coctelería para eventos corporativos, despedidas de soltera y cenas privadas dirigidos por nuestros mixólogos.' }}
+        </p>
+        <ul class="service-features-list">
+          <li data-i18n="services.srv3_f1">Estaciones de coctelera individuales</li>
+          <li data-i18n="services.srv3_f2">Historia de destilados y maridaje</li>
+          <li data-i18n="services.srv3_f3">Guía de recetas para llevar a casa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Servicios para Eventos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "SERVICIOS & PAQUETES"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Título Principal",
+      "default": "Servicio Integral de Coctelería"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Todo lo necesario para brindar una experiencia de bar de coctelería de clase mundial en tu residencia, salón o espacio de eventos."
+    },
+    {
+      "type": "text",
+      "id": "srv1_title",
+      "label": "Servicio 1 Título",
+      "default": "Barras Móviles Iluminadas"
+    },
+    {
+      "type": "textarea",
+      "id": "srv1_desc",
+      "label": "Servicio 1 Descripción",
+      "default": "Estaciones de barra modulares con iluminación decorativa, acabados en bronce, herramientas profesionales de coctelería y estación de hielo."
+    },
+    {
+      "type": "text",
+      "id": "srv2_title",
+      "label": "Servicio 2 Título",
+      "default": "Menús de Coctelería de Autor"
+    },
+    {
+      "type": "textarea",
+      "id": "srv2_desc",
+      "label": "Servicio 2 Descripción",
+      "default": "Curaduría de recetas a medida con cartas de menú impresas, garnituras botánicas frescas, ahumados en vivo y opciones sin alcohol (mocktails)."
+    },
+    {
+      "type": "text",
+      "id": "srv3_title",
+      "label": "Servicio 3 Título",
+      "default": "Masterclasses Interactivas"
+    },
+    {
+      "type": "textarea",
+      "id": "srv3_desc",
+      "label": "Servicio 3 Descripción",
+      "default": "Talleres prácticos e interactivos de coctelería para eventos corporativos, despedidas de soltera y cenas privadas dirigidos por nuestros mixólogos."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Servicios para Eventos"
+    }
+  ]
+}
+{% endschema %}

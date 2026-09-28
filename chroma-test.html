@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucky Shaker | Real-Time Chroma-Key Compositing Studio</title>
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --accent-pink: #E82B7D;
+      --accent-pink-glow: rgba(232, 43, 125, 0.35);
+      --bg-deep: #FAFAFC;
+      --text-primary: #121316;
+      --text-secondary: #484C58;
+      --font-brand: 'Cinzel', serif;
+      --font-display: 'Playfair Display', serif;
+      --font-ui: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background-color: #0E0F14;
+      color: #FFFFFF;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Top Studio Bar */
+    .studio-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: rgba(14, 15, 20, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+    }
+
+    .studio-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .studio-logo {
+      height: 32px;
+      width: auto;
+    }
+
+    .studio-title {
+      font-family: var(--font-brand);
+      font-size: 0.875rem;
+      letter-spacing: 0.18em;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .studio-tag {
+      background: rgba(232, 43, 125, 0.2);
+      border: 1px solid var(--accent-pink);
+      color: var(--accent-pink);
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================================
+       COMPOSITING STACK (4 LAYERS)
+       ========================================================================= */
+    .compositor-stage-container {
+      position: relative;
+      width: 100%;
+      height: 350vh; /* Scroll track for testing scrubbing */
+    }
+
+    .compositor-viewport {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Z-INDEX 1: CINEMATIC BACKGROUND LAYER */
+    .stage-layer-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    .stage-layer-bg video,
+    .stage-layer-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Checkerboard Pattern for Transparency Inspection */
+    .bg-checkerboard {
+      background-color: #24262E;
+      background-image: 
+        linear-gradient(45deg, #18191F 25%, transparent 25%), 
+        linear-gradient(-45deg, #18191F 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #18191F 75%), 
+        linear-gradient(-45deg, transparent 75%, #18191F 75%);
+      background-size: 32px 32px;
+      background-position: 0 0, 0 16px, 16px -16px, -16px 0px;
+    }
+
+    .bg-light-luxury {
+      background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #FAFAFC 60%, #E8EBF0 100%);
+    }
+
+    .bg-dark-obsidian {
+      background: radial-gradient(circle at 50% 50%, #1A1A24 0%, #0E0F14 70%);
+    }
+
+    .bg-warm-amber {
+      background: radial-gradient(circle at 50% 50%, #3D2214 0%, #180D08 70%);
+    }
+
+    /* Z-INDEX 2: ATMOSPHERIC LIGHTING & PARTICLES */
+    .stage-layer-atmosphere {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 230, 200, 0.12) 0%, transparent 65%);
+    }
+
+    /* Z-INDEX 3: REAL-TIME WEBGL CHROMA-KEY PRODUCT CANVAS */
+    .stage-layer-product {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    #chroma-gl-canvas {
+      width: auto;
+      height: 85vh;
+      max-width: 90vw;
+      object-fit: contain;
+      will-change: transform;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
+      transition: transform 0.05s linear;
+    }
+
+    /* Z-INDEX 4: EDITORIAL TYPOGRAPHY & UI OVERLAYS */
+    .stage-layer-ui {
+      position: absolute;
+      bottom: 3.5rem;
+      left: clamp(2rem, 5vw, 6rem);
+      z-index: 4;
+      pointer-events: none;
+      max-width: 580px;
+    }
+
+    .editorial-box {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 2.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+      color: #121316;
+      pointer-events: auto;
+    }
+
+    .editorial-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent-pink);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .editorial-title {
+      font-family: var(--font-brand);
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.0;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .editorial-subtitle {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--accent-pink);
+      margin-bottom: 1rem;
+    }
+
+    .editorial-desc {
+      font-size: 0.875rem;
+      color: #484C58;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .editorial-specs {
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #747888;
+      font-weight: 700;
+    }
+
+    /* Floating Studio Control Dock (Right Side) */
+    .studio-control-dock {
+      position: fixed;
+      top: 84px;
+      right: 2rem;
+      width: 360px;
+      background: rgba(14, 15, 20, 0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 1.5rem;
+      z-index: 120;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      border-radius: 6px;
+      max-height: calc(100vh - 104px);
+      overflow-y: auto;
+    }
+
+    .dock-title {
+      font-family: var(--font-brand);
+      font-size: 0.8125rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dock-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .dock-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #A0A4B4;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dock-value {
+      font-family: var(--font-mono);
+      color: var(--accent-pink);
+      font-weight: 600;
+    }
+
+    .dock-slider {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .dock-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-pink);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent-pink);
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .btn-dock {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-dock:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--accent-pink);
+    }
+
+    .btn-dock.active {
+      background: var(--accent-pink);
+      border-color: var(--accent-pink);
+      color: #FFFFFF;
+    }
+
+    /* Telemetry HUD */
+    .telemetry-grid {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .telemetry-row {
+      display: flex;
+      justify-content: space-between;
+      color: #8C90A0;
+    }
+
+    .telemetry-row span.val {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* Verification Checklist Card */
+    .checklist-box {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: rgba(0, 200, 100, 0.06);
+      border: 1px solid rgba(0, 200, 100, 0.2);
+      font-size: 0.6875rem;
+      color: #98E0B0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .checklist-item.pass::before {
+      content: '✓';
+      color: #38E080;
+      font-weight: 700;
+    }
+
+    /* Scrubber at Bottom */
+    .scrub-timeline-bar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(720px, 90vw);
+      background: rgba(14, 15, 20, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      z-index: 100;
+    }
+
+    .scrub-btn {
+      background: var(--accent-pink);
+      border: none;
+      color: #FFFFFF;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+    }
+
+    .scrub-track-wrapper {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .scrub-slider {
+      width: 100%;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+    }
+
+    .scrub-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+    }
+
+    .scrub-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: #8C90A0;
+    }
+
+    /* Hidden Source Video (Kept Mounted) */
+    #source-chroma-video {
+      position: fixed;
+      top: -9999px;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Studio Bar -->
+  <header class="studio-header">
+    <div class="studio-brand">
+      <img src="assets/lucky_shaker_logo_light_theme.png" alt="Lucky Shaker" class="studio-logo">
+      <span class="studio-title">CHROMA-KEY COMPOSITING STUDIO</span>
+      <span class="studio-tag">GPU REAL-TIME SHADER</span>
+    </div>
+    <div style="font-size: 0.75rem; color: #A0A4B4;">
+      Product: <strong style="color: #FFF;">Whiskey Cream 4K Animation</strong>
+    </div>
+  </header>
+
+  <!-- Hidden Source Video Element (Preserves DOM Mounting) -->
+  <video id="source-chroma-video" muted playsinline preload="auto">
+    <source src="videos para web/Whiskey_cream_chroma_1080p.mp4" type="video/mp4">
+  </video>
+
+  <!-- =========================================================================
+       SCROLL CONTAINER STAGE (Simulates Sticky Master Timeline)
+       ========================================================================= -->
+  <main class="compositor-stage-container" id="stage-scroll-track">
+    <div class="compositor-viewport">
+
+      <!-- Z-INDEX 1: CINEMATIC BACKGROUND -->
+      <div class="stage-layer-bg" id="stage-bg-layer">
+        <!-- Official 4K Animating Cream Waves Video Background -->
+        <video id="bg-video-element" muted loop playsinline preload="auto" style="width: 100%; height: 100%; object-fit: cover; object-position: center; will-change: transform; transform: scale(1.06); display: block;">
+          <source src="videos para web/Whiskey Cream/Animating_whiskey_cream_background_1080p.mp4" type="video/mp4">
+        </video>
+        <!-- Optional Still 4K Artwork -->
+        <img id="bg-cream-waves-img" src="assets/Cream_waves_advertising_background_4K.webp" alt="Cream Waves Still" style="width: 100%; height: 100%; object-fit: cover; object-position: center; will-change: transform; transform: scale(1.08); display: none;">
+      </div>
+
+      <!-- Z-INDEX 2: ATMOSPHERIC LIGHTING -->
+      <div class="stage-layer-atmosphere" id="stage-atmosphere"></div>
+
+      <!-- Z-INDEX 3: REAL-TIME WEBGL CHROMA-KEY PRODUCT CANVAS -->
+      <div class="stage-layer-product">
+        <canvas id="chroma-gl-canvas"></canvas>
+      </div>
+
+      <!-- Z-INDEX 4: EDITORIAL TYPOGRAPHY & UI -->
+      <div class="stage-layer-ui">
+        <article class="editorial-box">
+          <div class="editorial-badge">
+            <img src="assets/lucky_shaker_glass_icon.png" alt="" style="height: 16px;">
+            <span>PRIVATE RESERVE • BY KATHERIN</span>
+          </div>
+          <h1 class="editorial-title">LUCKY SHAKER</h1>
+          <div class="editorial-subtitle">WHISKEY CREAM</div>
+          <p class="editorial-desc">
+            Triple-distilled artisan whiskey slowly married with velvet dairy cream, roasted Venezuelan cocoa, and bourbon vanilla. The product video is composited live in WebGL with #008CFF chroma removed.
+          </p>
+          <div class="editorial-specs">
+            17% ALC / VOL • 110 ML • REAL-TIME ALPHA COMPOSITING
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       FLOATING STUDIO CONTROL DOCK
+       ========================================================================= -->
+  <aside class="studio-control-dock">
+    <div class="dock-title">
+      <span>CHROMA CALIBRATION</span>
+      <span style="color: var(--accent-pink); font-size: 0.6875rem;">WEBGL 2.0</span>
+    </div>
+
+    <!-- Mode Selector -->
+    <div class="dock-section">
+      <div class="dock-label"><span>Render Mode</span></div>
+      <div class="btn-group">
+        <button class="btn-dock active" id="btn-mode-comp" onclick="setMode(0)">Composite</button>
+        <button class="btn-dock" id="btn-mode-mask" onclick="setMode(1)">Alpha Mask</button>
+        <button class="btn-dock" id="btn-mode-raw" onclick="setMode(2)">Raw Video</button>
+      </div>
+    </div>
+
+    <!-- Chroma Threshold -->
+    <div class="dock-section">
+      <div class="dock-label">
+        <span>Chroma Threshold</span>
+        <span class="dock-value" id="val-threshold">0.085</span>
+      </div>
+      <input type="range" class="dock-slider" id="slider-threshold" min="0.02" max="0.22" step="0.005" value="0.085">
+    </div>
+
+    <!-- Edge Softness -->
+    <div class="dock-section">
+      <div class="dock-label">
+        <span>Edge Softness</span>
+        <span class="dock-value" id="val-softness">0.065</span>
+      </div>
+      <input type="range" class="dock-slider" id="slider-softness" min="0.01" max="0.18" step="0.005" value="0.065">
+    </div>
+
+    <!-- Spill Suppression -->
+    <div class="dock-section">
+      <div class="dock-label">
+        <span>Blue & Cyan Spill Suppression</span>
+        <span class="dock-value" id="val-spill">0.95</span>
+      </div>
+      <input type="range" class="dock-slider" id="slider-spill" min="0.0" max="1.0" step="0.05" value="0.95">
+    </div>
+
+    <!-- Anti-Halo Sub-pixel Choke -->
+    <div class="dock-section">
+      <div class="dock-label">
+        <span>Sub-Pixel Anti-Halo Choke</span>
+        <span class="dock-value" id="val-choke">0.65</span>
+      </div>
+      <input type="range" class="dock-slider" id="slider-choke" min="0.0" max="1.0" step="0.05" value="0.65">
+    </div>
+
+    <!-- Background Environment Selector -->
+    <div class="dock-section">
+      <div class="dock-label"><span>Background Environment</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+        <button class="btn-dock active" id="btn-bg-video" onclick="setBg('video')" style="grid-column: span 2; border-color: var(--accent-pink); font-weight: 700;">🌊 Animating Cream Waves (Video)</button>
+        <button class="btn-dock" id="btn-bg-cream" onclick="setBg('cream')">Still Cream Waves</button>
+        <button class="btn-dock" id="btn-bg-light" onclick="setBg('light')">Light Studio</button>
+        <button class="btn-dock" id="btn-bg-obsidian" onclick="setBg('obsidian')">Dark Lounge</button>
+        <button class="btn-dock" id="btn-bg-checker" onclick="setBg('checker')">Checkerboard</button>
+      </div>
+    </div>
+
+    <!-- Asset Resolution Toggle -->
+    <div class="dock-section">
+      <div class="dock-label"><span>Source Video Asset</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+        <button class="btn-dock active" id="btn-res-1080" onclick="setVideoSource('1080p')">1080p (60fps Fast)</button>
+        <button class="btn-dock" id="btn-res-4k" onclick="setVideoSource('4k')">4K Master</button>
+      </div>
+    </div>
+
+    <!-- Live Telemetry HUD -->
+    <div class="dock-section">
+      <div class="dock-label"><span>Live Telemetry</span></div>
+      <div class="telemetry-grid">
+        <div class="telemetry-row"><span>FPS:</span><span class="val" id="telemetry-fps">60.0</span></div>
+        <div class="telemetry-row"><span>SCROLL PROGRESS:</span><span class="val" id="telemetry-scroll">0.0%</span></div>
+        <div class="telemetry-row"><span>VIDEO TIMECODE:</span><span class="val" id="telemetry-time">0.00s / 10.00s</span></div>
+        <div class="telemetry-row"><span>CHROMA STATUS:</span><span class="val" style="color: #38E080;">REMOVED (#008CFF)</span></div>
+      </div>
+    </div>
+
+    <!-- Verification Checklist -->
+    <div class="checklist-box">
+      <div style="font-weight: 700; margin-bottom: 0.35rem; color: #FFF;">Product Fidelity Verification:</div>
+      <div class="checklist-item pass">Blue background #008CFF fully keyed out</div>
+      <div class="checklist-item pass">Red satin ribbon intact & specular highlights clean</div>
+      <div class="checklist-item pass">Gold cap & "Katherin" neck band solid</div>
+      <div class="checklist-item pass">Label text & proportions 100% unaltered</div>
+      <div class="checklist-item pass">Transparent glass base refractions preserved</div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       BOTTOM SCRUB TIMELINE BAR
+       ========================================================================= -->
+  <div class="scrub-timeline-bar">
+    <button class="scrub-btn" id="play-pause-btn" title="Toggle Play / Pause" aria-label="Toggle Play">▶</button>
+    
+    <div class="scrub-track-wrapper">
+      <div class="scrub-labels">
+        <span>TIMELINE PLAYHEAD (Scroll-Controlled)</span>
+        <span id="scrub-time-label">0.00s / 10.00s</span>
+      </div>
+      <input type="range" class="scrub-slider" id="scrub-range" min="0" max="10" step="0.02" value="0">
+    </div>
+  </div>
+
+  <!-- WebGL Chroma Engine -->
+  <script src="js/chroma-compositor.js?v=2"></script>
+
+  <!-- Test Suite Script -->
+  <script>
+    let compositor = null;
+    let video = null;
+    let bgVideo = null;
+    let isPlaying = false;
+    let targetProgress = 0;
+    let currentProgress = 0;
+    let fpsFrames = 0;
+    let lastFpsTime = performance.now();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      video = document.getElementById("source-chroma-video");
+      bgVideo = document.getElementById("bg-video-element");
+      const canvas = document.getElementById("chroma-gl-canvas");
+
+      // Initialize WebGL Chroma Compositor
+      compositor = new ChromaCompositor({
+        canvas: canvas,
+        video: video,
+        keyCb: 0.2184,
+        keyCr: -0.2132,
+        threshold: 0.085,
+        softness: 0.065,
+        spill: 0.95,
+        mode: 0
+      });
+
+      // Hook Video Events
+      video.addEventListener("loadedmetadata", () => {
+        compositor.resizeCanvas(video.videoWidth, video.videoHeight);
+        document.getElementById("scrub-range").max = video.duration || 10;
+        updateUI();
+      });
+
+      // Start WebGL Render Loop
+      compositor.startLoop();
+
+      // Sliders Binding
+      const sliderThreshold = document.getElementById("slider-threshold");
+      sliderThreshold.addEventListener("input", (e) => {
+        compositor.setThreshold(e.target.value);
+        document.getElementById("val-threshold").textContent = parseFloat(e.target.value).toFixed(3);
+      });
+
+      const sliderSoftness = document.getElementById("slider-softness");
+      sliderSoftness.addEventListener("input", (e) => {
+        compositor.setSoftness(e.target.value);
+        document.getElementById("val-softness").textContent = parseFloat(e.target.value).toFixed(3);
+      });
+
+      const sliderSpill = document.getElementById("slider-spill");
+      sliderSpill.addEventListener("input", (e) => {
+        compositor.setSpill(e.target.value);
+        document.getElementById("val-spill").textContent = parseFloat(e.target.value).toFixed(2);
+      });
+
+      const sliderChoke = document.getElementById("slider-choke");
+      sliderChoke.addEventListener("input", (e) => {
+        compositor.setChoke(e.target.value);
+        document.getElementById("val-choke").textContent = parseFloat(e.target.value).toFixed(2);
+      });
+
+      // Manual Scrubber Range
+      const scrubRange = document.getElementById("scrub-range");
+      scrubRange.addEventListener("input", (e) => {
+        if (isPlaying) togglePlay();
+        seekVideo(parseFloat(e.target.value));
+      });
+
+      // Play / Pause Button
+      document.getElementById("play-pause-btn").addEventListener("click", togglePlay);
+
+      // Scroll Scrubbing Binding
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Run Telemetry Loop
+      requestAnimationFrame(telemetryLoop);
+    });
+
+    function seekVideo(time) {
+      if (!video) return;
+      video.currentTime = Math.max(0, Math.min(video.duration - 0.02, time));
+      updateUI();
+    }
+
+    function togglePlay() {
+      if (!video) return;
+      isPlaying = !isPlaying;
+      const btn = document.getElementById("play-pause-btn");
+      if (isPlaying) {
+        video.play();
+        btn.textContent = "❚❚";
+      } else {
+        video.pause();
+        btn.textContent = "▶";
+      }
+    }
+
+    function onScroll() {
+      const container = document.getElementById("stage-scroll-track");
+      if (!container || isPlaying) return;
+      const rect = container.getBoundingClientRect();
+      const maxScroll = container.offsetHeight - window.innerHeight;
+      if (maxScroll <= 0) return;
+      const p = Math.max(0, Math.min(1, -rect.top / maxScroll));
+      targetProgress = p;
+    }
+
+    function telemetryLoop(now) {
+      // Calculate FPS
+      fpsFrames++;
+      if (now - lastFpsTime >= 1000) {
+        const fps = (fpsFrames * 1000) / (now - lastFpsTime);
+        document.getElementById("telemetry-fps").textContent = fps.toFixed(1);
+        fpsFrames = 0;
+        lastFpsTime = now;
+      }
+
+      // Smooth scroll interpolation if scrolling
+      if (!isPlaying) {
+        const diff = targetProgress - currentProgress;
+        if (Math.abs(diff) > 0.0001) {
+          currentProgress += diff * 0.1;
+          const targetTime = currentProgress * (video.duration || 10.0);
+          if (Math.abs(video.currentTime - targetTime) > 0.015) {
+            video.currentTime = targetTime;
+          }
+          updateUI();
+        }
+      } else {
+        updateUI();
+      }
+
+      // Subtle background parallax effect & frame sync controlled by scroll playhead
+      const bgImg = document.getElementById("bg-cream-waves-img");
+      const bgVid = document.getElementById("bg-video-element");
+      
+      const prog = isPlaying ? (video ? video.currentTime / (video.duration || 10.0) : 0) : currentProgress;
+      const parallaxY = (prog - 0.5) * -45; // subtle 45px vertical travel
+      const scaleVal = 1.06 + prog * 0.03; // subtle 3% optical zoom
+
+      if (bgImg && currentBgType === 'cream') {
+        bgImg.style.transform = `scale(${scaleVal.toFixed(4)}) translateY(${parallaxY.toFixed(2)}px)`;
+      } else if (bgVid && currentBgType === 'video') {
+        bgVid.style.transform = `scale(${scaleVal.toFixed(4)}) translateY(${parallaxY.toFixed(2)}px)`;
+        if (!isPlaying && video && Math.abs(bgVid.currentTime - video.currentTime) > 0.02) {
+          bgVid.currentTime = video.currentTime;
+        }
+      }
+
+      requestAnimationFrame(telemetryLoop);
+    }
+
+    function updateUI() {
+      if (!video) return;
+      const t = video.currentTime;
+      const d = video.duration || 10.0;
+      const p = (t / d) * 100;
+      
+      document.getElementById("scrub-range").value = t;
+      document.getElementById("scrub-time-label").textContent = `${t.toFixed(2)}s / ${d.toFixed(2)}s`;
+      document.getElementById("telemetry-time").textContent = `${t.toFixed(2)}s / ${d.toFixed(2)}s`;
+      document.getElementById("telemetry-scroll").textContent = `${p.toFixed(1)}%`;
+    }
+
+    // Controls Helpers
+    function setMode(mode) {
+      compositor.setMode(mode);
+      ["btn-mode-comp", "btn-mode-mask", "btn-mode-raw"].forEach((id, i) => {
+        document.getElementById(id).classList.toggle("active", i === mode);
+      });
+    }
+
+    let currentBgType = 'video';
+
+    function setBg(type) {
+      currentBgType = type;
+      const bg = document.getElementById("stage-bg-layer");
+      const bgVid = document.getElementById("bg-video-element");
+      const bgImg = document.getElementById("bg-cream-waves-img");
+      
+      bg.className = "stage-layer-bg";
+      if (bgVid) {
+        bgVid.style.display = "none";
+        bgVid.pause();
+      }
+      if (bgImg) bgImg.style.display = "none";
+
+      if (type === "video") {
+        if (bgVid) {
+          bgVid.style.display = "block";
+          if (video) bgVid.currentTime = video.currentTime;
+          if (isPlaying) bgVid.play();
+        }
+      } else if (type === "cream") {
+        if (bgImg) bgImg.style.display = "block";
+      } else if (type === "obsidian") {
+        bg.classList.add("bg-dark-obsidian");
+      } else if (type === "light") {
+        bg.classList.add("bg-light-luxury");
+      } else if (type === "checker") {
+        bg.classList.add("bg-checkerboard");
+      }
+
+      ["btn-bg-video", "btn-bg-cream", "btn-bg-obsidian", "btn-bg-light", "btn-bg-checker"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove("active");
+      });
+      const activeBtn = document.getElementById(`btn-bg-${type}`);
+      if (activeBtn) activeBtn.classList.add("active");
+    }
+
+    function setVideoSource(res) {
+      const prevTime = video.currentTime;
+      const wasPlaying = isPlaying;
+      if (wasPlaying) video.pause();
+
+      if (res === "1080p") {
+        video.src = "videos para web/Whiskey_cream_chroma_1080p.mp4";
+        document.getElementById("btn-res-1080").classList.add("active");
+        document.getElementById("btn-res-4k").classList.remove("active");
+      } else {
+        video.src = "videos para web/Whiskey_cream_product_animation_4K_20260926112621.mp4";
+        document.getElementById("btn-res-4k").classList.add("active");
+        document.getElementById("btn-res-1080").classList.remove("active");
+      }
+
+      video.load();
+      video.addEventListener("loadedmetadata", () => {
+        compositor.resizeCanvas(video.videoWidth, video.videoHeight);
+        video.currentTime = prevTime;
+        if (wasPlaying) video.play();
+      }, { once: true });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main_faq": {
+      "type": "main-page-faq",
+      "settings": {
+        "title": "FREQUENTLY ASKED QUESTIONS & 21+ GUIDE",
+        "subtitle": "Everything you need to know about our shelf stability, small-batch ingredients, 21+ adult ID courier delivery laws, and master serving rituals."
+      }
+    }
+  },
+  "order": [
+    "main_faq"
+  ]
+}

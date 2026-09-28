@@ -1,0 +1,45 @@
+<section class="related-products-section" data-section-id="{{ section.id }}">
+  <div class="related-container">
+    <div class="related-header">
+      <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'RESERVE COLLECTION' }}</span>
+      <h2 class="section-title">{{ section.settings.headline | default: 'Pair With Other Signature Bottles' }}</h2>
+    </div>
+
+    <div class="related-grid">
+      {%- assign count = 0 -%}
+      {%- for rel_product in collections.all.products -%}
+        {%- if rel_product.id != product.id and count < 4 -%}
+          <div class="related-product-col">
+            {% render 'product-card', product: rel_product %}
+          </div>
+          {%- assign count = count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Related Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "RESERVE COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Pair With Other Signature Bottles"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related Products"
+    }
+  ]
+}
+{% endschema %}

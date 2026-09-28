@@ -1,0 +1,180 @@
+<section id="events" class="event-types-section" data-section-id="{{ section.id }}">
+  <div class="event-types-container">
+    <div class="section-header-center">
+      <span class="section-eyebrow" data-i18n="types.eyebrow">{{ section.settings.eyebrow | default: 'CREADO PARA TU MOMENTO' }}</span>
+      <h2 class="section-title" data-i18n="types.headline">{{ section.settings.headline | default: 'Coctelería a Medida para Cada Ocasión' }}</h2>
+      <p class="section-subtitle" data-i18n="types.subtitle">
+        {{ section.settings.subtitle | default: 'Desde celebraciones íntimas hasta grandes recepciones de bodas, adaptamos cada cóctel, estación de barra y detalle de hospitalidad a tu evento.' }}
+      </p>
+    </div>
+
+    <div class="event-types-grid">
+      <!-- Card 1: Bodas -->
+      <article class="event-type-card">
+        <div class="event-card-media">
+          <img src="{{ 'event-weddings.jpg' | asset_url }}" alt="Servicio de Coctelería para Bodas por Lucky Shaker" class="event-img" width="600" height="400" loading="lazy">
+          <span class="event-tag" data-i18n="types.c1_tag">ELEGANTE &bull; MEMORABLE</span>
+        </div>
+        <div class="event-card-body">
+          <h3 class="event-card-title" data-i18n="types.c1_title">{{ section.settings.c1_title | default: 'Bodas &amp; Recepciones' }}</h3>
+          <p class="event-card-desc" data-i18n="types.c1_desc">
+            {{ section.settings.c1_desc | default: 'Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos profesionales.' }}
+          </p>
+          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Boda'; return false; }">
+            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 2: Fiestas Privadas -->
+      <article class="event-type-card">
+        <div class="event-card-media">
+          <img src="{{ 'event-private-party.jpg' | asset_url }}" alt="Coctelería para Fiestas Privadas" class="event-img" width="600" height="400" loading="lazy">
+          <span class="event-tag" data-i18n="types.c2_tag">ÍNTIMO &bull; VIBRANTE</span>
+        </div>
+        <div class="event-card-body">
+          <h3 class="event-card-title" data-i18n="types.c2_title">{{ section.settings.c2_title | default: 'Fiestas Privadas &amp; Cumpleaños' }}</h3>
+          <p class="event-card-desc" data-i18n="types.c2_desc">
+            {{ section.settings.c2_desc | default: 'Eleva cumpleaños, aniversarios y reuniones en terrazas con barras móviles privadas, menús de autor y total tranquilidad para el anfitrión.' }}
+          </p>
+          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Fiesta Privada'; return false; }">
+            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 3: Eventos Corporativos -->
+      <article class="event-type-card">
+        <div class="event-card-media">
+          <img src="{{ 'event-corporate-gala.jpg' | asset_url }}" alt="Galas Corporativas y Eventos de Marca" class="event-img" width="600" height="400" loading="lazy">
+          <span class="event-tag" data-i18n="types.c3_tag">SOFISTICADO &bull; IMPECABLE</span>
+        </div>
+        <div class="event-card-body">
+          <h3 class="event-card-title" data-i18n="types.c3_title">{{ section.settings.c3_title | default: 'Galas Corporativas &amp; Marcas' }}</h3>
+          <p class="event-card-desc" data-i18n="types.c3_desc">
+            {{ section.settings.c3_desc | default: 'Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP.' }}
+          </p>
+          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Evento Corporativo'; return false; }">
+            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 4: Celebraciones Especiales -->
+      <article class="event-type-card">
+        <div class="event-card-media">
+          <img src="{{ 'event-bartender-action.jpg' | asset_url }}" alt="Celebraciones Especiales y Masterclasses" class="event-img" width="600" height="400" loading="lazy">
+          <span class="event-tag" data-i18n="types.c4_tag">INTERACTIVO &bull; EXCLUSIVO</span>
+        </div>
+        <div class="event-card-body">
+          <h3 class="event-card-title" data-i18n="types.c4_title">{{ section.settings.c4_title | default: 'Celebraciones Especiales &amp; Talleres' }}</h3>
+          <p class="event-card-desc" data-i18n="types.c4_desc">
+            {{ section.settings.c4_desc | default: 'Masterclasses interactivas de coctelería, despedidas de soltera y catas guiadas lideradas por la fundadora Katherin y maestros mixólogos.' }}
+          </p>
+          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Masterclass'; return false; }">
+            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tipos de Eventos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "CREADO PARA TU MOMENTO"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Título Principal",
+      "default": "Coctelería a Medida para Cada Ocasión"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Desde celebraciones íntimas hasta grandes recepciones de bodas, adaptamos cada cóctel, estación de barra y detalle de hospitalidad a tu evento."
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta 1: Bodas"
+    },
+    {
+      "type": "text",
+      "id": "c1_title",
+      "label": "Título",
+      "default": "Bodas & Recepciones"
+    },
+    {
+      "type": "textarea",
+      "id": "c1_desc",
+      "label": "Descripción",
+      "default": "Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos profesionales."
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta 2: Fiestas Privadas"
+    },
+    {
+      "type": "text",
+      "id": "c2_title",
+      "label": "Título",
+      "default": "Fiestas Privadas & Cumpleaños"
+    },
+    {
+      "type": "textarea",
+      "id": "c2_desc",
+      "label": "Descripción",
+      "default": "Eleva cumpleaños, aniversarios y reuniones en terrazas con barras móviles privadas, menús de autor y total tranquilidad para el anfitrión."
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta 3: Eventos Corporativos"
+    },
+    {
+      "type": "text",
+      "id": "c3_title",
+      "label": "Título",
+      "default": "Galas Corporativas & Marcas"
+    },
+    {
+      "type": "textarea",
+      "id": "c3_desc",
+      "label": "Descripción",
+      "default": "Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP."
+    },
+    {
+      "type": "header",
+      "content": "Tarjeta 4: Celebraciones Especiales"
+    },
+    {
+      "type": "text",
+      "id": "c4_title",
+      "label": "Título",
+      "default": "Celebraciones Especiales & Talleres"
+    },
+    {
+      "type": "textarea",
+      "id": "c4_desc",
+      "label": "Descripción",
+      "default": "Masterclasses interactivas de coctelería, despedidas de soltera y catas guiadas lideradas por la fundadora Katherin y maestros mixólogos."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tipos de Eventos"
+    }
+  ]
+}
+{% endschema %}

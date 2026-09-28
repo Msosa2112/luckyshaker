@@ -1,0 +1,97 @@
+{
+  "sections": {
+    "event_hero": {
+      "type": "event-hero",
+      "settings": {
+        "eyebrow": "LUCKY SHAKER — COCTELERÍA & BARTENDING DE AUTOR",
+        "headline": "HAZ QUE TU EVENTO<br><span class=\"highlight-pink\">SEA MÁS LUCKY.</span>",
+        "subtitle": "Servicio premium de barras móviles, coctelería de autor y hospitalidad inolvidable para bodas, fiestas privadas, galas corporativas y celebraciones.",
+        "primary_cta": "COTIZAR TU EVENTO",
+        "secondary_cta": "TIENDA ONLINE"
+      }
+    },
+    "event_types": {
+      "type": "event-types",
+      "settings": {
+        "eyebrow": "CREADO PARA TU MOMENTO",
+        "headline": "Coctelería a Medida para Cada Ocasión",
+        "subtitle": "Desde celebraciones íntimas hasta grandes recepciones de bodas, adaptamos cada cóctel, estación de barra y detalle de hospitalidad a tu evento."
+      }
+    },
+    "event_experience": {
+      "type": "event-experience",
+      "settings": {
+        "eyebrow": "MÁS QUE UNA BARRA",
+        "headline": "La Experiencia Lucky Shaker",
+        "subtitle": "Gestionamos cada aspecto de la logística de barra, la coreografía de mixología y el servicio para que puedas disfrutar plenamente con tus invitados."
+      }
+    },
+    "event_services": {
+      "type": "event-services",
+      "settings": {
+        "eyebrow": "SERVICIOS & PAQUETES",
+        "headline": "Servicio Integral de Coctelería",
+        "subtitle": "Todo lo necesario para brindar una experiencia de bar de coctelería de clase mundial en tu residencia, salón o espacio de eventos."
+      }
+    },
+    "event_gallery": {
+      "type": "event-gallery",
+      "settings": {
+        "eyebrow": "LA ATMÓSFERA",
+        "headline": "Momentos Que Hemos Creado",
+        "subtitle": "Un vistazo a la energía, el arte de la mixología y la atmósfera sofisticada que llevamos a cada evento privado."
+      }
+    },
+    "event_testimonials": {
+      "type": "event-testimonials",
+      "settings": {
+        "eyebrow": "OPINIONES DE CLIENTES",
+        "headline": "Amado por Anfitriones e Invitados"
+      }
+    },
+    "event_booking_form": {
+      "type": "event-booking-form",
+      "settings": {
+        "eyebrow": "RESERVA TU EVENTO",
+        "headline": "Solicita una Cotización Personalizada",
+        "subtitle": "Cuéntanos sobre tu próxima celebración. Nuestro equipo preparará una propuesta de barra a tu medida y confirmará disponibilidad en menos de 24 horas."
+      }
+    },
+    "lucky_cinematic_scroll": {
+      "type": "lucky-cinematic-scroll",
+      "settings": {
+        "title_wc": "WHISKEY CREAM",
+        "title_of": "OLD FASHIONED",
+        "title_mojito": "MOJITO"
+      }
+    },
+    "home_shop_preview": {
+      "type": "home-shop-preview",
+      "settings": {
+        "eyebrow": "LLEVA LUCKY SHAKER A CASA",
+        "headline": "La Colección de Botellas Reserva",
+        "subtitle": "Cócteles de autor elaborados a mano y sellados en pesadas botellas de vidrio. Cada botella de 750ml rinde 6–8 copas de nivel coctelería para tu barra personal."
+      }
+    },
+    "event_faq": {
+      "type": "event-faq",
+      "settings": {
+        "eyebrow": "PREGUNTAS FRECUENTES",
+        "headline": "Detalles del Servicio de Barras",
+        "subtitle": "Todo lo que necesitas saber sobre reservar Lucky Shaker para tu celebración."
+      }
+    }
+  },
+  "order": [
+    "event_hero",
+    "event_types",
+    "event_experience",
+    "event_services",
+    "event_gallery",
+    "event_testimonials",
+    "event_booking_form",
+    "lucky_cinematic_scroll",
+    "home_shop_preview",
+    "event_faq"
+  ]
+}

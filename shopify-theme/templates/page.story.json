@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main_story": {
+      "type": "main-page-story",
+      "settings": {
+        "title": "CRAFT COCKTAILS, WITHOUT THE BAR",
+        "subtitle": "Born from a reverence for cocktail bar culture and the conviction that luxury cocktail craftsmanship should not be confined to a speakeasy stool."
+      }
+    }
+  },
+  "order": [
+    "main_story"
+  ]
+}

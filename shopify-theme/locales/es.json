@@ -1,0 +1,55 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_text": "Saltar al contenido",
+      "close": "Cerrar",
+      "loading": "Cargando..."
+    },
+    "404": {
+      "title": "La copa está vacía",
+      "subtext": "La página que buscas ha sido movida o no existe.",
+      "link": "Volver a la colección"
+    }
+  },
+  "sections": {
+    "header": {
+      "film": "Video",
+      "shop": "Tienda de Botellas",
+      "story": "Nosotros",
+      "contact": "Contacto",
+      "bag": "Bolsa"
+    },
+    "cart": {
+      "title": "Tu Selección",
+      "empty": "Tu barra de cócteles está vacía.",
+      "explore": "Explora nuestra colección artesanal para comenzar.",
+      "subtotal": "SUBTOTAL",
+      "checkout": "FINALIZAR COMPRA",
+      "view_cart": "VER BOLSA COMPLETA",
+      "free_shipping_eligible": "¡Envío Express Gratis desbloqueado!",
+      "free_shipping_remaining": "Agrega {{ amount }} más para Envío Express Gratis",
+      "special_instructions": "Instrucciones de entrega y nota de regalo de cortesía"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Añadir a la Bolsa",
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "bottle_option": "Botella Estándar (750ml)",
+      "trio_option": "Trío Reserva de Selección",
+      "serving_size": "Rinde 6–8 copas completas (3.5oz c/u)",
+      "bestseller": "MÁS VENDIDO"
+    }
+  },
+  "compliance": {
+    "age_verification": {
+      "heading": "Bienvenido a Lucky Shaker",
+      "subheading": "Cócteles artesanales de autor. Debes tener más de 21 años para ingresar.",
+      "confirm_btn": "Tengo 21 años o más — Entrar",
+      "reject_btn": "Soy menor de 21 años",
+      "warning": "Al ingresar, confirmas que tienes la edad legal para consumir alcohol en tu jurisdicción."
+    },
+    "footer_notice": "POR FAVOR DISFRUTA CON RESPONSABILIDAD. SE REQUIERE TENER 21+ AÑOS PARA COMPRAR. FIRMA DE ADULTO REQUERIDA EN LA ENTREGA."
+  }
+}

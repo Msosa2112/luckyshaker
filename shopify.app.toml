@@ -1,0 +1,17 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "119860c63155055842e05b94993729e5"
+name = "Lucky Shaker CLI"
+application_url = "https://luckyshakersupply.com"
+embedded = true
+
+[access_scopes]
+scopes = "write_products,read_products"
+
+[auth]
+redirect_urls = [
+  "https://luckyshakersupply.com/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01"

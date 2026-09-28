@@ -1,0 +1,55 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_text": "Skip to content",
+      "close": "Close",
+      "loading": "Loading..."
+    },
+    "404": {
+      "title": "The Glass is Empty",
+      "subtext": "The page you are looking for has been moved, poured, or does not exist.",
+      "link": "Return to Cocktail Collection"
+    }
+  },
+  "sections": {
+    "header": {
+      "film": "Film",
+      "shop": "Shop",
+      "story": "Our Story",
+      "contact": "Contact",
+      "bag": "BAG"
+    },
+    "cart": {
+      "title": "Your Selection",
+      "empty": "Your cocktail bar is empty.",
+      "explore": "Explore our signature collection to begin.",
+      "subtotal": "SUBTOTAL",
+      "checkout": "PROCEED TO CHECKOUT",
+      "view_cart": "VIEW FULL CART",
+      "free_shipping_eligible": "Unlocked: Complimentary Express Courier Shipping",
+      "free_shipping_remaining": "Add {{ amount }} more to unlock Complimentary Courier Delivery",
+      "special_instructions": "Complimentary Gift Note & Delivery Instructions"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "bottle_option": "Standard Bottle (750ml)",
+      "trio_option": "Curated 3-Pack Reserve",
+      "serving_size": "Yields 6–8 pours (3.5oz each)",
+      "bestseller": "BEST SELLER"
+    }
+  },
+  "compliance": {
+    "age_verification": {
+      "heading": "Welcome to Lucky Shaker",
+      "subheading": "Handcrafted small-batch cocktails. You must be 21+ years of age to enter.",
+      "confirm_btn": "I Am 21 or Older — Enter",
+      "reject_btn": "I Am Under 21",
+      "warning": "By entering, you confirm you are of legal purchase age for alcohol in your jurisdiction."
+    },
+    "footer_notice": "PLEASE ENJOY RESPONSIBLY. MUST BE 21+ YEARS OF AGE TO PURCHASE. ADULT SIGNATURE REQUIRED AT DELIVERY."
+  }
+}

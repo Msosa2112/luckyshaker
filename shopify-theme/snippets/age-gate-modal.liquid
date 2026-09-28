@@ -1,0 +1,92 @@
+<div id="age-gate-modal" class="age-gate-overlay" style="display: none;">
+  <div class="age-gate-card">
+    <div class="age-gate-icon">
+      <img src="{{ 'favicon.svg' | asset_url }}" alt="Lucky Shaker" width="36" height="36" style="object-fit: contain;">
+    </div>
+    <h2 class="age-gate-title">{{ settings.age_gate_heading | default: 'WELCOME TO LUCKY SHAKER' }}</h2>
+    <p class="age-gate-desc">
+      {{ settings.age_gate_subheading | default: 'You must be 21+ years of age to explore and purchase handcrafted cocktails.' }}
+    </p>
+
+    <div class="age-gate-actions">
+      <button id="age-gate-confirm" class="btn btn-pink" style="width: 100%; justify-content: center;">
+        <span>{{ 'compliance.age_verification.confirm_btn' | t }}</span>
+      </button>
+      <button id="age-gate-reject" class="btn button-glass" style="width: 100%; justify-content: center; margin-top: 0.5rem; font-size: 0.75rem;">
+        <span>{{ 'compliance.age_verification.reject_btn' | t }}</span>
+      </button>
+    </div>
+
+    <p class="age-gate-footnote">
+      {{ 'compliance.age_verification.warning' | t }}
+    </p>
+  </div>
+</div>
+
+<style>
+.age-gate-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 11, 16, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.age-gate-card {
+  max-width: 440px;
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+.age-gate-icon {
+  margin-bottom: 1.25rem;
+}
+.age-gate-title {
+  font-family: var(--font-brand);
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+.age-gate-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+.age-gate-footnote {
+  font-size: 0.6875rem;
+  color: var(--text-dim);
+  margin-top: 1.25rem;
+  line-height: 1.4;
+}
+</style>
+
+<script>
+(function() {
+  var verified = localStorage.getItem('ls_age_verified');
+  var modal = document.getElementById('age-gate-modal');
+  if (!verified && modal) {
+    modal.style.display = 'flex';
+  }
+  var confirmBtn = document.getElementById('age-gate-confirm');
+  var rejectBtn = document.getElementById('age-gate-reject');
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', function() {
+      localStorage.setItem('ls_age_verified', 'true');
+      if (modal) modal.style.display = 'none';
+    });
+  }
+  if (rejectBtn) {
+    rejectBtn.addEventListener('click', function() {
+      window.location.href = 'https://www.responsibility.org';
+    });
+  }
+})();
+</script>

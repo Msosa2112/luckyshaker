@@ -1,0 +1,136 @@
+<footer class="luxury-footer" data-section-id="{{ section.id }}">
+  <div class="footer-top">
+    <!-- Brand Column -->
+    <div class="footer-brand-col">
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }} Inicio">
+        {%- if section.settings.footer_logo != blank -%}
+          <img src="{{ section.settings.footer_logo | image_url: width: 300 }}" alt="{{ shop.name }}" class="footer-logo-img" width="160" height="42">
+        {%- else -%}
+          <img src="{{ 'logo_lucky_shaker.svg' | asset_url }}" alt="{{ shop.name }}" class="footer-logo-img" width="160" height="42">
+        {%- endif -%}
+      </a>
+      <p data-i18n="footer.brand_desc">
+        {{ section.settings.brand_text | default: 'Servicio de coctelería y barras móviles de ultra lujo para eventos privados, bodas y celebraciones. Agitado con pasión, servido con distinción.' }}
+      </p>
+      <div style="margin-top: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.85rem; background: rgba(0,0,0,0.04); border-radius: 9999px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-pink);">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span data-i18n="footer.badge_21">Certificación +21 y Servicio Asegurado</span>
+      </div>
+    </div>
+
+    <!-- Eventos & Servicios Links -->
+    <div>
+      <h4 class="footer-col-title" data-i18n="footer.col1_title">{{ section.settings.col_1_title | default: 'EVENTOS & SERVICIOS' }}</h4>
+      <ul class="footer-links">
+        {%- if section.settings.col_1_menu != blank -%}
+          {%- for link in linklists[section.settings.col_1_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          <li><a href="#events" onclick="const e=document.getElementById('events'); if(e){ e.scrollIntoView({behavior:'smooth'}); return false; }" data-i18n="footer.weddings">Bodas &amp; Recepciones</a></li>
+          <li><a href="#events" onclick="const e=document.getElementById('events'); if(e){ e.scrollIntoView({behavior:'smooth'}); return false; }" data-i18n="footer.private_parties">Fiestas Privadas</a></li>
+          <li><a href="#events" onclick="const e=document.getElementById('events'); if(e){ e.scrollIntoView({behavior:'smooth'}); return false; }" data-i18n="footer.corporate">Galas Corporativas</a></li>
+          <li><a href="#events" onclick="const e=document.getElementById('events'); if(e){ e.scrollIntoView({behavior:'smooth'}); return false; }" data-i18n="footer.masterclasses">Masterclasses &amp; Talleres</a></li>
+          <li><a href="#book-event" onclick="const b=document.getElementById('book-event'); if(b){ b.scrollIntoView({behavior:'smooth'}); return false; }" data-i18n="footer.request_quote">Cotizar Barra para Evento</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+
+    <!-- Tienda & Experiencia Links -->
+    <div>
+      <h4 class="footer-col-title" data-i18n="footer.col2_title">{{ section.settings.col_2_title | default: 'TIENDA & MARCA' }}</h4>
+      <ul class="footer-links">
+        {%- if section.settings.col_2_menu != blank -%}
+          {%- for link in linklists[section.settings.col_2_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          <li><a href="{{ routes.all_products_collection_url }}" data-i18n="footer.shop_bottles">Tienda de Botellas Reserva</a></li>
+          <li><a href="/products/whiskey-cream">Whiskey Cream (750ml)</a></li>
+          <li><a href="/products/old-fashioned">Old Fashioned (750ml)</a></li>
+          <li><a href="/products/mojito">Mojito Craft (750ml)</a></li>
+          <li><a href="/pages/our-story" data-i18n="footer.our_story">Nuestra Historia</a></li>
+          <li><a href="/pages/faq" data-i18n="footer.faqs">Preguntas Frecuentes</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+
+    <!-- Legal & Políticas Links -->
+    <div>
+      <h4 class="footer-col-title" data-i18n="footer.col3_title">{{ section.settings.col_3_title | default: 'POLÍTICAS & LEGAL' }}</h4>
+      <ul class="footer-links">
+        {%- if section.settings.col_3_menu != blank -%}
+          {%- for link in linklists[section.settings.col_3_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          <li><a href="/policies/shipping-policy" data-i18n="footer.shipping">Envíos &amp; Entregas</a></li>
+          <li><a href="/policies/refund-policy" data-i18n="footer.refunds">Reembolsos &amp; Cancelaciones</a></li>
+          <li><a href="/policies/privacy-policy" data-i18n="footer.privacy">Política de Privacidad</a></li>
+          <li><a href="/policies/terms-of-service" data-i18n="footer.terms">Términos del Servicio</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="copyright" data-i18n="footer.copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }} LLC. TODOS LOS DERECHOS RESERVADOS.</div>
+    <div class="legal-notice" data-i18n="footer.notice">Disfruta con moderación. Venta y servicio de bebidas con alcohol exclusivo para mayores de 21 años.</div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de Página / Footer",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Logo del Footer"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Descripción de la Marca",
+      "default": "Servicio de coctelería y barras móviles de ultra lujo para eventos privados, bodas y celebraciones. Agitado con pasión, servido con distinción."
+    },
+    {
+      "type": "text",
+      "id": "col_1_title",
+      "label": "Título Columna 1",
+      "default": "EVENTOS & SERVICIOS"
+    },
+    {
+      "type": "link_list",
+      "id": "col_1_menu",
+      "label": "Menú Columna 1"
+    },
+    {
+      "type": "text",
+      "id": "col_2_title",
+      "label": "Título Columna 2",
+      "default": "TIENDA & MARCA"
+    },
+    {
+      "type": "link_list",
+      "id": "col_2_menu",
+      "label": "Menú Columna 2"
+    },
+    {
+      "type": "text",
+      "id": "col_3_title",
+      "label": "Título Columna 3",
+      "default": "POLÍTICAS & LEGAL"
+    },
+    {
+      "type": "link_list",
+      "id": "col_3_menu",
+      "label": "Menú Columna 3"
+    }
+  ]
+}
+{% endschema %}

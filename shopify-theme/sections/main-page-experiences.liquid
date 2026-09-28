@@ -1,0 +1,279 @@
+<section class="experiences-page-section" data-section-id="{{ section.id }}">
+  <!-- Experiences Page Hero -->
+  <div class="page-hero">
+    <div class="page-breadcrumbs">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span style="color: var(--text-primary); font-weight: 600;">Experiences</span>
+    </div>
+    <h1 class="page-title">{{ section.settings.hero_title | default: 'BESPOKE EXPERIENCES' }}</h1>
+    <p class="page-subtitle">
+      {{ section.settings.hero_subtitle | default: 'Immerse your guests in private guided tastings, custom event bar catering, and mixology masterclasses led by master mixologist Katherin.' }}
+    </p>
+  </div>
+
+  <div class="experiences-main-container">
+    
+    <!-- Experience Cards Grid -->
+    <div class="experiences-detailed-grid">
+      
+      <!-- Option 1: Private Tasting -->
+      <div class="exp-detail-card" id="book-tasting">
+        <div class="exp-detail-media">
+          <span class="exp-badge-pill">PRIVATE &bull; 4–12 GUESTS</span>
+          <img src="{{ 'old_fashioned_desktop.jpg' | asset_url }}" alt="Private Guided Tasting" class="exp-detail-img" width="500" height="340">
+        </div>
+        <div class="exp-detail-body">
+          <div class="exp-meta-top">
+            <span class="exp-price-tag">From $65 / Person</span>
+            <span class="exp-duration-tag">90 Min Experience</span>
+          </div>
+          <h2 class="exp-detail-title">Private Guided Tastings</h2>
+          <p class="exp-detail-desc">
+            A sensorial masterclass exploring barrel-aged spirits, aromatic bitters, and botanical synergy. Includes tasting flight of 4 reserve cocktails, crystal glassware, and pairing bites.
+          </p>
+          <ul class="exp-detail-perks">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 4-Flight Guided Tasting &amp; Flavor Wheel</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Sommelier Glassware &amp; Ice Carving Demo</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Take-Home 750ml Reserve Bottle for Host</li>
+          </ul>
+          <button type="button" class="btn btn-pink exp-select-btn" onclick="selectExperienceBooking('Private Guided Tastings (4–12 Guests)')">
+            <span>SELECT &amp; CHOOSE DATE</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Option 2: Events & Celebrations -->
+      <div class="exp-detail-card featured" id="book-events">
+        <div class="exp-detail-media">
+          <span class="exp-badge-pill featured-pill">SIGNATURE &bull; 20–200+ GUESTS</span>
+          <img src="{{ 'mojito_desktop.jpg' | asset_url }}" alt="Event Bar Catering" class="exp-detail-img" width="500" height="340">
+        </div>
+        <div class="exp-detail-body">
+          <div class="exp-meta-top">
+            <span class="exp-price-tag">Custom Packages</span>
+            <span class="exp-duration-tag">Turnkey Service</span>
+          </div>
+          <h2 class="exp-detail-title">Event &amp; Wedding Bar Catering</h2>
+          <p class="exp-detail-desc">
+            Elevate your wedding, gala, or celebration with a custom Lucky Shaker cocktail bar. Seamless service featuring our signature bottled cocktails poured to order with fresh artisanal garnishes.
+          </p>
+          <ul class="exp-detail-perks">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom Printed Menu &amp; Bottle Monogramming</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Professional Bartending Staff &amp; Glassware</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Zero Setup Hassle &bull; Full Logistics Included</li>
+          </ul>
+          <button type="button" class="btn btn-pink exp-select-btn" onclick="selectExperienceBooking('Event & Wedding Bar Catering (20+ Guests)')">
+            <span>REQUEST EVENT PROPOSAL</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Option 3: Mixology Masterclasses -->
+      <div class="exp-detail-card" id="book-masterclass">
+        <div class="exp-detail-media">
+          <span class="exp-badge-pill">WORKSHOP &bull; 6–18 GUESTS</span>
+          <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Mixology Masterclass" class="exp-detail-img" width="500" height="340">
+        </div>
+        <div class="exp-detail-body">
+          <div class="exp-meta-top">
+            <span class="exp-price-tag">From $85 / Person</span>
+            <span class="exp-duration-tag">2-Hour Workshop</span>
+          </div>
+          <h2 class="exp-detail-title">Hands-On Mixology Masterclass</h2>
+          <p class="exp-detail-desc">
+            Step behind the bar with master mixologist Katherin. Master shaker dynamics, emulsification science, botanical balancing, and batching secrets.
+          </p>
+          <ul class="exp-detail-perks">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Complete Bar Kit Provided for Each Station</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Craft 3 Signature Cocktails Hands-On</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Recipe Book &amp; Mixologist Certification</li>
+          </ul>
+          <button type="button" class="btn btn-pink exp-select-btn" onclick="selectExperienceBooking('Mixology Masterclass (6–18 Guests)')">
+            <span>SELECT &amp; CHOOSE DATE</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interactive Booking Engine (Shopify Free App Compatible Hook & Self-Contained Form) -->
+    <div class="booking-engine-box" id="booking-engine">
+      <div class="booking-header">
+        <span class="section-eyebrow">RESERVE YOUR DATE</span>
+        <h3 class="booking-box-title">Book Your Lucky Shaker Experience</h3>
+        <p class="booking-box-desc">Choose your preferred experience, date, and party size. Our hospitality team will confirm calendar slots within 24 hours.</p>
+      </div>
+
+      <!-- Free Booking App Mount Point for Appointo / Easy Appointment Booking Embeds -->
+      <div id="shopify-appointo-embed-slot" class="shopify-app-embed-slot"></div>
+
+      <form id="lucky-shaker-booking-form" class="booking-flow-form" onsubmit="handleBookingSubmit(event)">
+        
+        <!-- Step 1: Service Selection -->
+        <div class="booking-form-step">
+          <label class="step-label">1. CHOOSE EXPERIENCE</label>
+          <div class="service-selector-grid">
+            <label class="service-radio-card active">
+              <input type="radio" name="experience_type" value="Private Guided Tasting" checked onchange="updateSelectedService(this)">
+              <span class="radio-title">Private Guided Tasting</span>
+              <span class="radio-sub">From $65/guest &bull; 90 Min</span>
+            </label>
+            <label class="service-radio-card">
+              <input type="radio" name="experience_type" value="Events & Weddings Bar" onchange="updateSelectedService(this)">
+              <span class="radio-title">Events &amp; Weddings Bar</span>
+              <span class="radio-sub">Custom Catering &bull; 20+ Guests</span>
+            </label>
+            <label class="service-radio-card">
+              <input type="radio" name="experience_type" value="Mixology Masterclass" onchange="updateSelectedService(this)">
+              <span class="radio-title">Mixology Masterclass</span>
+              <span class="radio-sub">From $85/guest &bull; 2 Hours</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 2: Date & Time -->
+        <div class="booking-form-step">
+          <label class="step-label">2. DATE &amp; TIME PREFERENCE</label>
+          <div class="datetime-grid">
+            <div class="input-field-group">
+              <label for="booking-date">Preferred Date</label>
+              <input type="date" id="booking-date" name="preferred_date" required class="form-input">
+            </div>
+            <div class="input-field-group">
+              <label for="booking-slot">Preferred Time Window</label>
+              <select id="booking-slot" name="preferred_time" class="form-select" required>
+                <option value="Afternoon (1:00 PM – 3:00 PM)">Afternoon (1:00 PM – 3:00 PM)</option>
+                <option value="Sunset Cocktail Hour (4:30 PM – 6:30 PM)" selected>Sunset Cocktail Hour (4:30 PM – 6:30 PM)</option>
+                <option value="Evening Lounge (7:30 PM – 9:30 PM)">Evening Lounge (7:30 PM – 9:30 PM)</option>
+                <option value="Custom Event Window">Custom Event Window</option>
+              </select>
+            </div>
+            <div class="input-field-group">
+              <label for="booking-guests">Estimated Number of Guests</label>
+              <select id="booking-guests" name="guest_count" class="form-select" required>
+                <option value="4–6 Guests">4–6 Guests</option>
+                <option value="7–12 Guests" selected>7–12 Guests</option>
+                <option value="13–25 Guests">13–25 Guests</option>
+                <option value="26–50 Guests">26–50 Guests</option>
+                <option value="50+ Guests (Large Event)">50+ Guests (Large Event)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Contact Info -->
+        <div class="booking-form-step">
+          <label class="step-label">3. CONTACT &amp; LOCATION DETAILS</label>
+          <div class="contact-fields-grid">
+            <div class="input-field-group">
+              <label for="booking-name">Full Name</label>
+              <input type="text" id="booking-name" name="name" placeholder="E.g. Elena Rostova" required class="form-input">
+            </div>
+            <div class="input-field-group">
+              <label for="booking-email">Email Address</label>
+              <input type="email" id="booking-email" name="email" placeholder="elena@example.com" required class="form-input">
+            </div>
+            <div class="input-field-group">
+              <label for="booking-phone">Phone Number</label>
+              <input type="tel" id="booking-phone" name="phone" placeholder="(555) 000-0000" required class="form-input">
+            </div>
+            <div class="input-field-group">
+              <label for="booking-city">Event City / Location</label>
+              <input type="text" id="booking-city" name="location" placeholder="City, State" required class="form-input">
+            </div>
+            <div class="input-field-group full-width">
+              <label for="booking-notes">Special Requests, Occasion &amp; Dietary Notes</label>
+              <textarea id="booking-notes" name="notes" rows="3" class="form-textarea" placeholder="Tell us about your celebration, preferred cocktails, or custom requests..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-submit-row">
+          <button type="submit" id="booking-submit-btn" class="btn btn-pink booking-cta">
+            <span>CONFIRM &amp; SUBMIT RESERVATION REQUEST</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+
+        <div id="booking-success-msg" class="booking-success-card" style="display: none;">
+          <div class="success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h4>Reservation Request Received!</h4>
+          <p>Thank you for booking with Lucky Shaker. Our hospitality concierge will contact you within 24 hours to finalize your personalized tasting menu and calendar confirmation.</p>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script>
+function selectExperienceBooking(serviceName) {
+  var engine = document.getElementById('booking-engine');
+  if (engine) engine.scrollIntoView({ behavior: 'smooth' });
+  var radios = document.querySelectorAll('input[name="experience_type"]');
+  radios.forEach(function(r) {
+    if (serviceName.includes(r.value)) {
+      r.checked = true;
+      updateSelectedService(r);
+    }
+  });
+}
+
+function updateSelectedService(radioEl) {
+  document.querySelectorAll('.service-radio-card').forEach(function(c) {
+    c.classList.remove('active');
+  });
+  if (radioEl && radioEl.closest('.service-radio-card')) {
+    radioEl.closest('.service-radio-card').classList.add('active');
+  }
+}
+
+function handleBookingSubmit(e) {
+  e.preventDefault();
+  var form = document.getElementById('lucky-shaker-booking-form');
+  var success = document.getElementById('booking-success-msg');
+  var btn = document.getElementById('booking-submit-btn');
+
+  if (btn) {
+    btn.innerHTML = '<span>RESERVING...</span>';
+    btn.style.opacity = '0.7';
+  }
+
+  setTimeout(function() {
+    if (form) form.reset();
+    if (btn) btn.style.display = 'none';
+    if (success) {
+      success.style.display = 'block';
+      success.scrollIntoView({ behavior: 'smooth' });
+    }
+    if (window.LuckyShakerCart) {
+      window.LuckyShakerCart.showToast('Reservation request submitted successfully!');
+    }
+  }, 900);
+}
+</script>
+
+{% schema %}
+{
+  "name": "Experiences Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "BESPOKE EXPERIENCES"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "Immerse your guests in private guided tastings, custom event bar catering, and mixology masterclasses led by master mixologist Katherin."
+    }
+  ]
+}
+{% endschema %}

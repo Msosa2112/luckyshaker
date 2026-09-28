@@ -1,0 +1,32 @@
+<section class="error-404-container">
+  <div class="error-glass-card">
+    <div class="error-brand-icon">
+      <img src="{{ 'favicon.svg' | asset_url }}" alt="Lucky Shaker" width="60" height="60" style="object-fit: contain;">
+    </div>
+
+    <span class="error-sub-code">ERROR 404 &bull; VINTAGE NOT FOUND</span>
+    <h1 class="error-title">{{ 'general.404.title' | t }}</h1>
+    <p class="error-desc">
+      {{ 'general.404.subtext' | t }}
+    </p>
+
+    <div class="error-action-row">
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-pink">
+        <span>{{ 'general.404.link' | t }}</span>
+        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M1 7h12M8 2l5 5-5 5"/>
+        </svg>
+      </a>
+      <a href="{{ routes.root_url }}" class="btn button-glass">
+        <span>RETURN TO HOME</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": []
+}
+{% endschema %}

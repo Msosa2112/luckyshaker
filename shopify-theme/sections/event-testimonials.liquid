@@ -1,0 +1,117 @@
+<section class="event-testimonials-section" data-section-id="{{ section.id }}">
+  <div class="event-testimonials-container">
+    <div class="section-header-center">
+      <span class="section-eyebrow" data-i18n="reviews.eyebrow">{{ section.settings.eyebrow | default: 'OPINIONES DE CLIENTES' }}</span>
+      <h2 class="section-title" data-i18n="reviews.headline">{{ section.settings.headline | default: 'Amado por Anfitriones e Invitados' }}</h2>
+      <div class="testimonials-badge-gold">
+        <div class="stars-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span data-i18n="reviews.badge_text">Servicio de Coctelería para Eventos Calificado con 5.0 Estrellas</span>
+      </div>
+    </div>
+
+    <div class="testimonials-cards-grid">
+      <!-- Testimonio 1 -->
+      <div class="event-review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote" data-i18n="reviews.r1_quote">
+          &ldquo;{{ section.settings.r1_quote | default: 'Lucky Shaker elevó por completo la recepción de nuestra boda. El menú de cócteles personalizados fue un éxito total y los bartenders fueron excepcionalmente rápidos y profesionales.' }}&rdquo;
+        </p>
+        <div class="review-author-meta">
+          <span class="review-author-name" data-i18n="reviews.r1_author">{{ section.settings.r1_author | default: 'Sofía &amp; Lucas M.' }}</span>
+          <span class="review-author-event" data-i18n="reviews.r1_event">Recepción de Boda &bull; Coral Gables, FL</span>
+        </div>
+      </div>
+
+      <!-- Testimonio 2 -->
+      <div class="event-review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote" data-i18n="reviews.r2_quote">
+          &ldquo;{{ section.settings.r2_quote | default: 'Contratamos a Lucky Shaker para nuestra gala corporativa anual de 180 invitados. Ejecución impecable, cero filas en barra y el Old Fashioned ahumado fue inolvidable.' }}&rdquo;
+        </p>
+        <div class="review-author-meta">
+          <span class="review-author-name" data-i18n="reviews.r2_author">{{ section.settings.r2_author | default: 'David R., Director Ejecutivo' }}</span>
+          <span class="review-author-event" data-i18n="reviews.r2_event">Gala Corporativa &bull; Brickell, Miami</span>
+        </div>
+      </div>
+
+      <!-- Testimonio 3 -->
+      <div class="event-review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-quote" data-i18n="reviews.r3_quote">
+          &ldquo;{{ section.settings.r3_quote | default: 'La masterclass de coctelería para mi cumpleaños número 40 fue la mejor fiesta que hemos organizado. ¡Katherin y su equipo hicieron que todos se sintieran como expertos!' }}&rdquo;
+        </p>
+        <div class="review-author-meta">
+          <span class="review-author-name" data-i18n="reviews.r3_author">{{ section.settings.r3_author | default: 'Camila T.' }}</span>
+          <span class="review-author-event" data-i18n="reviews.r3_event">Celebración de Cumpleaños &bull; Miami Beach</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reseñas de Eventos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "OPINIONES DE CLIENTES"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Título Principal",
+      "default": "Amado por Anfitriones e Invitados"
+    },
+    {
+      "type": "textarea",
+      "id": "r1_quote",
+      "label": "Reseña 1 Cita",
+      "default": "Lucky Shaker elevó por completo la recepción de nuestra boda. El menú de cócteles personalizados fue un éxito total y los bartenders fueron excepcionalmente rápidos y profesionales."
+    },
+    {
+      "type": "text",
+      "id": "r1_author",
+      "label": "Reseña 1 Autor",
+      "default": "Sofía & Lucas M."
+    },
+    {
+      "type": "textarea",
+      "id": "r2_quote",
+      "label": "Reseña 2 Cita",
+      "default": "Contratamos a Lucky Shaker para nuestra gala corporativa anual de 180 invitados. Ejecución impecable, cero filas en barra y el Old Fashioned ahumado fue inolvidable."
+    },
+    {
+      "type": "text",
+      "id": "r2_author",
+      "label": "Reseña 2 Autor",
+      "default": "David R., Director Ejecutivo"
+    },
+    {
+      "type": "textarea",
+      "id": "r3_quote",
+      "label": "Reseña 3 Cita",
+      "default": "La masterclass de coctelería para mi cumpleaños número 40 fue la mejor fiesta que hemos organizado. ¡Katherin y su equipo hicieron que todos se sintieran como expertos!"
+    },
+    {
+      "type": "text",
+      "id": "r3_author",
+      "label": "Reseña 3 Autor",
+      "default": "Camila T."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reseñas de Eventos"
+    }
+  ]
+}
+{% endschema %}

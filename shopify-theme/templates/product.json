@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main_product": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "how_to_enjoy": {
+      "type": "home-how-to-enjoy",
+      "settings": {}
+    },
+    "related_products": {
+      "type": "related-products",
+      "settings": {}
+    },
+    "faq": {
+      "type": "home-faq",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_product",
+    "how_to_enjoy",
+    "related_products",
+    "faq"
+  ]
+}

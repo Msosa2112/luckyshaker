@@ -1,0 +1,143 @@
+<section id="faq" class="event-faq-section" data-section-id="{{ section.id }}">
+  <div class="event-faq-container">
+    <div class="section-header-center">
+      <span class="section-eyebrow" data-i18n="faq.eyebrow">{{ section.settings.eyebrow | default: 'PREGUNTAS FRECUENTES' }}</span>
+      <h2 class="section-title" data-i18n="faq.headline">{{ section.settings.headline | default: 'Detalles del Servicio de Bartending' }}</h2>
+      <p class="section-subtitle" data-i18n="faq.subtitle">
+        {{ section.settings.subtitle | default: 'Todo lo que necesitas saber sobre la contratación de Lucky Shaker para tu celebración.' }}
+      </p>
+    </div>
+
+    <div class="faq-accordion-list">
+      <!-- FAQ 1 -->
+      <details class="faq-acc-item" open>
+        <summary class="faq-acc-header">
+          <span data-i18n="faq.q1">{{ section.settings.q1 | default: '¿Qué incluye un paquete de barra móvil Lucky Shaker?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p data-i18n="faq.a1">{{ section.settings.a1 | default: 'Nuestros paquetes integrales incluyen barra móvil iluminada, mixólogos certificados, herramientas completas de bar, cristalería fina o vasos de policarbonato prémium, hielo artesanal, jugos cítricos frescos, jarabes botánicos caseros, garnituras, cartas de menú personalizadas, montaje y desmontaje completo.' }}</p>
+        </div>
+      </details>
+
+      <!-- FAQ 2 -->
+      <details class="faq-acc-item">
+        <summary class="faq-acc-header">
+          <span data-i18n="faq.q2">{{ section.settings.q2 | default: '¿Cómo funciona la compra y suministro de licor para eventos privados?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p data-i18n="faq.a2">{{ section.settings.a2 | default: 'Te entregamos una lista de compras detallada con la cantidad exacta de botellas requeridas según el número de invitados y el menú seleccionado, o coordinamos a través de distribuidores autorizados según las normativas vigentes.' }}</p>
+        </div>
+      </details>
+
+      <!-- FAQ 3 -->
+      <details class="faq-acc-item">
+        <summary class="faq-acc-header">
+          <span data-i18n="faq.q3">{{ section.settings.q3 | default: '¿Con cuánta anticipación debemos reservar la fecha?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p data-i18n="faq.a3">{{ section.settings.a3 | default: 'Recomendamos reservar con 3 a 8 semanas de anticipación para fines de semana y temporadas de bodas. Sin embargo, también atendemos celebraciones de último momento sujetas a la disponibilidad de nuestro equipo.' }}</p>
+        </div>
+      </details>
+
+      <!-- FAQ 4 -->
+      <details class="faq-acc-item">
+        <summary class="faq-acc-header">
+          <span data-i18n="faq.q4">{{ section.settings.q4 | default: '¿Podemos crear cócteles temáticos personalizados para nuestra fiesta o boda?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p data-i18n="faq.a4">{{ section.settings.a4 | default: '¡Por supuesto! La creación de recetas personalizadas es nuestra especialidad. Durante la asesoría de menú, formularemos cócteles exclusivos con nombres y perfiles botánicos que reflejen la temática de tu evento.' }}</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="faq-footer-cta">
+      <span data-i18n="faq.footer_ready">¿Listo para planificar tu barra?</span>
+      <a href="#book-event" class="faq-contact-link" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }">
+        <span data-i18n="faq.footer_link">Solicitar Cotización &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Eventos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "PREGUNTAS FRECUENTES"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Título Principal",
+      "default": "Detalles del Servicio de Barras"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Todo lo que necesitas saber sobre reservar Lucky Shaker para tu celebración."
+    },
+    {
+      "type": "text",
+      "id": "q1",
+      "label": "Pregunta 1",
+      "default": "¿Qué incluye el servicio de barra para eventos de Lucky Shaker?"
+    },
+    {
+      "type": "textarea",
+      "id": "a1",
+      "label": "Respuesta 1",
+      "default": "Incluye estaciones de barra móviles completas, mixólogos profesionales certificados y asegurados, cartas de menú impresas a medida, jarabes y mixers artesanales de la casa, cítricos frescos exprimidos, garnituras de diseño, cristalería de cristal y pozos de hielo completos."
+    },
+    {
+      "type": "text",
+      "id": "q2",
+      "label": "Pregunta 2",
+      "default": "¿Con cuánta anticipación debo reservar mi fecha?"
+    },
+    {
+      "type": "textarea",
+      "id": "a2",
+      "label": "Respuesta 2",
+      "default": "Recomendamos reservar con 3 a 8 semanas de anticipación para eventos privados y de 3 a 6 meses para bodas y galas corporativas de fin de año. Sin embargo, siempre atendemos solicitudes con menor tiempo según disponibilidad."
+    },
+    {
+      "type": "text",
+      "id": "q3",
+      "label": "Pregunta 3",
+      "default": "¿Ustedes proporcionan el alcohol o lo provee el cliente?"
+    },
+    {
+      "type": "textarea",
+      "id": "a3",
+      "label": "Respuesta 3",
+      "default": "Ofrecemos ambas opciones flexibles. Podemos coordinar y gestionar la lista completa de licores a través de nuestros distribuidores autorizados asociados, o proveerte una lista exacta de compras si prefieres suministrar los licores por tu cuenta."
+    },
+    {
+      "type": "text",
+      "id": "q4",
+      "label": "Pregunta 4",
+      "default": "¿Pueden personalizar los nombres de los cócteles para nuestro evento?"
+    },
+    {
+      "type": "textarea",
+      "id": "a4",
+      "label": "Respuesta 4",
+      "default": "¡Absolutamente! Es uno de nuestros servicios insignia. Creamos cócteles con nombres alusivos a los novios, a la empresa o a la temática del anfitrión, maridados con sus licores preferidos."
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Eventos"
+    }
+  ]
+}
+{% endschema %}

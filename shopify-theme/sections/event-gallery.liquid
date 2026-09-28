@@ -1,0 +1,89 @@
+<section id="gallery" class="event-gallery-section" data-section-id="{{ section.id }}">
+  <div class="event-gallery-container">
+    <div class="section-header-center">
+      <span class="section-eyebrow" data-i18n="gallery.eyebrow">{{ section.settings.eyebrow | default: 'LA ATMÓSFERA' }}</span>
+      <h2 class="section-title" data-i18n="gallery.headline">{{ section.settings.headline | default: 'Momentos Que Hemos Creado' }}</h2>
+      <p class="section-subtitle" data-i18n="gallery.subtitle">
+        {{ section.settings.subtitle | default: 'Un vistazo a la energía, el arte de la mixología y la atmósfera sofisticada que llevamos a cada evento privado.' }}
+      </p>
+    </div>
+
+    <div class="gallery-editorial-grid">
+      <!-- Item 1: Large Feature (Bodas) -->
+      <div class="gallery-item item-large">
+        <img src="{{ 'event-weddings.jpg' | asset_url }}" alt="Barra de Coctelería para Bodas Lucky Shaker" class="gallery-img" width="800" height="600" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-pill" data-i18n="gallery.p1">BODAS</span>
+          <h4 data-i18n="gallery.t1">Montaje de Barra al Atardecer</h4>
+        </div>
+      </div>
+
+      <!-- Item 2: Mixologist Shake -->
+      <div class="gallery-item">
+        <img src="{{ 'event-bartender-action.jpg' | asset_url }}" alt="Mixólogo de Autor en Acción" class="gallery-img" width="600" height="500" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-pill" data-i18n="gallery.p2">EL ARTE</span>
+          <h4 data-i18n="gallery.t2">Precisión y Pasión en Coctelera</h4>
+        </div>
+      </div>
+
+      <!-- Item 3: Private Party Rooftop -->
+      <div class="gallery-item">
+        <img src="{{ 'event-private-party.jpg' | asset_url }}" alt="Fiesta Privada en Terraza" class="gallery-img" width="600" height="500" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-pill" data-i18n="gallery.p3">EVENTOS PRIVADOS</span>
+          <h4 data-i18n="gallery.t3">Celebraciones en Terrazas</h4>
+        </div>
+      </div>
+
+      <!-- Item 4: Corporate Gala Bar -->
+      <div class="gallery-item">
+        <img src="{{ 'event-corporate-gala.jpg' | asset_url }}" alt="Coctelería para Galas Corporativas" class="gallery-img" width="600" height="500" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-pill" data-i18n="gallery.p4">GALAS CORPORATIVAS</span>
+          <h4 data-i18n="gallery.t4">Servicio VIP para Empresas</h4>
+        </div>
+      </div>
+
+      <!-- Item 5: Cocktail Pour / Bottled Reserve -->
+      <div class="gallery-item">
+        <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Detalles de Coctelería Lucky Shaker" class="gallery-img" width="600" height="500" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-pill" data-i18n="gallery.p5">COLECCIÓN RESERVA</span>
+          <h4 data-i18n="gallery.t5">Elegancia Embotellada a Mano</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Galería de Eventos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "LA ATMÓSFERA"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Título Principal",
+      "default": "Momentos Que Hemos Creado"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Un vistazo a la energía, el arte de la mixología y la atmósfera sofisticada que llevamos a cada evento privado."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Galería de Eventos"
+    }
+  ]
+}
+{% endschema %}

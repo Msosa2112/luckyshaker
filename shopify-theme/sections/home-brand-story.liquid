@@ -1,0 +1,141 @@
+<section id="story" class="brand-story-section" data-section-id="{{ section.id }}">
+  <div class="brand-story-inner">
+    <div class="story-header-wrap">
+      <span class="story-eyebrow">{{ section.settings.eyebrow | default: 'THE LUCKY SHAKER EXPERIENCE' }}</span>
+      <h2 class="story-headline">{{ section.settings.headline | default: 'A memorable drink starts with the right ingredients.' }}</h2>
+    </div>
+
+    <div class="story-content">
+      <p class="story-body-p">
+        {{ section.settings.body_text | default: 'We founded Lucky Shaker Bartender to eliminate the compromise between high-end cocktail lounge craftsmanship and spontaneous at-home enjoyment. Every bottle is hand-blended with authentic spirits, real botanicals, and zero shortcuts. Simply chill, shake, and pour.' }}
+      </p>
+
+      {%- if section.settings.cta_label != blank -%}
+        <div class="story-cta-wrap">
+          <a href="{{ section.settings.cta_link | default: '/pages/our-story' }}" class="btn button-glass">
+            <span>{{ section.settings.cta_label }}</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      {%- endif -%}
+
+      <div class="story-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 4h10l-1.5 13a3 3 0 0 1-3 2.5h-1a3 3 0 0 1-3-2.5L7 4z"/>
+              <path d="M7.5 9h9"/>
+              <path d="M8 14h8"/>
+            </svg>
+          </div>
+          <h4>{{ section.settings.pillar1_title | default: 'THE SPIRITS' }}</h4>
+          <p>{{ section.settings.pillar1_text | default: 'Authentic small-batch distillates aged to peak character in charred oak casks.' }}</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="12" rx="8" ry="5.5" transform="rotate(-35 12 12)"/>
+              <path d="M6 18c3-4 9-8 12-12"/>
+              <path d="M9 10c1 1 2 2 4 2"/>
+            </svg>
+          </div>
+          <h4>{{ section.settings.pillar2_title | default: 'THE BOTANICALS' }}</h4>
+          <p>{{ section.settings.pillar2_text | default: 'Cold-pressed citrus oils, hand-picked garden herbs, and pure caramelized sugars.' }}</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/>
+            </svg>
+          </div>
+          <h4>{{ section.settings.pillar3_title | default: 'THE CRAFT' }}</h4>
+          <p>{{ section.settings.pillar3_text | default: 'Master mixologist formulation ensuring world-class balance in every pour.' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE LUCKY SHAKER EXPERIENCE"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "A memorable drink starts with the right ingredients."
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Story Paragraph",
+      "default": "We founded Lucky Shaker Bartender to eliminate the compromise between high-end cocktail lounge craftsmanship and spontaneous at-home enjoyment. Every bottle is hand-blended with authentic spirits, real botanicals, and zero shortcuts. Simply chill, shake, and pour."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button Label",
+      "default": "DISCOVER OUR STORY"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Pillars"
+    },
+    {
+      "type": "text",
+      "id": "pillar1_title",
+      "label": "Pillar 1 Title",
+      "default": "THE SPIRITS"
+    },
+    {
+      "type": "text",
+      "id": "pillar1_text",
+      "label": "Pillar 1 Description",
+      "default": "Authentic small-batch distillates aged to peak character in charred oak casks."
+    },
+    {
+      "type": "text",
+      "id": "pillar2_title",
+      "label": "Pillar 2 Title",
+      "default": "THE BOTANICALS"
+    },
+    {
+      "type": "text",
+      "id": "pillar2_text",
+      "label": "Pillar 2 Description",
+      "default": "Cold-pressed citrus oils, hand-picked garden herbs, and pure caramelized sugars."
+    },
+    {
+      "type": "text",
+      "id": "pillar3_title",
+      "label": "Pillar 3 Title",
+      "default": "THE CRAFT"
+    },
+    {
+      "type": "text",
+      "id": "pillar3_text",
+      "label": "Pillar 3 Description",
+      "default": "Master mixologist formulation ensuring world-class balance in every pour."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Story"
+    }
+  ]
+}
+{% endschema %}

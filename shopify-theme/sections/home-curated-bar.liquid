@@ -1,0 +1,155 @@
+<section id="shop" class="shop-section">
+  <div class="shop-header">
+    <div class="eyebrow">{{ section.settings.eyebrow | default: 'RESERVE BOTTLES' }}</div>
+    <h2 class="shop-headline">{{ section.settings.title | default: 'CURATE YOUR BAR' }}</h2>
+    <p class="shop-subheadline">
+      {{ section.settings.subtitle | default: 'Individually formulated, hand-batched, and sealed for exceptional shelf stability. Each bottle pours 6–8 full-sized luxury cocktails.' }}
+    </p>
+  </div>
+
+  <div class="products-catalog">
+    {%- assign catalog_collection = collections[section.settings.featured_collection] -%}
+    {%- if catalog_collection == blank or catalog_collection.products.size == 0 -%}
+      {%- assign catalog_collection = collections['all'] -%}
+    {%- endif -%}
+
+    {%- if catalog_collection.products.size > 0 -%}
+      {%- for product in catalog_collection.products limit: 12 -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Curated Showcase -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="{{ routes.all_products_collection_url }}">
+            <img src="{{ 'margarita.jpg' | asset_url }}" alt="Lucky Shaker MARGARITA 750ml" width="400" height="500" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">18% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="{{ routes.all_products_collection_url }}" style="color: inherit; text-decoration: none;">MARGARITA</a></h3>
+          <p class="product-desc">Un clásico refrescante de tequila y cítricos, con un equilibrio perfecto entre acidez y dulzor.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Tequila · Lima · Naranja · Agave</div>
+          <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('margarita', 1, 'Margarita 750ml', '$38.00')" aria-label="Add MARGARITA to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="{{ routes.all_products_collection_url }}">
+            <img src="{{ 'mojito.jpg' | asset_url }}" alt="Lucky Shaker MOJITO 750ml" width="400" height="500" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">12% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="{{ routes.all_products_collection_url }}" style="color: inherit; text-decoration: none;">MOJITO</a></h3>
+          <p class="product-desc">Refrescante y ligero, con ron, lima y el carácter aromático de la menta.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Minty</span>
+            <span class="pill-note">Refreshing</span>
+          </div>
+          <div class="product-ingredients-line">Ron blanco · Lima · Menta · Azúcar</div>
+          <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('mojito', 1, 'Mojito 750ml', '$36.00')" aria-label="Add MOJITO to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="{{ routes.all_products_collection_url }}">
+            <img src="{{ 'old-fashioned.jpg' | asset_url }}" alt="Lucky Shaker OLD FASHIONED 750ml" width="400" height="500" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">24% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="{{ routes.all_products_collection_url }}" style="color: inherit; text-decoration: none;">OLD FASHIONED</a></h3>
+          <p class="product-desc">Un clásico sofisticado donde el whiskey y los bitters entregan complejidad y elegancia.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Bold</span>
+            <span class="pill-note">Smoky</span>
+            <span class="pill-note">Complex</span>
+          </div>
+          <div class="product-ingredients-line">Whiskey · Bitters · Azúcar · Naranja</div>
+          <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('old-fashioned', 1, 'Old Fashioned 750ml', '$42.00')" aria-label="Add OLD FASHIONED to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+    {%- endif -%}
+  </div>
+
+  <div style="text-align: center; margin-top: 3.5rem;">
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn-pink" style="display: inline-flex; text-decoration: none; padding: 1rem 2.5rem;">
+      <span>EXPLORE ALL 18 COCKTAILS</span>
+      <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M1 7h12M8 2l5 5-5 5"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Cocktails Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "RESERVE BOTTLES"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "CURATE YOUR BAR"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Individually formulated, hand-batched, and sealed for exceptional shelf stability. Each bottle pours 6–8 full-sized luxury cocktails."
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Select Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Cocktails Grid"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,135 @@
+<section class="home-lifestyle-section" data-section-id="{{ section.id }}">
+  <div class="lifestyle-container">
+    <div class="lifestyle-header-center">
+      <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'THE COCKTAIL CULTURE' }}</span>
+      <h2 class="section-title">{{ section.settings.headline | default: 'Designed For Modern Moments.' }}</h2>
+      <p class="section-subtitle">
+        {{ section.settings.subtitle | default: 'From intimate terrace evenings to spontaneous celebrations, Lucky Shaker transforms every gathering into an effortless cocktail lounge experience.' }}
+      </p>
+    </div>
+
+    <div class="lifestyle-mosaic-grid">
+      <!-- Mosaic 1 -->
+      <div class="lifestyle-card large">
+        {%- if section.settings.img1 != blank -%}
+          <img src="{{ section.settings.img1 | image_url: width: 800 }}" alt="{{ section.settings.caption1 | default: 'The Cocktail Ritual' }}" class="lifestyle-img" width="800" height="500">
+        {%- else -%}
+          <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Lucky Shaker Velvet Ritual" class="lifestyle-img" width="800" height="500">
+        {%- endif -%}
+        <div class="lifestyle-glass-overlay">
+          <span class="lifestyle-pill">THE RITUAL</span>
+          <h3>{{ section.settings.caption1 | default: 'Chill. Shake. Pour.' }}</h3>
+          <p>{{ section.settings.subcaption1 | default: 'Master balance achieved in seconds without bar tools.' }}</p>
+        </div>
+      </div>
+
+      <!-- Mosaic 2 -->
+      <div class="lifestyle-card">
+        {%- if section.settings.img2 != blank -%}
+          <img src="{{ section.settings.img2 | image_url: width: 600 }}" alt="{{ section.settings.caption2 | default: 'Old Fashioned Reserve' }}" class="lifestyle-img" width="600" height="500">
+        {%- else -%}
+          <img src="{{ 'old_fashioned_desktop.jpg' | asset_url }}" alt="Lucky Shaker Old Fashioned" class="lifestyle-img" width="600" height="500">
+        {%- endif -%}
+        <div class="lifestyle-glass-overlay">
+          <span class="lifestyle-pill">RESERVE BATCH</span>
+          <h3>{{ section.settings.caption2 | default: 'Charred Oak & Bitters' }}</h3>
+        </div>
+      </div>
+
+      <!-- Mosaic 3 -->
+      <div class="lifestyle-card">
+        {%- if section.settings.img3 != blank -%}
+          <img src="{{ section.settings.img3 | image_url: width: 600 }}" alt="{{ section.settings.caption3 | default: 'Fresh Botanical Mojito' }}" class="lifestyle-img" width="600" height="500">
+        {%- else -%}
+          <img src="{{ 'mojito_desktop.jpg' | asset_url }}" alt="Lucky Shaker Craft Mojito" class="lifestyle-img" width="600" height="500">
+        {%- endif -%}
+        <div class="lifestyle-glass-overlay">
+          <span class="lifestyle-pill">BOTANICALS</span>
+          <h3>{{ section.settings.caption3 | default: 'Fresh Herb & Cold Lime' }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lifestyle & Story",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE COCKTAIL CULTURE"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Designed For Modern Moments."
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "From intimate terrace evenings to spontaneous celebrations, Lucky Shaker transforms every gathering into an effortless cocktail lounge experience."
+    },
+    {
+      "type": "header",
+      "content": "Image 1 (Large)"
+    },
+    {
+      "type": "image_picker",
+      "id": "img1",
+      "label": "Image 1"
+    },
+    {
+      "type": "text",
+      "id": "caption1",
+      "label": "Caption 1",
+      "default": "Chill. Shake. Pour."
+    },
+    {
+      "type": "text",
+      "id": "subcaption1",
+      "label": "Subcaption 1",
+      "default": "Master balance achieved in seconds without bar tools."
+    },
+    {
+      "type": "header",
+      "content": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "img2",
+      "label": "Image 2"
+    },
+    {
+      "type": "text",
+      "id": "caption2",
+      "label": "Caption 2",
+      "default": "Charred Oak & Bitters"
+    },
+    {
+      "type": "header",
+      "content": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "img3",
+      "label": "Image 3"
+    },
+    {
+      "type": "text",
+      "id": "caption3",
+      "label": "Caption 3",
+      "default": "Fresh Herb & Cold Lime"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lifestyle & Story"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,162 @@
+<section class="product-experience-section" data-section-id="{{ section.id }}">
+  <div class="product-experience-container">
+    <div class="product-experience-grid">
+      
+      <!-- Media / Visual Column -->
+      <div class="exp-media-wrap">
+        <div class="exp-image-card">
+          <span class="exp-badge">PRIVATE RESERVE &bull; 750 ML</span>
+          {%- if section.settings.image != blank -%}
+            <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.headline | default: 'Lucky Shaker Craftsmanship' }}" class="exp-img" width="600" height="600">
+          {%- else -%}
+            <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Lucky Shaker Whiskey Cream" class="exp-img" width="600" height="600">
+          {%- endif -%}
+          <div class="exp-glass-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>MASTER MIXOLOGIST BATCH &bull; BY KATHERIN</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Column -->
+      <div class="exp-content-wrap">
+        <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'THE PRODUCT EXPERIENCE' }}</span>
+        <h2 class="section-title">{{ section.settings.headline | default: 'Liquid Perfection In Every Bottle.' }}</h2>
+        <p class="section-lead-text">
+          {{ section.settings.body | default: 'Formulated to rigorous lounge standards, each Lucky Shaker bottle is a complete, shelf-stable craft cocktail. No synthetic preservatives, no artificial syrups—only premium distilled spirits, fresh botanicals, and velvety dairy cream.' }}
+        </p>
+
+        <div class="exp-features-grid">
+          <div class="exp-feature-item">
+            <div class="exp-feature-num">01</div>
+            <div class="exp-feature-text">
+              <h4>{{ section.settings.feat1_title | default: 'Small-Batch Distillate' }}</h4>
+              <p>{{ section.settings.feat1_text | default: 'Triple-distilled aged spirits blended to exacting proof and velvety viscosity.' }}</p>
+            </div>
+          </div>
+
+          <div class="exp-feature-item">
+            <div class="exp-feature-num">02</div>
+            <div class="exp-feature-text">
+              <h4>{{ section.settings.feat2_title | default: 'Real Botanical Infusion' }}</h4>
+              <p>{{ section.settings.feat2_text | default: 'Venezuelan roasted cocoa, Tahitian vanilla beans, and cold-pressed citrus.' }}</p>
+            </div>
+          </div>
+
+          <div class="exp-feature-item">
+            <div class="exp-feature-num">03</div>
+            <div class="exp-feature-text">
+              <h4>{{ section.settings.feat3_title | default: '6–8 Lounge Servings' }}</h4>
+              <p>{{ section.settings.feat3_text | default: 'Each 750ml glass bottle pours multiple full-sized cocktails for your bar.' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-cta-row">
+          <a href="{{ section.settings.cta_link | default: '/collections/all' }}" class="btn btn-pink">
+            <span>{{ section.settings.cta_label | default: 'EXPLORE THE COLLECTION' }}</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Experience",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE PRODUCT EXPERIENCE"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Liquid Perfection In Every Bottle."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body Paragraph",
+      "default": "Formulated to rigorous lounge standards, each Lucky Shaker bottle is a complete, shelf-stable craft cocktail. No synthetic preservatives, no artificial syrups—only premium distilled spirits, fresh botanicals, and velvety dairy cream."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Featured Image"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button Label",
+      "default": "EXPLORE THE COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Feature 1"
+    },
+    {
+      "type": "text",
+      "id": "feat1_title",
+      "label": "Title",
+      "default": "Small-Batch Distillate"
+    },
+    {
+      "type": "text",
+      "id": "feat1_text",
+      "label": "Description",
+      "default": "Triple-distilled aged spirits blended to exacting proof and velvety viscosity."
+    },
+    {
+      "type": "header",
+      "content": "Feature 2"
+    },
+    {
+      "type": "text",
+      "id": "feat2_title",
+      "label": "Title",
+      "default": "Real Botanical Infusion"
+    },
+    {
+      "type": "text",
+      "id": "feat2_text",
+      "label": "Description",
+      "default": "Venezuelan roasted cocoa, Tahitian vanilla beans, and cold-pressed citrus."
+    },
+    {
+      "type": "header",
+      "content": "Feature 3"
+    },
+    {
+      "type": "text",
+      "id": "feat3_title",
+      "label": "Title",
+      "default": "6–8 Lounge Servings"
+    },
+    {
+      "type": "text",
+      "id": "feat3_text",
+      "label": "Description",
+      "default": "Each 750ml glass bottle pours multiple full-sized cocktails for your bar."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Experience"
+    }
+  ]
+}
+{% endschema %}

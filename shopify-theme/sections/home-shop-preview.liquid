@@ -1,0 +1,133 @@
+<section id="shop-preview" class="home-shop-preview-section" data-section-id="{{ section.id }}">
+  <div class="shop-preview-container">
+    <div class="section-header-center">
+      <span class="section-eyebrow" data-i18n="shop_preview.eyebrow">{{ section.settings.eyebrow | default: 'LLEVA LUCKY SHAKER A CASA' }}</span>
+      <h2 class="section-title" data-i18n="shop_preview.headline">{{ section.settings.headline | default: 'La Colección de Botellas Reserva' }}</h2>
+      <p class="section-subtitle" data-i18n="shop_preview.subtitle">
+        {{ section.settings.subtitle | default: 'Cócteles de autor elaborados a mano y sellados en pesadas botellas de vidrio. Cada botella de 750ml rinde 6–8 copas de nivel coctelería para tu barra personal.' }}
+      </p>
+    </div>
+
+    <div class="shop-preview-grid">
+      {%- assign shop_collection = collections[section.settings.featured_collection] -%}
+      {%- if shop_collection == blank or shop_collection.products.size == 0 -%}
+        {%- assign shop_collection = collections['all'] -%}
+      {%- endif -%}
+
+      {%- if shop_collection.products.size > 0 -%}
+        {%- for product in shop_collection.products limit: 3 -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Botella 1: Whiskey Cream -->
+        <article class="product-item">
+          <div class="product-visual-box">
+            <a href="{{ routes.all_products_collection_url }}">
+              <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Lucky Shaker Whiskey Cream" width="400" height="500" loading="lazy">
+            </a>
+            <span class="product-visual-badge">17% ABV</span>
+          </div>
+          <div class="product-details">
+            <div class="product-meta-row">
+              <span class="product-type">750ML &bull; RESERVA</span>
+              <span class="product-price">$38.00</span>
+            </div>
+            <h3 class="product-name"><a href="{{ routes.all_products_collection_url }}" style="color: inherit; text-decoration: none;">WHISKEY CREAM</a></h3>
+            <p class="product-desc">Whiskey añejado triple destilación, cacao tostado venezolano y crema aterciopelada.</p>
+            <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('whiskey-cream', 1, 'Whiskey Cream 750ml', '$38.00')" style="margin-top: auto;">
+              <span data-i18n="shop_preview.add_bag">AÑADIR A LA BOLSA</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Botella 2: Old Fashioned -->
+        <article class="product-item">
+          <div class="product-visual-box">
+            <a href="{{ routes.all_products_collection_url }}">
+              <img src="{{ 'old-fashioned.jpg' | asset_url }}" alt="Lucky Shaker Old Fashioned" width="400" height="500" loading="lazy">
+            </a>
+            <span class="product-visual-badge">24% ABV</span>
+          </div>
+          <div class="product-details">
+            <div class="product-meta-row">
+              <span class="product-type">750ML &bull; RESERVA</span>
+              <span class="product-price">$42.00</span>
+            </div>
+            <h3 class="product-name"><a href="{{ routes.all_products_collection_url }}" style="color: inherit; text-decoration: none;">OLD FASHIONED</a></h3>
+            <p class="product-desc">Whiskey bourbon añejo, bitters aromáticos y aceites esenciales de naranja exprimidos en frío.</p>
+            <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('old-fashioned', 1, 'Old Fashioned 750ml', '$42.00')" style="margin-top: auto;">
+              <span data-i18n="shop_preview.add_bag">AÑADIR A LA BOLSA</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- Botella 3: Mojito -->
+        <article class="product-item">
+          <div class="product-visual-box">
+            <a href="{{ routes.all_products_collection_url }}">
+              <img src="{{ 'mojito.jpg' | asset_url }}" alt="Lucky Shaker Mojito" width="400" height="500" loading="lazy">
+            </a>
+            <span class="product-visual-badge">12% ABV</span>
+          </div>
+          <div class="product-details">
+            <div class="product-meta-row">
+              <span class="product-type">750ML &bull; RESERVA</span>
+              <span class="product-price">$36.00</span>
+            </div>
+            <h3 class="product-name"><a href="{{ routes.all_products_collection_url }}" style="color: inherit; text-decoration: none;">CRAFT MOJITO</a></h3>
+            <p class="product-desc">Ron blanco caribeño, lima prensada en frío, menta fresca de jardín y azúcar de caña pura.</p>
+            <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('mojito', 1, 'Craft Mojito 750ml', '$36.00')" style="margin-top: auto;">
+              <span data-i18n="shop_preview.add_bag">AÑADIR A LA BOLSA</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </button>
+          </div>
+        </article>
+      {%- endif -%}
+    </div>
+
+    <div class="shop-preview-footer-cta">
+      <a href="{{ routes.all_products_collection_url }}" class="btn button-glass btn-explore-shop">
+        <span data-i18n="shop_preview.explore_btn">EXPLORAR LOS 19 CÓCTELES EN BOTELLA</span>
+        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vista Previa de Tienda",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Antetítulo",
+      "default": "LLEVA LUCKY SHAKER A CASA"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Título Principal",
+      "default": "La Colección de Botellas Reserva"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Cócteles de autor elaborados a mano y sellados en pesadas botellas de vidrio. Cada botella de 750ml rinde 6–8 copas de nivel coctelería para tu barra personal."
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Colección Destacada"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vista Previa de Tienda"
+    }
+  ]
+}
+{% endschema %}

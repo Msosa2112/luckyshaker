@@ -13,6 +13,10 @@
   <meta property="og:image" content="assets/posters/whiskey_cream_desktop.jpg">
   <meta property="og:type" content="website">
 
+  <!-- Preload First Cinematic Hero Frames (Performance Budget LCP < 1.2s) -->
+  <link rel="preload" as="image" href="assets/frames/whiskey_scroll/frame-0001.webp?v=6" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/frames/whiskey_scroll_mobile/frame-0001.webp?v=6" media="(max-width: 768px)" fetchpriority="high">
+
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,18 +31,39 @@
 <body>
 
   <!-- =========================================================================
+       GLOBAL LIQUID GLASS OPTICAL DISTORTION FILTER (#glass-distortion)
+       ========================================================================= -->
+  <svg style="position: absolute; width: 0; height: 0; pointer-events: none; opacity: 0; overflow: hidden;" aria-hidden="true" focusable="false">
+    <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence" />
+      <feComponentTransfer in="turbulence" result="mapped">
+        <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+        <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+        <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+      </feComponentTransfer>
+      <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+      <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lightingColor="white" result="specLight">
+        <fePointLight x="-200" y="-200" z="300" />
+      </feSpecularLighting>
+      <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
+      <feDisplacementMap in="SourceGraphic" in2="softMap" scale="200" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
+  <!-- =========================================================================
        1. LUXURY STICKY NAVIGATION (Official Brand Logo - Light Theme)
        ========================================================================= -->
   <header class="navbar" id="main-nav">
     <a href="#cinematic-sequence" class="nav-brand" aria-label="Lucky Shaker Bartender Home">
-      <img src="assets/lucky_shaker_logo_light_theme.png" alt="Lucky Shaker Bartender" class="nav-logo-img">
+      <img src="assets/logo_lucky_shaker.svg" alt="Lucky Shaker Bartender" class="nav-logo-img">
     </a>
 
     <nav aria-label="Main Navigation">
       <ul class="nav-menu">
         <li><a href="#cinematic-sequence" class="nav-link">Film</a></li>
-        <li><a href="#shop" class="nav-link">Shop</a></li>
-        <li><a href="#story" class="nav-link">Our Story</a></li>
+        <li><a href="shop.html" class="nav-link">Shop</a></li>
+        <li><a href="story.html" class="nav-link">Our Story</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
     </nav>
 
@@ -70,25 +95,113 @@
       <!-- =====================================================================
            LAYER 1: SCENE VIDEO LAYERS (Pinned Co-planar Depth Stack)
            ===================================================================== -->
-      <div class="scene-layer scene-mojito" id="scene-mojito">
-        <video id="video-mojito" class="scene-video" muted playsinline preload="auto" poster="assets/posters/mojito_desktop.jpg">
-          <source media="(max-width: 768px)" src="videos para web/Mojito/Mojito_product_video mobile.mp4" type="video/mp4">
-          <source src="videos para web/Mojito/Cinematic_mojito_desktop.mp4" type="video/mp4">
+
+      <!-- =====================================================================
+           LAYER 1: SCENE VIDEO & CANVAS LAYERS (3 COCKTAILS IN CONTINUOUS SCROLL)
+           ===================================================================== -->
+
+      <!-- SCENE 1: WHISKEY CREAM (ACT 1) -->
+      <div class="scene-layer scene-whiskey-cream" id="scene-whiskey-cream">
+        <span class="video-bestseller-tag">BEST SELLER</span>
+        <canvas id="wc-sequence-canvas" class="scene-canvas"></canvas>
+        <video id="video-whiskey-cream-commercial" class="wc-commercial-video" muted playsinline preload="auto">
+          <source media="(max-width: 768px)" src="videos para web/Whiskey Cream/Scroll_driven_whiskey_mobile_1080p.mp4" type="video/mp4">
+          <source src="videos para web/Whiskey Cream/Scroll_first_cinematic_whiskey_1080p.mp4" type="video/mp4">
         </video>
+        <div class="wc-atmosphere-layer"></div>
+        <div id="wc-liquid-glow" class="wc-liquid-glow"></div>
+        <div id="wc-scan-beam" class="wc-scan-beam"></div>
       </div>
 
+      <!-- SCENE 2: OLD FASHIONED (ACT 2 — SLIDES FROM RIGHT) -->
       <div class="scene-layer scene-old-fashioned" id="scene-old-fashioned">
-        <video id="video-old-fashioned" class="scene-video" muted playsinline preload="auto" poster="assets/posters/old_fashioned_desktop.jpg">
+        <span class="video-bestseller-tag">BEST SELLER</span>
+        <canvas id="of-sequence-canvas" class="scene-canvas"></canvas>
+        <video id="video-old-fashioned" class="scene-video-bg" muted playsinline preload="auto">
           <source media="(max-width: 768px)" src="videos para web/Old Fashioned/Old_Fashioned_cocktail_mobile.mp4" type="video/mp4">
           <source src="videos para web/Old Fashioned/Cinematic_Old_Fashioned desktop.mp4" type="video/mp4">
         </video>
+        <div class="of-atmosphere-layer"></div>
       </div>
 
-      <div class="scene-layer scene-whiskey-cream" id="scene-whiskey-cream">
-        <video id="video-whiskey-cream" class="scene-video" muted playsinline preload="auto" poster="assets/posters/whiskey_cream_desktop.jpg">
-          <source media="(max-width: 768px)" src="videos para web/Whiskey Cream/Whiskey_cream_mobile.mp4" type="video/mp4">
-          <source src="videos para web/Whiskey Cream/Whiskey_cream_desktop.mp4" type="video/mp4">
+      <!-- SCENE 3: MOJITO (ACT 3 — SLIDES FROM RIGHT) -->
+      <div class="scene-layer scene-mojito" id="scene-mojito">
+        <span class="video-bestseller-tag">BEST SELLER</span>
+        <canvas id="mojito-sequence-canvas" class="scene-canvas"></canvas>
+        <video id="video-mojito" class="scene-video-bg" muted playsinline preload="auto">
+          <source media="(max-width: 768px)" src="videos para web/Mojito/Mojito_product_video mobile.mp4" type="video/mp4">
+          <source src="videos para web/Mojito/Cinematic_mojito_desktop.mp4" type="video/mp4">
         </video>
+        <div class="mojito-atmosphere-layer"></div>
+      </div>
+
+      <!-- FLOATING 3D STORYTELLING BADGES (GN INVESTMENT ARCHITECTURE) -->
+      <div class="floating-badges-container" id="floating-badges-container">
+        
+        <!-- BADGE 1: TOP LEFT -->
+        <div class="floating-badge badge-top-left" id="badge-whiskey">
+          <div class="badge-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 4h10l-1.5 13a3 3 0 0 1-3 2.5h-1a3 3 0 0 1-3-2.5L7 4z"/>
+              <path d="M7.5 9h9"/>
+              <path d="M8 14h8"/>
+            </svg>
+          </div>
+          <div class="badge-text-box">
+            <span class="badge-title">Triple-Distilled Aged Whiskey</span>
+            <span class="badge-sub">Matured in charred American oak</span>
+          </div>
+        </div>
+
+        <!-- BADGE 2: TOP RIGHT -->
+        <div class="floating-badge badge-top-right" id="badge-cocoa">
+          <div class="badge-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <ellipse cx="12" cy="12" rx="8" ry="5.5" transform="rotate(-35 12 12)"/>
+              <path d="M6 18c3-4 9-8 12-12"/>
+              <path d="M9 10c1 1 2 2 4 2"/>
+            </svg>
+          </div>
+          <div class="badge-text-box">
+            <span class="badge-title">Venezuelan Roasted Cocoa</span>
+            <span class="badge-sub">Infused with bourbon vanilla beans</span>
+          </div>
+        </div>
+
+        <!-- BADGE 3: BOTTOM LEFT -->
+        <div class="floating-badge badge-bottom-left" id="badge-cream">
+          <div class="badge-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <div class="badge-text-box">
+            <span class="badge-title">Pure Velvet Dairy Cream</span>
+            <span class="badge-sub">17% Alc / Vol • 110 ML single pour</span>
+          </div>
+        </div>
+
+        <!-- BADGE 4: BOTTOM RIGHT -->
+        <div class="floating-badge badge-bottom-right" id="badge-artisan">
+          <div class="badge-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/>
+            </svg>
+          </div>
+          <div class="badge-text-box">
+            <span class="badge-title">Private Reserve By Katherin</span>
+            <span class="badge-sub">Hand-batched &amp; sealed in glass</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SCROLL CUE INDICATOR (Fades out after 5% scroll) -->
+      <div class="scroll-cue" id="scroll-cue">
+        <span class="scroll-cue-text">SCROLL TO EXPLORE THE CRAFT</span>
+        <svg class="scroll-cue-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+        </svg>
       </div>
 
       <!-- =====================================================================
@@ -102,64 +215,68 @@
            ===================================================================== -->
       <div class="cinematic-editorial-container">
         
-        <!-- CARD 1: MOJITO -->
-        <article class="editorial-card card-mojito" id="card-mojito">
-          <div class="eyebrow"><img src="assets/lucky_shaker_glass_icon.png" alt="" class="card-glass-icon"> CRAFTED COCKTAILS • READY TO POUR</div>
-          <h1 class="panel-title">LUCKY SHAKER</h1>
-          <div class="panel-subtitle">MOJITO</div>
-          <p class="panel-desc">
-            An effervescent masterpiece balancing triple-filtered Caribbean rum, hand-bruised garden spearmint, cold-pressed Persian limes, and pure cane sweetness.
-          </p>
-          <div class="panel-specs">12% ABV • 750 ML • SERVE OVER CRACKED ICE WITH MINT</div>
-          <div class="panel-actions">
-            <button class="btn btn-primary" onclick="addToCart('mojito')" aria-label="Shop Mojito">
-              <span>SHOP MOJITO — $36.00</span>
-              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M1 7h12M8 2l5 5-5 5"/>
-              </svg>
+        <!-- CARD 1: WHISKEY CREAM -->
+        <article class="editorial-card card-whiskey-cream cinematic-bottom-split" id="card-whiskey-cream">
+          <div class="split-left-name">
+            <h2 class="callout-product-title">WHISKEY CREAM</h2>
+          </div>
+          <div class="split-right-action">
+            <button class="btn btn-primary btn-liquid-glass" onclick="addToCart('whiskey-cream')" aria-label="Shop Whiskey Cream">
+              <span class="btn-glass-layer-distortion" aria-hidden="true"></span>
+              <span class="btn-glass-layer-tint" aria-hidden="true"></span>
+              <span class="btn-glass-layer-specular" aria-hidden="true"></span>
+              <span class="btn-text-content">
+                <span>SHOP NOW — $38.00</span>
+                <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 7h12M8 2l5 5-5 5"/>
+                </svg>
+              </span>
             </button>
           </div>
         </article>
 
         <!-- CARD 2: OLD FASHIONED -->
-        <article class="editorial-card card-old-fashioned" id="card-old-fashioned">
-          <div class="eyebrow"><img src="assets/lucky_shaker_glass_icon.png" alt="" class="card-glass-icon"> THE TIMELESS CLASSIC</div>
-          <h2 class="panel-title">LUCKY SHAKER</h2>
-          <div class="panel-subtitle">OLD FASHIONED</div>
-          <p class="panel-desc">
-            The undisputed sovereign of classic cocktails. Bold Kentucky straight bourbon gently stirred with bespoke aromatic bitters, rich caramelized demerara, and citrus zest oils.
-          </p>
-          <div class="panel-specs">24% ABV • 750 ML • SERVE OVER CLEAR ICE SPHERE</div>
-          <div class="panel-actions">
-            <button class="btn btn-primary" onclick="addToCart('old-fashioned')" aria-label="Shop Old Fashioned">
-              <span>SHOP OLD FASHIONED — $42.00</span>
-              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M1 7h12M8 2l5 5-5 5"/>
-              </svg>
+        <article class="editorial-card card-old-fashioned cinematic-bottom-split" id="card-old-fashioned">
+          <div class="split-left-name">
+            <h2 class="callout-product-title">OLD FASHIONED</h2>
+          </div>
+          <div class="split-right-action">
+            <button class="btn btn-primary btn-liquid-glass" onclick="addToCart('old-fashioned')" aria-label="Shop Old Fashioned">
+              <span class="btn-glass-layer-distortion" aria-hidden="true"></span>
+              <span class="btn-glass-layer-tint" aria-hidden="true"></span>
+              <span class="btn-glass-layer-specular" aria-hidden="true"></span>
+              <span class="btn-text-content">
+                <span>SHOP NOW — $42.00</span>
+                <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 7h12M8 2l5 5-5 5"/>
+                </svg>
+              </span>
             </button>
           </div>
         </article>
 
-        <!-- CARD 3: WHISKEY CREAM -->
-        <article class="editorial-card card-whiskey-cream" id="card-whiskey-cream">
-          <div class="eyebrow"><img src="assets/lucky_shaker_glass_icon.png" alt="" class="card-glass-icon"> CREATED BY KATHERIN</div>
-          <h2 class="panel-title">LUCKY SHAKER</h2>
-          <div class="panel-subtitle">WHISKEY CREAM</div>
-          <p class="panel-desc">
-            A sumptuous indulgence marrying triple-distilled whiskeys with rich dairy cream, toasted cocoa, and bourbon vanilla bean. Velvety, warm, and decadent.
-          </p>
-          <div class="panel-specs">17% ABV • 750 ML • SERVE NEAT OR ON THE ROCKS</div>
-          <div class="panel-actions">
-            <button class="btn btn-primary" onclick="addToCart('whiskey-cream')" aria-label="Shop Whiskey Cream">
-              <span>SHOP WHISKEY CREAM — $38.00</span>
-              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M1 7h12M8 2l5 5-5 5"/>
-              </svg>
+        <!-- CARD 3: MOJITO -->
+        <article class="editorial-card card-mojito cinematic-bottom-split" id="card-mojito">
+          <div class="split-left-name">
+            <h2 class="callout-product-title">MOJITO</h2>
+          </div>
+          <div class="split-right-action">
+            <button class="btn btn-primary btn-liquid-glass" onclick="addToCart('mojito')" aria-label="Shop Mojito">
+              <span class="btn-glass-layer-distortion" aria-hidden="true"></span>
+              <span class="btn-glass-layer-tint" aria-hidden="true"></span>
+              <span class="btn-glass-layer-specular" aria-hidden="true"></span>
+              <span class="btn-text-content">
+                <span>SHOP NOW — $36.00</span>
+                <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M1 7h12M8 2l5 5-5 5"/>
+                </svg>
+              </span>
             </button>
           </div>
         </article>
 
       </div>
+
 
       <!-- =====================================================================
            LAYER 4: TIMELINE SCRUBBER & LIVE TELEMETRY HUD
@@ -169,9 +286,7 @@
           <div class="timeline-fill" id="timeline-fill-bar"></div>
         </div>
         <div class="timeline-markers">
-          <span class="marker marker-mojito active" id="marker-mojito">01 MOJITO</span>
-          <span class="marker marker-oldfashioned" id="marker-oldfashioned">02 OLD FASHIONED</span>
-          <span class="marker marker-whiskeycream" id="marker-whiskeycream">03 WHISKEY CREAM</span>
+          <span class="marker marker-whiskeycream active" id="marker-whiskeycream" style="width: 100%; text-align: center; letter-spacing: 0.15em;">WHISKEY CREAM • 4K CINEMATIC SCROLL (0.00s — 10.00s • 120 FRAMES)</span>
         </div>
       </div>
 
@@ -184,8 +299,8 @@
         </div>
         <div class="debug-row"><span>PROGRESS:</span><strong id="debug-master-progress">0.0%</strong></div>
         <div class="debug-row"><span>DIRECTION:</span><strong id="debug-direction">IDLE</strong></div>
-        <div class="debug-row"><span>ACTIVE SCENE:</span><strong id="debug-active-cocktail">MOJITO</strong></div>
-        <div class="debug-row"><span>TIMECODE:</span><strong id="debug-timecode">0.00s / 4.00s</strong></div>
+        <div class="debug-row"><span>ACTIVE SCENE:</span><strong id="debug-active-cocktail">WHISKEY CREAM</strong></div>
+        <div class="debug-row"><span>TIMECODE:</span><strong id="debug-timecode">0.00s / 10.00s</strong></div>
       </div>
 
     </div>
@@ -205,10 +320,42 @@
 
     <div class="products-catalog">
       
-      <!-- Product 1: Mojito -->
+      <!-- 1. MARGARITA -->
       <article class="product-item">
         <div class="product-visual-box">
-          <img src="assets/posters/mojito_desktop.jpg" alt="Lucky Shaker Mojito 750ml" loading="lazy">
+          <a href="shop.html">
+            <img src="assets/cocteles/margarita.jpg" alt="Lucky Shaker MARGARITA 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">18% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">MARGARITA</a></h3>
+          <p class="product-desc">Un clásico refrescante de tequila y cítricos, con un equilibrio perfecto entre acidez y dulzor.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Tequila · Lima · Naranja · Agave</div>
+          <button class="btn btn-primary" onclick="addToCart('margarita')" aria-label="Add MARGARITA to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 2. MOJITO -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/mojito.jpg" alt="Lucky Shaker MOJITO 750ml" loading="lazy" decoding="async">
+          </a>
           <span class="product-visual-badge">12% ABV</span>
         </div>
         <div class="product-details">
@@ -216,14 +363,15 @@
             <span class="product-type">750ML • READY TO POUR</span>
             <span class="product-price">$36.00</span>
           </div>
-          <h3 class="product-name">MOJITO</h3>
-          <p class="product-desc">Caribbean white rum, fresh mint leaf, Tahitian lime oil, and demerara cane sugar.</p>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">MOJITO</a></h3>
+          <p class="product-desc">Refrescante y ligero, con ron, lima y el carácter aromático de la menta.</p>
           <div class="product-notes-pills">
-            <span class="pill-note">Spearmint</span>
-            <span class="pill-note">Tahitian Lime</span>
-            <span class="pill-note">Rum</span>
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Minty</span>
+            <span class="pill-note">Refreshing</span>
           </div>
-          <button class="btn btn-primary" onclick="addToCart('mojito')" aria-label="Add Mojito to Bag">
+          <div class="product-ingredients-line">Ron blanco · Lima · Menta · Azúcar</div>
+          <button class="btn btn-primary" onclick="addToCart('mojito')" aria-label="Add MOJITO to Bag" style="margin-top: auto;">
             <span>ADD TO BAG</span>
             <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -232,10 +380,312 @@
         </div>
       </article>
 
-      <!-- Product 2: Old Fashioned -->
+      <!-- 3. DAIQUIRI -->
       <article class="product-item">
         <div class="product-visual-box">
-          <img src="assets/posters/old_fashioned_desktop.jpg" alt="Lucky Shaker Old Fashioned 750ml" loading="lazy">
+          <a href="shop.html">
+            <img src="assets/cocteles/daiquiri.jpg" alt="Lucky Shaker DAIQUIRI 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">15% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">DAIQUIRI</a></h3>
+          <p class="product-desc">Un clásico cubano limpio y elegante, donde el ron y la lima crean un balance perfectamente refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Crisp</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Ron blanco · Lima · Azúcar</div>
+          <button class="btn btn-primary" onclick="addToCart('daiquiri')" aria-label="Add DAIQUIRI to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 4. GIN &amp; TONIC -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/gin-tonic.jpg" alt="Lucky Shaker GIN & TONIC 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">GIN &amp; TONIC</a></h3>
+          <p class="product-desc">Limpio, aromático y refrescante, con notas botánicas y cítricas sobre una base de gin.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Botanical</span>
+            <span class="pill-note">Crisp</span>
+            <span class="pill-note">Refreshing</span>
+          </div>
+          <div class="product-ingredients-line">Gin · Tonic · Cítricos</div>
+          <button class="btn btn-primary" onclick="addToCart('gin-tonic')" aria-label="Add GIN & TONIC to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 5. PALOMA -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/paloma.jpg" alt="Lucky Shaker PALOMA 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">15% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">PALOMA</a></h3>
+          <p class="product-desc">Tequila y toronja se unen en un cóctel brillante, cítrico y ligeramente amargo.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Bright</span>
+            <span class="pill-note">Refreshing</span>
+          </div>
+          <div class="product-ingredients-line">Tequila · Toronja · Lima · Sal</div>
+          <button class="btn btn-primary" onclick="addToCart('paloma')" aria-label="Add PALOMA to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 6. MIMOSA -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/mimosa.jpg" alt="Lucky Shaker MIMOSA 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">11% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$34.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">MIMOSA</a></h3>
+          <p class="product-desc">La combinación perfecta de cítricos y burbujas, ligera, brillante y naturalmente refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Sparkling</span>
+            <span class="pill-note">Bright</span>
+          </div>
+          <div class="product-ingredients-line">Jugo de naranja · Prosecco</div>
+          <button class="btn btn-primary" onclick="addToCart('mimosa')" aria-label="Add MIMOSA to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 7. MOSCOW MULE -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/moscow-mule.jpg" alt="Lucky Shaker MOSCOW MULE 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">MOSCOW MULE</a></h3>
+          <p class="product-desc">Vodka, ginger beer y lima crean un cóctel intenso, fresco y ligeramente picante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Spicy</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Crisp</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Ginger Beer · Lima</div>
+          <button class="btn btn-primary" onclick="addToCart('moscow-mule')" aria-label="Add MOSCOW MULE to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 8. COSMOPOLITAN -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/cosmopolitan.jpg" alt="Lucky Shaker COSMOPOLITAN 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">18% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">COSMOPOLITAN</a></h3>
+          <p class="product-desc">Elegante y vibrante, con notas de cranberry, cítricos y un acabado ligeramente ácido.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Fruity</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Elegant</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Cranberry · Naranja · Lima</div>
+          <button class="btn btn-primary" onclick="addToCart('cosmopolitan')" aria-label="Add COSMOPOLITAN to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 9. SEX ON THE BEACH -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/sex-on-the-beach.jpg" alt="Lucky Shaker SEX ON THE BEACH 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">SEX ON THE BEACH</a></h3>
+          <p class="product-desc">Tropical y frutal, combinando durazno, naranja y cranberry en un balance suave y refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Fruity</span>
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Durazno · Naranja · Cranberry</div>
+          <button class="btn btn-primary" onclick="addToCart('sex-on-the-beach')" aria-label="Add SEX ON THE BEACH to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 10. PIÑA COLADA -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/pina-colada.jpg" alt="Lucky Shaker PIÑA COLADA 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">15% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">PIÑA COLADA</a></h3>
+          <p class="product-desc">Cremosa y tropical, con el equilibrio clásico entre piña, coco y ron.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Creamy</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Ron blanco · Piña · Coco</div>
+          <button class="btn btn-primary" onclick="addToCart('pina-colada')" aria-label="Add PIÑA COLADA to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 11. BLUE HAWAII -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/blue-hawaii.jpg" alt="Lucky Shaker BLUE HAWAII 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">16% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">BLUE HAWAII</a></h3>
+          <p class="product-desc">Un cóctel tropical de vibrante color azul, con notas de piña, cítricos y ron.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Bright</span>
+          </div>
+          <div class="product-ingredients-line">Ron · Vodka · Blue Curaçao · Piña</div>
+          <button class="btn btn-primary" onclick="addToCart('blue-hawaii')" aria-label="Add BLUE HAWAII to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 12. MALIBU BAY BREEZE -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/malibu-bay-breeze.jpg" alt="Lucky Shaker MALIBU BAY BREEZE 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">MALIBU BAY BREEZE</a></h3>
+          <p class="product-desc">Una mezcla tropical y frutal de coco, piña y cranberry con un acabado suave y refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Fruity</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Malibu · Piña · Cranberry</div>
+          <button class="btn btn-primary" onclick="addToCart('malibu-bay-breeze')" aria-label="Add MALIBU BAY BREEZE to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 13. NEGRONI -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/negroni.jpg" alt="Lucky Shaker NEGRONI 750ml" loading="lazy" decoding="async">
+          </a>
           <span class="product-visual-badge">24% ABV</span>
         </div>
         <div class="product-details">
@@ -243,14 +693,15 @@
             <span class="product-type">750ML • READY TO POUR</span>
             <span class="product-price">$42.00</span>
           </div>
-          <h3 class="product-name">OLD FASHIONED</h3>
-          <p class="product-desc">Aged Kentucky bourbon, house aromatic bitters, caramelized demerara, and citrus zest oils.</p>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">NEGRONI</a></h3>
+          <p class="product-desc">Intenso, equilibrado y sofisticado, con notas amargas, cítricas y herbales.</p>
           <div class="product-notes-pills">
-            <span class="pill-note">Kentucky Bourbon</span>
-            <span class="pill-note">Bitters</span>
-            <span class="pill-note">Orange Oil</span>
+            <span class="pill-note">Bitter</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Bold</span>
           </div>
-          <button class="btn btn-primary" onclick="addToCart('old-fashioned')" aria-label="Add Old Fashioned to Bag">
+          <div class="product-ingredients-line">Gin · Campari · Vermouth rojo</div>
+          <button class="btn btn-primary" onclick="addToCart('negroni')" aria-label="Add NEGRONI to Bag" style="margin-top: auto;">
             <span>ADD TO BAG</span>
             <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -259,25 +710,148 @@
         </div>
       </article>
 
-      <!-- Product 3: Whiskey Cream -->
+      <!-- 14. OLD FASHIONED -->
       <article class="product-item">
         <div class="product-visual-box">
-          <img src="assets/posters/whiskey_cream_desktop.jpg" alt="Lucky Shaker Whiskey Cream by Katherin" loading="lazy">
-          <span class="product-visual-badge">17% ABV</span>
+          <a href="shop.html">
+            <img src="assets/cocteles/old-fashioned.jpg" alt="Lucky Shaker OLD FASHIONED 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">28% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">OLD FASHIONED</a></h3>
+          <p class="product-desc">Un clásico profundo y elegante, con whiskey, notas de naranja y un toque aromático de bitters.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Rich</span>
+            <span class="pill-note">Bold</span>
+            <span class="pill-note">Smoky</span>
+          </div>
+          <div class="product-ingredients-line">Whiskey · Bitters · Azúcar · Naranja</div>
+          <button class="btn btn-primary" onclick="addToCart('old-fashioned')" aria-label="Add OLD FASHIONED to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 15. MANHATTAN -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/manhattan.jpg" alt="Lucky Shaker MANHATTAN 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">26% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">MANHATTAN</a></h3>
+          <p class="product-desc">Elegante y profundo, con whiskey, vermouth dulce y delicadas notas especiadas.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Rich</span>
+            <span class="pill-note">Smooth</span>
+            <span class="pill-note">Complex</span>
+          </div>
+          <div class="product-ingredients-line">Rye Whiskey · Vermouth rojo · Bitters</div>
+          <button class="btn btn-primary" onclick="addToCart('manhattan')" aria-label="Add MANHATTAN to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 16. CLASSIC MARTINI -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/classic-martini.jpg" alt="Lucky Shaker CLASSIC MARTINI 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">26% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">CLASSIC MARTINI</a></h3>
+          <p class="product-desc">Limpio, sofisticado y perfectamente equilibrado, con gin y dry vermouth.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Crisp</span>
+            <span class="pill-note">Dry</span>
+            <span class="pill-note">Elegant</span>
+          </div>
+          <div class="product-ingredients-line">Gin · Dry Vermouth · Limón</div>
+          <button class="btn btn-primary" onclick="addToCart('classic-martini')" aria-label="Add CLASSIC MARTINI to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 17. ESPRESSO MARTINI -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/espresso-martini.jpg" alt="Lucky Shaker ESPRESSO MARTINI 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">20% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$40.00</span>
+          </div>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">ESPRESSO MARTINI</a></h3>
+          <p class="product-desc">Intenso y sedoso, con profundas notas de espresso y un acabado ligeramente dulce.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Rich</span>
+            <span class="pill-note">Smooth</span>
+            <span class="pill-note">Bold</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Decaf Espresso · Coffee Liqueur · Sugar</div>
+          <button class="btn btn-primary" onclick="addToCart('espresso-martini')" aria-label="Add ESPRESSO MARTINI to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 18. CAIPIRINHA -->
+      <article class="product-item">
+        <div class="product-visual-box">
+          <a href="shop.html">
+            <img src="assets/cocteles/caipirinha.jpg" alt="Lucky Shaker CAIPIRINHA 750ml" loading="lazy" decoding="async">
+          </a>
+          <span class="product-visual-badge">18% ABV</span>
         </div>
         <div class="product-details">
           <div class="product-meta-row">
             <span class="product-type">750ML • READY TO POUR</span>
             <span class="product-price">$38.00</span>
           </div>
-          <h3 class="product-name">WHISKEY CREAM</h3>
-          <p class="product-desc">Triple-distilled whiskey, velvet fresh dairy cream, cocoa, and Madagascar vanilla bean.</p>
+          <h3 class="product-name"><a href="shop.html" style="color: inherit; text-decoration: none;">CAIPIRINHA</a></h3>
+          <p class="product-desc">Un clásico brasileño vibrante y refrescante, con cachaça, lima y un toque de azúcar.</p>
           <div class="product-notes-pills">
-            <span class="pill-note">Artisan Whiskey</span>
-            <span class="pill-note">Double Cream</span>
-            <span class="pill-note">Vanilla Bean</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Vibrant</span>
           </div>
-          <button class="btn btn-primary" onclick="addToCart('whiskey-cream')" aria-label="Add Whiskey Cream to Bag">
+          <div class="product-ingredients-line">Cachaça · Lima · Azúcar</div>
+          <button class="btn btn-primary" onclick="addToCart('caipirinha')" aria-label="Add CAIPIRINHA to Bag" style="margin-top: auto;">
             <span>ADD TO BAG</span>
             <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -327,13 +901,13 @@
        ========================================================================= -->
   <section class="final-cta-section">
     <div class="final-cta-content">
-      <img src="assets/lucky_shaker_stacked_light_theme.png" alt="Lucky Shaker Bartender" class="cta-stacked-logo">
+      <img src="assets/logo_lucky_shaker.svg" alt="Lucky Shaker Bartender" class="cta-stacked-logo">
       <div class="eyebrow">YOUR INVITATION</div>
       <h2 class="final-cta-headline">READY TO SHAKE?</h2>
       <p class="final-cta-subtitle">
         Elevate your home ritual with bottled cocktail perfection. Delivered safely to your door in custom temperature-stable packaging.
       </p>
-      <a href="#shop" class="btn btn-pink">
+      <a href="shop.html" class="btn btn-pink">
         <span>SHOP ALL COCKTAILS</span>
         <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -348,55 +922,56 @@
   <footer class="luxury-footer">
     <div class="footer-top">
       <div class="footer-brand-col">
-        <a href="#cinematic-sequence" aria-label="Lucky Shaker Bartender Home">
-          <img src="assets/lucky_shaker_logo_light_theme.png" alt="Lucky Shaker Bartender" class="footer-logo-img">
+        <a href="index.html" aria-label="Lucky Shaker Bartender Home">
+          <img src="assets/logo_lucky_shaker.svg" alt="Lucky Shaker Bartender" class="footer-logo-img">
         </a>
         <p>
-          Ultra-premium ready-to-pour cocktails formulated by master mixologists. Shaken with passion, poured with intention.
+          Ultra-premium ready-to-pour craft cocktails formulated by master mixologists. Shaken with passion, poured with intention.
         </p>
+        <div style="margin-top: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.85rem; background: rgba(0,0,0,0.04); border-radius: 9999px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-pink);">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span>21+ Direct-to-Consumer Certified</span>
+        </div>
       </div>
 
       <div>
         <h4 class="footer-col-title">COLLECTION</h4>
         <ul class="footer-links">
-          <li><a href="#cinematic-sequence">Mojito (750ml)</a></li>
-          <li><a href="#cinematic-sequence">Old Fashioned (750ml)</a></li>
-          <li><a href="#cinematic-sequence">Whiskey Cream (750ml)</a></li>
-          <li><a href="#shop">Gift Sets & Trio</a></li>
+          <li><a href="shop.html">Shop All Cocktails</a></li>
+          <li><a href="product.html">Whiskey Cream (750ml)</a></li>
+          <li><a href="shop.html">Old Fashioned (750ml)</a></li>
+          <li><a href="shop.html">Mojito Craft (750ml)</a></li>
+          <li><a href="shop.html">The Connoisseur Trio</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="footer-col-title">EXPERIENCE</h4>
         <ul class="footer-links">
-          <li><a href="#story">Our Story</a></li>
-          <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a></li>
+          <li><a href="story.html">Our Story</a></li>
+          <li><a href="contact.html">Concierge &amp; Events</a></li>
+          <li><a href="faq.html">FAQs &amp; 21+ Guide</a></li>
+          <li><a href="cart.html">View Full Cart</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="footer-col-title">PRIVATE RESERVE</h4>
-        <p style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1rem;">
-          Subscribe to receive invitation-only access to small-batch single-barrel releases.
-        </p>
-        <form id="newsletter-form" class="newsletter-form">
-          <div class="newsletter-input-group">
-            <input type="email" class="newsletter-input" placeholder="Your email address" required aria-label="Email address for newsletter">
-            <button type="submit" class="newsletter-submit" aria-label="Subscribe to Private Reserve">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
-        </form>
+        <h4 class="footer-col-title">LEGAL &amp; POLICIES</h4>
+        <ul class="footer-links">
+          <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+          <li><a href="refund-policy.html">Refunds &amp; Breakage</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
       <div class="copyright">© 2026 LUCKY SHAKER BARTENDER LLC. ALL RIGHTS RESERVED.</div>
-      <div class="legal-notice">PLEASE ENJOY RESPONSIBLY. MUST BE 21+ YEARS OF AGE TO PURCHASE.</div>
+      <div class="legal-notice">PLEASE ENJOY RESPONSIBLY. MUST BE 21+ YEARS OF AGE TO PURCHASE. ADULT SIGNATURE REQUIRED AT DELIVERY.</div>
     </div>
   </footer>
 
@@ -406,22 +981,45 @@
   <div id="cart-backdrop" class="cart-drawer-backdrop"></div>
   <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping Cart">
     <div class="cart-drawer-header">
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <img src="assets/lucky_shaker_glass_icon.png" alt="" style="height: 22px; width: auto; object-fit: contain;">
-        <span class="cart-title">YOUR SELECTION</span>
+      <div class="cart-drawer-header-left">
+        <img src="assets/lucky_shaker_glass_icon.png" alt="Lucky Shaker" style="height: 24px; width: auto; object-fit: contain;">
+        <div class="cart-title-wrap">
+          <span class="cart-title">YOUR SELECTION</span>
+          <span id="drawer-count-badge" class="cart-count-pill">0 ITEMS</span>
+        </div>
       </div>
       <button id="close-cart-btn" class="close-drawer-btn" aria-label="Close Shopping Cart">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
     </div>
 
+    <!-- Free Shipping Progress Banner -->
+    <div id="cart-shipping-banner" class="cart-shipping-banner">
+      <div class="cart-shipping-text">
+        <span id="shipping-progress-text">Spend <strong>$80.00</strong> for <strong>Free Express Shipping</strong></span>
+        <span id="shipping-progress-percent" style="font-weight: 700; color: var(--accent-pink);">0%</span>
+      </div>
+      <div class="cart-shipping-bar-bg">
+        <div id="shipping-progress-fill" class="cart-shipping-bar-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
     <div id="cart-items-list" class="cart-items-container">
       <div class="cart-empty-message">
-        <p>Your cocktail bar is empty.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-dim);">Explore our signature collection to begin.</p>
+        <div class="empty-cart-icon-wrap">
+          <img src="assets/lucky_shaker_glass_icon.png" alt="Lucky Shaker">
+        </div>
+        <h4 class="empty-cart-title">YOUR BAR IS EMPTY</h4>
+        <p class="empty-cart-desc">Explore our signature ready-to-pour craft cocktails to curate your collection.</p>
+        <a href="shop.html" class="empty-cart-cta">
+          <span>EXPLORE COCKTAILS</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
       </div>
     </div>
 
@@ -430,19 +1028,47 @@
         <span class="subtotal-label">SUBTOTAL</span>
         <span id="drawer-subtotal" class="subtotal-val">$0.00</span>
       </div>
-      <button id="checkout-btn" class="btn btn-pink" style="width: 100%;">
-        <span>PROCEED TO CHECKOUT</span>
-        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M1 7h12M8 2l5 5-5 5"/>
+      <div class="cart-shipping-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
         </svg>
-      </button>
+        <span>Taxes &amp; shipping calculated at checkout</span>
+      </div>
+      <div class="cart-drawer-ctas">
+        <button id="checkout-btn" class="btn-drawer-checkout">
+          <span>PROCEED TO CHECKOUT</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </button>
+        <a href="cart.html" class="btn-drawer-view-cart">
+          <span>VIEW FULL BAG</span>
+        </a>
+      </div>
+      <div class="cart-drawer-trust-pills">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>SSL Secure</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Express Delivery</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span>100% Craft</span>
+        </div>
+      </div>
     </div>
   </aside>
 
   <!-- Vendor Libraries: GSAP 3.12 & ScrollTrigger -->
   <script src="js/vendor/gsap.min.js"></script>
   <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <!-- Real-Time WebGL Chroma-Key Compositor -->
+  <script src="js/chroma-compositor.js?v=2"></script>
   <!-- Application Master Logic -->
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=2"></script>
 </body>
 </html>

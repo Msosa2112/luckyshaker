@@ -1,0 +1,157 @@
+<section class="home-faq-section" data-section-id="{{ section.id }}">
+  <div class="faq-container">
+    <div class="faq-header-center">
+      <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'FREQUENTLY ASKED QUESTIONS' }}</span>
+      <h2 class="section-title">{{ section.settings.headline | default: 'Everything You Need to Know' }}</h2>
+      <p class="section-subtitle">
+        {{ section.settings.subtitle | default: 'Clear answers regarding our small-batch formulation, 21+ delivery, and private booking services.' }}
+      </p>
+    </div>
+
+    <div class="faq-accordion-list">
+      <!-- FAQ 1 -->
+      <details class="faq-acc-item" open>
+        <summary class="faq-acc-header">
+          <span>{{ section.settings.q1 | default: 'How many cocktails does each 750ml bottle pour?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p>{{ section.settings.a1 | default: 'Each 750 ML bottle contains 6 to 8 full-sized luxury lounge servings (3.5oz to 4.0oz per pour over ice). Perfect for intimate gatherings, dinner parties, or stocking your home reserve bar.' }}</p>
+        </div>
+      </details>
+
+      <!-- FAQ 2 -->
+      <details class="faq-acc-item">
+        <summary class="faq-acc-header">
+          <span>{{ section.settings.q2 | default: 'What is the shelf life and storage recommendation?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p>{{ section.settings.a2 | default: 'Unopened bottles are shelf-stable for 12 months at ambient room temperature away from direct heat and sunlight. Once opened, refrigerate and enjoy within 6 months. Shake well before each pour.' }}</p>
+        </div>
+      </details>
+
+      <!-- FAQ 3 -->
+      <details class="faq-acc-item">
+        <summary class="faq-acc-header">
+          <span>{{ section.settings.q3 | default: 'How does 21+ shipping and breakage protection work?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p>{{ section.settings.a3 | default: 'Orders are shipped in custom insulated temperature-controlled corrugated packaging designed specifically for glass transport. By law, an adult aged 21+ with government ID must sign upon delivery. All shipments include 100% transit insurance.' }}</p>
+        </div>
+      </details>
+
+      <!-- FAQ 4 -->
+      <details class="faq-acc-item">
+        <summary class="faq-acc-header">
+          <span>{{ section.settings.q4 | default: 'How do I book a private tasting or event bar service?' }}</span>
+          <span class="faq-acc-icon">&plus;</span>
+        </summary>
+        <div class="faq-acc-body">
+          <p>{{ section.settings.a4 | default: 'You can book directly via our Experiences page or choose your date and guest count. Our hospitality concierge will confirm your personalized cocktail menu within 24 hours.' }}</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="faq-footer-cta">
+      <span>Have a specific inquiry?</span>
+      <a href="/pages/contact" class="faq-contact-link">Contact our Concierge &rarr;</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FREQUENTLY ASKED QUESTIONS"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Everything You Need to Know"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Clear answers regarding our small-batch formulation, 21+ delivery, and private booking services."
+    },
+    {
+      "type": "header",
+      "content": "Question 1"
+    },
+    {
+      "type": "text",
+      "id": "q1",
+      "label": "Question",
+      "default": "How many cocktails does each 750ml bottle pour?"
+    },
+    {
+      "type": "textarea",
+      "id": "a1",
+      "label": "Answer",
+      "default": "Each 750 ML bottle contains 6 to 8 full-sized luxury lounge servings (3.5oz to 4.0oz per pour over ice). Perfect for intimate gatherings, dinner parties, or stocking your home reserve bar."
+    },
+    {
+      "type": "header",
+      "content": "Question 2"
+    },
+    {
+      "type": "text",
+      "id": "q2",
+      "label": "Question",
+      "default": "What is the shelf life and storage recommendation?"
+    },
+    {
+      "type": "textarea",
+      "id": "a2",
+      "label": "Answer",
+      "default": "Unopened bottles are shelf-stable for 12 months at ambient room temperature away from direct heat and sunlight. Once opened, refrigerate and enjoy within 6 months. Shake well before each pour."
+    },
+    {
+      "type": "header",
+      "content": "Question 3"
+    },
+    {
+      "type": "text",
+      "id": "q3",
+      "label": "Question",
+      "default": "How does 21+ shipping and breakage protection work?"
+    },
+    {
+      "type": "textarea",
+      "id": "a3",
+      "label": "Answer",
+      "default": "Orders are shipped in custom insulated temperature-controlled corrugated packaging designed specifically for glass transport. By law, an adult aged 21+ with government ID must sign upon delivery. All shipments include 100% transit insurance."
+    },
+    {
+      "type": "header",
+      "content": "Question 4"
+    },
+    {
+      "type": "text",
+      "id": "q4",
+      "label": "Question",
+      "default": "How do I book a private tasting or event bar service?"
+    },
+    {
+      "type": "textarea",
+      "id": "a4",
+      "label": "Answer",
+      "default": "You can book directly via our Experiences page or choose your date and guest count. Our hospitality concierge will confirm your personalized cocktail menu within 24 hours."
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section"
+    }
+  ]
+}
+{% endschema %}

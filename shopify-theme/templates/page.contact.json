@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main_contact": {
+      "type": "main-page-contact",
+      "settings": {
+        "title": "CONCIERGE & CLIENT SERVICES",
+        "subtitle": "Whether curating custom cocktail pairings for a private celebration, tracking an adult-signature shipment, or discussing hospitality wholesale distribution, our team is at your service."
+      }
+    }
+  },
+  "order": [
+    "main_contact"
+  ]
+}

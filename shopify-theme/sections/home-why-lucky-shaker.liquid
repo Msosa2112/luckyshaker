@@ -1,0 +1,164 @@
+<section class="why-lucky-shaker-section" data-section-id="{{ section.id }}">
+  <div class="why-container">
+    <div class="why-header-center">
+      <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'THE LUCKY SHAKER STANDARD' }}</span>
+      <h2 class="section-title">{{ section.settings.headline | default: 'Why Lucky Shaker?' }}</h2>
+      <p class="section-subtitle">
+        {{ section.settings.subtitle | default: 'We reimagined bottled cocktails as an uncompromising luxury ritual. Four hallmarks define every batch we craft.' }}
+      </p>
+    </div>
+
+    <div class="why-cards-grid">
+      <!-- Card 1 -->
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <h3 class="why-card-title">{{ section.settings.c1_title | default: 'Lounge Quality At Home' }}</h3>
+        <p class="why-card-text">
+          {{ section.settings.c1_text | default: 'Enjoy peak speakeasy and cocktail lounge standards spontaneously. No juicing, measuring, or mixing required.' }}
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 class="why-card-title">{{ section.settings.c2_title | default: '12-Month Shelf Stability' }}</h3>
+        <p class="why-card-text">
+          {{ section.settings.c2_text | default: 'Our proprietary formulation locks in botanical freshness and velvet cream consistency at ambient room temperature.' }}
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h3 class="why-card-title">{{ section.settings.c3_title | default: 'Master Mixology By Katherin' }}</h3>
+        <p class="why-card-text">
+          {{ section.settings.c3_text | default: 'Formulated and balanced by master mixologist Katherin using premium spirits and authentic whole ingredients.' }}
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="why-card">
+        <div class="why-card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13"/>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <h3 class="why-card-title">{{ section.settings.c4_title | default: 'Insulated 21+ Delivery' }}</h3>
+        <p class="why-card-text">
+          {{ section.settings.c4_text | default: 'Direct-to-door temperature-stable packaging with mandatory adult verification and breakage guarantee.' }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why Lucky Shaker",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE LUCKY SHAKER STANDARD"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Why Lucky Shaker?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "We reimagined bottled cocktails as an uncompromising luxury ritual. Four hallmarks define every batch we craft."
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "text",
+      "id": "c1_title",
+      "label": "Title",
+      "default": "Lounge Quality At Home"
+    },
+    {
+      "type": "textarea",
+      "id": "c1_text",
+      "label": "Text",
+      "default": "Enjoy peak speakeasy and cocktail lounge standards spontaneously. No juicing, measuring, or mixing required."
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "text",
+      "id": "c2_title",
+      "label": "Title",
+      "default": "12-Month Shelf Stability"
+    },
+    {
+      "type": "textarea",
+      "id": "c2_text",
+      "label": "Text",
+      "default": "Our proprietary formulation locks in botanical freshness and velvet cream consistency at ambient room temperature."
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "text",
+      "id": "c3_title",
+      "label": "Title",
+      "default": "Master Mixology By Katherin"
+    },
+    {
+      "type": "textarea",
+      "id": "c3_text",
+      "label": "Text",
+      "default": "Formulated and balanced by master mixologist Katherin using premium spirits and authentic whole ingredients."
+    },
+    {
+      "type": "header",
+      "content": "Card 4"
+    },
+    {
+      "type": "text",
+      "id": "c4_title",
+      "label": "Title",
+      "default": "Insulated 21+ Delivery"
+    },
+    {
+      "type": "textarea",
+      "id": "c4_text",
+      "label": "Text",
+      "default": "Direct-to-door temperature-stable packaging with mandatory adult verification and breakage guarantee."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Lucky Shaker"
+    }
+  ]
+}
+{% endschema %}

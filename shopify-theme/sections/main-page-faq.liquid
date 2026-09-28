@@ -1,0 +1,101 @@
+<section class="page-hero">
+  <div class="page-breadcrumbs">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span>/</span>
+    <span>Frequently Asked Questions</span>
+  </div>
+  <h1 class="page-title">{{ section.settings.title | default: 'FREQUENTLY ASKED QUESTIONS &amp; 21+ GUIDE' }}</h1>
+  <p class="page-subtitle">
+    {{ section.settings.subtitle | default: 'Everything you need to know about our shelf stability, small-batch ingredients, 21+ adult ID courier delivery laws, and master serving rituals.' }}
+  </p>
+</section>
+
+<main class="faq-page-container">
+  <div class="faq-search-box">
+    <input type="text" id="faq-search-input" placeholder="Search keywords: shelf life, 21+, allergens, signature, courier..." aria-label="Search FAQs">
+  </div>
+
+  <div class="faq-category-block">
+    <h2 class="faq-category-title">SHELF LIFE &amp; STORAGE</h2>
+    <div class="faq-list">
+      
+      <details class="pdp-accordion faq-item" open>
+        <summary class="accordion-header">
+          <span>How long do Lucky Shaker cocktails stay fresh?</span>
+          <span class="accordion-arrow">&plus;</span>
+        </summary>
+        <div class="accordion-body">
+          <p>Unopened bottles have an ambient shelf stability of <strong>12 months</strong> from the distillation date printed on each neck seal. Once opened, store in the refrigerator (below 4°C / 40°F) and enjoy within <strong>6 months</strong> for peak botanical aroma and mouthfeel.</p>
+        </div>
+      </details>
+
+      <details class="pdp-accordion faq-item">
+        <summary class="accordion-header">
+          <span>Why does Whiskey Cream contain real dairy cream?</span>
+          <span class="accordion-arrow">&plus;</span>
+        </summary>
+        <div class="accordion-body">
+          <p>We refuse to use synthetic palm oil or non-dairy powders. We use 100% pasteurized farm dairy cream. Natural separation can occasionally occur at cold temperatures—simply give the bottle 3 vigorous shakes before pouring over ice.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <div class="faq-category-block">
+    <h2 class="faq-category-title">SHIPPING &amp; 21+ ADULT SIGNATURE</h2>
+    <div class="faq-list">
+
+      <details class="pdp-accordion faq-item" open>
+        <summary class="accordion-header">
+          <span>Why is a 21+ adult signature strictly required at delivery?</span>
+          <span class="accordion-arrow">&plus;</span>
+        </summary>
+        <div class="accordion-body">
+          <p>Under United States federal law (27 CFR § 251) and individual state alcohol control boards, couriers (FedEx/UPS/specialized liquor couriers) are legally prohibited from releasing parcels containing distilled spirits without inspecting a valid government photo ID proving the recipient is at least 21 years of age. Packages cannot be left unattended on porches.</p>
+        </div>
+      </details>
+
+      <details class="pdp-accordion faq-item">
+        <summary class="accordion-header">
+          <span>What happens if my bottle breaks during shipping?</span>
+          <span class="accordion-arrow">&plus;</span>
+        </summary>
+        <div class="accordion-body">
+          <p>Every bottle is shipped in custom-molded shock-absorbent thermal air cushions. In the rare event of transit damage, take a quick photo and email <strong>concierge@luckyshaker.com</strong> within 48 hours. We will immediately dispatch a priority replacement bottle at 100% zero cost to you.</p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</main>
+
+<script>
+document.getElementById('faq-search-input')?.addEventListener('input', function(e) {
+  var term = e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    var txt = item.textContent.toLowerCase();
+    item.style.display = txt.includes(term) ? 'block' : 'none';
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Hero Title",
+      "default": "FREQUENTLY ASKED QUESTIONS & 21+ GUIDE"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Hero Subtitle",
+      "default": "Everything you need to know about our shelf stability, small-batch ingredients, 21+ adult ID courier delivery laws, and master serving rituals."
+    }
+  ]
+}
+{% endschema %}

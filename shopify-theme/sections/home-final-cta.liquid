@@ -1,0 +1,58 @@
+<section class="final-cta-section">
+  <div class="final-cta-content">
+    <img src="{{ 'logo_lucky_shaker.svg' | asset_url }}" alt="{{ shop.name }}" class="cta-stacked-logo" width="180" height="60" loading="lazy">
+    <div class="eyebrow">{{ section.settings.eyebrow | default: 'YOUR INVITATION' }}</div>
+    <h2 class="final-cta-headline">{{ section.settings.headline | default: 'READY TO SHAKE?' }}</h2>
+    <p class="final-cta-subtitle">
+      {{ section.settings.subtitle | default: 'Elevate your home ritual with bottled cocktail perfection. Delivered safely to your door in custom temperature-stable packaging.' }}
+    </p>
+    <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn btn-pink">
+      <span>{{ section.settings.button_label | default: 'SHOP ALL COCKTAILS' }}</span>
+      <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M1 7h12M8 2l5 5-5 5"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Final Call To Action",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "YOUR INVITATION"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "READY TO SHAKE?"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Elevate your home ritual with bottled cocktail perfection. Delivered safely to your door in custom temperature-stable packaging."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP ALL COCKTAILS"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Final Call To Action"
+    }
+  ]
+}
+{% endschema %}

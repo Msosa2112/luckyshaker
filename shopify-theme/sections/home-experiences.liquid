@@ -1,0 +1,214 @@
+<section id="experiences" class="home-experiences-section" data-section-id="{{ section.id }}">
+  <div class="experiences-container">
+    <div class="experiences-header-wrap">
+      <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'BESPOKE HOSPITALITY & MASTERCLASSES' }}</span>
+      <h2 class="section-title">{{ section.settings.headline | default: 'Experience Lucky Shaker' }}</h2>
+      <p class="section-subtitle">
+        {{ section.settings.subtitle | default: 'Beyond bottled perfection, we curate unforgettable private tastings, bar catering, and mixology masterclasses tailored to your event.' }}
+      </p>
+    </div>
+
+    <div class="experiences-cards-grid">
+      <!-- Experience 1 -->
+      <div class="exp-service-card">
+        <div class="exp-card-media">
+          <span class="exp-service-tag">PRIVATE &bull; 4–12 GUESTS</span>
+          {%- if section.settings.exp1_img != blank -%}
+            <img src="{{ section.settings.exp1_img | image_url: width: 600 }}" alt="{{ section.settings.exp1_title | default: 'Private Tastings' }}" class="exp-card-img" width="400" height="280">
+          {%- else -%}
+            <img src="{{ 'old_fashioned_desktop.jpg' | asset_url }}" alt="Lucky Shaker Private Tasting" class="exp-card-img" width="400" height="280">
+          {%- endif -%}
+        </div>
+        <div class="exp-card-body">
+          <h3 class="exp-service-title">{{ section.settings.exp1_title | default: 'Private Guided Tastings' }}</h3>
+          <p class="exp-service-desc">
+            {{ section.settings.exp1_desc | default: 'An intimate cocktail tasting journey exploring spirit terroir, barrel aging, and custom flavor balancing with our master mixology team.' }}
+          </p>
+          <div class="exp-service-meta">
+            <span class="exp-price">From $65 / guest</span>
+            <span class="exp-duration">90 Minutes</span>
+          </div>
+          <a href="{{ section.settings.exp1_link | default: '/pages/experiences#book-tasting' }}" class="btn btn-pink exp-book-btn">
+            <span>BOOK NOW</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Experience 2 -->
+      <div class="exp-service-card featured">
+        <div class="exp-card-media">
+          <span class="exp-service-tag featured-tag">SIGNATURE &bull; EVENTS &amp; WEDDINGS</span>
+          {%- if section.settings.exp2_img != blank -%}
+            <img src="{{ section.settings.exp2_img | image_url: width: 600 }}" alt="{{ section.settings.exp2_title | default: 'Events & Celebrations' }}" class="exp-card-img" width="400" height="280">
+          {%- else -%}
+            <img src="{{ 'mojito_desktop.jpg' | asset_url }}" alt="Lucky Shaker Events Bar" class="exp-card-img" width="400" height="280">
+          {%- endif -%}
+        </div>
+        <div class="exp-card-body">
+          <h3 class="exp-service-title">{{ section.settings.exp2_title | default: 'Events & Celebrations Bar' }}</h3>
+          <p class="exp-service-desc">
+            {{ section.settings.exp2_desc | default: 'Turnkey luxury cocktail catering with custom bottled cocktail service, signature glassware, garnish bars, and private bartenders.' }}
+          </p>
+          <div class="exp-service-meta">
+            <span class="exp-price">Custom Packages</span>
+            <span class="exp-duration">20–200+ Guests</span>
+          </div>
+          <a href="{{ section.settings.exp2_link | default: '/pages/experiences#book-events' }}" class="btn btn-pink exp-book-btn">
+            <span>BOOK NOW</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Experience 3 -->
+      <div class="exp-service-card">
+        <div class="exp-card-media">
+          <span class="exp-service-tag">HANDS-ON &bull; MASTERCLASS</span>
+          {%- if section.settings.exp3_img != blank -%}
+            <img src="{{ section.settings.exp3_img | image_url: width: 600 }}" alt="{{ section.settings.exp3_title | default: 'Cocktail Masterclass' }}" class="exp-card-img" width="400" height="280">
+          {%- else -%}
+            <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Lucky Shaker Masterclass" class="exp-card-img" width="400" height="280">
+          {%- endif -%}
+        </div>
+        <div class="exp-card-body">
+          <h3 class="exp-service-title">{{ section.settings.exp3_title | default: 'Mixology Masterclasses' }}</h3>
+          <p class="exp-service-desc">
+            {{ section.settings.exp3_desc | default: 'Learn the secrets of craft cocktail emulsion, ice clarity, shaker physics, and botanical extraction from master mixologist Katherin.' }}
+          </p>
+          <div class="exp-service-meta">
+            <span class="exp-price">From $85 / guest</span>
+            <span class="exp-duration">2 Hours</span>
+          </div>
+          <a href="{{ section.settings.exp3_link | default: '/pages/experiences#book-masterclass' }}" class="btn btn-pink exp-book-btn">
+            <span>BOOK NOW</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking App Integration Hook -->
+    <div class="experiences-app-container" id="shopify-booking-app-mount">
+      <div class="booking-guarantee-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Instant Calendar Confirmation &bull; Free Rescheduling up to 48h Prior &bull; 100% Satisfaction Guarantee</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Experiences & Booking",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "BESPOKE HOSPITALITY & MASTERCLASSES"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Experience Lucky Shaker"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Beyond bottled perfection, we curate unforgettable private tastings, bar catering, and mixology masterclasses tailored to your event."
+    },
+    {
+      "type": "header",
+      "content": "Experience 1"
+    },
+    {
+      "type": "text",
+      "id": "exp1_title",
+      "label": "Title",
+      "default": "Private Guided Tastings"
+    },
+    {
+      "type": "textarea",
+      "id": "exp1_desc",
+      "label": "Description",
+      "default": "An intimate cocktail tasting journey exploring spirit terroir, barrel aging, and custom flavor balancing with our master mixology team."
+    },
+    {
+      "type": "image_picker",
+      "id": "exp1_img",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "exp1_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Experience 2"
+    },
+    {
+      "type": "text",
+      "id": "exp2_title",
+      "label": "Title",
+      "default": "Events & Celebrations Bar"
+    },
+    {
+      "type": "textarea",
+      "id": "exp2_desc",
+      "label": "Description",
+      "default": "Turnkey luxury cocktail catering with custom bottled cocktail service, signature glassware, garnish bars, and private bartenders."
+    },
+    {
+      "type": "image_picker",
+      "id": "exp2_img",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "exp2_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Experience 3"
+    },
+    {
+      "type": "text",
+      "id": "exp3_title",
+      "label": "Title",
+      "default": "Mixology Masterclasses"
+    },
+    {
+      "type": "textarea",
+      "id": "exp3_desc",
+      "label": "Description",
+      "default": "Learn the secrets of craft cocktail emulsion, ice clarity, shaker physics, and botanical extraction from master mixologist Katherin."
+    },
+    {
+      "type": "image_picker",
+      "id": "exp3_img",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "exp3_link",
+      "label": "Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experiences & Booking"
+    }
+  ]
+}
+{% endschema %}

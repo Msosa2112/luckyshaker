@@ -1,0 +1,13 @@
+{
+  "current": {
+    "accent_pink": "#E82B7D",
+    "accent_pink_light": "#FF3888",
+    "bg_color": "#FAFAFC",
+    "text_primary": "#121316",
+    "enable_age_gate": true,
+    "age_gate_heading": "WELCOME TO LUCKY SHAKER",
+    "age_gate_subheading": "You must be 21+ years of age to explore and purchase handcrafted cocktails.",
+    "social_instagram": "https://instagram.com",
+    "social_tiktok": "https://tiktok.com"
+  }
+}

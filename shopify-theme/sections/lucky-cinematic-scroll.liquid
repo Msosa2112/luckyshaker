@@ -1,0 +1,278 @@
+<section class="cinematic-sequence" id="cinematic-sequence" data-section-id="{{ section.id }}">
+  <div class="cinematic-viewport" id="cinematic-viewport">
+    
+    <!-- =====================================================================
+         LAYER 1: SCENE VIDEO & POSTER LAYERS (3 COCKTAILS IN CONTINUOUS SCROLL)
+         ===================================================================== -->
+
+    <!-- SCENE 1: WHISKEY CREAM (ACT 1) -->
+    <div class="scene-layer scene-whiskey-cream" id="scene-whiskey-cream">
+      <span class="video-bestseller-tag" data-i18n="shop.bestseller">MÁS VENDIDO</span>
+      <canvas id="wc-sequence-canvas" class="scene-canvas"></canvas>
+      <video id="video-whiskey-cream-commercial" class="wc-commercial-video" muted playsinline preload="auto" poster="{{ 'whiskey_cream_desktop.jpg' | asset_url }}">
+        <source media="(max-width: 768px)" src="{% if section.settings.video_wc_mobile != blank %}{{ section.settings.video_wc_mobile }}{% else %}{{ 'whiskey_cream_mobile.mp4' | asset_url }}{% endif %}" type="video/mp4">
+        <source src="{% if section.settings.video_wc_desktop != blank %}{{ section.settings.video_wc_desktop }}{% else %}{{ 'whiskey_cream_desktop.mp4' | asset_url }}{% endif %}" type="video/mp4">
+      </video>
+      <div class="wc-atmosphere-layer"></div>
+      <div id="wc-liquid-glow" class="wc-liquid-glow"></div>
+    </div>
+
+    <!-- SCENE 2: OLD FASHIONED (ACT 2 — SLIDES FROM RIGHT) -->
+    <div class="scene-layer scene-old-fashioned" id="scene-old-fashioned">
+      <span class="video-bestseller-tag" data-i18n="shop.bestseller">MÁS VENDIDO</span>
+      <canvas id="of-sequence-canvas" class="scene-canvas"></canvas>
+      <video id="video-old-fashioned" class="scene-video-bg" muted playsinline preload="auto" poster="{{ 'old_fashioned_desktop.jpg' | asset_url }}">
+        <source media="(max-width: 768px)" src="{% if section.settings.video_of_mobile != blank %}{{ section.settings.video_of_mobile }}{% else %}{{ 'old_fashioned_mobile.mp4' | asset_url }}{% endif %}" type="video/mp4">
+        <source src="{% if section.settings.video_of_desktop != blank %}{{ section.settings.video_of_desktop }}{% else %}{{ 'old_fashioned_desktop.mp4' | asset_url }}{% endif %}" type="video/mp4">
+      </video>
+      <div class="of-atmosphere-layer"></div>
+    </div>
+
+    <!-- SCENE 3: MOJITO (ACT 3 — SLIDES FROM RIGHT) -->
+    <div class="scene-layer scene-mojito" id="scene-mojito">
+      <span class="video-bestseller-tag" data-i18n="shop.bestseller">MÁS VENDIDO</span>
+      <canvas id="mojito-sequence-canvas" class="scene-canvas"></canvas>
+      <video id="video-mojito" class="scene-video-bg" muted playsinline preload="auto" poster="{{ 'mojito_desktop.jpg' | asset_url }}">
+        <source media="(max-width: 768px)" src="{% if section.settings.video_mojito_mobile != blank %}{{ section.settings.video_mojito_mobile }}{% else %}{{ 'mojito_mobile.mp4' | asset_url }}{% endif %}" type="video/mp4">
+        <source src="{% if section.settings.video_mojito_desktop != blank %}{{ section.settings.video_mojito_desktop }}{% else %}{{ 'mojito_desktop.mp4' | asset_url }}{% endif %}" type="video/mp4">
+      </video>
+      <div class="mojito-atmosphere-layer"></div>
+    </div>
+
+    <!-- FLOATING 3D STORYTELLING BADGES -->
+    <div class="floating-badges-container" id="floating-badges-container">
+      
+      <!-- BADGE 1: TOP LEFT -->
+      <div class="floating-badge badge-top-left" id="badge-whiskey">
+        <div class="badge-icon-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 4h10l-1.5 13a3 3 0 0 1-3 2.5h-1a3 3 0 0 1-3-2.5L7 4z"/>
+            <path d="M7.5 9h9"/>
+            <path d="M8 14h8"/>
+          </svg>
+        </div>
+        <div class="badge-text-box">
+          <span class="badge-title" data-i18n="cinematic.b1_title">Whiskey Añejado Triple Destilación</span>
+          <span class="badge-sub" data-i18n="cinematic.b1_sub">Madurado en roble americano tostado</span>
+        </div>
+      </div>
+
+      <!-- BADGE 2: TOP RIGHT -->
+      <div class="floating-badge badge-top-right" id="badge-cocoa">
+        <div class="badge-icon-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <ellipse cx="12" cy="12" rx="8" ry="5.5" transform="rotate(-35 12 12)"/>
+            <path d="M6 18c3-4 9-8 12-12"/>
+            <path d="M9 10c1 1 2 2 4 2"/>
+          </svg>
+        </div>
+        <div class="badge-text-box">
+          <span class="badge-title" data-i18n="cinematic.b2_title">Cacao Tostado Venezolano</span>
+          <span class="badge-sub" data-i18n="cinematic.b2_sub">Con infusión de vainilla Bourbon</span>
+        </div>
+      </div>
+
+      <!-- BADGE 3: BOTTOM LEFT -->
+      <div class="floating-badge badge-bottom-left" id="badge-cream">
+        <div class="badge-icon-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <div class="badge-text-box">
+          <span class="badge-title" data-i18n="cinematic.b3_title">Crema Láctea Pura Terciopelo</span>
+          <span class="badge-sub" data-i18n="cinematic.b3_sub">17% Alc / Vol • Copa de 110 ML</span>
+        </div>
+      </div>
+
+      <!-- BADGE 4: BOTTOM RIGHT -->
+      <div class="floating-badge badge-bottom-right" id="badge-artisan">
+        <div class="badge-icon-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/>
+          </svg>
+        </div>
+        <div class="badge-text-box">
+          <span class="badge-title" data-i18n="cinematic.b4_title">Reserva Privada por Katherin</span>
+          <span class="badge-sub" data-i18n="cinematic.b4_sub">Elaborado a mano y sellado en vidrio</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- HERO INTRO BADGE & DUAL CTAS -->
+    <div class="hero-brand-top-overlay" id="hero-brand-top-overlay">
+      <span class="hero-brand-tag" data-i18n="cinematic.brand_tag">BOTELLAS ARTESANALES &bull; LISTAS PARA SERVIR</span>
+      <h2 class="hero-brand-headline" data-i18n="cinematic.headline">LLEVA LUCKY SHAKER A CASA</h2>
+      <p class="hero-brand-subheadline" data-i18n="cinematic.subtitle">Cócteles de autor elaborados a mano y listos para servir. Descubre cada botella a través del scroll interactivo.</p>
+      <div class="hero-dual-ctas">
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-pink hero-primary-cta">
+          <span data-i18n="cinematic.shop_all_cta">VER TODA LA COLECCIÓN</span>
+          <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
+        <a href="#book-event" class="btn button-glass hero-secondary-cta" onclick="const target=document.getElementById('book-event'); if(target){ target.scrollIntoView({behavior:'smooth'}); return false; }">
+          <span data-i18n="cinematic.book_cta">COTIZAR TU EVENTO</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- SCROLL CUE INDICATOR -->
+    <div class="scroll-cue" id="scroll-cue">
+      <span class="scroll-cue-text" data-i18n="cinematic.scroll_cue">SCROLL PARA DESCUBRIR LA MAGIA</span>
+      <svg class="scroll-cue-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+      </svg>
+    </div>
+
+    <div class="cinematic-atmosphere" id="cinematic-atmosphere"></div>
+    <div class="cinematic-vignette"></div>
+
+    <!-- FLOATING EDITORIAL ACTION CARDS -->
+    <div class="cinematic-editorial-container">
+      
+      <!-- Card 1: Whiskey Cream -->
+      <article class="editorial-card card-whiskey-cream cinematic-bottom-split active" id="card-whiskey-cream">
+        <div class="split-left-name">
+          <h3 class="callout-product-title">{{ section.settings.title_wc | default: 'WHISKEY CREAM' }}</h3>
+        </div>
+        <div class="split-right-action">
+          <button type="button" class="btn btn-primary btn-liquid-glass" id="btn-add-wc" onclick="LuckyShakerCart.addItemByHandle('whiskey-cream', 1, 'Whiskey Cream 750ml', '$38.00')">
+            <span class="btn-glass-layer-distortion"></span>
+            <span class="btn-glass-layer-tint"></span>
+            <span class="btn-glass-layer-specular"></span>
+            <span class="btn-text-content">
+              <span><span data-i18n="cinematic.buy_btn">COMPRAR</span> — $38.00</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 7h12M8 2l5 5-5 5"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 2: Old Fashioned -->
+      <article class="editorial-card card-old-fashioned cinematic-bottom-split" id="card-old-fashioned">
+        <div class="split-left-name">
+          <h3 class="callout-product-title">{{ section.settings.title_of | default: 'OLD FASHIONED' }}</h3>
+        </div>
+        <div class="split-right-action">
+          <button type="button" class="btn btn-primary btn-liquid-glass" id="btn-add-of" onclick="LuckyShakerCart.addItemByHandle('old-fashioned', 1, 'Old Fashioned 750ml', '$42.00')">
+            <span class="btn-glass-layer-distortion"></span>
+            <span class="btn-glass-layer-tint"></span>
+            <span class="btn-glass-layer-specular"></span>
+            <span class="btn-text-content">
+              <span><span data-i18n="cinematic.buy_btn">COMPRAR</span> — $42.00</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 7h12M8 2l5 5-5 5"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 3: Mojito -->
+      <article class="editorial-card card-mojito cinematic-bottom-split" id="card-mojito">
+        <div class="split-left-name">
+          <h3 class="callout-product-title">{{ section.settings.title_mojito | default: 'MOJITO' }}</h3>
+        </div>
+        <div class="split-right-action">
+          <button type="button" class="btn btn-primary btn-liquid-glass" id="btn-add-mojito" onclick="LuckyShakerCart.addItemByHandle('mojito', 1, 'Craft Mojito 750ml', '$36.00')">
+            <span class="btn-glass-layer-distortion"></span>
+            <span class="btn-glass-layer-tint"></span>
+            <span class="btn-glass-layer-specular"></span>
+            <span class="btn-text-content">
+              <span><span data-i18n="cinematic.buy_btn">COMPRAR</span> — $36.00</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 7h12M8 2l5 5-5 5"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Scrubber bar -->
+    <div class="film-timeline-scrubber">
+      <div class="timeline-track">
+        <div class="timeline-fill" id="timeline-fill-bar"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Secuencia Interactiva",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Whiskey Cream Settings"
+    },
+    {
+      "type": "text",
+      "id": "title_wc",
+      "label": "Cocktail 1 Title",
+      "default": "WHISKEY CREAM"
+    },
+    {
+      "type": "text",
+      "id": "video_wc_desktop",
+      "label": "Video Desktop CDN URL"
+    },
+    {
+      "type": "text",
+      "id": "video_wc_mobile",
+      "label": "Video Mobile CDN URL"
+    },
+    {
+      "type": "header",
+      "content": "Old Fashioned Settings"
+    },
+    {
+      "type": "text",
+      "id": "title_of",
+      "label": "Cocktail 2 Title",
+      "default": "OLD FASHIONED"
+    },
+    {
+      "type": "text",
+      "id": "video_of_desktop",
+      "label": "Video Desktop CDN URL"
+    },
+    {
+      "type": "text",
+      "id": "video_of_mobile",
+      "label": "Video Mobile CDN URL"
+    },
+    {
+      "type": "header",
+      "content": "Mojito Settings"
+    },
+    {
+      "type": "text",
+      "id": "title_mojito",
+      "label": "Cocktail 3 Title",
+      "default": "MOJITO"
+    },
+    {
+      "type": "text",
+      "id": "video_mojito_desktop",
+      "label": "Video Desktop CDN URL"
+    },
+    {
+      "type": "text",
+      "id": "video_mojito_mobile",
+      "label": "Video Mobile CDN URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Secuencia Interactiva"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Whiskey Cream by Katherin (750ml) | Lucky Shaker Bartender</title>
+  <meta name="description" content="Small-batch aged whiskey, velvety fresh dairy cream, Venezuelan cocoa, and Madagascar vanilla bean. 17% ABV, ready to pour over ice.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo_lucky_shaker.svg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core & Page Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Sticky Luxury Navigation -->
+  <header class="navbar" id="main-nav">
+    <a href="index.html" class="nav-brand" aria-label="Lucky Shaker Bartender Home">
+      <img src="assets/logo_lucky_shaker.svg" alt="Lucky Shaker Bartender" class="nav-logo-img">
+    </a>
+
+    <nav aria-label="Main Navigation">
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Film</a></li>
+        <li><a href="shop.html" class="nav-link active" style="color: var(--accent-pink);">Shop</a></li>
+        <li><a href="story.html" class="nav-link">Our Story</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="cart-toggle-btn open-cart-btn" aria-label="View Shopping Bag">
+        <span>BAG</span>
+        <span class="cart-badge">0</span>
+      </button>
+
+      <button class="mobile-menu-btn open-cart-btn" aria-label="Open Cart on Mobile">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- PDP Main Container -->
+  <main class="pdp-main-section">
+    
+    <!-- Breadcrumbs -->
+    <div class="page-breadcrumbs" style="justify-content: flex-start; margin-bottom: 2rem;">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="shop.html">Cocktails</a>
+      <span>/</span>
+      <span style="color: var(--text-primary); font-weight: 600;">Whiskey Cream by Katherin</span>
+    </div>
+
+    <div class="pdp-grid">
+      
+      <!-- Gallery Column -->
+      <div class="pdp-gallery-wrap">
+        <div class="pdp-main-image-box">
+          <span class="pdp-bestseller-badge">BEST SELLER</span>
+          <span class="pdp-abv-badge">17% ABV • 750ML</span>
+          <img src="assets/posters/whiskey_cream_desktop.jpg" alt="Whiskey Cream by Katherin 750ml" id="pdp-active-img" class="pdp-main-image">
+        </div>
+
+        <div class="pdp-thumbnails">
+          <div class="pdp-thumb active" onclick="switchPdpImage('assets/posters/whiskey_cream_desktop.jpg', this)">
+            <img src="assets/posters/whiskey_cream_desktop.jpg" alt="Front Bottle View">
+          </div>
+          <div class="pdp-thumb" onclick="switchPdpImage('assets/reference_bottle_1.jpg', this)">
+            <img src="assets/reference_bottle_1.jpg" alt="Pour Over Ice">
+          </div>
+          <div class="pdp-thumb" onclick="switchPdpImage('assets/reference_bottle_2.jpg', this)">
+            <img src="assets/reference_bottle_2.jpg" alt="Luxury Presentation Box">
+          </div>
+        </div>
+      </div>
+
+      <!-- Information & Buy Box Column -->
+      <div class="pdp-info-wrap">
+        <div>
+          <span class="pdp-eyebrow">PRIVATE RESERVE // MASTER MIXOLOGIST BATCH</span>
+          <h1 class="pdp-title">WHISKEY CREAM</h1>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.35rem; font-style: italic;">
+            Formulated by Katherin • Small-Batch Distillate
+          </div>
+        </div>
+
+        <div class="pdp-rating-row">
+          <span class="pdp-stars-svg" style="display: inline-flex; gap: 3px; color: var(--accent-pink);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <strong style="color: var(--text-primary);">4.92 / 5.0</strong>
+          <a href="#reviews" class="pdp-rating-count">(186 Verified Connoisseurs)</a>
+        </div>
+
+        <div class="pdp-price-row">
+          <span class="pdp-price" id="pdp-dynamic-price">$38.00</span>
+          <span class="pdp-tax-note">Tax included • Free shipping on orders over $75</span>
+        </div>
+
+        <p class="pdp-desc-text">
+          A decadent union of triple-distilled small-batch aged whiskey, velvety fresh dairy double cream, roasted Venezuelan cocoa, and cold-extracted Madagascar vanilla bean. Formulated to lounge standards, shelf-stable, and ready to pour over crystal-clear ice.
+        </p>
+
+        <!-- Variant Selector -->
+        <div>
+          <div class="pdp-variant-label">
+            <span>SELECT PRESENTATION:</span>
+            <span id="selected-variant-name" style="color: var(--accent-pink);">Single 750ml Bottle</span>
+          </div>
+
+          <div class="variant-options-grid">
+            <div class="variant-option-card active" onclick="selectPdpVariant('single', 38.00, 'Single 750ml Bottle', this)">
+              <div class="variant-card-title">SINGLE 750ML BOTTLE</div>
+              <div class="variant-card-subtitle">Pours 6–8 Signature Cocktails • $38.00</div>
+            </div>
+
+            <div class="variant-option-card" onclick="selectPdpVariant('trio', 105.00, 'The Connoisseur Trio (3 Bottles)', this)">
+              <div class="variant-card-title">CELEBRATION 3-PACK</div>
+              <div class="variant-card-subtitle">3 x 750ml + Free Shaker • $105.00 ($116 value)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantity & Add to Cart -->
+        <div class="pdp-action-row">
+          <div class="quantity-stepper">
+            <button class="qty-step-btn" onclick="updatePdpQty(-1)" aria-label="Decrease quantity">−</button>
+            <span class="qty-display" id="pdp-qty-val">1</span>
+            <button class="qty-step-btn" onclick="updatePdpQty(1)" aria-label="Increase quantity">+</button>
+          </div>
+
+          <button class="btn btn-pink btn-add-pdp" onclick="addCurrentPdpToCart()" aria-label="Add to Bag">
+            <span id="pdp-btn-label">ADD TO BAG — $38.00</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="pdp-trust-list">
+          <div class="pdp-trust-item">
+            <span class="pdp-trust-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="2" x2="12" y2="22"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M20 16l-4-4 4-4"/>
+                <path d="M4 8l4 4-4 4"/>
+                <path d="M16 4l-4 4-4-4"/>
+                <path d="M8 20l4-4 4 4"/>
+              </svg>
+            </span>
+            <span><strong>Temperature-Protected Glass Shipping:</strong> Custom insulated shock-absorbing pods.</span>
+          </div>
+          <div class="pdp-trust-item">
+            <span class="pdp-trust-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </span>
+            <span><strong>100% Breakage Guarantee:</strong> Immediate replacement if broken in transit.</span>
+          </div>
+          <div class="pdp-trust-item">
+            <span class="pdp-trust-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M7.5 12h2.5a1.5 1.5 0 0 0 0-3H8v6h3"/>
+                <path d="M14 9h2v6"/>
+                <line x1="13" y1="15" x2="17" y2="15"/>
+              </svg>
+            </span>
+            <span><strong>Adult 21+ Required:</strong> Valid photo ID required by courier upon delivery.</span>
+          </div>
+        </div>
+
+        <!-- Accordions -->
+        <div class="pdp-accordions">
+          
+          <!-- Accordion 1 -->
+          <div class="pdp-accordion-item open">
+            <button class="pdp-accordion-header" onclick="togglePdpAccordion(this)">
+              <span>Sensory Tasting Notes</span>
+              <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="pdp-accordion-body">
+              <p><strong>Nose:</strong> Toasted caramel, bourbon oak char, rich cream, and delicate hints of dark cocoa nibs.</p>
+              <p style="margin-top: 0.5rem;"><strong>Palate:</strong> Silky and dense with an initial burst of vanilla bean warmth, giving way to spiced oak whiskey character and sweet cream.</p>
+              <p style="margin-top: 0.5rem;"><strong>Finish:</strong> Long, warming, and comforting with lingering chocolate and toasted malt.</p>
+            </div>
+          </div>
+
+          <!-- Accordion 2 -->
+          <div class="pdp-accordion-item">
+            <button class="pdp-accordion-header" onclick="togglePdpAccordion(this)">
+              <span>The Perfect Serve Ritual</span>
+              <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="pdp-accordion-body">
+              <ol style="padding-left: 1.25rem; line-height: 1.7;">
+                <li><strong>Chill:</strong> Place bottle in the refrigerator for at least 2 hours before serving.</li>
+                <li><strong>Shake:</strong> Shake vigorously for 10 seconds to awaken the velvety cream emulsion.</li>
+                <li><strong>Pour:</strong> Serve 3.5 oz over a single large clear ice sphere in an old-fashioned tumbler.</li>
+                <li><strong>Garnish:</strong> Optional freshly grated nutmeg or dark chocolate shavings.</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Accordion 3 -->
+          <div class="pdp-accordion-item">
+            <button class="pdp-accordion-header" onclick="togglePdpAccordion(this)">
+              <span>Specifications &amp; Ingredients</span>
+              <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="pdp-accordion-body">
+              <p><strong>Alcohol by Volume:</strong> 17.0% ABV (34 Proof)</p>
+              <p style="margin-top: 0.35rem;"><strong>Volume:</strong> 750ml (25.4 fl oz) • Pours 6–8 full cocktails</p>
+              <p style="margin-top: 0.35rem;"><strong>Allergens:</strong> Contains fresh dairy cream (milk). Gluten-free spirits distillate.</p>
+              <p style="margin-top: 0.35rem;"><strong>Shelf Life:</strong> 12 months unopened at room temperature. Refrigerate after opening and enjoy within 6 months.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Customer Reviews Section -->
+    <section id="reviews" style="margin-top: 6rem; padding-top: 4rem; border-top: 1px solid var(--border-light);">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 3rem;">
+        <span class="pdp-eyebrow">VERIFIED REVIEWS</span>
+        <h2 style="font-family: var(--font-brand); font-size: 2.2rem; margin-top: 0.5rem;">WHAT CONNOISSEURS ARE SAYING</h2>
+        <div style="font-size: 2.5rem; font-weight: 700; color: var(--text-primary); margin-top: 1rem;">4.92 / 5.0</div>
+        <div class="pdp-stars-svg" style="display: flex; justify-content: center; gap: 4px; color: #F5A623; margin-top: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+          <div style="display: flex; gap: 3px; color: #F5A623; margin-bottom: 0.75rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h4 style="font-family: var(--font-brand); margin-bottom: 0.5rem;">"Blows Irish cream out of the water"</h4>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">"The whiskey presence is so smooth yet distinctive, not masked by artificial sugar. You can taste the genuine charred oak and real vanilla bean."</p>
+          <div style="margin-top: 1rem; font-size: 0.78rem; font-weight: 700; color: var(--text-primary);">— Marcus D. • Verified Buyer</div>
+        </div>
+
+        <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+          <div style="display: flex; gap: 3px; color: #F5A623; margin-bottom: 0.75rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h4 style="font-family: var(--font-brand); margin-bottom: 0.5rem;">"The perfect host gift"</h4>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">"Brought the trio to our dinner party. Everyone was amazed that this came from a bottle. It looks and tastes like a $24 cocktail from a high-end lounge in Manhattan."</p>
+          <div style="margin-top: 1rem; font-size: 0.78rem; font-weight: 700; color: var(--text-primary);">— Elena R. • Verified Buyer</div>
+        </div>
+
+        <div style="background: #FFFFFF; border: 1px solid var(--border-light); border-radius: 20px; padding: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.03);">
+          <div style="display: flex; gap: 3px; color: #F5A623; margin-bottom: 0.75rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h4 style="font-family: var(--font-brand); margin-bottom: 0.5rem;">"Arrived in pristine condition"</h4>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">"Was nervous about shipping glass and cream in summer heat. The packaging pod kept it cool and perfectly protected. Ordering our third batch today."</p>
+          <div style="margin-top: 1rem; font-size: 0.78rem; font-weight: 700; color: var(--text-primary);">— Thomas K. • Verified Buyer</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Luxury Footer -->
+  <footer class="luxury-footer">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <a href="index.html" aria-label="Lucky Shaker Bartender Home">
+          <img src="assets/logo_lucky_shaker.svg" alt="Lucky Shaker Bartender" class="footer-logo-img">
+        </a>
+        <p>Ultra-premium ready-to-pour craft cocktails formulated by master mixologists. Shaken with passion, poured with intention.</p>
+        <div style="margin-top: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.85rem; background: rgba(0,0,0,0.04); border-radius: 9999px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-pink);">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span>21+ Direct-to-Consumer Certified</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">COLLECTION</h4>
+        <ul class="footer-links">
+          <li><a href="shop.html">Shop All Cocktails</a></li>
+          <li><a href="product.html">Whiskey Cream (750ml)</a></li>
+          <li><a href="shop.html">Old Fashioned (750ml)</a></li>
+          <li><a href="shop.html">Mojito Craft (750ml)</a></li>
+          <li><a href="shop.html">The Connoisseur Trio</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">EXPERIENCE</h4>
+        <ul class="footer-links">
+          <li><a href="story.html">Our Story</a></li>
+          <li><a href="contact.html">Concierge &amp; Events</a></li>
+          <li><a href="faq.html">FAQs &amp; 21+ Guide</a></li>
+          <li><a href="cart.html">View Cart</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">LEGAL &amp; POLICIES</h4>
+        <ul class="footer-links">
+          <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+          <li><a href="refund-policy.html">Refunds &amp; Breakage</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="copyright">© 2026 LUCKY SHAKER BARTENDER LLC. ALL RIGHTS RESERVED.</div>
+      <div class="legal-notice">PLEASE ENJOY RESPONSIBLY. MUST BE 21+ YEARS OF AGE TO PURCHASE.</div>
+    </div>
+  </footer>
+
+  <!-- Cart Slide-Out Drawer -->
+  <div id="cart-backdrop" class="cart-drawer-backdrop"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping Cart">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-header-left">
+        <img src="assets/lucky_shaker_glass_icon.png" alt="Lucky Shaker" style="height: 24px; width: auto; object-fit: contain;">
+        <div class="cart-title-wrap">
+          <span class="cart-title">YOUR SELECTION</span>
+          <span id="drawer-count-badge" class="cart-count-pill">0 ITEMS</span>
+        </div>
+      </div>
+      <button id="close-cart-btn" class="close-drawer-btn" aria-label="Close Shopping Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Banner -->
+    <div id="cart-shipping-banner" class="cart-shipping-banner">
+      <div class="cart-shipping-text">
+        <span id="shipping-progress-text">Spend <strong>$80.00</strong> for <strong>Free Express Shipping</strong></span>
+        <span id="shipping-progress-percent" style="font-weight: 700; color: var(--accent-pink);">0%</span>
+      </div>
+      <div class="cart-shipping-bar-bg">
+        <div id="shipping-progress-fill" class="cart-shipping-bar-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div id="cart-items-list" class="cart-items-container">
+      <div class="cart-empty-message">
+        <div class="empty-cart-icon-wrap">
+          <img src="assets/lucky_shaker_glass_icon.png" alt="Lucky Shaker">
+        </div>
+        <h4 class="empty-cart-title">YOUR BAR IS EMPTY</h4>
+        <p class="empty-cart-desc">Explore our signature ready-to-pour craft cocktails to curate your collection.</p>
+        <a href="shop.html" class="empty-cart-cta">
+          <span>EXPLORE COCKTAILS</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <span class="subtotal-label">SUBTOTAL</span>
+        <span id="drawer-subtotal" class="subtotal-val">$0.00</span>
+      </div>
+      <div class="cart-shipping-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>Taxes &amp; shipping calculated at checkout</span>
+      </div>
+      <div class="cart-drawer-ctas">
+        <button id="checkout-btn" class="btn-drawer-checkout">
+          <span>PROCEED TO CHECKOUT</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </button>
+        <a href="cart.html" class="btn-drawer-view-cart">
+          <span>VIEW FULL BAG</span>
+        </a>
+      </div>
+      <div class="cart-drawer-trust-pills">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>SSL Secure</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Express Delivery</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span>100% Craft</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Application Script -->
+  <script src="js/app.js"></script>
+
+  <!-- PDP Dynamic Interaction Script -->
+  <script>
+    let pdpCurrentPrice = 38.00;
+    let pdpCurrentQty = 1;
+    let pdpSelectedVariant = 'single';
+
+    function switchPdpImage(src, thumbElem) {
+      document.getElementById('pdp-active-img').src = src;
+      document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
+      thumbElem.classList.add('active');
+    }
+
+    function selectPdpVariant(variantKey, price, name, cardElem) {
+      pdpSelectedVariant = variantKey;
+      pdpCurrentPrice = price;
+      document.getElementById('pdp-dynamic-price').textContent = `$${price.toFixed(2)}`;
+      document.getElementById('selected-variant-name').textContent = name;
+      document.querySelectorAll('.variant-option-card').forEach(c => c.classList.remove('active'));
+      cardElem.classList.add('active');
+      updatePriceDisplay();
+    }
+
+    function updatePdpQty(delta) {
+      pdpCurrentQty = Math.max(1, pdpCurrentQty + delta);
+      document.getElementById('pdp-qty-val').textContent = pdpCurrentQty;
+      updatePriceDisplay();
+    }
+
+    function updatePriceDisplay() {
+      const total = pdpCurrentPrice * pdpCurrentQty;
+      document.getElementById('pdp-btn-label').textContent = `ADD TO BAG — $${total.toFixed(2)}`;
+    }
+
+    function addCurrentPdpToCart() {
+      if (pdpSelectedVariant === 'single') {
+        addToCart('whiskey-cream', pdpCurrentQty);
+      } else {
+        addToCart('whiskey-cream', pdpCurrentQty);
+        addToCart('old-fashioned', pdpCurrentQty);
+        addToCart('mojito', pdpCurrentQty);
+      }
+    }
+
+    function togglePdpAccordion(headerElem) {
+      const item = headerElem.closest('.pdp-accordion-item');
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

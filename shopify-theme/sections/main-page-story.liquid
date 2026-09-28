@@ -1,0 +1,97 @@
+<section class="page-hero">
+  <div class="page-breadcrumbs">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span>/</span>
+    <span>Our Story</span>
+  </div>
+  <h1 class="page-title">{{ section.settings.title | default: 'CRAFT COCKTAILS, WITHOUT THE BAR' }}</h1>
+  <p class="page-subtitle">
+    {{ section.settings.subtitle | default: 'Born from a reverence for cocktail bar culture and the conviction that luxury cocktail craftsmanship should not be confined to a speakeasy stool.' }}
+  </p>
+</section>
+
+<main class="story-content-container">
+  <!-- Manifesto Grid -->
+  <div class="story-grid-section">
+    <div class="story-text-column">
+      <span class="story-label">OUR PHILOSOPHY</span>
+      <h2 class="story-heading">Mixology as a Fine Art Form</h2>
+      <p class="story-paragraph">
+        Lucky Shaker was founded by Katherin in 2024 to solve a long-standing compromise: why did at-home cocktails either require an intimidating shelf of 14 esoteric bitters and 20 minutes of muddling, or settle for sickeningly sweet canned neon drinks packed with artificial syrups?
+      </p>
+      <p class="story-paragraph">
+        We set out to formulate ready-to-pour bottled cocktails using the exact same authentic spirits, single-origin aromatics, and cold-pressed juices favored by the world's Top 50 cocktail institutions.
+      </p>
+    </div>
+    <div class="story-image-column">
+      <img src="{{ 'assets/posters/whiskey_cream_desktop.jpg' | file_url }}" alt="Lucky Shaker Craft Cocktails" class="story-feature-img" width="800" height="600" loading="lazy">
+    </div>
+  </div>
+
+  <!-- The 3 Pillars -->
+  <div class="story-pillars-grid">
+    <div class="story-pillar-card">
+      <div class="pillar-icon" style="color: var(--accent-pink); display: flex; justify-content: center; margin-bottom: 1rem;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 4h10l-1.5 13a3 3 0 0 1-3 2.5h-1a3 3 0 0 1-3-2.5L7 4z"/>
+          <path d="M7.5 9h9"/>
+          <path d="M8 14h8"/>
+        </svg>
+      </div>
+      <h3 class="pillar-title">Authentic Small-Batch Spirits</h3>
+      <p class="pillar-desc">
+        Never grain neutral spirits with synthetic flavorings. We use 4-year aged Kentucky bourbons, Caribbean pot-distilled rums, and artisanal agave tequilas.
+      </p>
+    </div>
+
+    <div class="pillar-card">
+      <div class="pillar-icon" style="color: var(--accent-pink); display: flex; justify-content: center; margin-bottom: 1rem;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 20A7 7 0 0 1 4 13C4 7 11 3 11 3s7 4 7 10a7 7 0 0 1-7 7z"/>
+          <path d="M11 20v-9"/>
+        </svg>
+      </div>
+      <h3 class="pillar-title">Single-Origin Botanicals</h3>
+      <p class="pillar-desc">
+        Whole Tahitian vanilla beans, roasted Venezuelan cocoa nibs, hand-torn Caribbean spearmint, and organic cane sugar. Pure ingredients you can taste.
+      </p>
+    </div>
+
+    <div class="pillar-card">
+      <div class="pillar-icon" style="color: var(--accent-pink); display: flex; justify-content: center; margin-bottom: 1rem;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="2" x2="12" y2="22"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M20 16l-4-4 4-4"/>
+          <path d="M4 8l4 4-4 4"/>
+          <path d="M16 4l-4 4-4-4"/>
+          <path d="M8 20l4-4 4 4"/>
+        </svg>
+      </div>
+      <h3 class="pillar-title">Chill, Shake &amp; Pour</h3>
+      <p class="pillar-desc">
+        Zero mixing kits or shaker tins required. We dial in the dilution, aromatics, and proof directly in the bottle so you get a flawless drink in 10 seconds.
+      </p>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Our Story Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Hero Title",
+      "default": "CRAFT COCKTAILS, WITHOUT THE BAR"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Hero Subtitle",
+      "default": "Born from a reverence for cocktail bar culture and the conviction that luxury cocktail craftsmanship should not be confined to a speakeasy stool."
+    }
+  ]
+}
+{% endschema %}

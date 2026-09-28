@@ -1,0 +1,78 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Lucky Shaker Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Lucky Shaker LLC",
+    "theme_documentation_url": "https://luckyshaker.com",
+    "theme_support_url": "https://luckyshaker.com/contact"
+  },
+  {
+    "name": "Brand Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "accent_pink",
+        "label": "Signature Pink Accent",
+        "default": "#E82B7D"
+      },
+      {
+        "type": "color",
+        "id": "accent_pink_light",
+        "label": "Signature Pink Light",
+        "default": "#FF3888"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#FAFAFC"
+      },
+      {
+        "type": "color",
+        "id": "text_primary",
+        "label": "Primary Text Color",
+        "default": "#121316"
+      }
+    ]
+  },
+  {
+    "name": "Compliance & 21+ Age Gate",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_age_gate",
+        "label": "Enable 21+ Age Gate Verification Modal",
+        "default": true,
+        "info": "Mandatory for direct-to-consumer alcohol retail in compliance with TTB and state liquor laws."
+      },
+      {
+        "type": "text",
+        "id": "age_gate_heading",
+        "label": "Age Gate Title",
+        "default": "WELCOME TO LUCKY SHAKER"
+      },
+      {
+        "type": "text",
+        "id": "age_gate_subheading",
+        "label": "Age Gate Subtitle",
+        "default": "You must be of legal drinking age (21+) in your country of residence to enter."
+      }
+    ]
+  },
+  {
+    "name": "Social Media Links",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      }
+    ]
+  }
+]

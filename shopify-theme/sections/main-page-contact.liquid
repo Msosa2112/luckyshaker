@@ -1,0 +1,156 @@
+<section class="page-hero">
+  <div class="page-breadcrumbs">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span>/</span>
+    <span>Contact Concierge</span>
+  </div>
+  <h1 class="page-title">{{ section.settings.title | default: 'CONCIERGE &amp; CLIENT SERVICES' }}</h1>
+  <p class="page-subtitle">
+    {{ section.settings.subtitle | default: 'Whether curating custom cocktail pairings for a private celebration, tracking an adult-signature shipment, or discussing hospitality wholesale distribution, our team is at your service.' }}
+  </p>
+</section>
+
+<main class="contact-page-container">
+  <div class="contact-grid-layout">
+    
+    <!-- Left: Channels -->
+    <div class="contact-channels-card">
+      <h2 class="contact-card-title">DIRECT CHANNELS</h2>
+      <p class="contact-intro">Our concierge desk operates Monday through Saturday, 9:00 AM – 7:00 PM EST.</p>
+
+      <div class="channel-item">
+        <span class="channel-icon" style="color: var(--accent-pink); display: flex; align-items: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c0 4.42-3.58 8-8 8s-8-3.58-8-8z"/>
+            <line x1="12" y1="12" x2="12" y2="20"/>
+            <line x1="8" y1="20" x2="16" y2="20"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Private Client Services &amp; Orders</h4>
+          <p><a href="mailto:concierge@luckyshaker.com">concierge@luckyshaker.com</a></p>
+        </div>
+      </div>
+
+      <div class="channel-item">
+        <span class="channel-icon" style="color: var(--accent-pink); display: flex; align-items: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+            <line x1="9" y1="22" x2="9" y2="2"/>
+            <path d="M14 6h2"/>
+            <path d="M14 10h2"/>
+            <path d="M14 14h2"/>
+            <path d="M14 18h2"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Corporate Gifting &amp; Bulk Orders</h4>
+          <p><a href="mailto:gifting@luckyshaker.com">gifting@luckyshaker.com</a></p>
+        </div>
+      </div>
+
+      <div class="channel-item">
+        <span class="channel-icon" style="color: var(--accent-pink); display: flex; align-items: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Wholesale &amp; On-Premise Distribution</h4>
+          <p><a href="mailto:wholesale@luckyshaker.com">wholesale@luckyshaker.com</a></p>
+        </div>
+      </div>
+
+      <div class="channel-item">
+        <span class="channel-icon" style="color: var(--accent-pink); display: flex; align-items: center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Headquarters &amp; Tasting Lab</h4>
+          <p>Lucky Shaker Bartender LLC<br>Miami, FL &bull; United States</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Shopify Form -->
+    <div class="contact-form-card">
+      <h2 class="contact-card-title">SEND AN INQUIRY</h2>
+      <p class="contact-intro">Fill out the brief form below and our lead sommelier will respond within 4 business hours.</p>
+
+      {%- form 'contact', id: 'contact-form' -%}
+        {%- if form.posted_successfully? -%}
+          <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid #10B981; border-radius: 12px; padding: 1rem; color: #10B981; margin-bottom: 1.5rem;">
+            Thank you for reaching out. A Lucky Shaker concierge specialist has received your inquiry.
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid #EF4444; border-radius: 12px; padding: 1rem; color: #EF4444; margin-bottom: 1.5rem;">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label for="ContactFormName">FULL NAME *</label>
+            <input type="text" id="ContactFormName" name="contact[name]" required placeholder="Alexander Vance" value="{% if form.name %}{{ form.name }}{% endif %}">
+          </div>
+          <div class="form-field">
+            <label for="ContactFormEmail">EMAIL ADDRESS *</label>
+            <input type="email" id="ContactFormEmail" name="contact[email]" required placeholder="alexander@example.com" value="{% if form.email %}{{ form.email }}{% endif %}">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="ContactFormSubject">INQUIRY TYPE</label>
+          <select id="ContactFormSubject" name="contact[inquiry_type]" class="form-select">
+            <option value="Order & Shipping Status">Order Tracking &amp; Delivery</option>
+            <option value="Private Tasting & Events">Private Tasting &amp; VIP Events</option>
+            <option value="Corporate Gifting">Corporate Gifting (20+ bottles)</option>
+            <option value="Wholesale Distribution">Wholesale &amp; On-Premise Distribution</option>
+            <option value="General Mixology Question">General Inquiries</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="ContactFormMessage">YOUR MESSAGE *</label>
+          <textarea id="ContactFormMessage" name="contact[body]" rows="5" required placeholder="Tell us how we can assist you with your cocktail order or event...">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-pink" style="width: 100%; justify-content: center; margin-top: 1rem;">
+          <span>TRANSMIT INQUIRY</span>
+          <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </button>
+      {%- endform -%}
+    </div>
+
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Hero Title",
+      "default": "CONCIERGE & CLIENT SERVICES"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Hero Subtitle",
+      "default": "Whether curating custom cocktail pairings for a private celebration, tracking an adult-signature shipment, or discussing hospitality wholesale distribution, our team is at your service."
+    }
+  ]
+}
+{% endschema %}

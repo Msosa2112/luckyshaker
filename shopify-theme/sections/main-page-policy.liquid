@@ -1,0 +1,24 @@
+<section class="page-hero">
+  <div class="page-breadcrumbs">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span>/</span>
+    <span>{{ page.title }}</span>
+  </div>
+  <h1 class="page-title">{{ page.title | upcase }}</h1>
+  <p class="page-subtitle">
+    Effective Date: January 1, 2026 &bull; Lucky Shaker Bartender LLC Direct-to-Consumer Standards
+  </p>
+</section>
+
+<main class="policy-page-container">
+  <article class="policy-article-card">
+    {{ page.content }}
+  </article>
+</main>
+
+{% schema %}
+{
+  "name": "Legal Policy Page",
+  "settings": []
+}
+{% endschema %}

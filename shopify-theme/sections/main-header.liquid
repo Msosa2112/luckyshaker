@@ -1,0 +1,69 @@
+<header class="navbar" id="main-nav" data-section-id="{{ section.id }}">
+  <a href="{{ routes.root_url }}" class="nav-brand" aria-label="{{ shop.name }} Home">
+    <img src="{{ 'logo_lucky_shaker_light.svg' | asset_url }}" alt="{{ shop.name }}" class="nav-logo-img nav-logo-light" width="160" height="42">
+    <img src="{{ 'logo_lucky_shaker_dark.svg' | asset_url }}" alt="{{ shop.name }}" class="nav-logo-img nav-logo-dark" width="160" height="42">
+  </a>
+
+  <nav class="nav-center" aria-label="Navegación Principal">
+    <ul class="nav-menu">
+      {%- if section.settings.menu != blank and section.settings.menu != 'main-menu' and linklists[section.settings.menu].links.size > 0 -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li>
+            <a href="{{ link.url }}" class="nav-link{% if link.current %} active{% endif %}">
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li><a href="#events" onclick="const e=document.getElementById('events') || document.getElementById('event-types'); if(e){ e.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.events">Eventos &amp; Servicios</a></li>
+        <li><a href="#experience" onclick="const ex=document.getElementById('experience') || document.getElementById('event-experience'); if(ex){ ex.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.experience">Experiencia</a></li>
+        <li><a href="#gallery" onclick="const g=document.getElementById('gallery') || document.getElementById('event-gallery'); if(g){ g.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.gallery">Galería</a></li>
+        <li><a href="#cinematic-sequence" onclick="const s=document.getElementById('cinematic-sequence') || document.getElementById('shop-preview'); if(s){ s.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link nav-shop-link" data-i18n="nav.shop">Tienda Online</a></li>
+        <li><a href="#faq" onclick="const f=document.getElementById('faq') || document.getElementById('event-faq'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.faq">Preguntas</a></li>
+      {%- endif -%}
+    </ul>
+  </nav>
+
+  <div class="nav-actions">
+    <!-- Luxury Language Switcher [ ES | EN ] -->
+    <div class="lang-switcher" id="lang-switcher" aria-label="Selector de Idioma / Language">
+      <button type="button" class="lang-btn active" id="lang-btn-es" data-lang="es" onclick="LuckyShakerLang.setLang('es')">ES</button>
+      <span class="lang-divider">/</span>
+      <button type="button" class="lang-btn" id="lang-btn-en" data-lang="en" onclick="LuckyShakerLang.setLang('en')">EN</button>
+    </div>
+
+    <a href="#book-event" class="btn btn-pink nav-book-btn" onclick="const b=document.getElementById('book-event'); if(b){ b.scrollIntoView({behavior:'smooth'}); return false; }">
+      <span data-i18n="nav.book_event">COTIZAR EVENTO</span>
+    </a>
+
+    <!-- Luxury Shopping Bag Icon Trigger -->
+    <button class="cart-toggle-btn open-cart-btn" aria-label="Ver Bolsa de Compras" id="nav-cart-trigger">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="nav-cart-icon">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <path d="M16 10a4 4 0 0 1-8 0"></path>
+      </svg>
+      <span class="cart-badge" id="cart-badge-count">{{ cart.item_count }}</span>
+    </button>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Encabezado / Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú de Navegación",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

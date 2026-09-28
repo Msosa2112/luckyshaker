@@ -1,0 +1,69 @@
+<section class="page-hero">
+  <div class="page-breadcrumbs">
+    <a href="{{ routes.root_url }}">Home</a>
+    <span>/</span>
+    <span>{{ collection.title | default: 'The Signature Collection' }}</span>
+  </div>
+  <h1 class="page-title">{{ collection.title | default: 'THE SIGNATURE COLLECTION' }}</h1>
+  <p class="page-subtitle">
+    {{ collection.description | default: 'Artisan-formulated, small-batch ready-to-pour cocktails. Each 750ml bottle yields 6–8 lounge-grade pours with zero artificial preservatives. Simply chill, shake, and serve.' }}
+  </p>
+</section>
+
+<main class="catalog-container">
+  <!-- Filter & Sort Toolbar -->
+  <div class="catalog-toolbar">
+    <div class="filter-pills" id="filter-pills">
+      <button class="filter-btn active" data-filter="all">All Releases</button>
+      <button class="filter-btn" data-filter="whiskey">Whiskey &amp; Bourbon</button>
+      <button class="filter-btn" data-filter="rum">Rum &amp; Botanical</button>
+      <button class="filter-btn" data-filter="bundles">Curated Trios</button>
+    </div>
+
+    <div class="sort-wrapper">
+      <label for="catalog-sort">Sort By:</label>
+      <select id="catalog-sort" class="sort-select" onchange="location = this.value;">
+        <option value="{{ collection.url }}?sort_by=manual"{% if collection.sort_by == 'manual' %} selected{% endif %}>Featured</option>
+        <option value="{{ collection.url }}?sort_by=price-ascending"{% if collection.sort_by == 'price-ascending' %} selected{% endif %}>Price: Low to High</option>
+        <option value="{{ collection.url }}?sort_by=price-descending"{% if collection.sort_by == 'price-descending' %} selected{% endif %}>Price: High to Low</option>
+        <option value="{{ collection.url }}?sort_by=best-selling"{% if collection.sort_by == 'best-selling' %} selected{% endif %}>Best Selling</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="products-catalog" id="catalog-grid">
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem;">
+          <p style="font-size: 1.1rem; color: var(--text-muted);">No cocktails found in this collection.</p>
+        </div>
+      {%- endfor -%}
+
+      {%- if paginate.pages > 1 -%}
+        <div class="pagination-wrapper" style="grid-column: 1 / -1; display: flex; justify-content: center; gap: 0.5rem; margin-top: 3rem;">
+          {{ paginate | default_pagination }}
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Main Collection Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "label": "Products per page"
+    }
+  ]
+}
+{% endschema %}

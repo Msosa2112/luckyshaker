@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Reserve Bottles &amp; Gift Sets | Lucky Shaker Bartender</title>
+  <meta name="description" content="Explore the full collection of Lucky Shaker ready-to-pour craft cocktails. Whiskey Cream, Old Fashioned, Mojito, and curated tasting gift sets.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo_lucky_shaker.svg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core & Page Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Sticky Luxury Navigation -->
+  <header class="navbar" id="main-nav">
+    <a href="index.html" class="nav-brand" aria-label="Lucky Shaker Bartender Home">
+      <img src="assets/logo_lucky_shaker.svg" alt="Lucky Shaker Bartender" class="nav-logo-img">
+    </a>
+
+    <nav aria-label="Main Navigation">
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Film</a></li>
+        <li><a href="shop.html" class="nav-link active" style="color: var(--accent-pink);">Shop</a></li>
+        <li><a href="story.html" class="nav-link">Our Story</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="cart-toggle-btn open-cart-btn" aria-label="View Shopping Bag">
+        <span>BAG</span>
+        <span class="cart-badge">0</span>
+      </button>
+
+      <button class="mobile-menu-btn open-cart-btn" aria-label="Open Cart on Mobile">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Hero Header -->
+  <section class="page-hero">
+    <div class="page-breadcrumbs">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Shop All</span>
+    </div>
+    <h1 class="page-title">THE SIGNATURE COLLECTION</h1>
+    <p class="page-subtitle">
+      Artisan-formulated, small-batch ready-to-pour cocktails. Each 750ml bottle yields 6–8 lounge-grade pours with zero artificial preservatives. Simply chill, shake, and serve.
+    </p>
+  </section>
+
+  <!-- Catalog Main Container -->
+  <main class="catalog-container">
+    
+    <!-- Filter & Sort Toolbar -->
+    <div class="catalog-toolbar">
+      <div class="filter-pills" id="filter-pills">
+        <button class="filter-btn active" data-filter="all">All Cocktails (18)</button>
+        <button class="filter-btn" data-filter="tequila">Tequila &amp; Agave</button>
+        <button class="filter-btn" data-filter="rum">Rum &amp; Cachaça</button>
+        <button class="filter-btn" data-filter="vodka">Vodka</button>
+        <button class="filter-btn" data-filter="gin">Gin &amp; Botanical</button>
+        <button class="filter-btn" data-filter="whiskey">Whiskey &amp; Bourbon</button>
+        <button class="filter-btn" data-filter="sparkling">Sparkling</button>
+      </div>
+
+      <div class="sort-wrapper">
+        <label for="catalog-sort">Sort By:</label>
+        <select id="catalog-sort" class="sort-select">
+          <option value="featured">Featured First</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="abv">Highest Alcohol % (ABV)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-catalog" id="catalog-grid">
+      
+      <!-- 1. MARGARITA -->
+      <article class="product-item" data-category="tequila" data-price="38" data-abv="18">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/margarita.jpg" alt="Lucky Shaker Margarita" loading="lazy">
+          </a>
+          <span class="product-visual-badge">18% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">MARGARITA</a></h3>
+          <p class="product-desc">Un clásico refrescante de tequila y cítricos, con un equilibrio perfecto entre acidez y dulzor.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Tequila · Lima · Naranja · Agave</div>
+          <button class="btn btn-primary" onclick="addToCart('margarita')" aria-label="Add Margarita to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 2. MOJITO -->
+      <article class="product-item" data-category="rum" data-price="36" data-abv="12">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/mojito.jpg" alt="Lucky Shaker Mojito" loading="lazy">
+          </a>
+          <span class="product-visual-badge">12% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">MOJITO</a></h3>
+          <p class="product-desc">Refrescante y ligero, con ron, lima y el carácter aromático de la menta.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Minty</span>
+            <span class="pill-note">Refreshing</span>
+          </div>
+          <div class="product-ingredients-line">Ron blanco · Lima · Menta · Azúcar</div>
+          <button class="btn btn-primary" onclick="addToCart('mojito')" aria-label="Add Mojito to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 3. DAIQUIRI -->
+      <article class="product-item" data-category="rum" data-price="36" data-abv="15">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/daiquiri.jpg" alt="Lucky Shaker Daiquiri" loading="lazy">
+          </a>
+          <span class="product-visual-badge">15% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">DAIQUIRI</a></h3>
+          <p class="product-desc">Un clásico cubano limpio y elegante, donde el ron y la lima crean un balance perfectamente refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Crisp</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Ron blanco · Lima · Azúcar</div>
+          <button class="btn btn-primary" onclick="addToCart('daiquiri')" aria-label="Add Daiquiri to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 4. GIN & TONIC -->
+      <article class="product-item" data-category="gin" data-price="38" data-abv="14">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/gin-tonic.jpg" alt="Lucky Shaker Gin & Tonic" loading="lazy">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">GIN &amp; TONIC</a></h3>
+          <p class="product-desc">Limpio, aromático y refrescante, con notas botánicas y cítricas sobre una base de gin.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Botanical</span>
+            <span class="pill-note">Crisp</span>
+            <span class="pill-note">Refreshing</span>
+          </div>
+          <div class="product-ingredients-line">Gin · Tonic · Cítricos</div>
+          <button class="btn btn-primary" onclick="addToCart('gin-tonic')" aria-label="Add Gin & Tonic to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 5. PALOMA -->
+      <article class="product-item" data-category="tequila" data-price="38" data-abv="15">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/paloma.jpg" alt="Lucky Shaker Paloma" loading="lazy">
+          </a>
+          <span class="product-visual-badge">15% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">PALOMA</a></h3>
+          <p class="product-desc">Tequila y toronja se unen en un cóctel brillante, cítrico y ligeramente amargo.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Bright</span>
+            <span class="pill-note">Refreshing</span>
+          </div>
+          <div class="product-ingredients-line">Tequila · Toronja · Lima · Sal</div>
+          <button class="btn btn-primary" onclick="addToCart('paloma')" aria-label="Add Paloma to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 6. MIMOSA -->
+      <article class="product-item" data-category="sparkling" data-price="34" data-abv="11">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/mimosa.jpg" alt="Lucky Shaker Mimosa" loading="lazy">
+          </a>
+          <span class="product-visual-badge">11% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$34.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">MIMOSA</a></h3>
+          <p class="product-desc">La combinación perfecta de cítricos y burbujas, ligera, brillante y naturalmente refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Sparkling</span>
+            <span class="pill-note">Bright</span>
+          </div>
+          <div class="product-ingredients-line">Jugo de naranja · Prosecco</div>
+          <button class="btn btn-primary" onclick="addToCart('mimosa')" aria-label="Add Mimosa to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 7. MOSCOW MULE -->
+      <article class="product-item" data-category="vodka" data-price="38" data-abv="14">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/moscow-mule.jpg" alt="Lucky Shaker Moscow Mule" loading="lazy">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">MOSCOW MULE</a></h3>
+          <p class="product-desc">Vodka, ginger beer y lima crean un cóctel intenso, fresco y ligeramente picante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Spicy</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Crisp</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Ginger Beer · Lima</div>
+          <button class="btn btn-primary" onclick="addToCart('moscow-mule')" aria-label="Add Moscow Mule to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 8. COSMOPOLITAN -->
+      <article class="product-item" data-category="vodka" data-price="38" data-abv="18">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/cosmopolitan.jpg" alt="Lucky Shaker Cosmopolitan" loading="lazy">
+          </a>
+          <span class="product-visual-badge">18% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">COSMOPOLITAN</a></h3>
+          <p class="product-desc">Elegante y vibrante, con notas de cranberry, cítricos y un acabado ligeramente ácido.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Fruity</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Elegant</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Cranberry · Naranja · Lima</div>
+          <button class="btn btn-primary" onclick="addToCart('cosmopolitan')" aria-label="Add Cosmopolitan to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 9. SEX ON THE BEACH -->
+      <article class="product-item" data-category="vodka" data-price="36" data-abv="14">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/sex-on-the-beach.jpg" alt="Lucky Shaker Sex on the Beach" loading="lazy">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">SEX ON THE BEACH</a></h3>
+          <p class="product-desc">Tropical y frutal, combinando durazno, naranja y cranberry en un balance suave y refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Fruity</span>
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Durazno · Naranja · Cranberry</div>
+          <button class="btn btn-primary" onclick="addToCart('sex-on-the-beach')" aria-label="Add Sex on the Beach to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 10. PIÑA COLADA -->
+      <article class="product-item" data-category="rum" data-price="38" data-abv="15">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/pina-colada.jpg" alt="Lucky Shaker Piña Colada" loading="lazy">
+          </a>
+          <span class="product-visual-badge">15% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">PIÑA COLADA</a></h3>
+          <p class="product-desc">Cremosa y tropical, con el equilibrio clásico entre piña, coco y ron.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Creamy</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Ron blanco · Piña · Coco</div>
+          <button class="btn btn-primary" onclick="addToCart('pina-colada')" aria-label="Add Piña Colada to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 11. BLUE HAWAII -->
+      <article class="product-item" data-category="rum" data-price="38" data-abv="16">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/blue-hawaii.jpg" alt="Lucky Shaker Blue Hawaii" loading="lazy">
+          </a>
+          <span class="product-visual-badge">16% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">BLUE HAWAII</a></h3>
+          <p class="product-desc">Un cóctel tropical de vibrante color azul, con notas de piña, cítricos y ron.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Bright</span>
+          </div>
+          <div class="product-ingredients-line">Ron · Vodka · Blue Curaçao · Piña</div>
+          <button class="btn btn-primary" onclick="addToCart('blue-hawaii')" aria-label="Add Blue Hawaii to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 12. MALIBU BAY BREEZE -->
+      <article class="product-item" data-category="rum" data-price="36" data-abv="14">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/malibu-bay-breeze.jpg" alt="Lucky Shaker Malibu Bay Breeze" loading="lazy">
+          </a>
+          <span class="product-visual-badge">14% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$36.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">MALIBU BAY BREEZE</a></h3>
+          <p class="product-desc">Una mezcla tropical y frutal de coco, piña y cranberry con un acabado suave y refrescante.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Tropical</span>
+            <span class="pill-note">Fruity</span>
+            <span class="pill-note">Smooth</span>
+          </div>
+          <div class="product-ingredients-line">Malibu · Piña · Cranberry</div>
+          <button class="btn btn-primary" onclick="addToCart('malibu-bay-breeze')" aria-label="Add Malibu Bay Breeze to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 13. NEGRONI -->
+      <article class="product-item" data-category="gin" data-price="42" data-abv="24">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/negroni.jpg" alt="Lucky Shaker Negroni" loading="lazy">
+          </a>
+          <span class="product-visual-badge">24% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">NEGRONI</a></h3>
+          <p class="product-desc">Intenso, equilibrado y sofisticado, con notas amargas, cítricas y herbales.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Bitter</span>
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Bold</span>
+          </div>
+          <div class="product-ingredients-line">Gin · Campari · Vermouth rojo</div>
+          <button class="btn btn-primary" onclick="addToCart('negroni')" aria-label="Add Negroni to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 14. OLD FASHIONED -->
+      <article class="product-item" data-category="whiskey" data-price="42" data-abv="28">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/old-fashioned.jpg" alt="Lucky Shaker Old Fashioned" loading="lazy">
+          </a>
+          <span class="product-visual-badge">28% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">OLD FASHIONED</a></h3>
+          <p class="product-desc">Un clásico profundo y elegante, con whiskey, notas de naranja y un toque aromático de bitters.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Rich</span>
+            <span class="pill-note">Bold</span>
+            <span class="pill-note">Smoky</span>
+          </div>
+          <div class="product-ingredients-line">Whiskey · Bitters · Azúcar · Naranja</div>
+          <button class="btn btn-primary" onclick="addToCart('old-fashioned')" aria-label="Add Old Fashioned to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 15. MANHATTAN -->
+      <article class="product-item" data-category="whiskey" data-price="42" data-abv="26">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/manhattan.jpg" alt="Lucky Shaker Manhattan" loading="lazy">
+          </a>
+          <span class="product-visual-badge">26% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">MANHATTAN</a></h3>
+          <p class="product-desc">Elegante y profundo, con whiskey, vermouth dulce y delicadas notas especiadas.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Rich</span>
+            <span class="pill-note">Smooth</span>
+            <span class="pill-note">Complex</span>
+          </div>
+          <div class="product-ingredients-line">Rye Whiskey · Vermouth rojo · Bitters</div>
+          <button class="btn btn-primary" onclick="addToCart('manhattan')" aria-label="Add Manhattan to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 16. CLASSIC MARTINI -->
+      <article class="product-item" data-category="gin" data-price="42" data-abv="26">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/classic-martini.jpg" alt="Lucky Shaker Classic Martini" loading="lazy">
+          </a>
+          <span class="product-visual-badge">26% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$42.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">CLASSIC MARTINI</a></h3>
+          <p class="product-desc">Limpio, sofisticado y perfectamente equilibrado, con gin y dry vermouth.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Crisp</span>
+            <span class="pill-note">Dry</span>
+            <span class="pill-note">Elegant</span>
+          </div>
+          <div class="product-ingredients-line">Gin · Dry Vermouth · Limón</div>
+          <button class="btn btn-primary" onclick="addToCart('classic-martini')" aria-label="Add Classic Martini to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 17. ESPRESSO MARTINI -->
+      <article class="product-item" data-category="vodka" data-price="40" data-abv="20">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/espresso-martini.jpg" alt="Lucky Shaker Espresso Martini" loading="lazy">
+          </a>
+          <span class="product-visual-badge">20% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$40.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">ESPRESSO MARTINI</a></h3>
+          <p class="product-desc">Intenso y sedoso, con profundas notas de espresso y un acabado ligeramente dulce.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Rich</span>
+            <span class="pill-note">Smooth</span>
+            <span class="pill-note">Bold</span>
+          </div>
+          <div class="product-ingredients-line">Vodka · Decaf Espresso · Coffee Liqueur · Sugar</div>
+          <button class="btn btn-primary" onclick="addToCart('espresso-martini')" aria-label="Add Espresso Martini to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- 18. CAIPIRINHA -->
+      <article class="product-item" data-category="rum" data-price="38" data-abv="18">
+        <div class="product-visual-box">
+          <a href="product.html">
+            <img src="assets/cocteles/caipirinha.jpg" alt="Lucky Shaker Caipirinha" loading="lazy">
+          </a>
+          <span class="product-visual-badge">18% ABV</span>
+        </div>
+        <div class="product-details">
+          <div class="product-meta-row">
+            <span class="product-type">750ML • READY TO POUR</span>
+            <span class="product-price">$38.00</span>
+          </div>
+          <h3 class="product-name"><a href="product.html" style="color: inherit; text-decoration: none;">CAIPIRINHA</a></h3>
+          <p class="product-desc">Un clásico brasileño vibrante y refrescante, con cachaça, lima y un toque de azúcar.</p>
+          <div class="product-notes-pills">
+            <span class="pill-note">Citrus</span>
+            <span class="pill-note">Fresh</span>
+            <span class="pill-note">Vibrant</span>
+          </div>
+          <div class="product-ingredients-line">Cachaça · Lima · Azúcar</div>
+          <button class="btn btn-primary" onclick="addToCart('caipirinha')" aria-label="Add Caipirinha to Bag" style="margin-top: auto;">
+            <span>ADD TO BAG</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Value & Trust Pillars -->
+  <section style="background: #FFFFFF; border-top: 1px solid var(--border-light); padding: 4rem var(--gutter);">
+    <div style="max-width: var(--container-max); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.5rem; text-align: center;">
+      <div>
+        <div style="display: flex; justify-content: center; margin-bottom: 0.85rem; color: var(--accent-pink);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/>
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <h4 style="font-family: var(--font-brand); margin-bottom: 0.4rem;">TEMPERATURE-STABLE</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">Specially formulated and packed to maintain freshness during all transit climates.</p>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: center; margin-bottom: 0.85rem; color: var(--accent-pink);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h4 style="font-family: var(--font-brand); margin-bottom: 0.4rem;">100% BREAKAGE GUARANTEE</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">If any bottle arrives cracked or damaged, we replace it instantly with zero hassle.</p>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: center; margin-bottom: 0.85rem; color: var(--accent-pink);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c0 4.42-3.58 8-8 8s-8-3.58-8-8z"/>
+            <line x1="12" y1="12" x2="12" y2="20"/>
+            <line x1="8" y1="20" x2="16" y2="20"/>
+          </svg>
+        </div>
+        <h4 style="font-family: var(--font-brand); margin-bottom: 0.4rem;">READY TO POUR</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">No mixers, syrups, or cutting boards needed. Just chill, shake over ice, and enjoy.</p>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: center; margin-bottom: 0.85rem; color: var(--accent-pink);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M7.5 12h2.5a1.5 1.5 0 0 0 0-3H8v6h3"/>
+            <path d="M14 9h2v6"/>
+            <line x1="13" y1="15" x2="17" y2="15"/>
+          </svg>
+        </div>
+        <h4 style="font-family: var(--font-brand); margin-bottom: 0.4rem;">ADULT 21+ VERIFIED</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">Legally compliant alcohol fulfillment requiring valid government ID on delivery.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Luxury Footer -->
+  <footer class="luxury-footer">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <a href="index.html" aria-label="Lucky Shaker Bartender Home">
+          <img src="assets/logo_lucky_shaker.svg" alt="Lucky Shaker Bartender" class="footer-logo-img">
+        </a>
+        <p>Ultra-premium ready-to-pour craft cocktails formulated by master mixologists. Shaken with passion, poured with intention.</p>
+        <div style="margin-top: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.85rem; background: rgba(0,0,0,0.04); border-radius: 9999px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-pink);">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span>21+ Direct-to-Consumer Certified</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">COLLECTION</h4>
+        <ul class="footer-links">
+          <li><a href="shop.html">Shop All Cocktails</a></li>
+          <li><a href="product.html">Whiskey Cream (750ml)</a></li>
+          <li><a href="shop.html">Old Fashioned (750ml)</a></li>
+          <li><a href="shop.html">Mojito Craft (750ml)</a></li>
+          <li><a href="shop.html">The Connoisseur Trio</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">EXPERIENCE</h4>
+        <ul class="footer-links">
+          <li><a href="story.html">Our Story</a></li>
+          <li><a href="contact.html">Concierge &amp; Events</a></li>
+          <li><a href="faq.html">FAQs &amp; 21+ Guide</a></li>
+          <li><a href="cart.html">View Cart</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">LEGAL &amp; POLICIES</h4>
+        <ul class="footer-links">
+          <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+          <li><a href="refund-policy.html">Refunds &amp; Breakage</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="copyright">© 2026 LUCKY SHAKER BARTENDER LLC. ALL RIGHTS RESERVED.</div>
+      <div class="legal-notice">PLEASE ENJOY RESPONSIBLY. MUST BE 21+ YEARS OF AGE TO PURCHASE.</div>
+    </div>
+  </footer>
+
+  <!-- Cart Slide-Out Drawer -->
+  <div id="cart-backdrop" class="cart-drawer-backdrop"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Shopping Cart">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-header-left">
+        <img src="assets/lucky_shaker_glass_icon.png" alt="Lucky Shaker" style="height: 24px; width: auto; object-fit: contain;">
+        <div class="cart-title-wrap">
+          <span class="cart-title">YOUR SELECTION</span>
+          <span id="drawer-count-badge" class="cart-count-pill">0 ITEMS</span>
+        </div>
+      </div>
+      <button id="close-cart-btn" class="close-drawer-btn" aria-label="Close Shopping Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Banner -->
+    <div id="cart-shipping-banner" class="cart-shipping-banner">
+      <div class="cart-shipping-text">
+        <span id="shipping-progress-text">Spend <strong>$80.00</strong> for <strong>Free Express Shipping</strong></span>
+        <span id="shipping-progress-percent" style="font-weight: 700; color: var(--accent-pink);">0%</span>
+      </div>
+      <div class="cart-shipping-bar-bg">
+        <div id="shipping-progress-fill" class="cart-shipping-bar-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div id="cart-items-list" class="cart-items-container">
+      <div class="cart-empty-message">
+        <div class="empty-cart-icon-wrap">
+          <img src="assets/lucky_shaker_glass_icon.png" alt="Lucky Shaker">
+        </div>
+        <h4 class="empty-cart-title">YOUR BAR IS EMPTY</h4>
+        <p class="empty-cart-desc">Explore our signature ready-to-pour craft cocktails to curate your collection.</p>
+        <a href="shop.html" class="empty-cart-cta">
+          <span>EXPLORE COCKTAILS</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <span class="subtotal-label">SUBTOTAL</span>
+        <span id="drawer-subtotal" class="subtotal-val">$0.00</span>
+      </div>
+      <div class="cart-shipping-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>Taxes &amp; shipping calculated at checkout</span>
+      </div>
+      <div class="cart-drawer-ctas">
+        <button id="checkout-btn" class="btn-drawer-checkout">
+          <span>PROCEED TO CHECKOUT</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </button>
+        <a href="cart.html" class="btn-drawer-view-cart">
+          <span>VIEW FULL BAG</span>
+        </a>
+      </div>
+      <div class="cart-drawer-trust-pills">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>SSL Secure</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Express Delivery</span>
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span>100% Craft</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Application Script -->
+  <script src="js/app.js"></script>
+
+  <!-- Catalog Filter Script -->
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('#catalog-grid .product-item').forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-category') === filter) {
+            item.style.display = 'flex';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    document.getElementById('catalog-sort').addEventListener('change', (e) => {
+      const val = e.target.value;
+      const grid = document.getElementById('catalog-grid');
+      const items = Array.from(grid.querySelectorAll('.product-item'));
+
+      items.sort((a, b) => {
+        const pA = parseFloat(a.getAttribute('data-price'));
+        const pB = parseFloat(b.getAttribute('data-price'));
+        const abvA = parseFloat(a.getAttribute('data-abv'));
+        const abvB = parseFloat(b.getAttribute('data-abv'));
+
+        if (val === 'price-asc') return pA - pB;
+        if (val === 'price-desc') return pB - pA;
+        if (val === 'abv') return abvB - abvA;
+        return 0;
+      });
+
+      items.forEach(item => grid.appendChild(item));
+    });
+  </script>
+</body>
+</html>

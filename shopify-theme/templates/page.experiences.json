@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main_experiences": {
+      "type": "main-page-experiences",
+      "settings": {
+        "hero_title": "BESPOKE EXPERIENCES",
+        "hero_subtitle": "Immerse your guests in private guided tastings, custom event bar catering, and mixology masterclasses led by master mixologist Katherin."
+      }
+    },
+    "how_to_enjoy": {
+      "type": "home-how-to-enjoy",
+      "settings": {}
+    },
+    "faq": {
+      "type": "home-faq",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main_experiences",
+    "how_to_enjoy",
+    "faq"
+  ]
+}
