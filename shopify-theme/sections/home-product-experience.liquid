@@ -12,7 +12,7 @@
             <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Lucky Shaker Whiskey Cream" class="exp-img" width="600" height="600">
           {%- endif -%}
           <div class="exp-glass-pill">
-            {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <span>MASTER MIXOLOGIST BATCH &bull; BY KATHERIN</span>
           </div>
         </div>
@@ -55,7 +55,9 @@
         <div class="exp-cta-row">
           <a href="{{ section.settings.cta_link | default: '/collections/all' }}" class="btn btn-pink">
             <span>{{ section.settings.cta_label | default: 'EXPLORE THE COLLECTION' }}</span>
-            {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
           </a>
         </div>
       </div>

@@ -8,7 +8,9 @@
     </p>
     <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn btn-pink">
       <span>{{ section.settings.button_label | default: 'SHOP ALL COCKTAILS' }}</span>
-      {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
+      <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M1 7h12M8 2l5 5-5 5"/>
+      </svg>
     </a>
   </div>
 </section>

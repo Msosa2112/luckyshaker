@@ -12,7 +12,7 @@
       {%- form 'contact', id: 'event-quote-form', class: 'event-quote-form' -%}
         {%- if form.posted_successfully? -%}
           <div class="quote-form-success" role="alert">
-            {% render 'icon', name: 'circle-check', size: 24, stroke: '#10B981', stroke_width: 2.5 %}
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <div>
               <h4 data-i18n="booking.success_title">¡Muchas gracias! Hemos recibido tu solicitud.</h4>
               <p data-i18n="booking.success_desc">Nuestro director de eventos revisará los detalles y te enviará una propuesta personalizada en menos de 24 horas.</p>
@@ -92,10 +92,10 @@
         <div class="form-submit-row">
           <button type="submit" class="btn btn-pink btn-submit-quote">
             <span data-i18n="booking.btn_submit">ENVIAR SOLICITUD DE COTIZACIÓN</span>
-            {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 2 %}
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
           </button>
           <div class="form-guarantee-text">
-            {% render 'icon', name: 'shield-check', size: 15, stroke: '#10B981', stroke_width: 2.2 %}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             <span data-i18n="booking.guarantee">Sin pagos por adelantado &bull; Respuesta personalizada en 24 horas</span>
           </div>
         </div>

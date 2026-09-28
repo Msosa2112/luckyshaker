@@ -6,7 +6,10 @@
       <span id="drawer-count-badge" class="cart-count-pill">{{ cart.item_count }} {% if cart.item_count == 1 %}PRODUCTO{% else %}PRODUCTOS{% endif %}</span>
     </div>
     <button id="close-cart-btn" class="close-drawer-btn" aria-label="Cerrar">
-      {% render 'icon', name: 'x', size: 18, stroke_width: 2.2 %}
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
     </button>
   </div>
 
@@ -31,7 +34,9 @@
         <p class="empty-cart-desc" data-i18n="cart.empty_desc">Explora nuestra colección de botellas para comenzar.</p>
         <a href="{{ routes.all_products_collection_url }}" class="empty-cart-cta">
           <span data-i18n="cart.explore_btn">EXPLORAR CÓCTELES</span>
-          {% render 'icon', name: 'arrow-right', size: 14, stroke_width: 2 %}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
         </a>
       </div>
     {%- else -%}
@@ -49,20 +54,14 @@
             <div class="item-vol">{{ item.variant.title | default: '750ml • Listo para Servir' }}</div>
             <div class="cart-item-actions">
               <div class="cart-item-qty">
-                <button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', {{ item.quantity | minus: 1 }})" aria-label="Disminuir cantidad">
-                  {% render 'icon', name: 'minus', size: 12, stroke_width: 2.2 %}
-                </button>
+                <button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', {{ item.quantity | minus: 1 }})" aria-label="Disminuir cantidad">&minus;</button>
                 <span class="qty-num">{{ item.quantity }}</span>
-                <button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', {{ item.quantity | plus: 1 }})" aria-label="Aumentar cantidad">
-                  {% render 'icon', name: 'plus', size: 12, stroke_width: 2.2 %}
-                </button>
+                <button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', {{ item.quantity | plus: 1 }})" aria-label="Aumentar cantidad">&plus;</button>
               </div>
               <div class="item-price">{{ item.final_line_price | money }}</div>
             </div>
           </div>
-          <button type="button" class="remove-item-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', 0)" aria-label="Eliminar producto">
-            {% render 'icon', name: 'trash-2', size: 15, stroke_width: 1.8 %}
-          </button>
+          <button type="button" class="remove-item-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', 0)" aria-label="Eliminar producto">&times;</button>
         </div>
       {%- endfor -%}
     {%- endif -%}
@@ -78,7 +77,9 @@
     <div class="drawer-actions">
       <button type="button" id="checkout-btn" class="btn btn-pink btn-drawer-checkout" onclick="LuckyShakerCart.proceedToCheckout()">
         <span data-i18n="cart.checkout">FINALIZAR COMPRA</span>
-        {% render 'icon', name: 'arrow-right', size: 14, stroke_width: 2 %}
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 7h12M8 2l5 5-5 5"/>
+        </svg>
       </button>
       <a href="{{ routes.all_products_collection_url }}" class="continue-shopping-link" onclick="LuckyShakerCart.close();" data-i18n="cart.continue">
         Continuar Explorando &rarr;
@@ -86,8 +87,8 @@
     </div>
 
     <div class="cart-trust-badges">
-      <span>{% render 'icon', name: 'shield-check', size: 14, stroke_width: 2, stroke: '#E82B7D' %} Pago Seguro</span>
-      <span>{% render 'icon', name: 'package', size: 14, stroke_width: 2, stroke: '#E82B7D' %} Embalaje Protegido 21+</span>
+      <span>🔒 Pago Seguro</span>
+      <span>📦 Embalaje Protegido 21+</span>
     </div>
   </div>
 </aside>
@@ -95,7 +96,7 @@
 <!-- Toast notification for quick item add -->
 <div id="cart-toast" class="cart-toast" role="status" aria-live="polite">
   <div class="toast-content">
-    {% render 'icon', name: 'circle-check', size: 18, stroke_width: 2.2, stroke: '#10B981' %}
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
     <span id="toast-message">Cóctel añadido a tu selección</span>
   </div>
 </div>
