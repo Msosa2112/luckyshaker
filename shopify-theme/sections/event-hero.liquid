@@ -17,30 +17,26 @@
     <div class="event-hero-ctas">
       <a href="#book-event" class="btn btn-pink btn-hero-primary" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }">
         <span data-i18n="hero.primary_cta">{{ section.settings.primary_cta | default: 'COTIZAR TU EVENTO' }}</span>
-        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M1 7h12M8 2l5 5-5 5"/>
-        </svg>
+        {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 2 %}
       </a>
 
       <a href="#cinematic-sequence" class="btn button-glass btn-hero-secondary" onclick="const s=document.getElementById('cinematic-sequence') || document.getElementById('shop-preview'); if(s){ s.scrollIntoView({behavior:'smooth'}); return false; }">
         <span data-i18n="hero.secondary_cta">{{ section.settings.secondary_cta | default: 'TIENDA ONLINE' }}</span>
-        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-left: 0.35rem;">
-          <path d="M1 7h12M8 2l5 5-5 5"/>
-        </svg>
+        {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8, style: 'margin-left: 0.35rem;' %}
       </a>
     </div>
 
     <div class="event-hero-trust-bar">
       <div class="trust-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        {% render 'icon', name: 'shield-check', size: 18, stroke: '#E82B7D', stroke_width: 2 %}
         <span data-i18n="hero.trust1">Barras Móviles de Lujo</span>
       </div>
       <div class="trust-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        {% render 'icon', name: 'clock', size: 18, stroke: '#E82B7D', stroke_width: 2 %}
         <span data-i18n="hero.trust2">Mixólogos de Autor Certificados</span>
       </div>
       <div class="trust-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        {% render 'icon', name: 'star', size: 18, stroke: '#E82B7D', stroke_width: 2 %}
         <span data-i18n="hero.trust3">Servicio 5 Estrellas</span>
       </div>
     </div>

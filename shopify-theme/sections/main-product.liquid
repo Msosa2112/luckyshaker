@@ -57,11 +57,11 @@
 
       <div class="pdp-rating-row">
         <div class="pdp-stars">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#E82B7D"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
+          {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
+          {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
+          {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
+          {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
         </div>
         <span class="pdp-rating-score">4.95 / 5.0</span>
         <span class="pdp-rating-count" data-i18n="pdp.reviews_count">(+180 Reseñas Verificadas)</span>
@@ -75,64 +75,7 @@
           {%- endif -%}
         </div>
         <div class="pdp-shipping-badge">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          <span data-i18n="pdp.free_shipping">Envío Express Gratis +21 en órdenes de $80+</span>
-        </div>
-      </div>
-
-      <!-- Clean Narrative Description -->
-      <div class="pdp-description-content">
-        {{ product.description | default: '<p>Elaborado a mano con licores artesanales, botánicos frescos y cero conservantes artificiales. Perfectamente equilibrado para disfrutar de inmediato sobre hielo cristalino.</p>' }}
-      </div>
-
-      <!-- Dynamic Product Form -->
-      {%- form 'product', product, id: 'pdp-product-form', class: 'pdp-form-wrap' -%}
-        <input type="hidden" name="id" id="selected-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
-
-        {%- if product.variants.size > 1 -%}
-          <div class="pdp-variants-section">
-            <div class="pdp-variant-label">
-              <span data-i18n="pdp.select_format">SELECCIONAR PRESENTACIÓN:</span>
-              <span id="selected-variant-name" class="variant-active-name">{{ product.selected_or_first_available_variant.title }}</span>
-            </div>
-            <div class="variant-options-grid">
-              {%- for variant in product.variants -%}
-                <div class="variant-option-card{% if forloop.first %} active{% endif %}" onclick="LuckyShakerPDP.selectVariant({{ variant.id }}, '{{ variant.price | money }}', this)">
-                  <div class="variant-card-title">{{ variant.title }}</div>
-                  <div class="variant-card-subtitle">{{ variant.price | money }}</div>
-                </div>
-              {%- endfor -%}
-            </div>
-          </div>
-        {%- endif -%}
-
-        <!-- Tactile Liquid Stepper + Add to Bag Bar -->
-        <div class="pdp-action-row">
-          <div class="pdp-qty-pill">
-            <button type="button" class="pdp-qty-btn minus" onclick="LuckyShakerPDP.adjustQty(-1)" aria-label="Disminuir cantidad">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-            <input type="number" id="pdp-qty-input" name="quantity" value="1" min="1" max="12" readonly class="pdp-qty-val">
-            <button type="button" class="pdp-qty-btn plus" onclick="LuckyShakerPDP.adjustQty(1)" aria-label="Aumentar cantidad">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-          </div>
-
-          <button type="submit" id="pdp-submit-btn" class="pdp-cta-add">
-            <span id="pdp-btn-label" data-i18n="pdp.add_to_bag">AGREGAR A LA BOLSA &bull; {{ product.selected_or_first_available_variant.price | money }}</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
-              <polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </button>
-        </div>
-      {%- endform -%}
-
-      <!-- 21+ Delivery Guarantee & Trust Badges -->
-      <div class="pdp-trust-card">
-        <div class="pdp-trust-row">
-          <div class="trust-icon-circle">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          {% render 'icon', name: 'shield-check', size: 18, stroke: '#E82B7D', stroke_width: 1.8 %}
           </div>
           <span data-i18n="pdp.trust_pkg">Empaque Térmico con Garantía Total contra Roturas</span>
         </div>

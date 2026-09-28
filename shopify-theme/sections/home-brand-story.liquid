@@ -14,9 +14,7 @@
         <div class="story-cta-wrap">
           <a href="{{ section.settings.cta_link | default: '/pages/our-story' }}" class="btn button-glass">
             <span>{{ section.settings.cta_label }}</span>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 7h12M8 2l5 5-5 5"/>
-            </svg>
+            {% render 'icon', name: 'arrow-right', size: 14, stroke_width: 2 %}
           </a>
         </div>
       {%- endif -%}

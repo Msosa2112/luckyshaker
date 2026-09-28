@@ -41,9 +41,7 @@
           <div class="product-ingredients-line">Tequila · Lima · Naranja · Agave</div>
           <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('margarita', 1, 'Margarita 750ml', '$38.00')" aria-label="Add MARGARITA to Bag" style="margin-top: auto;">
             <span>ADD TO BAG</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M1 7h12M8 2l5 5-5 5"/>
-            </svg>
+            {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
           </button>
         </div>
       </article>
@@ -70,9 +68,7 @@
           <div class="product-ingredients-line">Ron blanco · Lima · Menta · Azúcar</div>
           <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('mojito', 1, 'Mojito 750ml', '$36.00')" aria-label="Add MOJITO to Bag" style="margin-top: auto;">
             <span>ADD TO BAG</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M1 7h12M8 2l5 5-5 5"/>
-            </svg>
+            {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
           </button>
         </div>
       </article>
@@ -99,9 +95,7 @@
           <div class="product-ingredients-line">Whiskey · Bitters · Azúcar · Naranja</div>
           <button class="btn btn-primary" onclick="LuckyShakerCart.addItemByHandle('old-fashioned', 1, 'Old Fashioned 750ml', '$42.00')" aria-label="Add OLD FASHIONED to Bag" style="margin-top: auto;">
             <span>ADD TO BAG</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M1 7h12M8 2l5 5-5 5"/>
-            </svg>
+            {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
           </button>
         </div>
       </article>
@@ -111,9 +105,7 @@
   <div style="text-align: center; margin-top: 3.5rem;">
     <a href="{{ routes.all_products_collection_url }}" class="btn btn-pink" style="display: inline-flex; text-decoration: none; padding: 1rem 2.5rem;">
       <span>EXPLORE ALL 18 COCKTAILS</span>
-      <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M1 7h12M8 2l5 5-5 5"/>
-      </svg>
+      {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
     </a>
   </div>
 </section>

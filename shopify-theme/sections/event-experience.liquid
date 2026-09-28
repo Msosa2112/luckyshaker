@@ -13,43 +13,7 @@
       <div class="exp-step-item">
         <div class="step-badge">01</div>
         <div class="step-icon-circle">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h3 class="step-name" data-i18n="exp.s1_title">{{ section.settings.s1_title | default: '01 &bull; PLANIFICA' }}</h3>
-        <p class="step-text" data-i18n="exp.s1_desc">
-          {{ section.settings.s1_desc | default: 'Asesoría personalizada de menú. Diseñamos cócteles de autor que combinan con la temática de tu evento, el perfil de los invitados y el estilo del lugar.' }}
-        </p>
-      </div>
-
-      <!-- Paso 02 -->
-      <div class="exp-step-item">
-        <div class="step-badge">02</div>
-        <div class="step-icon-circle">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8"><ellipse cx="12" cy="12" rx="8" ry="5.5" transform="rotate(-35 12 12)"/><path d="M6 18c3-4 9-8 12-12"/><path d="M9 10c1 1 2 2 4 2"/></svg>
-        </div>
-        <h3 class="step-name" data-i18n="exp.s2_title">{{ section.settings.s2_title | default: '02 &bull; PREPARA' }}</h3>
-        <p class="step-text" data-i18n="exp.s2_desc">
-          {{ section.settings.s2_desc | default: 'Jarabes botánicos artesanales, cítricos recién exprimidos, hielo artesanal cristalino, garnituras exclusivas y montaje de la barra antes de que lleguen los invitados.' }}
-        </p>
-      </div>
-
-      <!-- Paso 03 -->
-      <div class="exp-step-item">
-        <div class="step-badge">03</div>
-        <div class="step-icon-circle">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8"><path d="M7 4h10l-1.5 13a3 3 0 0 1-3 2.5h-1a3 3 0 0 1-3-2.5L7 4z"/><path d="M4 8l2 2"/><path d="M20 8l-2 2"/></svg>
-        </div>
-        <h3 class="step-name" data-i18n="exp.s3_title">{{ section.settings.s3_title | default: '03 &bull; AGITA' }}</h3>
-        <p class="step-text" data-i18n="exp.s3_desc">
-          {{ section.settings.s3_desc | default: 'Arte de coctelera y hospitalidad de alto nivel. Cada cóctel se agita al momento con dinamismo, precisión y una presentación impecable.' }}
-        </p>
-      </div>
-
-      <!-- Paso 04 -->
-      <div class="exp-step-item">
-        <div class="step-badge">04</div>
-        <div class="step-icon-circle">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
         </div>
         <h3 class="step-name" data-i18n="exp.s4_title">{{ section.settings.s4_title | default: '04 &bull; CELEBRA' }}</h3>
         <p class="step-text" data-i18n="exp.s4_desc">
@@ -61,7 +25,7 @@
     <div class="experience-cta-wrap">
       <a href="#book-event" class="btn btn-pink" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }">
         <span data-i18n="exp.book_btn">COTIZAR TU EVENTO</span>
-        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+        {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
       </a>
     </div>
   </div>

@@ -13,60 +13,7 @@
       <div class="enjoy-step-card">
         <div class="step-num-pill">01</div>
         <div class="step-icon-wrap">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="2" x2="12" y2="22"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-            <path d="M20 16l-4-4 4-4"/>
-            <path d="M4 8l4 4-4 4"/>
-            <path d="M16 4l-4 4-4-4"/>
-            <path d="M8 20l4-4 4 4"/>
-          </svg>
-        </div>
-        <h3 class="step-title">{{ section.settings.s1_title | default: 'CHILL' }}</h3>
-        <p class="step-desc">
-          {{ section.settings.s1_desc | default: 'Refrigerate the bottle thoroughly to 4°C (40°F) or rest over an ice bath for 20 minutes.' }}
-        </p>
-      </div>
-
-      <!-- Step 02 -->
-      <div class="enjoy-step-card">
-        <div class="step-num-pill">02</div>
-        <div class="step-icon-wrap">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 4h10l-1.5 13a3 3 0 0 1-3 2.5h-1a3 3 0 0 1-3-2.5L7 4z"/>
-            <path d="M4 8l2 2"/>
-            <path d="M20 8l-2 2"/>
-          </svg>
-        </div>
-        <h3 class="step-title">{{ section.settings.s2_title | default: 'SHAKE' }}</h3>
-        <p class="step-desc">
-          {{ section.settings.s2_desc | default: 'Give the bottle 3 to 5 vigorous shakes to fully aerate and homogenize the natural craft botanicals.' }}
-        </p>
-      </div>
-
-      <!-- Step 03 -->
-      <div class="enjoy-step-card">
-        <div class="step-num-pill">03</div>
-        <div class="step-icon-wrap">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 2h8l4 8H4z"/>
-            <path d="M12 10v10"/>
-            <path d="M8 20h8"/>
-          </svg>
-        </div>
-        <h3 class="step-title">{{ section.settings.s3_title | default: 'SERVE' }}</h3>
-        <p class="step-desc">
-          {{ section.settings.s3_desc | default: 'Pour 3.5oz over a crystal ice sphere or chilled rocks glass. Garnish with a citrus peel or fresh herb.' }}
-        </p>
-      </div>
-
-      <!-- Step 04 -->
-      <div class="enjoy-step-card">
-        <div class="step-num-pill">04</div>
-        <div class="step-icon-wrap">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
+          {% render 'icon', name: 'star', size: 15, stroke: '#E82B7D', fill: '#E82B7D', stroke_width: 1.5 %}
         </div>
         <h3 class="step-title">{{ section.settings.s4_title | default: 'ENJOY' }}</h3>
         <p class="step-desc">

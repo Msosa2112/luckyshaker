@@ -13,9 +13,7 @@
     <div class="error-action-row">
       <a href="{{ routes.all_products_collection_url }}" class="btn btn-pink">
         <span>{{ 'general.404.link' | t }}</span>
-        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M1 7h12M8 2l5 5-5 5"/>
-        </svg>
+        {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 1.8 %}
       </a>
       <a href="{{ routes.root_url }}" class="btn button-glass">
         <span>RETURN TO HOME</span>

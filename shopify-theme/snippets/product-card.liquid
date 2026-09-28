@@ -78,9 +78,7 @@
         {%- if product.available -%}
           <button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem({{ product.selected_or_first_available_variant.id }}, 1, '{{ product.title | escape }}', '{{ product.price | money }}')" aria-label="Agregar {{ clean_title }} a la Bolsa">
             <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 7h12M8 2l5 5-5 5"/>
-            </svg>
+            {% render 'icon', name: 'arrow-right', size: 14, class: 'btn-arrow', stroke_width: 2 %}
           </button>
         {%- else -%}
           <button type="button" class="btn btn-luxury-pink is-soldout" disabled>

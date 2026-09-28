@@ -23,3 +23,4 @@ package-lock.json
 
 # Shopify CLI local state
 .shopify/
+node_modules
