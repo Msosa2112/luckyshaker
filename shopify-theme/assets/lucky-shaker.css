@@ -7694,11 +7694,7 @@ details[open] .accordion-chevron {
 
 @media (max-width: 768px) {
   .event-hero-section {
-    height: 220vh;
-  }
-
-  .event-hero-section {
-    height: 320vh;
+    height: 360vh !important;
   }
 
   .hero-video-desktop {
@@ -7822,9 +7818,6 @@ details[open] .accordion-chevron {
     display: none;
   }
   
-  .event-hero-section {
-    min-height: 85vh;
-  }
   
   .event-types-container,
   .event-experience-container,

@@ -1411,6 +1411,21 @@ function initHeroCinematicScroll() {
     setTimeout(function() { video.__healing = false; }, 6000);
   }
 
+  function performSeek(video, time) {
+    video.__isSeeking = true;
+    if ('fastSeek' in video) {
+      try {
+        video.fastSeek(time);
+        return;
+      } catch (e) {}
+    }
+    try {
+      video.currentTime = time;
+    } catch (e) {
+      video.__isSeeking = false;
+    }
+  }
+
   function scrubVideo(video, targetSeconds) {
     if (!video || !video.duration || isNaN(video.duration)) return;
     var maxSafe = Math.max(0, video.duration - 0.02);
@@ -1421,14 +1436,28 @@ function initHeroCinematicScroll() {
       healVideo(video);
       return;
     }
-    if (Math.abs(video.currentTime - clamped) > 0.012) {
-      video.currentTime = clamped;
+
+    if (!video.__hasSeekListener) {
+      video.__hasSeekListener = true;
+      video.addEventListener('seeked', function() {
+        video.__isSeeking = false;
+        if (typeof video.__pendingTime === 'number' && Math.abs(video.currentTime - video.__pendingTime) > 0.015) {
+          performSeek(video, video.__pendingTime);
+        }
+      });
+    }
+
+    if (Math.abs(video.currentTime - clamped) > 0.015) {
+      if (!video.__isSeeking) {
+        performSeek(video, clamped);
+      }
     }
   }
 
   var targetProgress = 0;
   var currentProgress = 0;
   var isLoopActive = false;
+  var HERO_SMOOTHING_FACTOR = 0.09;
 
   function computeHeroScrollProgress() {
     var rect = heroSection.getBoundingClientRect();
@@ -1454,9 +1483,8 @@ function initHeroCinematicScroll() {
 
   function renderHeroLoop() {
     var diff = targetProgress - currentProgress;
-    var factor = Math.abs(diff) > 0.06 ? 0.32 : 0.20;
-    if (Math.abs(diff) > 0.0002) {
-      currentProgress += diff * factor;
+    if (Math.abs(diff) > 0.0001) {
+      currentProgress += diff * HERO_SMOOTHING_FACTOR;
       applyHeroCinematicTransformation(currentProgress);
       requestAnimationFrame(renderHeroLoop);
     } else {

@@ -3,12 +3,13 @@
     
     <!-- 1. DUAL VIDEO BACKGROUND (Desktop & Mobile 9:16 Scroll-Scrubbed) -->
     <div class="event-hero-media-wrap" id="hero-media-wrap">
-      <video id="hero-landing-video-desktop" class="event-hero-video hero-video-desktop" muted playsinline preload="auto" poster="{{ 'hero_landing_desktop_poster.jpg' | asset_url }}">
+      <video id="hero-landing-video-desktop" class="event-hero-video hero-video-desktop" muted playsinline webkit-playsinline="true" x5-playsinline="true" preload="auto" poster="{{ 'hero_landing_desktop_poster.jpg' | asset_url }}">
         <source src="{% if section.settings.video_desktop != blank %}{{ section.settings.video_desktop }}{% else %}{{ 'hero_landing_desktop_scrub.mp4' | asset_url }}{% endif %}" type="video/mp4">
         <source src="{{ 'hero_landing_desktop.mp4' | asset_url }}" type="video/mp4">
       </video>
-      <video id="hero-landing-video-mobile" class="event-hero-video hero-video-mobile" muted playsinline preload="auto" poster="{{ 'hero_landing_mobile_poster.jpg' | asset_url }}">
+      <video id="hero-landing-video-mobile" class="event-hero-video hero-video-mobile" muted playsinline webkit-playsinline="true" x5-playsinline="true" preload="auto" poster="{{ 'hero_landing_mobile_poster.jpg' | asset_url }}">
         <source src="{% if section.settings.video_mobile != blank %}{{ section.settings.video_mobile }}{% else %}{{ 'hero_landing_mobile_scrub.mp4' | asset_url }}{% endif %}" type="video/mp4">
+        <source src="{{ 'hero_landing_mobile.mp4' | asset_url }}" type="video/mp4">
       </video>
 
       <!-- FINAL FRAME HERO STAMP (Crisp background photo without baked-in logo) -->
