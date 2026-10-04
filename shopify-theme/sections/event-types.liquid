@@ -1,4 +1,4 @@
-<section id="events" class="event-types-section" data-section-id="{{ section.id }}">
+<section id="events" class="event-types-section lumina-slider-section" data-section-id="{{ section.id }}">
   <div class="event-types-container">
     <div class="section-header-center">
       <span class="section-eyebrow" data-i18n="types.eyebrow">{{ section.settings.eyebrow | default: 'CREADO PARA TU MOMENTO' }}</span>
@@ -8,85 +8,1062 @@
       </p>
     </div>
 
-    <div class="event-types-grid">
-      <!-- Card 1: Bodas -->
-      <article class="event-type-card">
-        <div class="event-card-media">
-          <img src="{{ 'event-weddings.jpg' | asset_url }}" alt="Servicio de Coctelería para Bodas por Lucky Shaker" class="event-img" width="600" height="400" loading="lazy">
-          <span class="event-tag" data-i18n="types.c1_tag">ELEGANTE &bull; MEMORABLE</span>
-        </div>
-        <div class="event-card-body">
-          <h3 class="event-card-title" data-i18n="types.c1_title">{{ section.settings.c1_title | default: 'Bodas &amp; Recepciones' }}</h3>
-          <p class="event-card-desc" data-i18n="types.c1_desc">
-            {{ section.settings.c1_desc | default: 'Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos profesionales.' }}
-          </p>
-          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Boda'; return false; }">
-            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-          </a>
-        </div>
-      </article>
+    <!-- LUMINA WEBGL INTERACTIVE SLIDER -->
+    <div class="lumina-slider-wrapper" id="luminaSliderWrapper" data-auto-slide="{{ section.settings.auto_slide_speed | default: 5500 }}" data-transition-duration="{{ section.settings.transition_duration | default: 1.8 }}">
+      <!-- WebGL Canvas -->
+      <canvas class="lumina-webgl-canvas" id="luminaCanvas"></canvas>
+      
+      <!-- Static poster image for instant first-paint & fallback -->
+      <div class="lumina-poster-fallback" id="luminaFallback" style="background-image: url('{{ 'event-weddings.jpg' | asset_url }}');"></div>
 
-      <!-- Card 2: Fiestas Privadas -->
-      <article class="event-type-card">
-        <div class="event-card-media">
-          <img src="{{ 'event-private-party.jpg' | asset_url }}" alt="Coctelería para Fiestas Privadas" class="event-img" width="600" height="400" loading="lazy">
-          <span class="event-tag" data-i18n="types.c2_tag">ÍNTIMO &bull; VIBRANTE</span>
-        </div>
-        <div class="event-card-body">
-          <h3 class="event-card-title" data-i18n="types.c2_title">{{ section.settings.c2_title | default: 'Fiestas Privadas &amp; Cumpleaños' }}</h3>
-          <p class="event-card-desc" data-i18n="types.c2_desc">
-            {{ section.settings.c2_desc | default: 'Eleva cumpleaños, aniversarios y reuniones en terrazas con barras móviles privadas, menús de autor y total tranquilidad para el anfitrión.' }}
-          </p>
-          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Fiesta Privada'; return false; }">
-            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-          </a>
-        </div>
-      </article>
+      <!-- Luxury Ambient Gradient Overlays -->
+      <div class="lumina-gradient-overlay"></div>
+      <div class="lumina-vignette-overlay"></div>
 
-      <!-- Card 3: Eventos Corporativos -->
-      <article class="event-type-card">
-        <div class="event-card-media">
-          <img src="{{ 'event-corporate-gala.jpg' | asset_url }}" alt="Galas Corporativas y Eventos de Marca" class="event-img" width="600" height="400" loading="lazy">
-          <span class="event-tag" data-i18n="types.c3_tag">SOFISTICADO &bull; IMPECABLE</span>
+      <!-- Top Meta Bar: Tag Badge & Number Counter -->
+      <div class="lumina-meta-bar">
+        <div class="lumina-tag-badge" id="slideTag">ELEGANTE &bull; MEMORABLE</div>
+        <div class="lumina-counter">
+          <span class="slide-number" id="slideNumber">01</span>
+          <span class="slide-divider">/</span>
+          <span class="slide-total" id="slideTotal">04</span>
         </div>
-        <div class="event-card-body">
-          <h3 class="event-card-title" data-i18n="types.c3_title">{{ section.settings.c3_title | default: 'Galas Corporativas &amp; Marcas' }}</h3>
-          <p class="event-card-desc" data-i18n="types.c3_desc">
-            {{ section.settings.c3_desc | default: 'Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP.' }}
-          </p>
-          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Evento Corporativo'; return false; }">
-            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-          </a>
-        </div>
-      </article>
+      </div>
 
-      <!-- Card 4: Celebraciones Especiales -->
-      <article class="event-type-card">
-        <div class="event-card-media">
-          <img src="{{ 'event-bartender-action.jpg' | asset_url }}" alt="Celebraciones Especiales y Masterclasses" class="event-img" width="600" height="400" loading="lazy">
-          <span class="event-tag" data-i18n="types.c4_tag">INTERACTIVO &bull; EXCLUSIVO</span>
+      <!-- Center-Left Floating Editorial Content Card -->
+      <div class="lumina-content-stage">
+        <div class="lumina-content-glass-card">
+          <h3 class="lumina-slide-title" id="mainTitle">Bodas &amp; Recepción</h3>
+          <p class="lumina-slide-desc" id="mainDesc">Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos de autor.</p>
+          <div class="lumina-actions">
+            <a href="#book-event" class="btn btn-pink lumina-quote-btn" id="mainQuoteBtn">
+              <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
+              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </a>
+          </div>
         </div>
-        <div class="event-card-body">
-          <h3 class="event-card-title" data-i18n="types.c4_title">{{ section.settings.c4_title | default: 'Celebraciones Especiales &amp; Talleres' }}</h3>
-          <p class="event-card-desc" data-i18n="types.c4_desc">
-            {{ section.settings.c4_desc | default: 'Masterclasses interactivas de coctelería, despedidas de soltera y catas guiadas lideradas por la fundadora Katherin y maestros mixólogos.' }}
-          </p>
-          <a href="#book-event" class="btn button-glass event-card-btn" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); const sel=document.getElementById('inquiry-event-type'); if(sel) sel.value='Masterclass'; return false; }">
-            <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
-            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-          </a>
-        </div>
-      </article>
+      </div>
+
+      <!-- Bottom Category Navigation Bar with 4 Categories & Progress Indicators -->
+      <nav class="lumina-slides-nav" id="slidesNav" aria-label="Categorías de Eventos"></nav>
     </div>
   </div>
 </section>
 
+<style>
+/* ==========================================================================
+   LUMINA INTERACTIVE WEBGL SLIDER STYLES
+   ========================================================================== */
+.lumina-slider-section {
+  position: relative;
+  background: var(--bg-deep, #FAFAFC);
+  overflow: hidden;
+  padding: 5.5rem 0 6.5rem;
+}
+
+.lumina-slider-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 580px;
+  height: 68vh;
+  max-height: 720px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #0B0C0E;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  isolation: isolate;
+  user-select: none;
+}
+
+.lumina-webgl-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.lumina-slider-wrapper.loaded .lumina-webgl-canvas {
+  opacity: 1;
+}
+
+.lumina-poster-fallback {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transition: opacity 0.8s ease;
+}
+
+.lumina-slider-wrapper.loaded .lumina-poster-fallback {
+  opacity: 0;
+}
+
+/* Ambient Overlays */
+.lumina-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 12, 14, 0.25) 0%, rgba(11, 12, 14, 0.4) 40%, rgba(11, 12, 14, 0.88) 100%),
+              linear-gradient(90deg, rgba(11, 12, 14, 0.75) 0%, rgba(11, 12, 14, 0.25) 55%, rgba(11, 12, 14, 0.4) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lumina-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Meta Bar (Top Tag & Counter) */
+.lumina-meta-bar {
+  position: absolute;
+  top: 2rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.lumina-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(18, 19, 22, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.45rem 1.15rem;
+  border-radius: 100px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.lumina-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-brand, 'Cinzel', serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: rgba(18, 19, 22, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.42rem 1.1rem;
+  border-radius: 100px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.lumina-counter .slide-number {
+  color: var(--accent-pink, #E82B7D);
+  font-weight: 800;
+}
+
+.lumina-counter .slide-divider {
+  opacity: 0.4;
+  margin: 0 0.1rem;
+}
+
+.lumina-counter .slide-total {
+  opacity: 0.75;
+}
+
+/* Content Stage & Glass Card */
+.lumina-content-stage {
+  position: absolute;
+  left: 2.5rem;
+  bottom: 6.8rem;
+  max-width: 640px;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.lumina-content-glass-card {
+  background: rgba(15, 16, 20, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 22px;
+  padding: 2.2rem 2.4rem;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: border-color 0.4s ease;
+}
+
+.lumina-content-glass-card:hover {
+  border-color: rgba(232, 43, 125, 0.4);
+}
+
+.lumina-slide-title {
+  font-family: var(--font-brand, 'Cinzel', serif);
+  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin: 0 0 0.85rem 0;
+  letter-spacing: 0.02em;
+  min-height: 1.2em;
+}
+
+.lumina-slide-title span {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+
+.lumina-slide-desc {
+  font-family: var(--font-ui, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(0.9rem, 1.1vw, 1.02rem);
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.6;
+  margin: 0 0 1.6rem 0;
+  font-weight: 400;
+  min-height: 3.2em;
+}
+
+.lumina-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lumina-quote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.88rem 1.8rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  box-shadow: 0 8px 24px rgba(232, 43, 125, 0.45);
+  transition: all 0.3s ease;
+}
+
+.lumina-quote-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(232, 43, 125, 0.65);
+}
+
+/* Bottom 4 Category Navigation Tabs */
+.lumina-slides-nav {
+  position: absolute;
+  left: 2.5rem;
+  right: 2.5rem;
+  bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  z-index: 5;
+}
+
+.lumina-nav-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.75rem 1rem;
+  background: rgba(18, 19, 24, 0.68);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.lumina-nav-item:hover {
+  background: rgba(28, 30, 38, 0.85);
+  border-color: rgba(232, 43, 125, 0.45);
+  transform: translateY(-2px);
+}
+
+.lumina-nav-item.active {
+  background: rgba(232, 43, 125, 0.18);
+  border-color: rgba(232, 43, 125, 0.75);
+  box-shadow: 0 6px 20px rgba(232, 43, 125, 0.25);
+}
+
+.lumina-progress-line {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.lumina-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #FF3888, #E82B7D, #FFD15C);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.lumina-nav-item.active .lumina-progress-fill {
+  opacity: 1;
+}
+
+.lumina-nav-title {
+  font-family: var(--font-brand, 'Cinzel', serif);
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s ease;
+}
+
+.lumina-nav-item:hover .lumina-nav-title {
+  color: #FFFFFF;
+}
+
+.lumina-nav-item.active .lumina-nav-title {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .lumina-slider-wrapper {
+    height: 72vh;
+    min-height: 560px;
+  }
+  .lumina-meta-bar {
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+  .lumina-content-stage {
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 6.5rem;
+    max-width: 580px;
+  }
+  .lumina-slides-nav {
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.25rem;
+    gap: 0.65rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .lumina-slider-section {
+    padding: 3.5rem 0 4.5rem;
+  }
+  .lumina-slider-wrapper {
+    min-height: 540px;
+    height: 82vh;
+    border-radius: 20px;
+  }
+  .lumina-meta-bar {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+  .lumina-tag-badge {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    padding: 0.35rem 0.8rem;
+  }
+  .lumina-counter {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.8rem;
+  }
+  .lumina-content-stage {
+    left: 1rem;
+    right: 1rem;
+    bottom: 5.5rem;
+    max-width: none;
+  }
+  .lumina-content-glass-card {
+    padding: 1.25rem 1.35rem;
+    border-radius: 16px;
+  }
+  .lumina-slide-title {
+    font-size: 1.45rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.15;
+  }
+  .lumina-slide-desc {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+    min-height: auto;
+  }
+  .lumina-quote-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.78rem 1.25rem;
+    font-size: 0.78rem;
+  }
+  .lumina-slides-nav {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    gap: 0.35rem;
+  }
+  .lumina-nav-item {
+    padding: 0.45rem 0.45rem;
+    border-radius: 10px;
+    gap: 0.35rem;
+  }
+  .lumina-nav-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+}
+</style>
+
+<script>
+(function() {
+  // --- DYNAMIC SCRIPT LOADER (THREE.js & GSAP) ---
+  const loadScript = (src, globalName) => new Promise((res, rej) => {
+    if (window[globalName]) { res(); return; }
+    if (document.querySelector(`script[src="${src}"]`)) {
+      const check = setInterval(() => {
+        if (window[globalName]) { clearInterval(check); res(); }
+      }, 50);
+      setTimeout(() => { clearInterval(check); rej(new Error(`Timeout waiting for ${globalName}`)); }, 10000);
+      return;
+    }
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = () => { setTimeout(() => res(), 50); };
+    s.onerror = () => rej(new Error(`Failed to load ${src}`));
+    document.head.appendChild(s);
+  });
+
+  const initLuminaSlider = async () => {
+    try {
+      if (!window.THREE) {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'THREE');
+      }
+    } catch(err) {
+      console.warn('Lumina Shader: Three.js fallback active', err);
+      return;
+    }
+
+    const wrapper = document.getElementById('luminaSliderWrapper');
+    const canvas = document.getElementById('luminaCanvas');
+    if (!wrapper || !canvas || !window.THREE) return;
+
+    // --- SLIDER CONFIGURATION ---
+    const autoSlideSpeed = parseInt(wrapper.dataset.autoSlide, 10) || 5500;
+    const transitionDuration = parseFloat(wrapper.dataset.transitionDuration) || 1.8;
+    const PROGRESS_UPDATE_INTERVAL = 40;
+
+    // --- 4 CATEGORIES & SLIDES DATA ---
+    const slidesData = [
+      {
+        categoryKey: 'types.cat_1',
+        categoryDefault: 'Bodas',
+        tagKey: 'types.c1_tag',
+        tagDefault: 'ELEGANTE • MEMORABLE',
+        titleKey: 'types.c1_title',
+        titleDefault: 'Bodas & Recepción',
+        descKey: 'types.c1_desc',
+        descDefault: 'Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos de autor.',
+        media: "{{ 'event-weddings.jpg' | asset_url }}",
+        formValue: 'Boda'
+      },
+      {
+        categoryKey: 'types.cat_2',
+        categoryDefault: 'Gender Reveal',
+        tagKey: 'types.c2_tag',
+        tagDefault: 'MÁGICO • CELEBRACIÓN',
+        titleKey: 'types.c2_title',
+        titleDefault: 'Gender Reveal & Baby Shower',
+        descKey: 'types.c2_desc',
+        descDefault: 'Celebraciones mágicas con coctelería temática, mocktails de autor sin alcohol y estaciones de barra personalizadas para la revelación.',
+        media: "{{ 'event-gender-reveal.jpg' | asset_url }}",
+        formValue: 'Gender Reveal'
+      },
+      {
+        categoryKey: 'types.cat_3',
+        categoryDefault: 'Evento de Negocios',
+        tagKey: 'types.c3_tag',
+        tagDefault: 'SOFISTICADO • IMPECABLE',
+        titleKey: 'types.c3_title',
+        titleDefault: 'Evento de Negocios & Galas',
+        descKey: 'types.c3_desc',
+        descDefault: 'Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP.',
+        media: "{{ 'event-corporate-gala.jpg' | asset_url }}",
+        formValue: 'Evento Corporativo'
+      },
+      {
+        categoryKey: 'types.cat_4',
+        categoryDefault: 'Fiestas',
+        tagKey: 'types.c4_tag',
+        tagDefault: 'ÍNTIMO • VIBRANTE',
+        titleKey: 'types.c4_title',
+        titleDefault: 'Fiestas Privadas & VIP',
+        descKey: 'types.c4_desc',
+        descDefault: 'Eleva cumpleaños, aniversarios y veladas exclusivas con barras móviles privadas, ambientación de lujo y total tranquilidad para el anfitrión.',
+        media: "{{ 'event-private-party.jpg' | asset_url }}",
+        formValue: 'Fiesta Privada'
+      }
+    ];
+
+    // --- GLOBAL STATE ---
+    let currentSlideIndex = 0;
+    let isTransitioning = false;
+    let shaderMaterial, renderer, scene, camera;
+    let slideTextures = [];
+    let texturesLoaded = false;
+    let autoSlideTimer = null;
+    let progressAnimation = null;
+    let sliderEnabled = false;
+
+    // Helper: i18n lookup
+    const getI18n = (key, fallback) => {
+      if (window.LuckyShakerLang && typeof window.LuckyShakerLang.get === 'function') {
+        const val = window.LuckyShakerLang.get(key);
+        if (val && val !== key) return val;
+      }
+      return fallback;
+    };
+
+    // --- SHADERS ---
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `;
+
+    const fragmentShader = `
+      uniform sampler2D uTexture1, uTexture2;
+      uniform float uProgress;
+      uniform vec2 uResolution, uTexture1Size, uTexture2Size;
+      uniform float uGlobalIntensity, uSpeedMultiplier, uDistortionStrength;
+      uniform float uGlassRefractionStrength, uGlassChromaticAberration, uGlassBubbleClarity, uGlassEdgeGlow, uGlassLiquidFlow;
+      varying vec2 vUv;
+
+      vec2 getCoverUV(vec2 uv, vec2 textureSize) {
+        vec2 s = uResolution / textureSize;
+        float scale = max(s.x, s.y);
+        vec2 scaledSize = textureSize * scale;
+        vec2 offset = (uResolution - scaledSize) * 0.5;
+        return (uv * uResolution - offset) / scaledSize;
+      }
+
+      vec4 glassEffect(vec2 uv, float progress) {
+        float time = progress * 5.0 * uSpeedMultiplier;
+        vec2 uv1 = getCoverUV(uv, uTexture1Size);
+        vec2 uv2 = getCoverUV(uv, uTexture2Size);
+        float maxR = length(uResolution) * 0.85;
+        float br = progress * maxR;
+        vec2 p = uv * uResolution;
+        vec2 c = uResolution * 0.5;
+        float d = length(p - c);
+        float nd = d / max(br, 0.001);
+        float param = smoothstep(br + 3.0, br - 3.0, d);
+        vec4 img;
+        if (param > 0.0) {
+          float ro = 0.08 * uGlassRefractionStrength * uDistortionStrength * uGlobalIntensity * pow(smoothstep(0.3 * uGlassBubbleClarity, 1.0, nd), 1.5);
+          vec2 dir = (d > 0.0) ? (p - c) / d : vec2(0.0);
+          vec2 distUV = uv2 - dir * ro;
+          distUV += vec2(sin(time + nd * 10.0), cos(time * 0.8 + nd * 8.0)) * 0.015 * uGlassLiquidFlow * uSpeedMultiplier * nd * param;
+          float ca = 0.02 * uGlassChromaticAberration * uGlobalIntensity * pow(smoothstep(0.3, 1.0, nd), 1.2);
+          img = vec4(
+            texture2D(uTexture2, distUV + dir * ca * 1.2).r,
+            texture2D(uTexture2, distUV + dir * ca * 0.2).g,
+            texture2D(uTexture2, distUV - dir * ca * 0.8).b,
+            1.0
+          );
+          if (uGlassEdgeGlow > 0.0) {
+            float rim = smoothstep(0.95, 1.0, nd) * (1.0 - smoothstep(1.0, 1.01, nd));
+            img.rgb += rim * 0.08 * uGlassEdgeGlow * uGlobalIntensity;
+          }
+        } else {
+          img = texture2D(uTexture2, uv2);
+        }
+        vec4 oldImg = texture2D(uTexture1, uv1);
+        if (progress > 0.95) img = mix(img, texture2D(uTexture2, uv2), (progress - 0.95) / 0.05);
+        return mix(oldImg, img, param);
+      }
+
+      void main() {
+        gl_FragColor = glassEffect(vUv, uProgress);
+      }
+    `;
+
+    // --- CHARACTER SPLITTING FOR GSAP ---
+    const splitText = (text) => {
+      return text.split('').map(char => `<span style="display: inline-block; opacity: 0;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+    };
+
+    // --- UPDATE CONTENT WITH GSAP KINEMATICS ---
+    const updateContent = (idx) => {
+      const titleEl = document.getElementById('mainTitle');
+      const descEl = document.getElementById('mainDesc');
+      const tagEl = document.getElementById('slideTag');
+      const quoteBtn = document.getElementById('mainQuoteBtn');
+      if (!titleEl || !descEl) return;
+
+      const slide = slidesData[idx];
+      const titleText = getI18n(slide.titleKey, slide.titleDefault);
+      const descText = getI18n(slide.descKey, slide.descDefault);
+      const tagText = getI18n(slide.tagKey, slide.tagDefault);
+
+      // Animate out
+      if (window.gsap) {
+        window.gsap.to(titleEl.children, { y: -18, opacity: 0, duration: 0.35, stagger: 0.015, ease: "power2.in" });
+        window.gsap.to(descEl, { y: -8, opacity: 0, duration: 0.3, ease: "power2.in" });
+        if (tagEl) window.gsap.to(tagEl, { opacity: 0, y: -6, duration: 0.25 });
+      }
+
+      setTimeout(() => {
+        // Set new content
+        titleEl.innerHTML = splitText(titleText);
+        descEl.textContent = descText;
+        if (tagEl) tagEl.textContent = tagText;
+
+        // Update button click target
+        if (quoteBtn) {
+          quoteBtn.onclick = (e) => {
+            e.preventDefault();
+            const formSection = document.getElementById('book-event');
+            if (formSection) {
+              formSection.scrollIntoView({ behavior: 'smooth' });
+              const sel = document.getElementById('inquiry-event-type');
+              if (sel && slide.formValue) sel.value = slide.formValue;
+            }
+          };
+        }
+
+        if (!window.gsap) return;
+
+        const children = titleEl.children;
+        window.gsap.set(children, { opacity: 0 });
+        window.gsap.set(descEl, { y: 15, opacity: 0 });
+        if (tagEl) window.gsap.fromTo(tagEl, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" });
+
+        // 4 Distinct Cinematic Character Animations per Category
+        switch(idx) {
+          case 0: // Bodas: Elegant Stagger Up
+            window.gsap.set(children, { y: 20 });
+            window.gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.028, ease: "power3.out" });
+            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
+            break;
+          case 1: // Gender Reveal: Dynamic Stagger Down with Back-bounce
+            window.gsap.set(children, { y: -20 });
+            window.gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.028, ease: "back.out(1.7)" });
+            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
+            break;
+          case 2: // Evento de Negocios: Sleek Blur Reveal
+            window.gsap.set(children, { filter: "blur(10px)", scale: 1.3, y: 0 });
+            window.gsap.to(children, { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.9, stagger: { amount: 0.35, from: "random" }, ease: "power2.out" });
+            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.85, delay: 0.22, ease: "power2.out" });
+            break;
+          case 3: // Fiestas: Energetic Scale Pop
+            window.gsap.set(children, { scale: 0, y: 0 });
+            window.gsap.to(children, { scale: 1, opacity: 1, duration: 0.65, stagger: 0.038, ease: "back.out(1.5)" });
+            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
+            break;
+          default:
+            window.gsap.set(children, { y: 20 });
+            window.gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.028, ease: "power3.out" });
+            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
+        }
+      }, 350);
+    };
+
+    // --- NAVIGATION TO SLIDE ---
+    const navigateToSlide = (targetIndex) => {
+      if (isTransitioning || targetIndex === currentSlideIndex) return;
+      stopAutoSlideTimer();
+      quickResetProgress(currentSlideIndex);
+
+      const currentTexture = slideTextures[currentSlideIndex];
+      const targetTexture = slideTextures[targetIndex];
+      if (!currentTexture || !targetTexture || !shaderMaterial) return;
+
+      isTransitioning = true;
+      shaderMaterial.uniforms.uTexture1.value = currentTexture;
+      shaderMaterial.uniforms.uTexture2.value = targetTexture;
+      shaderMaterial.uniforms.uTexture1Size.value = currentTexture.userData.size;
+      shaderMaterial.uniforms.uTexture2Size.value = targetTexture.userData.size;
+
+      updateContent(targetIndex);
+
+      currentSlideIndex = targetIndex;
+      updateCounter(currentSlideIndex);
+      updateNavigationState(currentSlideIndex);
+
+      if (window.gsap) {
+        window.gsap.fromTo(shaderMaterial.uniforms.uProgress,
+          { value: 0 },
+          {
+            value: 1,
+            duration: transitionDuration,
+            ease: "power2.inOut",
+            onComplete: () => {
+              shaderMaterial.uniforms.uProgress.value = 0;
+              shaderMaterial.uniforms.uTexture1.value = targetTexture;
+              shaderMaterial.uniforms.uTexture1Size.value = targetTexture.userData.size;
+              isTransitioning = false;
+              safeStartTimer(150);
+            }
+          }
+        );
+      } else {
+        shaderMaterial.uniforms.uProgress.value = 0;
+        shaderMaterial.uniforms.uTexture1.value = targetTexture;
+        isTransitioning = false;
+        safeStartTimer(150);
+      }
+    };
+
+    const handleSlideChange = () => {
+      if (isTransitioning || !texturesLoaded || !sliderEnabled) return;
+      navigateToSlide((currentSlideIndex + 1) % slidesData.length);
+    };
+
+    // --- CREATE 4 CATEGORY NAV BUTTONS ---
+    const createSlidesNavigation = () => {
+      const nav = document.getElementById("slidesNav");
+      if (!nav) return;
+      nav.innerHTML = "";
+      slidesData.forEach((slide, i) => {
+        const item = document.createElement("div");
+        item.className = `lumina-nav-item${i === 0 ? " active" : ""}`;
+        item.dataset.slideIndex = String(i);
+        const catTitle = getI18n(slide.categoryKey, slide.categoryDefault);
+        item.innerHTML = `
+          <div class="lumina-progress-line"><div class="lumina-progress-fill"></div></div>
+          <div class="lumina-nav-title" data-i18n="${slide.categoryKey}">${catTitle}</div>
+        `;
+        item.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (!isTransitioning && i !== currentSlideIndex) {
+            stopAutoSlideTimer();
+            quickResetProgress(currentSlideIndex);
+            navigateToSlide(i);
+          }
+        });
+        nav.appendChild(item);
+      });
+    };
+
+    const updateNavigationState = (idx) => {
+      document.querySelectorAll(".lumina-nav-item").forEach((el, i) => {
+        el.classList.toggle("active", i === idx);
+      });
+    };
+
+    const updateSlideProgress = (idx, prog) => {
+      const el = document.querySelectorAll(".lumina-nav-item")[idx]?.querySelector(".lumina-progress-fill");
+      if (el) {
+        el.style.width = `${prog}%`;
+        el.style.opacity = '1';
+      }
+    };
+
+    const fadeSlideProgress = (idx) => {
+      const el = document.querySelectorAll(".lumina-nav-item")[idx]?.querySelector(".lumina-progress-fill");
+      if (el) {
+        el.style.opacity = '0';
+        setTimeout(() => { if (el) el.style.width = "0%"; }, 250);
+      }
+    };
+
+    const quickResetProgress = (idx) => {
+      const el = document.querySelectorAll(".lumina-nav-item")[idx]?.querySelector(".lumina-progress-fill");
+      if (el) {
+        el.style.transition = "width 0.2s ease-out";
+        el.style.width = "0%";
+        setTimeout(() => {
+          if (el) el.style.transition = "width 0.05s linear, opacity 0.25s ease";
+        }, 200);
+      }
+    };
+
+    const updateCounter = (idx) => {
+      const sn = document.getElementById("slideNumber");
+      if (sn) sn.textContent = String(idx + 1).padStart(2, "0");
+      const st = document.getElementById("slideTotal");
+      if (st) st.textContent = String(slidesData.length).padStart(2, "0");
+    };
+
+    // --- AUTO SLIDE TIMER ---
+    const startAutoSlideTimer = () => {
+      if (!texturesLoaded || !sliderEnabled) return;
+      stopAutoSlideTimer();
+      let progress = 0;
+      const increment = (100 / autoSlideSpeed) * PROGRESS_UPDATE_INTERVAL;
+      progressAnimation = setInterval(() => {
+        if (!sliderEnabled) { stopAutoSlideTimer(); return; }
+        progress += increment;
+        updateSlideProgress(currentSlideIndex, Math.min(progress, 100));
+        if (progress >= 100) {
+          clearInterval(progressAnimation);
+          progressAnimation = null;
+          fadeSlideProgress(currentSlideIndex);
+          if (!isTransitioning) handleSlideChange();
+        }
+      }, PROGRESS_UPDATE_INTERVAL);
+    };
+
+    const stopAutoSlideTimer = () => {
+      if (progressAnimation) clearInterval(progressAnimation);
+      if (autoSlideTimer) clearTimeout(autoSlideTimer);
+      progressAnimation = null;
+      autoSlideTimer = null;
+    };
+
+    const safeStartTimer = (delay = 0) => {
+      stopAutoSlideTimer();
+      if (sliderEnabled && texturesLoaded) {
+        if (delay > 0) autoSlideTimer = setTimeout(startAutoSlideTimer, delay);
+        else startAutoSlideTimer();
+      }
+    };
+
+    // --- THREE.JS TEXTURE LOADER ---
+    const loadImageTexture = (src) => new Promise((resolve, reject) => {
+      const loader = new THREE.TextureLoader();
+      loader.load(
+        src,
+        (tex) => {
+          tex.minFilter = THREE.LinearFilter;
+          tex.magFilter = THREE.LinearFilter;
+          tex.generateMipmaps = false;
+          tex.userData = {
+            size: new THREE.Vector2(tex.image.naturalWidth || tex.image.width || 1376, tex.image.naturalHeight || tex.image.height || 768)
+          };
+          resolve(tex);
+        },
+        undefined,
+        reject
+      );
+    });
+
+    // --- INIT THREE.JS RENDERER & SCENE ---
+    const initRenderer = async () => {
+      const width = wrapper.clientWidth || window.innerWidth;
+      const height = wrapper.clientHeight || 600;
+
+      scene = new THREE.Scene();
+      camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "high-performance" });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      shaderMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          uTexture1: { value: null },
+          uTexture2: { value: null },
+          uProgress: { value: 0 },
+          uResolution: { value: new THREE.Vector2(width, height) },
+          uTexture1Size: { value: new THREE.Vector2(1376, 768) },
+          uTexture2Size: { value: new THREE.Vector2(1376, 768) },
+          uGlobalIntensity: { value: 1.0 },
+          uSpeedMultiplier: { value: 1.0 },
+          uDistortionStrength: { value: 1.0 },
+          uGlassRefractionStrength: { value: 1.0 },
+          uGlassChromaticAberration: { value: 1.0 },
+          uGlassBubbleClarity: { value: 1.0 },
+          uGlassEdgeGlow: { value: 1.0 },
+          uGlassLiquidFlow: { value: 1.0 }
+        },
+        vertexShader,
+        fragmentShader
+      });
+
+      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterial));
+
+      // Preload all 4 event textures
+      for (const s of slidesData) {
+        try {
+          const tex = await loadImageTexture(s.media);
+          slideTextures.push(tex);
+        } catch(e) {
+          console.warn("Failed texture loading for:", s.media, e);
+        }
+      }
+
+      if (slideTextures.length >= 2) {
+        shaderMaterial.uniforms.uTexture1.value = slideTextures[0];
+        shaderMaterial.uniforms.uTexture2.value = slideTextures[1];
+        shaderMaterial.uniforms.uTexture1Size.value = slideTextures[0].userData.size;
+        shaderMaterial.uniforms.uTexture2Size.value = slideTextures[1].userData.size;
+        texturesLoaded = true;
+        sliderEnabled = true;
+        wrapper.classList.add("loaded");
+        safeStartTimer(600);
+      }
+
+      let animationFrameId;
+      const render = () => {
+        animationFrameId = requestAnimationFrame(render);
+        renderer.render(scene, camera);
+      };
+      render();
+    };
+
+    // --- SETUP INITIAL CONTENT ---
+    createSlidesNavigation();
+    updateCounter(0);
+
+    const tEl = document.getElementById('mainTitle');
+    const dEl = document.getElementById('mainDesc');
+    const tagEl = document.getElementById('slideTag');
+    const quoteBtn = document.getElementById('mainQuoteBtn');
+
+    if (tEl && dEl) {
+      const initialSlide = slidesData[0];
+      tEl.innerHTML = splitText(getI18n(initialSlide.titleKey, initialSlide.titleDefault));
+      dEl.textContent = getI18n(initialSlide.descKey, initialSlide.descDefault);
+      if (tagEl) tagEl.textContent = getI18n(initialSlide.tagKey, initialSlide.tagDefault);
+
+      if (quoteBtn) {
+        quoteBtn.onclick = (e) => {
+          e.preventDefault();
+          const formSection = document.getElementById('book-event');
+          if (formSection) {
+            formSection.scrollIntoView({ behavior: 'smooth' });
+            const sel = document.getElementById('inquiry-event-type');
+            if (sel) sel.value = 'Boda';
+          }
+        };
+      }
+
+      if (window.gsap) {
+        window.gsap.fromTo(tEl.children, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, stagger: 0.028, ease: "power3.out", delay: 0.3 });
+        window.gsap.fromTo(dEl, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.85, ease: "power3.out", delay: 0.5 });
+      }
+    }
+
+    await initRenderer();
+
+    // --- EVENT LISTENERS ---
+    // Language Switcher Integration
+    document.addEventListener('luckyshaker:langchange', () => {
+      const slide = slidesData[currentSlideIndex];
+      const titleEl = document.getElementById('mainTitle');
+      const descEl = document.getElementById('mainDesc');
+      const tagEl = document.getElementById('slideTag');
+      if (titleEl && descEl && slide) {
+        titleEl.innerHTML = splitText(getI18n(slide.titleKey, slide.titleDefault));
+        descEl.textContent = getI18n(slide.descKey, slide.descDefault);
+        if (tagEl) tagEl.textContent = getI18n(slide.tagKey, slide.tagDefault);
+        if (window.gsap) {
+          window.gsap.set(titleEl.children, { opacity: 1, y: 0 });
+          window.gsap.set(descEl, { opacity: 1, y: 0 });
+        }
+      }
+      slidesData.forEach((s, i) => {
+        const titleEl = document.querySelectorAll(".lumina-nav-item")[i]?.querySelector(".lumina-nav-title");
+        if (titleEl) titleEl.textContent = getI18n(s.categoryKey, s.categoryDefault);
+      });
+    });
+
+    // Hover Pause / Resume
+    wrapper.addEventListener('mouseenter', () => {
+      if (sliderEnabled) stopAutoSlideTimer();
+    });
+    wrapper.addEventListener('mouseleave', () => {
+      if (sliderEnabled && !isTransitioning) safeStartTimer();
+    });
+
+    // Visibility Change
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopAutoSlideTimer();
+      else if (!isTransitioning) safeStartTimer();
+    });
+
+    // Touch Swipe Support for Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      stopAutoSlideTimer();
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 45) {
+        if (diff > 0) {
+          // Swiped left -> next slide
+          navigateToSlide((currentSlideIndex + 1) % slidesData.length);
+        } else {
+          // Swiped right -> prev slide
+          navigateToSlide((currentSlideIndex - 1 + slidesData.length) % slidesData.length);
+        }
+      } else {
+        safeStartTimer();
+      }
+    }, { passive: true });
+
+    // Keyboard Navigation
+    wrapper.setAttribute('tabindex', '0');
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        navigateToSlide((currentSlideIndex + 1) % slidesData.length);
+      } else if (e.key === 'ArrowLeft') {
+        navigateToSlide((currentSlideIndex - 1 + slidesData.length) % slidesData.length);
+      }
+    });
+
+    // Responsive Canvas Resize Observer
+    const handleResize = () => {
+      if (!renderer || !shaderMaterial) return;
+      const w = wrapper.clientWidth || window.innerWidth;
+      const h = wrapper.clientHeight || 600;
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      shaderMaterial.uniforms.uResolution.value.set(w, h);
+    };
+
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => handleResize());
+      ro.observe(wrapper);
+    } else {
+      window.addEventListener('resize', handleResize);
+    }
+  };
+
+  // Launch after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLuminaSlider);
+  } else {
+    initLuminaSlider();
+  }
+})();
+</script>
+
 {% schema %}
 {
-  "name": "Tipos de Eventos",
+  "name": "Tipos de Eventos (Lumina)",
   "settings": [
     {
       "type": "text",
@@ -107,73 +1084,21 @@
       "default": "Desde celebraciones íntimas hasta grandes recepciones de bodas, adaptamos cada cóctel, estación de barra y detalle de hospitalidad a tu evento."
     },
     {
-      "type": "header",
-      "content": "Tarjeta 1: Bodas"
+      "type": "number",
+      "id": "auto_slide_speed",
+      "label": "Velocidad de Auto-Slide (ms)",
+      "default": 5500
     },
     {
-      "type": "text",
-      "id": "c1_title",
-      "label": "Título",
-      "default": "Bodas & Recepciones"
-    },
-    {
-      "type": "textarea",
-      "id": "c1_desc",
-      "label": "Descripción",
-      "default": "Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos profesionales."
-    },
-    {
-      "type": "header",
-      "content": "Tarjeta 2: Fiestas Privadas"
-    },
-    {
-      "type": "text",
-      "id": "c2_title",
-      "label": "Título",
-      "default": "Fiestas Privadas & Cumpleaños"
-    },
-    {
-      "type": "textarea",
-      "id": "c2_desc",
-      "label": "Descripción",
-      "default": "Eleva cumpleaños, aniversarios y reuniones en terrazas con barras móviles privadas, menús de autor y total tranquilidad para el anfitrión."
-    },
-    {
-      "type": "header",
-      "content": "Tarjeta 3: Eventos Corporativos"
-    },
-    {
-      "type": "text",
-      "id": "c3_title",
-      "label": "Título",
-      "default": "Galas Corporativas & Marcas"
-    },
-    {
-      "type": "textarea",
-      "id": "c3_desc",
-      "label": "Descripción",
-      "default": "Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP."
-    },
-    {
-      "type": "header",
-      "content": "Tarjeta 4: Celebraciones Especiales"
-    },
-    {
-      "type": "text",
-      "id": "c4_title",
-      "label": "Título",
-      "default": "Celebraciones Especiales & Talleres"
-    },
-    {
-      "type": "textarea",
-      "id": "c4_desc",
-      "label": "Descripción",
-      "default": "Masterclasses interactivas de coctelería, despedidas de soltera y catas guiadas lideradas por la fundadora Katherin y maestros mixólogos."
+      "type": "number",
+      "id": "transition_duration",
+      "label": "Duración de Transición Shader (segundos)",
+      "default": 2
     }
   ],
   "presets": [
     {
-      "name": "Tipos de Eventos"
+      "name": "Tipos de Eventos (Lumina)"
     }
   ]
 }
