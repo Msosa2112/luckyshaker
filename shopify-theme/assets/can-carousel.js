@@ -43,7 +43,7 @@
       'coffee-beans': 'Café', ginger: 'Jengibre', 'coconut-half': 'Coco', agave: 'Agave',
       'sugar-cubes': 'Azúcar', juniper: 'Enebro', cherry: 'Cereza', 'sea-salt': 'Sal marina',
       olive: 'Aceituna', ice: 'Hielo', 'blue-curacao': 'Blue Curaçao',
-      apple: 'Manzana Deshidratada', 'apple-half': 'Mitad de Manzana', 'apple-peel': 'Twist de Manzana'
+      apple: 'Manzana Deshidratada', 'apple-half': 'Mitad de Manzana', 'apple-peel': 'Twist de Manzana', 'apple-whole': 'Manzana Roja'
     },
     en: {
       'lime-wheel': 'Lime', 'lime-half': 'Lime', 'lemon-wheel': 'Lemon', 'lemon-twist': 'Lemon twist',
@@ -53,7 +53,7 @@
       'coffee-beans': 'Coffee', ginger: 'Ginger', 'coconut-half': 'Coconut', agave: 'Agave',
       'sugar-cubes': 'Sugar', juniper: 'Juniper', cherry: 'Cherry', 'sea-salt': 'Sea salt',
       olive: 'Olive', ice: 'Ice', 'blue-curacao': 'Blue Curaçao',
-      apple: 'Dried Apple', 'apple-half': 'Apple Half', 'apple-peel': 'Apple Twist'
+      apple: 'Dried Apple', 'apple-half': 'Apple Half', 'apple-peel': 'Apple Twist', 'apple-whole': 'Fresh Whole Apple'
     }
   };
 
@@ -79,7 +79,7 @@
     mojito: ['lime-wheel', 'mint', 'sugar-cubes', 'lime-half', 'mint', 'ice'],
     'whiskey-cream': ['coffee-beans', 'sugar-cubes', 'coffee-beans', 'sugar-cubes', 'ice'],
     'lemon-dry': ['lemon-wheel', 'lemon-twist', 'lemon-wheel', 'lemon-twist', 'lemon-wheel', 'lemon-twist'],
-    'manzana-dry': ['apple', 'apple-half', 'apple-peel', 'apple', 'apple-half', 'apple-peel'],
+    'manzana-dry': ['apple-half', 'apple-peel', 'apple-whole', 'apple', 'apple-half', 'apple-peel', 'apple'],
     'naranja-dry': ['orange-wheel', 'orange-peel', 'orange-wheel', 'orange-peel', 'orange-wheel', 'orange-peel'],
     'pina-dry': ['pineapple-dry', 'pineapple-wedge', 'pineapple-twist', 'pineapple-dry', 'pineapple-wedge', 'pineapple-twist'],
     'signature-box': ['cherry', 'orange-wheel', 'lemon-twist', 'olive', 'ice']
@@ -89,7 +89,7 @@
     'lime-wheel': 1, 'lime-half': 1, 'lemon-wheel': 1, 'lemon-twist': 0.95, 'orange-wheel': 1.05, 'orange-peel': 1.05,
     'grapefruit-half': 1.1, 'pineapple-wedge': 1.15, 'pineapple-dry': 1.1, 'pineapple-twist': 1.15, peach: 1.15, cranberries: 0.85, mint: 1, 'coffee-beans': 0.85,
     ginger: 1.1, 'coconut-half': 1.2, agave: 1.05, 'sugar-cubes': 0.85, juniper: 0.95, cherry: 0.85, 'sea-salt': 0.9,
-    olive: 1.05, ice: 0.95, 'blue-wheel': 1.05, apple: 1.15, 'apple-half': 1.2, 'apple-peel': 1.2
+    olive: 1.05, ice: 0.95, 'blue-wheel': 1.05, apple: 1.15, 'apple-half': 1.2, 'apple-peel': 1.2, 'apple-whole': 1.25
   };
 
   var FX_SLOTS = [
@@ -166,7 +166,7 @@
           can: 'pkg-manzana-dry.webp',
           chips: ['Manzana seleccionada', 'Corte estrella', 'Twist artesanal', '100% Natural sin azúcar'],
           ritual: 'Flotar 1 lámina sobre cócteles aromáticos como Manhattan, Old Fashioned o té frío botánico.',
-          recipe: ['apple', 'apple-half', 'apple-peel', 'apple', 'apple-half', 'apple-peel']
+          recipe: ['apple-half', 'apple-peel', 'apple-whole', 'apple', 'apple-half', 'apple-peel', 'apple']
         },
         {
           handle: 'lemon-dry',
