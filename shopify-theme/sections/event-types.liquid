@@ -1,81 +1,82 @@
-<section id="events" class="event-types-section lumina-slider-section" data-section-id="{{ section.id }}">
+<section id="events" class="event-types-section" data-section-id="{{ section.id }}">
   <div class="event-types-container">
-    <div class="section-header-center">
-      <span class="section-eyebrow" data-i18n="types.eyebrow">{{ section.settings.eyebrow | default: 'CREADO PARA TU MOMENTO' }}</span>
-      <h2 class="section-title" data-i18n="types.headline">{{ section.settings.headline | default: 'Coctelería a Medida para Cada Ocasión' }}</h2>
-      <p class="section-subtitle" data-i18n="types.subtitle">
-        {{ section.settings.subtitle | default: 'Desde celebraciones íntimas hasta grandes recepciones de bodas, adaptamos cada cóctel, estación de barra y detalle de hospitalidad a tu evento.' }}
-      </p>
-    </div>
+    {%- if section.settings.show_header -%}
+      <div class="section-header-center">
+        <span class="section-eyebrow" data-i18n="types.eyebrow">{{ section.settings.eyebrow | default: 'CREADO PARA TU MOMENTO' }}</span>
+        <h2 class="section-title" data-i18n="types.headline">{{ section.settings.headline | default: 'Coctelería a Medida para Cada Ocasión' }}</h2>
+        <p class="section-subtitle" data-i18n="types.subtitle">
+          {{ section.settings.subtitle | default: 'Desde celebraciones íntimas hasta grandes recepciones de bodas, adaptamos cada cóctel, estación de barra y detalle de hospitalidad a tu evento.' }}
+        </p>
+      </div>
+    {%- endif -%}
 
-    <!-- LUMINA WEBGL INTERACTIVE SLIDER -->
-    <div class="lumina-slider-wrapper" id="luminaSliderWrapper" data-auto-slide="{{ section.settings.auto_slide_speed | default: 5500 }}" data-transition-duration="{{ section.settings.transition_duration | default: 1.8 }}">
-      <!-- WebGL Canvas -->
-      <canvas class="lumina-webgl-canvas" id="luminaCanvas"></canvas>
+    <!-- LUMINA WEBGL INTERACTIVE SLIDER (EXACT REFERENCE DESIGN) -->
+    <main class="slider-wrapper" id="luminaSliderWrapper" data-auto-slide="{{ section.settings.auto_slide_speed | default: 5000 }}" data-transition-duration="{{ section.settings.transition_duration | default: 2.5 }}">
+      <canvas class="webgl-canvas" id="luminaCanvas"></canvas>
       
-      <!-- Static poster image for instant first-paint & fallback -->
-      <div class="lumina-poster-fallback" id="luminaFallback" style="background-image: url('{{ 'event-weddings.jpg' | asset_url }}');"></div>
+      <!-- Static poster fallback -->
+      <div class="slider-poster-fallback" id="sliderFallback" style="background-image: url('{{ 'event-weddings.jpg' | asset_url }}');"></div>
 
-      <!-- Luxury Ambient Gradient Overlays -->
-      <div class="lumina-gradient-overlay"></div>
-      <div class="lumina-vignette-overlay"></div>
-
-      <!-- Top Meta Bar: Tag Badge & Number Counter -->
-      <div class="lumina-meta-bar">
-        <div class="lumina-tag-badge" id="slideTag">ELEGANTE &bull; MEMORABLE</div>
-        <div class="lumina-counter">
-          <span class="slide-number" id="slideNumber">01</span>
-          <span class="slide-divider">/</span>
-          <span class="slide-total" id="slideTotal">04</span>
-        </div>
+      <!-- Left & Right Vertically Centered Counters -->
+      <span class="slide-number" id="slideNumber">01</span>
+      <span class="slide-total" id="slideTotal">04</span>
+      
+      <!-- Dead-Center Title & Description (Clickable to Booking Form) -->
+      <div class="slide-content" id="slideContent" role="button" tabindex="0" title="Cotizar este evento">
+        <h2 class="slide-title" id="mainTitle"></h2>
+        <p class="slide-description" id="mainDesc"></p>
       </div>
-
-      <!-- Center-Left Floating Editorial Content Card -->
-      <div class="lumina-content-stage">
-        <div class="lumina-content-glass-card">
-          <h3 class="lumina-slide-title" id="mainTitle">Bodas &amp; Recepción</h3>
-          <p class="lumina-slide-desc" id="mainDesc">Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos de autor.</p>
-          <div class="lumina-actions">
-            <a href="#book-event" class="btn btn-pink lumina-quote-btn" id="mainQuoteBtn">
-              <span data-i18n="types.quote_btn">SOLICITAR COTIZACIÓN</span>
-              <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Category Navigation Bar with 4 Categories & Progress Indicators -->
-      <nav class="lumina-slides-nav" id="slidesNav" aria-label="Categorías de Eventos"></nav>
-    </div>
+     
+      <!-- Bottom Categories Navigation Bar -->
+      <nav class="slides-navigation" id="slidesNav" aria-label="Categorías de Eventos"></nav>
+    </main>
   </div>
 </section>
 
 <style>
 /* ==========================================================================
-   LUMINA INTERACTIVE WEBGL SLIDER STYLES
+   LUMINA INTERACTIVE SLIDER — PIXEL-PERFECT LUXURY REPLICATION
    ========================================================================== */
-.lumina-slider-section {
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+.event-types-section {
   position: relative;
   background: var(--bg-deep, #FAFAFC);
+  padding: 4.5rem 0 6rem;
   overflow: hidden;
-  padding: 5.5rem 0 6.5rem;
 }
 
-.lumina-slider-wrapper {
+.event-types-container {
+  max-width: var(--container-max, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--gutter, clamp(1.25rem, 4vw, 3.5rem));
+}
+
+.section-header-center {
+  text-align: center;
+  max-width: 740px;
+  margin: 0 auto 3.5rem;
+}
+
+/* Main Slider Wrapper */
+.slider-wrapper {
   position: relative;
   width: 100%;
+  height: 75vh;
   min-height: 580px;
-  height: 68vh;
-  max-height: 720px;
+  max-height: 780px;
   border-radius: 28px;
   overflow: hidden;
-  background: #0B0C0E;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  background: #000000;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   isolation: isolate;
   user-select: none;
 }
 
-.lumina-webgl-canvas {
+.webgl-canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -83,16 +84,15 @@
   height: 100%;
   display: block;
   z-index: 1;
-  pointer-events: none;
   opacity: 0;
   transition: opacity 0.8s ease;
 }
 
-.lumina-slider-wrapper.loaded .lumina-webgl-canvas {
+.slider-wrapper.loaded .webgl-canvas {
   opacity: 1;
 }
 
-.lumina-poster-fallback {
+.slider-poster-fallback {
   position: absolute;
   inset: 0;
   background-size: cover;
@@ -101,340 +101,202 @@
   transition: opacity 0.8s ease;
 }
 
-.lumina-slider-wrapper.loaded .lumina-poster-fallback {
+.slider-wrapper.loaded .slider-poster-fallback {
   opacity: 0;
 }
 
-/* Ambient Overlays */
-.lumina-gradient-overlay {
+/* Subtle dark vignette to ensure text readability while preserving full imagery */
+.slider-wrapper::after {
+  content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(11, 12, 14, 0.25) 0%, rgba(11, 12, 14, 0.4) 40%, rgba(11, 12, 14, 0.88) 100%),
-              linear-gradient(90deg, rgba(11, 12, 14, 0.75) 0%, rgba(11, 12, 14, 0.25) 55%, rgba(11, 12, 14, 0.4) 100%);
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 75%, rgba(0, 0, 0, 0.7) 100%),
+              linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, transparent 25%, transparent 65%, rgba(0, 0, 0, 0.65) 100%);
   z-index: 2;
   pointer-events: none;
 }
 
-.lumina-vignette-overlay {
+/* Left and Right Vertically Centered Numbers */
+.slide-number,
+.slide-total {
   position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
-  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.75);
+  z-index: 10;
   pointer-events: none;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
-/* Meta Bar (Top Tag & Counter) */
-.lumina-meta-bar {
+.slide-number {
+  left: clamp(1.8rem, 3.5vw, 3.5rem);
+}
+
+.slide-total {
+  right: clamp(1.8rem, 3.5vw, 3.5rem);
+}
+
+/* Center Content: Title & Description */
+.slide-content {
   position: absolute;
-  top: 2rem;
-  left: 2.5rem;
-  right: 2.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 5;
-  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  width: 88%;
+  max-width: 860px;
+  cursor: pointer;
+  padding: 1rem;
 }
 
-.lumina-tag-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(18, 19, 22, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+.slide-title {
+  font-family: 'Playfair Display', 'Cinzel', serif;
+  font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+  font-weight: 400;
   color: #FFFFFF;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.45rem 1.15rem;
-  border-radius: 100px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  line-height: 1.12;
+  margin: 0 0 1.25rem 0;
+  letter-spacing: -0.01em;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-.lumina-counter {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family: var(--font-brand, 'Cinzel', serif);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  background: rgba(18, 19, 22, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 0.42rem 1.1rem;
-  border-radius: 100px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.lumina-counter .slide-number {
-  color: var(--accent-pink, #E82B7D);
-  font-weight: 800;
-}
-
-.lumina-counter .slide-divider {
-  opacity: 0.4;
-  margin: 0 0.1rem;
-}
-
-.lumina-counter .slide-total {
-  opacity: 0.75;
-}
-
-/* Content Stage & Glass Card */
-.lumina-content-stage {
-  position: absolute;
-  left: 2.5rem;
-  bottom: 6.8rem;
-  max-width: 640px;
-  z-index: 5;
-  pointer-events: auto;
-}
-
-.lumina-content-glass-card {
-  background: rgba(15, 16, 20, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 22px;
-  padding: 2.2rem 2.4rem;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transition: border-color 0.4s ease;
-}
-
-.lumina-content-glass-card:hover {
-  border-color: rgba(232, 43, 125, 0.4);
-}
-
-.lumina-slide-title {
-  font-family: var(--font-brand, 'Cinzel', serif);
-  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
-  font-weight: 700;
-  color: #FFFFFF;
-  line-height: 1.2;
-  margin: 0 0 0.85rem 0;
-  letter-spacing: 0.02em;
-  min-height: 1.2em;
-}
-
-.lumina-slide-title span {
+.slide-title span {
   display: inline-block;
   will-change: transform, opacity, filter;
 }
 
-.lumina-slide-desc {
-  font-family: var(--font-ui, 'Plus Jakarta Sans', sans-serif);
-  font-size: clamp(0.9rem, 1.1vw, 1.02rem);
-  color: rgba(255, 255, 255, 0.86);
-  line-height: 1.6;
-  margin: 0 0 1.6rem 0;
+.slide-description {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(0.95rem, 1.25vw, 1.2rem);
   font-weight: 400;
-  min-height: 3.2em;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 620px;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
+  letter-spacing: 0.015em;
 }
 
-.lumina-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.lumina-quote-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.88rem 1.8rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  box-shadow: 0 8px 24px rgba(232, 43, 125, 0.45);
-  transition: all 0.3s ease;
-}
-
-.lumina-quote-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(232, 43, 125, 0.65);
-}
-
-/* Bottom 4 Category Navigation Tabs */
-.lumina-slides-nav {
+/* Bottom 4 Categories Navigation */
+.slides-navigation {
   position: absolute;
-  left: 2.5rem;
-  right: 2.5rem;
-  bottom: 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  z-index: 5;
+  bottom: 2.5rem;
+  left: clamp(2rem, 4vw, 4rem);
+  right: clamp(2rem, 4vw, 4rem);
+  display: flex;
+  justify-content: space-between;
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  z-index: 10;
 }
 
-.lumina-nav-item {
+.slide-nav-item {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  padding: 0.75rem 1rem;
-  background: rgba(18, 19, 24, 0.68);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
+  gap: 0.85rem;
   cursor: pointer;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.25s ease, box-shadow 0.3s ease;
+  opacity: 0.45;
+  transition: opacity 0.35s ease, transform 0.25s ease;
+  user-select: none;
   text-align: left;
 }
 
-.lumina-nav-item:hover {
-  background: rgba(28, 30, 38, 0.85);
-  border-color: rgba(232, 43, 125, 0.45);
-  transform: translateY(-2px);
+.slide-nav-item:hover {
+  opacity: 0.85;
 }
 
-.lumina-nav-item.active {
-  background: rgba(232, 43, 125, 0.18);
-  border-color: rgba(232, 43, 125, 0.75);
-  box-shadow: 0 6px 20px rgba(232, 43, 125, 0.25);
+.slide-nav-item.active {
+  opacity: 1;
 }
 
-.lumina-progress-line {
+.slide-progress-line {
   width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 2px;
-  overflow: hidden;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.25);
   position: relative;
+  overflow: hidden;
+  border-radius: 1px;
 }
 
-.lumina-progress-fill {
+.slide-progress-fill {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #FF3888, #E82B7D, #FFD15C);
-  border-radius: 2px;
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  background: #FFFFFF;
+  border-radius: 1px;
+  transition: width 0.05s linear;
 }
 
-.lumina-nav-item.active .lumina-progress-fill {
-  opacity: 1;
-}
-
-.lumina-nav-title {
-  font-family: var(--font-brand, 'Cinzel', serif);
-  font-size: 0.84rem;
+.slide-nav-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.68rem, 0.85vw, 0.78rem);
   font-weight: 600;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: color 0.3s ease;
-}
-
-.lumina-nav-item:hover .lumina-nav-title {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: #FFFFFF;
-}
-
-.lumina-nav-item.active .lumina-nav-title {
-  color: #FFFFFF;
-  font-weight: 700;
+  line-height: 1.35;
+  white-space: normal;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE
    ========================================================================== */
 @media (max-width: 1024px) {
-  .lumina-slider-wrapper {
-    height: 72vh;
-    min-height: 560px;
+  .slider-wrapper {
+    height: 70vh;
+    min-height: 520px;
   }
-  .lumina-meta-bar {
-    top: 1.5rem;
-    left: 1.5rem;
-    right: 1.5rem;
-  }
-  .lumina-content-stage {
-    left: 1.5rem;
-    right: 1.5rem;
-    bottom: 6.5rem;
-    max-width: 580px;
-  }
-  .lumina-slides-nav {
-    left: 1.5rem;
-    right: 1.5rem;
-    bottom: 1.25rem;
-    gap: 0.65rem;
+  .slides-navigation {
+    bottom: 2rem;
   }
 }
 
 @media (max-width: 768px) {
-  .lumina-slider-section {
-    padding: 3.5rem 0 4.5rem;
+  .event-types-section {
+    padding: 3rem 0 4.5rem;
   }
-  .lumina-slider-wrapper {
-    min-height: 540px;
-    height: 82vh;
+  .slider-wrapper {
+    height: 78vh;
+    min-height: 500px;
     border-radius: 20px;
   }
-  .lumina-meta-bar {
-    top: 1rem;
-    left: 1rem;
-    right: 1rem;
+  .slide-number {
+    left: 1.25rem;
   }
-  .lumina-tag-badge {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    padding: 0.35rem 0.8rem;
+  .slide-total {
+    right: 1.25rem;
   }
-  .lumina-counter {
-    font-size: 0.8rem;
-    padding: 0.35rem 0.8rem;
+  .slide-content {
+    width: 90%;
   }
-  .lumina-content-stage {
-    left: 1rem;
-    right: 1rem;
-    bottom: 5.5rem;
-    max-width: none;
+  .slide-title {
+    font-size: 2.35rem;
+    margin-bottom: 0.85rem;
   }
-  .lumina-content-glass-card {
-    padding: 1.25rem 1.35rem;
-    border-radius: 16px;
+  .slide-description {
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
-  .lumina-slide-title {
-    font-size: 1.45rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.15;
+  .slides-navigation {
+    bottom: 1.25rem;
+    left: 1.25rem;
+    right: 1.25rem;
+    gap: 0.5rem;
   }
-  .lumina-slide-desc {
-    font-size: 0.82rem;
-    line-height: 1.45;
-    margin-bottom: 1rem;
-    min-height: auto;
+  .slide-nav-item {
+    gap: 0.5rem;
   }
-  .lumina-quote-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 0.78rem 1.25rem;
-    font-size: 0.78rem;
-  }
-  .lumina-slides-nav {
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.75rem;
-    gap: 0.35rem;
-  }
-  .lumina-nav-item {
-    padding: 0.45rem 0.45rem;
-    border-radius: 10px;
-    gap: 0.35rem;
-  }
-  .lumina-nav-title {
-    font-size: 0.65rem;
-    letter-spacing: 0.02em;
+  .slide-nav-title {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
     text-align: center;
   }
 }
@@ -442,7 +304,7 @@
 
 <script>
 (function() {
-  // --- DYNAMIC SCRIPT LOADER (THREE.js & GSAP) ---
+  // --- DYNAMIC SCRIPT LOADER ---
   const loadScript = (src, globalName) => new Promise((res, rej) => {
     if (window[globalName]) { res(); return; }
     if (document.querySelector(`script[src="${src}"]`)) {
@@ -461,44 +323,56 @@
 
   const initLuminaSlider = async () => {
     try {
+      if (!window.gsap) {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', 'gsap');
+      }
       if (!window.THREE) {
         await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'THREE');
       }
-    } catch(err) {
-      console.warn('Lumina Shader: Three.js fallback active', err);
-      return;
+    } catch (e) {
+      console.error('Failed to load base scripts:', e);
     }
 
     const wrapper = document.getElementById('luminaSliderWrapper');
     const canvas = document.getElementById('luminaCanvas');
     if (!wrapper || !canvas || !window.THREE) return;
 
-    // --- SLIDER CONFIGURATION ---
-    const autoSlideSpeed = parseInt(wrapper.dataset.autoSlide, 10) || 5500;
-    const transitionDuration = parseFloat(wrapper.dataset.transitionDuration) || 1.8;
-    const PROGRESS_UPDATE_INTERVAL = 40;
+    // --- CONFIGURATION ---
+    const SLIDER_CONFIG = {
+      settings: {
+        transitionDuration: parseFloat(wrapper.dataset.transitionDuration) || 2.5,
+        autoSlideSpeed: parseInt(wrapper.dataset.autoSlide, 10) || 5000,
+        currentEffect: "glass",
+        currentEffectPreset: "Default",
+        globalIntensity: 1.0,
+        speedMultiplier: 1.0,
+        distortionStrength: 1.0,
+        colorEnhancement: 1.0,
+        glassRefractionStrength: 1.0,
+        glassChromaticAberration: 1.0,
+        glassBubbleClarity: 1.0,
+        glassEdgeGlow: 1.0,
+        glassLiquidFlow: 1.0
+      }
+    };
 
     // --- 4 CATEGORIES & SLIDES DATA ---
-    const slidesData = [
+    const slides = [
       {
         categoryKey: 'types.cat_1',
         categoryDefault: 'Bodas',
-        tagKey: 'types.c1_tag',
-        tagDefault: 'ELEGANTE • MEMORABLE',
         titleKey: 'types.c1_title',
         titleDefault: 'Bodas & Recepción',
         descKey: 'types.c1_desc',
-        descDefault: 'Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería de cristal, servicio de champaña y mixólogos de autor.',
+        descDefault: 'Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería fina y mixólogos de autor.',
         media: "{{ 'event-weddings.jpg' | asset_url }}",
         formValue: 'Boda'
       },
       {
         categoryKey: 'types.cat_2',
         categoryDefault: 'Gender Reveal',
-        tagKey: 'types.c2_tag',
-        tagDefault: 'MÁGICO • CELEBRACIÓN',
         titleKey: 'types.c2_title',
-        titleDefault: 'Gender Reveal & Baby Shower',
+        titleDefault: 'Gender Reveal',
         descKey: 'types.c2_desc',
         descDefault: 'Celebraciones mágicas con coctelería temática, mocktails de autor sin alcohol y estaciones de barra personalizadas para la revelación.',
         media: "{{ 'event-gender-reveal.jpg' | asset_url }}",
@@ -507,10 +381,8 @@
       {
         categoryKey: 'types.cat_3',
         categoryDefault: 'Evento de Negocios',
-        tagKey: 'types.c3_tag',
-        tagDefault: 'SOFISTICADO • IMPECABLE',
         titleKey: 'types.c3_title',
-        titleDefault: 'Evento de Negocios & Galas',
+        titleDefault: 'Evento de Negocios',
         descKey: 'types.c3_desc',
         descDefault: 'Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP.',
         media: "{{ 'event-corporate-gala.jpg' | asset_url }}",
@@ -519,10 +391,8 @@
       {
         categoryKey: 'types.cat_4',
         categoryDefault: 'Fiestas',
-        tagKey: 'types.c4_tag',
-        tagDefault: 'ÍNTIMO • VIBRANTE',
         titleKey: 'types.c4_title',
-        titleDefault: 'Fiestas Privadas & VIP',
+        titleDefault: 'Fiestas Privadas',
         descKey: 'types.c4_desc',
         descDefault: 'Eleva cumpleaños, aniversarios y veladas exclusivas con barras móviles privadas, ambientación de lujo y total tranquilidad para el anfitrión.',
         media: "{{ 'event-private-party.jpg' | asset_url }}",
@@ -539,6 +409,10 @@
     let autoSlideTimer = null;
     let progressAnimation = null;
     let sliderEnabled = false;
+
+    const SLIDE_DURATION = () => SLIDER_CONFIG.settings.autoSlideSpeed;
+    const PROGRESS_UPDATE_INTERVAL = 50;
+    const TRANSITION_DURATION = () => SLIDER_CONFIG.settings.transitionDuration;
 
     // Helper: i18n lookup
     const getI18n = (key, fallback) => {
@@ -615,88 +489,60 @@
       }
     `;
 
-    // --- CHARACTER SPLITTING FOR GSAP ---
+    // --- CHARACTER SPLITTING ---
     const splitText = (text) => {
       return text.split('').map(char => `<span style="display: inline-block; opacity: 0;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
     };
 
-    // --- UPDATE CONTENT WITH GSAP KINEMATICS ---
+    // --- UPDATE CONTENT WITH GSAP ---
     const updateContent = (idx) => {
       const titleEl = document.getElementById('mainTitle');
       const descEl = document.getElementById('mainDesc');
-      const tagEl = document.getElementById('slideTag');
-      const quoteBtn = document.getElementById('mainQuoteBtn');
-      if (!titleEl || !descEl) return;
+      if (titleEl && descEl && window.gsap) {
+        // Universal animate out (fade up)
+        gsap.to(titleEl.children, { y: -20, opacity: 0, duration: 0.5, stagger: 0.02, ease: "power2.in" });
+        gsap.to(descEl, { y: -10, opacity: 0, duration: 0.4, ease: "power2.in" });
 
-      const slide = slidesData[idx];
-      const titleText = getI18n(slide.titleKey, slide.titleDefault);
-      const descText = getI18n(slide.descKey, slide.descDefault);
-      const tagText = getI18n(slide.tagKey, slide.tagDefault);
+        setTimeout(() => {
+          const slide = slides[idx];
+          titleEl.innerHTML = splitText(getI18n(slide.titleKey, slide.titleDefault));
+          descEl.textContent = getI18n(slide.descKey, slide.descDefault);
 
-      // Animate out
-      if (window.gsap) {
-        window.gsap.to(titleEl.children, { y: -18, opacity: 0, duration: 0.35, stagger: 0.015, ease: "power2.in" });
-        window.gsap.to(descEl, { y: -8, opacity: 0, duration: 0.3, ease: "power2.in" });
-        if (tagEl) window.gsap.to(tagEl, { opacity: 0, y: -6, duration: 0.25 });
+          gsap.set(titleEl.children, { opacity: 0 });
+          gsap.set(descEl, { y: 20, opacity: 0 });
+
+          const children = titleEl.children;
+          switch (idx) {
+            case 0: // Bodas: Stagger Up
+              gsap.set(children, { y: 20 });
+              gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.03, ease: "power3.out" });
+              gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" });
+              break;
+            case 1: // Gender Reveal: Stagger Down
+              gsap.set(children, { y: -20 });
+              gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.03, ease: "back.out(1.7)" });
+              gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" });
+              break;
+            case 2: // Evento de Negocios: Blur Reveal
+              gsap.set(children, { filter: "blur(10px)", scale: 1.5, y: 0 });
+              gsap.to(children, { filter: "blur(0px)", scale: 1, opacity: 1, duration: 1, stagger: { amount: 0.5, from: "random" }, ease: "power2.out" });
+              gsap.to(descEl, { y: 0, opacity: 1, duration: 1, delay: 0.3, ease: "power2.out" });
+              break;
+            case 3: // Fiestas: Scale In
+              gsap.set(children, { scale: 0, y: 0 });
+              gsap.to(children, { scale: 1, opacity: 1, duration: 0.6, stagger: 0.05, ease: "back.out(1.5)" });
+              gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" });
+              break;
+            default:
+              gsap.set(children, { y: 20 });
+              gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.03, ease: "power3.out" });
+              gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" });
+          }
+        }, 500);
       }
-
-      setTimeout(() => {
-        // Set new content
-        titleEl.innerHTML = splitText(titleText);
-        descEl.textContent = descText;
-        if (tagEl) tagEl.textContent = tagText;
-
-        // Update button click target
-        if (quoteBtn) {
-          quoteBtn.onclick = (e) => {
-            e.preventDefault();
-            const formSection = document.getElementById('book-event');
-            if (formSection) {
-              formSection.scrollIntoView({ behavior: 'smooth' });
-              const sel = document.getElementById('inquiry-event-type');
-              if (sel && slide.formValue) sel.value = slide.formValue;
-            }
-          };
-        }
-
-        if (!window.gsap) return;
-
-        const children = titleEl.children;
-        window.gsap.set(children, { opacity: 0 });
-        window.gsap.set(descEl, { y: 15, opacity: 0 });
-        if (tagEl) window.gsap.fromTo(tagEl, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" });
-
-        // 4 Distinct Cinematic Character Animations per Category
-        switch(idx) {
-          case 0: // Bodas: Elegant Stagger Up
-            window.gsap.set(children, { y: 20 });
-            window.gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.028, ease: "power3.out" });
-            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
-            break;
-          case 1: // Gender Reveal: Dynamic Stagger Down with Back-bounce
-            window.gsap.set(children, { y: -20 });
-            window.gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.028, ease: "back.out(1.7)" });
-            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
-            break;
-          case 2: // Evento de Negocios: Sleek Blur Reveal
-            window.gsap.set(children, { filter: "blur(10px)", scale: 1.3, y: 0 });
-            window.gsap.to(children, { filter: "blur(0px)", scale: 1, opacity: 1, duration: 0.9, stagger: { amount: 0.35, from: "random" }, ease: "power2.out" });
-            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.85, delay: 0.22, ease: "power2.out" });
-            break;
-          case 3: // Fiestas: Energetic Scale Pop
-            window.gsap.set(children, { scale: 0, y: 0 });
-            window.gsap.to(children, { scale: 1, opacity: 1, duration: 0.65, stagger: 0.038, ease: "back.out(1.5)" });
-            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
-            break;
-          default:
-            window.gsap.set(children, { y: 20 });
-            window.gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.028, ease: "power3.out" });
-            window.gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.18, ease: "power3.out" });
-        }
-      }, 350);
     };
 
-    // --- NAVIGATION TO SLIDE ---
+    // --- SLIDE NAVIGATION ---
     const navigateToSlide = (targetIndex) => {
       if (isTransitioning || targetIndex === currentSlideIndex) return;
       stopAutoSlideTimer();
@@ -719,18 +565,18 @@
       updateNavigationState(currentSlideIndex);
 
       if (window.gsap) {
-        window.gsap.fromTo(shaderMaterial.uniforms.uProgress,
+        gsap.fromTo(shaderMaterial.uniforms.uProgress,
           { value: 0 },
           {
             value: 1,
-            duration: transitionDuration,
+            duration: TRANSITION_DURATION(),
             ease: "power2.inOut",
             onComplete: () => {
               shaderMaterial.uniforms.uProgress.value = 0;
               shaderMaterial.uniforms.uTexture1.value = targetTexture;
               shaderMaterial.uniforms.uTexture1Size.value = targetTexture.userData.size;
               isTransitioning = false;
-              safeStartTimer(150);
+              safeStartTimer(100);
             }
           }
         );
@@ -738,28 +584,28 @@
         shaderMaterial.uniforms.uProgress.value = 0;
         shaderMaterial.uniforms.uTexture1.value = targetTexture;
         isTransitioning = false;
-        safeStartTimer(150);
+        safeStartTimer(100);
       }
     };
 
     const handleSlideChange = () => {
       if (isTransitioning || !texturesLoaded || !sliderEnabled) return;
-      navigateToSlide((currentSlideIndex + 1) % slidesData.length);
+      navigateToSlide((currentSlideIndex + 1) % slides.length);
     };
 
-    // --- CREATE 4 CATEGORY NAV BUTTONS ---
+    // --- CREATE 4 CATEGORY NAV ITEMS ---
     const createSlidesNavigation = () => {
       const nav = document.getElementById("slidesNav");
       if (!nav) return;
       nav.innerHTML = "";
-      slidesData.forEach((slide, i) => {
+      slides.forEach((slide, i) => {
         const item = document.createElement("div");
-        item.className = `lumina-nav-item${i === 0 ? " active" : ""}`;
+        item.className = `slide-nav-item${i === 0 ? " active" : ""}`;
         item.dataset.slideIndex = String(i);
-        const catTitle = getI18n(slide.categoryKey, slide.categoryDefault);
+        const catLabel = getI18n(slide.categoryKey, slide.categoryDefault);
         item.innerHTML = `
-          <div class="lumina-progress-line"><div class="lumina-progress-fill"></div></div>
-          <div class="lumina-nav-title" data-i18n="${slide.categoryKey}">${catTitle}</div>
+          <div class="slide-progress-line"><div class="slide-progress-fill"></div></div>
+          <div class="slide-nav-title">${catLabel}</div>
         `;
         item.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -774,13 +620,13 @@
     };
 
     const updateNavigationState = (idx) => {
-      document.querySelectorAll(".lumina-nav-item").forEach((el, i) => {
+      document.querySelectorAll(".slide-nav-item").forEach((el, i) => {
         el.classList.toggle("active", i === idx);
       });
     };
 
     const updateSlideProgress = (idx, prog) => {
-      const el = document.querySelectorAll(".lumina-nav-item")[idx]?.querySelector(".lumina-progress-fill");
+      const el = document.querySelectorAll(".slide-nav-item")[idx]?.querySelector(".slide-progress-fill");
       if (el) {
         el.style.width = `${prog}%`;
         el.style.opacity = '1';
@@ -788,20 +634,20 @@
     };
 
     const fadeSlideProgress = (idx) => {
-      const el = document.querySelectorAll(".lumina-nav-item")[idx]?.querySelector(".lumina-progress-fill");
+      const el = document.querySelectorAll(".slide-nav-item")[idx]?.querySelector(".slide-progress-fill");
       if (el) {
         el.style.opacity = '0';
-        setTimeout(() => { if (el) el.style.width = "0%"; }, 250);
+        setTimeout(() => { if (el) el.style.width = "0%"; }, 300);
       }
     };
 
     const quickResetProgress = (idx) => {
-      const el = document.querySelectorAll(".lumina-nav-item")[idx]?.querySelector(".lumina-progress-fill");
+      const el = document.querySelectorAll(".slide-nav-item")[idx]?.querySelector(".slide-progress-fill");
       if (el) {
         el.style.transition = "width 0.2s ease-out";
         el.style.width = "0%";
         setTimeout(() => {
-          if (el) el.style.transition = "width 0.05s linear, opacity 0.25s ease";
+          if (el) el.style.transition = "width 0.1s ease, opacity 0.3s ease";
         }, 200);
       }
     };
@@ -810,19 +656,18 @@
       const sn = document.getElementById("slideNumber");
       if (sn) sn.textContent = String(idx + 1).padStart(2, "0");
       const st = document.getElementById("slideTotal");
-      if (st) st.textContent = String(slidesData.length).padStart(2, "0");
+      if (st) st.textContent = String(slides.length).padStart(2, "0");
     };
 
-    // --- AUTO SLIDE TIMER ---
     const startAutoSlideTimer = () => {
       if (!texturesLoaded || !sliderEnabled) return;
       stopAutoSlideTimer();
       let progress = 0;
-      const increment = (100 / autoSlideSpeed) * PROGRESS_UPDATE_INTERVAL;
+      const increment = (100 / SLIDE_DURATION()) * PROGRESS_UPDATE_INTERVAL;
       progressAnimation = setInterval(() => {
         if (!sliderEnabled) { stopAutoSlideTimer(); return; }
         progress += increment;
-        updateSlideProgress(currentSlideIndex, Math.min(progress, 100));
+        updateSlideProgress(currentSlideIndex, progress);
         if (progress >= 100) {
           clearInterval(progressAnimation);
           progressAnimation = null;
@@ -847,33 +692,27 @@
       }
     };
 
-    // --- THREE.JS TEXTURE LOADER ---
     const loadImageTexture = (src) => new Promise((resolve, reject) => {
       const loader = new THREE.TextureLoader();
       loader.load(
         src,
-        (tex) => {
-          tex.minFilter = THREE.LinearFilter;
-          tex.magFilter = THREE.LinearFilter;
-          tex.generateMipmaps = false;
-          tex.userData = {
-            size: new THREE.Vector2(tex.image.naturalWidth || tex.image.width || 1376, tex.image.naturalHeight || tex.image.height || 768)
-          };
-          resolve(tex);
+        (t) => {
+          t.minFilter = t.magFilter = THREE.LinearFilter;
+          t.userData = { size: new THREE.Vector2(t.image.naturalWidth || t.image.width || 1376, t.image.naturalHeight || t.image.height || 768) };
+          resolve(t);
         },
         undefined,
         reject
       );
     });
 
-    // --- INIT THREE.JS RENDERER & SCENE ---
     const initRenderer = async () => {
       const width = wrapper.clientWidth || window.innerWidth;
-      const height = wrapper.clientHeight || 600;
+      const height = wrapper.clientHeight || 650;
 
       scene = new THREE.Scene();
       camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-      renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: "high-performance" });
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -883,8 +722,8 @@
           uTexture2: { value: null },
           uProgress: { value: 0 },
           uResolution: { value: new THREE.Vector2(width, height) },
-          uTexture1Size: { value: new THREE.Vector2(1376, 768) },
-          uTexture2Size: { value: new THREE.Vector2(1376, 768) },
+          uTexture1Size: { value: new THREE.Vector2(1, 1) },
+          uTexture2Size: { value: new THREE.Vector2(1, 1) },
           uGlobalIntensity: { value: 1.0 },
           uSpeedMultiplier: { value: 1.0 },
           uDistortionStrength: { value: 1.0 },
@@ -900,13 +739,11 @@
 
       scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterial));
 
-      // Preload all 4 event textures
-      for (const s of slidesData) {
+      for (const s of slides) {
         try {
-          const tex = await loadImageTexture(s.media);
-          slideTextures.push(tex);
-        } catch(e) {
-          console.warn("Failed texture loading for:", s.media, e);
+          slideTextures.push(await loadImageTexture(s.media));
+        } catch (e) {
+          console.warn("Failed texture:", s.media, e);
         }
       }
 
@@ -918,141 +755,82 @@
         texturesLoaded = true;
         sliderEnabled = true;
         wrapper.classList.add("loaded");
-        safeStartTimer(600);
+        safeStartTimer(500);
       }
 
-      let animationFrameId;
       const render = () => {
-        animationFrameId = requestAnimationFrame(render);
+        requestAnimationFrame(render);
         renderer.render(scene, camera);
       };
       render();
     };
 
-    // --- SETUP INITIAL CONTENT ---
     createSlidesNavigation();
     updateCounter(0);
 
+    // Initial Text Content
     const tEl = document.getElementById('mainTitle');
     const dEl = document.getElementById('mainDesc');
-    const tagEl = document.getElementById('slideTag');
-    const quoteBtn = document.getElementById('mainQuoteBtn');
+    const contentEl = document.getElementById('slideContent');
 
     if (tEl && dEl) {
-      const initialSlide = slidesData[0];
-      tEl.innerHTML = splitText(getI18n(initialSlide.titleKey, initialSlide.titleDefault));
-      dEl.textContent = getI18n(initialSlide.descKey, initialSlide.descDefault);
-      if (tagEl) tagEl.textContent = getI18n(initialSlide.tagKey, initialSlide.tagDefault);
-
-      if (quoteBtn) {
-        quoteBtn.onclick = (e) => {
-          e.preventDefault();
-          const formSection = document.getElementById('book-event');
-          if (formSection) {
-            formSection.scrollIntoView({ behavior: 'smooth' });
-            const sel = document.getElementById('inquiry-event-type');
-            if (sel) sel.value = 'Boda';
-          }
-        };
-      }
-
+      tEl.innerHTML = splitText(getI18n(slides[0].titleKey, slides[0].titleDefault));
+      dEl.textContent = getI18n(slides[0].descKey, slides[0].descDefault);
       if (window.gsap) {
-        window.gsap.fromTo(tEl.children, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, stagger: 0.028, ease: "power3.out", delay: 0.3 });
-        window.gsap.fromTo(dEl, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.85, ease: "power3.out", delay: 0.5 });
+        gsap.fromTo(tEl.children, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: 0.03, ease: "power3.out", delay: 0.5 });
+        gsap.fromTo(dEl, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.8 });
       }
+    }
+
+    // Click on slide content smooth scrolls to booking form
+    if (contentEl) {
+      contentEl.addEventListener('click', () => {
+        const formSection = document.getElementById('book-event');
+        if (formSection) {
+          formSection.scrollIntoView({ behavior: 'smooth' });
+          const sel = document.getElementById('inquiry-event-type');
+          if (sel) sel.value = slides[currentSlideIndex].formValue;
+        }
+      });
+      contentEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          contentEl.click();
+        }
+      });
     }
 
     await initRenderer();
 
-    // --- EVENT LISTENERS ---
-    // Language Switcher Integration
+    // Listeners
+    document.addEventListener("visibilitychange", () => document.hidden ? stopAutoSlideTimer() : (!isTransitioning && safeStartTimer()));
+    
+    window.addEventListener("resize", () => {
+      if (renderer && shaderMaterial) {
+        const w = wrapper.clientWidth || window.innerWidth;
+        const h = wrapper.clientHeight || 650;
+        renderer.setSize(w, h);
+        shaderMaterial.uniforms.uResolution.value.set(w, h);
+      }
+    });
+
+    // Language change listener
     document.addEventListener('luckyshaker:langchange', () => {
-      const slide = slidesData[currentSlideIndex];
-      const titleEl = document.getElementById('mainTitle');
-      const descEl = document.getElementById('mainDesc');
-      const tagEl = document.getElementById('slideTag');
-      if (titleEl && descEl && slide) {
-        titleEl.innerHTML = splitText(getI18n(slide.titleKey, slide.titleDefault));
-        descEl.textContent = getI18n(slide.descKey, slide.descDefault);
-        if (tagEl) tagEl.textContent = getI18n(slide.tagKey, slide.tagDefault);
+      const slide = slides[currentSlideIndex];
+      if (tEl && dEl && slide) {
+        tEl.innerHTML = splitText(getI18n(slide.titleKey, slide.titleDefault));
+        dEl.textContent = getI18n(slide.descKey, slide.descDefault);
         if (window.gsap) {
-          window.gsap.set(titleEl.children, { opacity: 1, y: 0 });
-          window.gsap.set(descEl, { opacity: 1, y: 0 });
+          gsap.set(tEl.children, { opacity: 1, y: 0 });
+          gsap.set(dEl, { opacity: 1, y: 0 });
         }
       }
-      slidesData.forEach((s, i) => {
-        const titleEl = document.querySelectorAll(".lumina-nav-item")[i]?.querySelector(".lumina-nav-title");
+      slides.forEach((s, i) => {
+        const titleEl = document.querySelectorAll(".slide-nav-item")[i]?.querySelector(".slide-nav-title");
         if (titleEl) titleEl.textContent = getI18n(s.categoryKey, s.categoryDefault);
       });
     });
-
-    // Hover Pause / Resume
-    wrapper.addEventListener('mouseenter', () => {
-      if (sliderEnabled) stopAutoSlideTimer();
-    });
-    wrapper.addEventListener('mouseleave', () => {
-      if (sliderEnabled && !isTransitioning) safeStartTimer();
-    });
-
-    // Visibility Change
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stopAutoSlideTimer();
-      else if (!isTransitioning) safeStartTimer();
-    });
-
-    // Touch Swipe Support for Mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-    wrapper.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      stopAutoSlideTimer();
-    }, { passive: true });
-
-    wrapper.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      const diff = touchStartX - touchEndX;
-      if (Math.abs(diff) > 45) {
-        if (diff > 0) {
-          // Swiped left -> next slide
-          navigateToSlide((currentSlideIndex + 1) % slidesData.length);
-        } else {
-          // Swiped right -> prev slide
-          navigateToSlide((currentSlideIndex - 1 + slidesData.length) % slidesData.length);
-        }
-      } else {
-        safeStartTimer();
-      }
-    }, { passive: true });
-
-    // Keyboard Navigation
-    wrapper.setAttribute('tabindex', '0');
-    wrapper.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') {
-        navigateToSlide((currentSlideIndex + 1) % slidesData.length);
-      } else if (e.key === 'ArrowLeft') {
-        navigateToSlide((currentSlideIndex - 1 + slidesData.length) % slidesData.length);
-      }
-    });
-
-    // Responsive Canvas Resize Observer
-    const handleResize = () => {
-      if (!renderer || !shaderMaterial) return;
-      const w = wrapper.clientWidth || window.innerWidth;
-      const h = wrapper.clientHeight || 600;
-      renderer.setSize(w, h);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      shaderMaterial.uniforms.uResolution.value.set(w, h);
-    };
-
-    if (window.ResizeObserver) {
-      const ro = new ResizeObserver(() => handleResize());
-      ro.observe(wrapper);
-    } else {
-      window.addEventListener('resize', handleResize);
-    }
   };
 
-  // Launch after DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLuminaSlider);
   } else {
@@ -1065,6 +843,12 @@
 {
   "name": "Tipos de Eventos (Lumina)",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Mostrar Encabezado de Sección",
+      "default": true
+    },
     {
       "type": "text",
       "id": "eyebrow",
@@ -1087,13 +871,13 @@
       "type": "number",
       "id": "auto_slide_speed",
       "label": "Velocidad de Auto-Slide (ms)",
-      "default": 5500
+      "default": 5000
     },
     {
       "type": "number",
       "id": "transition_duration",
-      "label": "Duración de Transición Shader (segundos)",
-      "default": 2
+      "label": "Duración de Transición (segundos)",
+      "default": 2.5
     }
   ],
   "presets": [
