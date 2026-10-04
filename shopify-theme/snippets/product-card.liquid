@@ -23,7 +23,18 @@
   {%- assign notes_line = product.description | split: 'Ingredients:</strong> ' | last | split: '</li>' | first | split: '<' | first | replace: ',', ' · ' -%}
 {%- endif -%}
 
+{%- comment -%} Resolve a single image source (used for the visible image and the blurred ambient backdrop) {%- endcomment -%}
+{%- if product.featured_image -%}
+  {%- assign card_img_src = product.featured_image | image_url: width: 800 -%}
+{%- elsif product.handle == 'whiskey-cream' -%}
+  {%- assign card_img_src = 'prod-whiskey-cream.png' | asset_url -%}
+{%- else -%}
+  {%- assign fallback_img = 'prod-' | append: product.handle | append: '.jpg' -%}
+  {%- assign card_img_src = fallback_img | asset_url -%}
+{%- endif -%}
+
 <article class="product-item luxury-glass-card" data-product-id="{{ product.id }}">
+  <img class="product-ambient" src="{{ card_img_src }}" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
   <!-- Product Image Container -->
   <div class="product-visual-box">
     <div class="product-badge-group">
@@ -35,14 +46,14 @@
 
     <a href="{{ product.url }}" class="product-visual-link" aria-label="{{ product.title }}">
       {%- if product.featured_image -%}
-        <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
+        <img src="{{ card_img_src }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
       {%- elsif product.handle == 'whiskey-cream' -%}
-        <img src="{{ 'prod-whiskey-cream.png' | asset_url }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
+        <img src="{{ card_img_src }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
       {%- else -%}
-        {%- assign fallback_img = 'prod-' | append: product.handle | append: '.jpg' -%}
-        <img src="{{ fallback_img | asset_url }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='{{ 'margarita.jpg' | asset_url }}';">
+        <img src="{{ card_img_src }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='{{ 'margarita.jpg' | asset_url }}';">
       {%- endif -%}
     </a>
+    <span class="product-glare" aria-hidden="true"></span>
   </div>
 
   <!-- Compact Editorial Details Area -->
@@ -58,7 +69,13 @@
     </h3>
 
     {%- if notes_line != blank -%}
-      <p class="product-tasting-notes">{{ notes_line }}</p>
+      {%- assign note_chips = notes_line | split: ' · ' -%}
+      <ul class="product-notes-chips" aria-label="Ingredientes">
+        {%- for chip in note_chips limit: 4 -%}
+          {%- assign chip_clean = chip | strip -%}
+          {%- if chip_clean != blank -%}<li>{{ chip_clean }}</li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
     {%- elsif product.description != blank -%}
       <p class="product-tasting-notes">{{ product.description | strip_html | truncatewords: 8 }}</p>
     {%- else -%}

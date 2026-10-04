@@ -1,5 +1,13 @@
 {
   "sections": {
+    "lucky_cinematic_scroll": {
+      "type": "lucky-cinematic-scroll",
+      "settings": {
+        "title_wc": "WHISKEY CREAM",
+        "title_of": "OLD FASHIONED",
+        "title_mojito": "MOJITO"
+      }
+    },
     "main_collection": {
       "type": "main-collection",
       "settings": {
@@ -8,6 +16,7 @@
     }
   },
   "order": [
+    "lucky_cinematic_scroll",
     "main_collection"
   ]
 }

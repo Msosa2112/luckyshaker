@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3000;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -34,14 +34,8 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  fs.stat(filePath, (err, stats) => {
-    if (err || !stats.isFile()) {
-      res.statusCode = 404;
-      res.end('Not Found');
-      return;
-    }
-
-    const ext = path.extname(filePath).toLowerCase();
+  const sendFile = (targetPath, stats) => {
+    const ext = path.extname(targetPath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
     const total = stats.size;
     const range = req.headers.range;
@@ -64,7 +58,7 @@ const server = http.createServer((req, res) => {
         'Access-Control-Allow-Origin': '*'
       });
 
-      const stream = fs.createReadStream(filePath, { start, end });
+      const stream = fs.createReadStream(targetPath, { start, end });
       stream.pipe(res);
     } else {
       res.writeHead(200, {
@@ -74,11 +68,54 @@ const server = http.createServer((req, res) => {
         'Access-Control-Allow-Origin': '*'
       });
 
-      fs.createReadStream(filePath).pipe(res);
+      fs.createReadStream(targetPath).pipe(res);
     }
+  };
+
+  fs.stat(filePath, (err, stats) => {
+    if (err) {
+      res.statusCode = 404;
+      res.end('Not Found');
+      return;
+    }
+
+    if (stats.isDirectory()) {
+      const indexPath = path.join(filePath, 'index.html');
+      fs.stat(indexPath, (indexErr, indexStats) => {
+        if (indexErr || !indexStats.isFile()) {
+          res.statusCode = 404;
+          res.end('Not Found');
+          return;
+        }
+        sendFile(indexPath, indexStats);
+      });
+      return;
+    }
+
+    if (!stats.isFile()) {
+      res.statusCode = 404;
+      res.end('Not Found');
+      return;
+    }
+
+    sendFile(filePath, stats);
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Lucky Shaker Range-Aware Streaming Server running at http://localhost:${PORT}/`);
+let currentPort = DEFAULT_PORT;
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.warn(`Port ${currentPort} is busy. Trying port ${currentPort + 1}...`);
+    currentPort++;
+    setTimeout(() => {
+      server.listen(currentPort);
+    }, 200);
+  } else {
+    console.error('Server error:', err);
+  }
+});
+
+server.listen(currentPort, () => {
+  console.log(`Lucky Shaker Range-Aware Streaming Server running at http://localhost:${currentPort}/`);
 });

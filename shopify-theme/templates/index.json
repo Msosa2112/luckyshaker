@@ -4,7 +4,7 @@
       "type": "event-hero",
       "settings": {
         "eyebrow": "LUCKY SHAKER — COCTELERÍA & BARTENDING DE AUTOR",
-        "headline": "HAZ QUE TU EVENTO<br><span class=\"highlight-pink\">SEA MÁS LUCKY.</span>",
+        "headline": "HAZ QUE TU EVENTO<br><span class=\"highlight-pink\">SEA MÁS <span class=\"sparkle-word-lucky\">LUCKY.</span></span>",
         "subtitle": "Servicio premium de barras móviles, coctelería de autor y hospitalidad inolvidable para bodas, fiestas privadas, galas corporativas y celebraciones.",
         "primary_cta": "COTIZAR TU EVENTO",
         "secondary_cta": "TIENDA ONLINE"
@@ -57,22 +57,6 @@
         "subtitle": "Cuéntanos sobre tu próxima celebración. Nuestro equipo preparará una propuesta de barra a tu medida y confirmará disponibilidad en menos de 24 horas."
       }
     },
-    "lucky_cinematic_scroll": {
-      "type": "lucky-cinematic-scroll",
-      "settings": {
-        "title_wc": "WHISKEY CREAM",
-        "title_of": "OLD FASHIONED",
-        "title_mojito": "MOJITO"
-      }
-    },
-    "home_shop_preview": {
-      "type": "home-shop-preview",
-      "settings": {
-        "eyebrow": "LLEVA LUCKY SHAKER A CASA",
-        "headline": "La Colección de Botellas Reserva",
-        "subtitle": "Cócteles de autor elaborados a mano y sellados en pesadas botellas de vidrio. Cada botella de 750ml rinde 6–8 copas de nivel coctelería para tu barra personal."
-      }
-    },
     "event_faq": {
       "type": "event-faq",
       "settings": {
@@ -90,8 +74,6 @@
     "event_gallery",
     "event_testimonials",
     "event_booking_form",
-    "lucky_cinematic_scroll",
-    "home_shop_preview",
     "event_faq"
   ]
 }

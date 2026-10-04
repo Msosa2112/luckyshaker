@@ -1345,6 +1345,300 @@ function initPrimeStoneCinematicEngine() {
 }
 
 /* ==========================================================================
+   3.5 HERO SCROLL-DRIVEN CINEMATIC VIDEO ENGINE (4K Desktop & Mobile 9:16)
+   ========================================================================== */
+function initHeroCinematicScroll() {
+  var heroSection = document.getElementById('hero');
+  var stickyViewport = document.getElementById('event-hero-sticky-viewport');
+  var videoDesktop = document.getElementById('hero-landing-video-desktop');
+  var videoMobile = document.getElementById('hero-landing-video-mobile');
+  var heroTitleStage = document.getElementById('hero-title-stage');
+  var heroActionsStage = document.getElementById('hero-actions-stage');
+  var heroLogoStage = document.getElementById('hero-logo-stage');
+  var heroFinalStamp = document.getElementById('hero-final-stamp');
+  var heroContentFallback = document.getElementById('hero-content-container');
+  var scrollCue = document.getElementById('hero-scroll-cue');
+  var progressFill = document.getElementById('hero-progress-line-fill');
+
+  if (!heroSection || !stickyViewport) return;
+
+  var allHeroVideos = [];
+  if (videoDesktop) allHeroVideos.push(videoDesktop);
+  if (videoMobile) allHeroVideos.push(videoMobile);
+
+  allHeroVideos.forEach(function(v) {
+    v.muted = true;
+    v.playsInline = true;
+    v.pause();
+    v.preload = 'auto';
+    // NOTE: do not seek here. Seeking while the file is still loading can leave
+    // the element with seekable = [0,0], which makes every later scrub a no-op.
+    v.__healTries = 0;
+  });
+
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function getActiveVideo() {
+    return isMobile() ? (videoMobile || videoDesktop) : (videoDesktop || videoMobile);
+  }
+
+  function isVideoSeekable(video) {
+    try {
+      return video.seekable && video.seekable.length > 0 &&
+        video.seekable.end(video.seekable.length - 1) > video.duration * 0.5;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Self-heal: if the browser left the video in an unseekable state, reload it once
+  // and re-apply the pending target time as soon as data is available.
+  function healVideo(video) {
+    if (video.__healing || video.__healTries >= 4) return;
+    video.__healing = true;
+    video.__healTries++;
+    video.load();
+    var done = function() {
+      video.__healing = false;
+      video.pause();
+      if (typeof video.__pendingTime === 'number') {
+        try { video.currentTime = video.__pendingTime; } catch (e) {}
+      }
+    };
+    video.addEventListener('loadeddata', done, { once: true });
+    setTimeout(function() { video.__healing = false; }, 6000);
+  }
+
+  function scrubVideo(video, targetSeconds) {
+    if (!video || !video.duration || isNaN(video.duration)) return;
+    var maxSafe = Math.max(0, video.duration - 0.02);
+    var clamped = Math.max(0, Math.min(maxSafe, targetSeconds));
+    video.__pendingTime = clamped;
+    if (video.__healing) return;
+    if (!isVideoSeekable(video)) {
+      healVideo(video);
+      return;
+    }
+    if (Math.abs(video.currentTime - clamped) > 0.012) {
+      video.currentTime = clamped;
+    }
+  }
+
+  var targetProgress = 0;
+  var currentProgress = 0;
+  var isLoopActive = false;
+
+  function computeHeroScrollProgress() {
+    var rect = heroSection.getBoundingClientRect();
+    var scrollDistance = heroSection.offsetHeight - window.innerHeight;
+    if (scrollDistance <= 0) return 0;
+    var raw = -rect.top / scrollDistance;
+    return Math.max(0, Math.min(1, raw));
+  }
+
+  function onScrollOrResize() {
+    var newTarget = computeHeroScrollProgress();
+    if (Math.abs(newTarget - targetProgress) > 0.0001) {
+      targetProgress = newTarget;
+      if (!isLoopActive) {
+        isLoopActive = true;
+        requestAnimationFrame(renderHeroLoop);
+      }
+    }
+  }
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
+
+  function renderHeroLoop() {
+    var diff = targetProgress - currentProgress;
+    var factor = Math.abs(diff) > 0.06 ? 0.32 : 0.20;
+    if (Math.abs(diff) > 0.0002) {
+      currentProgress += diff * factor;
+      applyHeroCinematicTransformation(currentProgress);
+      requestAnimationFrame(renderHeroLoop);
+    } else {
+      currentProgress = targetProgress;
+      applyHeroCinematicTransformation(currentProgress);
+      isLoopActive = false;
+    }
+  }
+
+  var heroOverlay = document.querySelector('.event-hero-overlay');
+
+  function applyHeroCinematicTransformation(p) {
+    // 1. Scrub video: develops smoothly almost to the very end of the scroll (p = 0.97)
+    // Allows full slow-motion ingredients, shaking, pouring, ice, shaker bounce, and bloom to play out!
+    var VIDEO_END = 0.97;
+    var video = getActiveVideo();
+    if (video && video.duration) {
+      var maxTime = Math.max(0, video.duration - 0.02);
+      var videoNorm = Math.min(1, p / VIDEO_END);
+      var targetTime = videoNorm * maxTime;
+      scrubVideo(video, targetTime);
+    }
+
+    // 2. Subtle camera zoom on video layer & final stamp (1.02 -> 1.08)
+    var zoomP = Math.min(1, p / VIDEO_END);
+    var scale = (1.02 + zoomP * 0.06).toFixed(4);
+    allHeroVideos.forEach(function(v) {
+      if (v) v.style.transform = 'scale(' + scale + ')';
+    });
+    if (heroFinalStamp) {
+      heroFinalStamp.style.transform = 'scale(' + scale + ')';
+    }
+
+    // 3. EDITORIAL TITLE CHOREOGRAPHY (Solo early mid-scroll, completely gone before mixology pour)
+    // - Phase 1 (0.00 -> 0.06): Pure clean video. Title hidden.
+    // - Phase 2 (0.06 -> 0.16): Title fades in solo ("HAZ QUE TU EVENTO SEA MÁS LUCKY.")
+    // - Phase 3 (0.16 -> 0.36): Title stays fully visible alone in center.
+    // - Phase 4 (0.36 -> 0.46): Title dissolves / fades out cleanly.
+    // - Phase 5 (0.46 -> 0.93): Title completely gone. Video plays completely uninterrupted!
+    if (heroTitleStage) {
+      if (p < 0.06) {
+        heroTitleStage.style.opacity = '0';
+        heroTitleStage.style.transform = 'translate(-50%, calc(-50% + 35px)) scale(0.96)';
+        heroTitleStage.style.pointerEvents = 'none';
+      } else if (p < 0.16) {
+        var inNorm = (p - 0.06) / 0.10; // 0 -> 1
+        var yIn = (1 - inNorm) * 35;
+        var sIn = 0.96 + inNorm * 0.04;
+        heroTitleStage.style.opacity = inNorm.toFixed(3);
+        heroTitleStage.style.transform = 'translate(-50%, calc(-50% + ' + yIn.toFixed(1) + 'px)) scale(' + sIn.toFixed(3) + ')';
+        heroTitleStage.style.pointerEvents = 'none';
+      } else if (p <= 0.36) {
+        heroTitleStage.style.opacity = '1';
+        heroTitleStage.style.transform = 'translate(-50%, -50%) scale(1)';
+        heroTitleStage.style.pointerEvents = 'none';
+      } else if (p <= 0.46) {
+        var outNorm = (p - 0.36) / 0.10; // 0 -> 1
+        var yOut = -outNorm * 35;
+        var sOut = 1.0 - outNorm * 0.04;
+        var opOut = (1 - outNorm).toFixed(3);
+        heroTitleStage.style.opacity = opOut;
+        heroTitleStage.style.transform = 'translate(-50%, calc(-50% + ' + yOut.toFixed(1) + 'px)) scale(' + sOut.toFixed(3) + ')';
+        heroTitleStage.style.pointerEvents = 'none';
+      } else {
+        heroTitleStage.style.opacity = '0';
+        heroTitleStage.style.transform = 'translate(-50%, calc(-50% - 35px)) scale(0.96)';
+        heroTitleStage.style.pointerEvents = 'none';
+      }
+    }
+
+    // 4. ACTIONS & CONVERSION GROUP CHOREOGRAPHY (Buttons, Subtitle, Trust Bar)
+    // - Phase 1 to 3 (0.00 -> 0.93): STRICTLY HIDDEN! Full video animation plays out.
+    // - Phase 4 (0.93 -> 0.97): Smooth entrance as video reaches its final climax.
+    // - Phase 5 (0.97 -> 1.00): REST & INTERACTION HOLD ZONE. Fully visible, interactive.
+    if (heroActionsStage) {
+      if (p < 0.93) {
+        heroActionsStage.style.opacity = '0';
+        heroActionsStage.style.transform = 'translateX(-50%) translateY(35px)';
+        heroActionsStage.style.pointerEvents = 'none';
+      } else if (p < 0.97) {
+        var actNorm = (p - 0.93) / 0.04; // 0 -> 1
+        var actY = (1 - actNorm) * 35;
+        heroActionsStage.style.opacity = actNorm.toFixed(3);
+        heroActionsStage.style.transform = 'translateX(-50%) translateY(' + actY.toFixed(1) + 'px)';
+        heroActionsStage.style.pointerEvents = actNorm > 0.5 ? 'auto' : 'none';
+      } else {
+        heroActionsStage.style.opacity = '1';
+        heroActionsStage.style.transform = 'translateX(-50%) translateY(0px)';
+        heroActionsStage.style.pointerEvents = 'auto';
+      }
+    }
+
+    // 4a. Final-frame choreography hooks (CSS staggers children when .is-in is present)
+    var finalIn = p >= 0.93;
+    if (heroActionsStage) heroActionsStage.classList.toggle('is-in', finalIn);
+    if (heroLogoStage) heroLogoStage.classList.toggle('is-in', finalIn);
+
+    // 4b. Vector SVG Logo Stage (Crisp brand seal over clean background at very end)
+    if (heroLogoStage) {
+      if (p < 0.93) {
+        heroLogoStage.style.opacity = '0';
+        heroLogoStage.style.transform = 'translate(-50%, calc(-50% + 22px)) scale(0.95)';
+        heroLogoStage.style.pointerEvents = 'none';
+      } else if (p < 0.97) {
+        var logoNorm = (p - 0.93) / 0.04; // 0 -> 1
+        var logoY = (1 - logoNorm) * 22;
+        var logoScale = 0.95 + logoNorm * 0.05;
+        heroLogoStage.style.opacity = logoNorm.toFixed(3);
+        heroLogoStage.style.transform = 'translate(-50%, calc(-50% + ' + logoY.toFixed(1) + 'px)) scale(' + logoScale.toFixed(3) + ')';
+        heroLogoStage.style.pointerEvents = 'none';
+      } else {
+        heroLogoStage.style.opacity = '1';
+        heroLogoStage.style.transform = 'translate(-50%, -50%) scale(1)';
+        heroLogoStage.style.pointerEvents = 'none';
+      }
+    }
+
+    // 4c. Master Final Frame Hero Stamp (Locks crystal-clear clean photo as permanent Hero)
+    if (heroFinalStamp) {
+      if (p < 0.93) {
+        heroFinalStamp.style.opacity = '0';
+      } else if (p < 0.97) {
+        var stampNorm = (p - 0.93) / 0.04; // 0 -> 1 cross-fade
+        heroFinalStamp.style.opacity = stampNorm.toFixed(3);
+      } else {
+        heroFinalStamp.style.opacity = '1';
+      }
+    }
+
+    // Fallback if older markup is ever present
+    if (heroContentFallback && !heroTitleStage) {
+      if (p >= 0.10 && p <= 0.55) {
+        heroContentFallback.style.opacity = '1';
+        heroContentFallback.style.pointerEvents = 'auto';
+      } else {
+        heroContentFallback.style.opacity = '0';
+        heroContentFallback.style.pointerEvents = 'none';
+      }
+    }
+
+    // 5. Dynamic Overlay Modulation
+    if (heroOverlay) {
+      if (p < 0.08) {
+        heroOverlay.style.opacity = '0.15';
+      } else if (p < 0.20) {
+        var ovIn = 0.15 + ((p - 0.08) / 0.12) * 0.38;
+        heroOverlay.style.opacity = ovIn.toFixed(3);
+      } else if (p <= 0.44) {
+        heroOverlay.style.opacity = '0.53';
+      } else if (p <= 0.56) {
+        var ovOut = 0.53 - ((p - 0.44) / 0.12) * 0.38;
+        heroOverlay.style.opacity = ovOut.toFixed(3);
+      } else if (p <= 0.82) {
+        heroOverlay.style.opacity = '0.15';
+      } else {
+        var ovLogo = 0.15 + Math.min(1, (p - 0.82) / 0.06) * 0.10;
+        heroOverlay.style.opacity = ovLogo.toFixed(3);
+      }
+    }
+
+    // 6. Scroll cue fadeout (disappears immediately as scroll begins)
+    if (scrollCue) {
+      if (p <= 0.04) {
+        scrollCue.style.opacity = (1 - p / 0.04).toFixed(3);
+        scrollCue.style.transform = 'translateX(-50%) translateY(' + (p * 30).toFixed(1) + 'px)';
+      } else {
+        scrollCue.style.opacity = '0';
+      }
+    }
+
+    // 7. Timeline Progress line
+    if (progressFill) {
+      progressFill.style.width = (p * 100).toFixed(1) + '%';
+    }
+  }
+
+  // Initial prime
+  onScrollOrResize();
+  applyHeroCinematicTransformation(0);
+}
+
+/* ==========================================================================
    4. STICKY LUXURY NAVBAR CONTROLLER
    ========================================================================== */
 function initStickyNavbar() {
@@ -1385,6 +1679,7 @@ function initAllLuckyShaker() {
     window.LuckyShakerCart.init();
   }
   initPrimeStoneCinematicEngine();
+  initHeroCinematicScroll();
   initStickyNavbar();
 }
 
@@ -1393,4 +1688,247 @@ if (document.readyState === 'loading') {
 } else {
   initAllLuckyShaker();
 }
+
+// ==========================================================================
+// SILICON VALLEY MICROANIMATIONS ENGINE (Intersection Observer & Sparkles)
+// ==========================================================================
+function initMicroAnimations() {
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const elementsToAnimate = document.querySelectorAll('.section-title, .section-subtitle, .event-type-card, .experience-card, .package-card, .luxury-glass-card');
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    // Apply initial state class and per-group stagger (index within siblings, not global)
+    elementsToAnimate.forEach((el) => {
+      el.classList.add('animate-on-scroll');
+      if (el.classList.contains('event-type-card') || el.classList.contains('experience-card') || el.classList.contains('package-card') || el.classList.contains('luxury-glass-card')) {
+        const cardType = ['event-type-card', 'experience-card', 'package-card', 'luxury-glass-card'].find((c) => el.classList.contains(c));
+        const siblings = Array.prototype.filter.call(el.parentElement ? el.parentElement.children : [], (c) => c.classList.contains(cardType));
+        const i = Math.max(0, siblings.indexOf(el));
+        el.style.transitionDelay = `${(i % 4) * 0.09}s`;
+      }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        observer.unobserve(el); // Trigger only once
+        requestAnimationFrame(() => {
+          el.classList.add('is-visible');
+          // Release the reveal state once finished so hover/transform styles work again
+          const delay = parseFloat(el.style.transitionDelay) || 0;
+          setTimeout(() => {
+            el.classList.remove('animate-on-scroll', 'is-visible');
+            el.style.transitionDelay = '';
+          }, (delay + 1.1) * 1000);
+        });
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -15% 0px" });
+
+    elementsToAnimate.forEach(el => observer.observe(el));
+  }
+
+  // Init Sparkles Effect
+  initSparkles();
+  initMotionPolish();
+}
+
+// Magnetic pull on primary CTAs (fine pointers only, uses individual `translate` so hover transforms stay intact)
+function initMotionPolish() {
+  if (!window.matchMedia) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var targets = document.querySelectorAll('.btn-hero-primary, .btn-hero-secondary, .hero-primary-cta, .hero-secondary-cta, .btn-liquid-glass');
+
+  // Subtle 3D tilt + glare tracking on product cards (CSS reads --rx/--ry/--gx/--gy)
+  document.querySelectorAll('.product-item.luxury-glass-card').forEach(function (card) {
+    if (card.dataset.tilt) return;
+    card.dataset.tilt = '1';
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width;
+      var py = (e.clientY - r.top) / r.height;
+      card.style.setProperty('--ry', ((px - 0.5) * 7).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', ((0.5 - py) * 5).toFixed(2) + 'deg');
+      card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+      card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+    });
+    card.addEventListener('pointerleave', function () {
+      card.style.removeProperty('--rx');
+      card.style.removeProperty('--ry');
+    });
+  });
+  targets.forEach(function (btn) {
+    if (btn.dataset.magnetic) return;
+    btn.dataset.magnetic = '1';
+    btn.classList.add('is-magnetic');
+    btn.addEventListener('pointermove', function (e) {
+      var r = btn.getBoundingClientRect();
+      var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      var dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      btn.style.translate = (dx * 10).toFixed(1) + 'px ' + (dy * 8).toFixed(1) + 'px';
+    });
+    btn.addEventListener('pointerleave', function () {
+      btn.style.translate = '';
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMicroAnimations);
+} else {
+  initMicroAnimations();
+}
+
+function initSparkles() {
+  // 1. Guaranteed in-memory animation styles (completely bypasses CSS cache issues)
+  if (!document.getElementById('lucky-sparkle-injected-style')) {
+    const styleEl = document.createElement('style');
+    styleEl.id = 'lucky-sparkle-injected-style';
+    styleEl.textContent = `
+      .sparkle-word-lucky {
+        position: relative !important;
+        display: inline-block !important;
+      }
+      .sparkle-container {
+        position: absolute !important;
+        top: -10px !important;
+        left: -8px !important;
+        right: -8px !important;
+        bottom: -10px !important;
+        width: calc(100% + 16px) !important;
+        height: calc(100% + 20px) !important;
+        pointer-events: none !important;
+        z-index: 50 !important;
+        overflow: visible !important;
+      }
+      .sparkle-svg {
+        position: absolute !important;
+        pointer-events: none !important;
+        transform: translate(-50%, -50%) scale(0);
+        transform-origin: center center !important;
+        z-index: 50 !important;
+        will-change: transform, opacity !important;
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 8px #FE8BBB) !important;
+      }
+      @keyframes sparkle-twinkle {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        }
+        45% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.2) rotate(90deg);
+        }
+        75% {
+          opacity: 0.9;
+          transform: translate(-50%, -50%) scale(0.95) rotate(140deg);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0) rotate(180deg);
+        }
+      }
+    `;
+    document.head.appendChild(styleEl);
+  }
+
+  // 2. Find or target the word "LUCKY"
+  const heroTitle = document.querySelector('.event-hero-title');
+  if (!heroTitle) {
+    setTimeout(initSparkles, 200);
+    return;
+  }
+
+  let target = heroTitle.querySelector('.sparkle-word-lucky');
+  if (!target) {
+    const pinkSpan = heroTitle.querySelector('.highlight-pink') || heroTitle;
+    if (pinkSpan && /LUCKY/i.test(pinkSpan.innerHTML)) {
+      pinkSpan.innerHTML = pinkSpan.innerHTML.replace(/(LUCKY\.?)/i, '<span class="sparkle-word-lucky">$1</span>');
+      target = heroTitle.querySelector('.sparkle-word-lucky');
+    } else {
+      target = pinkSpan;
+    }
+  }
+
+  if (!target) return;
+
+  // Force strict relative and inline-block positioning directly
+  target.style.position = 'relative';
+  target.style.display = 'inline-block';
+  target.style.verticalAlign = 'baseline';
+
+  // 3. Reset any prior containers
+  target.querySelectorAll('.sparkle-container').forEach(c => c.remove());
+
+  const container = document.createElement('div');
+  container.className = 'sparkle-container';
+  container.style.position = 'absolute';
+  container.style.top = '-10px';
+  container.style.left = '-8px';
+  container.style.width = 'calc(100% + 16px)';
+  container.style.height = 'calc(100% + 20px)';
+  container.style.pointerEvents = 'none';
+  container.style.zIndex = '50';
+  container.style.overflow = 'visible';
+  target.appendChild(container);
+
+  const colors = ['#FE8BBB', '#FFFFFF', '#FFD700', '#C4B5FD', '#FF85C0', '#FDE68A'];
+  const svgPath = "M9.82531 0.843845C10.0553 0.215178 10.9446 0.215178 11.1746 0.843845L11.8618 2.72026C12.4006 4.19229 12.3916 6.39157 13.5 7.5C14.6084 8.60843 16.8077 8.59935 18.2797 9.13822L20.1561 9.82534C20.7858 10.0553 20.7858 10.9447 20.1561 11.1747L18.2797 11.8618C16.8077 12.4007 14.6084 12.3916 13.5 13.5C12.3916 14.6084 12.4006 16.8077 11.8618 18.2798L11.1746 20.1562C10.9446 20.7858 10.0553 20.7858 9.82531 20.1562L9.13819 18.2798C8.59932 16.8077 8.60843 14.6084 7.5 13.5C6.39157 12.3916 4.19225 12.4007 2.72023 11.8618L0.843814 11.1747C0.215148 10.9447 0.215148 10.0553 0.843814 9.82534L2.72023 9.13822C4.19225 8.59935 6.39157 8.60843 7.5 7.5C8.60843 6.39157 8.59932 4.19229 9.13819 2.72026L9.82531 0.843845Z";
+
+  // 8 autonomous stars staggered continuously
+  const starCount = 8;
+
+  function runStar(star) {
+    if (!container || !container.parentElement) return;
+
+    // Random coordinates tightly on the word LUCKY
+    const x = (Math.random() * 96 + 2).toFixed(1); // 2% to 98%
+    const y = (Math.random() * 80 + 10).toFixed(1); // 10% to 90%
+    const size = Math.floor(Math.random() * 12) + 20; // 20px to 32px (clearly visible!)
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const duration = (Math.random() * 0.7 + 1.1).toFixed(2); // 1.1s to 1.8s
+
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = x + '%';
+    star.style.top = y + '%';
+    star.querySelector('path').setAttribute('fill', color);
+
+    // Retrigger animation
+    star.style.animation = 'none';
+    void star.offsetWidth; // force reflow
+    star.style.animation = `sparkle-twinkle ${duration}s ease-in-out forwards`;
+
+    // When this star cycle completes, wait a moment and pop up in a new random spot!
+    const nextTime = Math.round(parseFloat(duration) * 1000) + Math.floor(Math.random() * 300 + 100);
+    setTimeout(() => runStar(star), nextTime);
+  }
+
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    star.setAttribute("viewBox", "0 0 21 21");
+    star.classList.add("sparkle-svg");
+    star.style.position = 'absolute';
+    star.style.width = '24px';
+    star.style.height = '24px';
+    star.style.transform = 'translate(-50%, -50%) scale(0)';
+    star.style.pointerEvents = 'none';
+    star.style.zIndex = '50';
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", svgPath);
+    path.setAttribute("fill", colors[i % colors.length]);
+    star.appendChild(path);
+
+    container.appendChild(star);
+
+    // Stagger initial appearances so they twinkle out of sync
+    setTimeout(() => runStar(star), i * 180);
+  }
+
+  console.log('✨ Lucky Shaker Sparkles Engine Active on word LUCKY (8 stars)');
+}
+
+
 

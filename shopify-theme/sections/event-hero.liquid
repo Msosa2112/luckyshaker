@@ -1,49 +1,88 @@
 <section id="hero" class="event-hero-section" data-section-id="{{ section.id }}">
-  <div class="event-hero-media-wrap">
-    <img src="{{ 'event-bartender-action.jpg' | asset_url }}" alt="Lucky Shaker Master Mixologist at Event" class="event-hero-bg-img" width="1920" height="1080" loading="eager" fetchpriority="high">
-    <div class="event-hero-overlay"></div>
-    <div class="event-hero-radial-glow"></div>
-  </div>
+  <div class="event-hero-sticky-viewport" id="event-hero-sticky-viewport">
+    
+    <!-- 1. DUAL VIDEO BACKGROUND (Desktop & Mobile 9:16 Scroll-Scrubbed) -->
+    <div class="event-hero-media-wrap" id="hero-media-wrap">
+      <video id="hero-landing-video-desktop" class="event-hero-video hero-video-desktop" muted playsinline preload="auto" poster="{{ 'hero_landing_desktop_poster.jpg' | asset_url }}">
+        <source src="{% if section.settings.video_desktop != blank %}{{ section.settings.video_desktop }}{% else %}{{ 'hero_landing_desktop_scrub.mp4' | asset_url }}{% endif %}" type="video/mp4">
+        <source src="{{ 'hero_landing_desktop.mp4' | asset_url }}" type="video/mp4">
+      </video>
+      <video id="hero-landing-video-mobile" class="event-hero-video hero-video-mobile" muted playsinline preload="auto" poster="{{ 'hero_landing_mobile_poster.jpg' | asset_url }}">
+        <source src="{% if section.settings.video_mobile != blank %}{{ section.settings.video_mobile }}{% else %}{{ 'hero_landing_mobile_scrub.mp4' | asset_url }}{% endif %}" type="video/mp4">
+      </video>
 
-  <div class="event-hero-content-container">
-    <h1 class="event-hero-title">
-      {{ section.settings.headline | default: 'HAZ QUE TU EVENTO<br><span class="highlight-pink">SEA MÁS LUCKY.</span>' }}
-    </h1>
+      <!-- FINAL FRAME HERO STAMP (Crisp background photo without baked-in logo) -->
+      <picture class="event-hero-final-stamp" id="hero-final-stamp">
+        <source media="(max-width: 768px)" srcset="{{ 'hero_landing_mobile_nobg.jpg' | asset_url }}">
+        <img src="{{ 'hero_landing_desktop_nobg.jpg' | asset_url }}" alt="Lucky Shaker Mobile Bartending Service" class="hero-final-stamp-img" loading="eager" width="2560" height="1428">
+      </picture>
 
-    <p class="event-hero-subtitle" data-i18n="hero.subtitle">
-      {{ section.settings.subtitle | default: 'Servicio premium de barras móviles, coctelería de autor y hospitalidad inolvidable para bodas, fiestas privadas, galas corporativas y celebraciones.' }}
-    </p>
-
-    <div class="event-hero-ctas">
-      <a href="#book-event" class="btn btn-pink btn-hero-primary" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }">
-        <span data-i18n="hero.primary_cta">{{ section.settings.primary_cta | default: 'COTIZAR TU EVENTO' }}</span>
-        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M1 7h12M8 2l5 5-5 5"/>
-        </svg>
-      </a>
-
-      <a href="#cinematic-sequence" class="btn button-glass btn-hero-secondary" onclick="const s=document.getElementById('cinematic-sequence') || document.getElementById('shop-preview'); if(s){ s.scrollIntoView({behavior:'smooth'}); return false; }">
-        <span data-i18n="hero.secondary_cta">{{ section.settings.secondary_cta | default: 'TIENDA ONLINE' }}</span>
-        <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-left: 0.35rem;">
-          <path d="M1 7h12M8 2l5 5-5 5"/>
-        </svg>
-      </a>
+      <div class="event-hero-overlay"></div>
+      <div class="event-hero-radial-glow"></div>
     </div>
 
-    <div class="event-hero-trust-bar">
-      <div class="trust-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span data-i18n="hero.trust1">Barras Móviles de Lujo</span>
+    <!-- 2. EDITORIAL HERO TITLE (Appears solo during middle scroll, dissolves before logo) -->
+    <div class="hero-title-stage" id="hero-title-stage">
+      <h1 class="event-hero-title">
+        {{ section.settings.headline | default: 'HAZ QUE TU EVENTO<br><span class="highlight-pink">SEA MÁS <span class="sparkle-word-lucky">LUCKY.</span></span>' }}
+      </h1>
+    </div>
+
+    <!-- 3. BRAND LOGO STAGE (Crisp vector SVG logo layered over the background photo at final frame) -->
+    <div class="hero-logo-stage" id="hero-logo-stage">
+      <img src="{{ 'logo_lucky_shaker_light.svg' | asset_url }}" alt="Lucky Shaker" class="hero-svg-logo" width="460" height="207" loading="eager">
+    </div>
+
+    <!-- 3. HERO ACTIONS & CONVERSION GROUP (Appears ONLY at the last frame below the center logo) -->
+    <div class="hero-actions-stage" id="hero-actions-stage">
+      <p class="event-hero-subtitle" data-i18n="hero.subtitle">
+        {{ section.settings.subtitle | default: 'Servicio premium de barras móviles, coctelería de autor y hospitalidad inolvidable para bodas, fiestas privadas, galas corporativas y celebraciones.' }}
+      </p>
+
+      <div class="event-hero-ctas">
+        <a href="#book-event" class="btn btn-pink btn-hero-primary" onclick="const f=document.getElementById('book-event'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }">
+          <span data-i18n="hero.primary_cta">{{ section.settings.primary_cta | default: 'COTIZAR TU EVENTO' }}</span>
+          <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
+
+        <a href="{{ routes.all_products_collection_url }}" class="btn button-glass btn-hero-secondary">
+          <span data-i18n="hero.secondary_cta">{{ section.settings.secondary_cta | default: 'TIENDA ONLINE' }}</span>
+          <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-left: 0.35rem;">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
       </div>
-      <div class="trust-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span data-i18n="hero.trust2">Mixólogos de Autor Certificados</span>
-      </div>
-      <div class="trust-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <span data-i18n="hero.trust3">Servicio 5 Estrellas</span>
+
+      <div class="event-hero-trust-bar">
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span data-i18n="hero.trust1">Barras Móviles de Lujo</span>
+        </div>
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span data-i18n="hero.trust2">Mixólogos de Autor Certificados</span>
+        </div>
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span data-i18n="hero.trust3">Servicio 5 Estrellas</span>
+        </div>
       </div>
     </div>
+
+    <!-- 3. TACTILE SCROLL CUE & TIMELINE PROGRESS -->
+    <div class="hero-scroll-cue-wrap" id="hero-scroll-cue">
+      <span class="hero-scroll-cue-label">SCROLL PARA EXPLORAR</span>
+      <div class="hero-scroll-mouse-pill">
+        <div class="hero-scroll-wheel-dot"></div>
+      </div>
+    </div>
+
+    <div class="hero-progress-line-track">
+      <div class="hero-progress-line-fill" id="hero-progress-line-fill"></div>
+    </div>
+
   </div>
 </section>
 
@@ -61,7 +100,7 @@
       "type": "text",
       "id": "headline",
       "label": "Headline",
-      "default": "HAZ QUE TU EVENTO<br><span class=\"highlight-pink\">SEA MÁS LUCKY.</span>"
+      "default": "HAZ QUE TU EVENTO<br><span class=\"highlight-pink\">SEA MÁS <span class=\"sparkle-word-lucky\">LUCKY.</span></span>"
     },
     {
       "type": "textarea",

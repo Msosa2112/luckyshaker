@@ -18,7 +18,7 @@
         <li><a href="#events" onclick="const e=document.getElementById('events') || document.getElementById('event-types'); if(e){ e.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.events">Eventos &amp; Servicios</a></li>
         <li><a href="#experience" onclick="const ex=document.getElementById('experience') || document.getElementById('event-experience'); if(ex){ ex.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.experience">Experiencia</a></li>
         <li><a href="#gallery" onclick="const g=document.getElementById('gallery') || document.getElementById('event-gallery'); if(g){ g.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.gallery">Galería</a></li>
-        <li><a href="#cinematic-sequence" onclick="const s=document.getElementById('cinematic-sequence') || document.getElementById('shop-preview'); if(s){ s.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link nav-shop-link" data-i18n="nav.shop">Tienda Online</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}" class="nav-link nav-shop-link" data-i18n="nav.shop">Tienda Online</a></li>
         <li><a href="#faq" onclick="const f=document.getElementById('faq') || document.getElementById('event-faq'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }" class="nav-link" data-i18n="nav.faq">Preguntas</a></li>
       {%- endif -%}
     </ul>
