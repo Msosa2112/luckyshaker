@@ -313,7 +313,7 @@
 {%- endpaginate -%}
 
 {%- comment -%} Ingredient sprites (assets/ing-<name>.webp) used by the atmosphere layer {%- endcomment -%}
-{%- assign fx_names = 'ice,lime-wheel,lime-half,lemon-wheel,lemon-twist,orange-wheel,orange-peel,grapefruit-half,pineapple-wedge,peach,cranberries,mint,coffee-beans,ginger,coconut-half,agave,sugar-cubes,juniper,cherry,sea-salt,olive,apple' | split: ',' -%}
+{%- assign fx_names = 'ice,lime-wheel,lime-half,lemon-wheel,lemon-twist,orange-wheel,orange-peel,grapefruit-half,pineapple-wedge,pineapple-dry,pineapple-twist,peach,cranberries,mint,coffee-beans,ginger,coconut-half,agave,sugar-cubes,juniper,cherry,sea-salt,olive,apple,apple-half,apple-peel' | split: ',' -%}
 <script type="application/json" data-cc-fx-assets>
 { {% for fx_name in fx_names %}"{{ fx_name }}": {{ 'ing-' | append: fx_name | append: '.webp' | asset_url | json }}{% unless forloop.last %}, {% endunless %}{% endfor %} }
 </script>
