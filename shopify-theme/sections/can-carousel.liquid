@@ -187,8 +187,28 @@
     <!-- Colour wash: every product's own photo, blurred, crossfading behind the cans -->
     <div class="cc-bg" aria-hidden="true">{{ cc_bg }}</div>
 
+    <div class="cc-categories-wrap">
+      <nav class="cc-categories" aria-label="Product Categories">
+        <button type="button" class="cc-cat-tab is-active" data-cat="cocktails">
+          <span data-cc-t="cat_cocktails">COCKTAILS</span>
+        </button>
+        <span class="cc-cat-sep" aria-hidden="true">|</span>
+        <button type="button" class="cc-cat-tab" data-cat="dry-fruits">
+          <span data-cc-t="cat_dry_fruits">DRY FRUITS</span>
+        </button>
+        <span class="cc-cat-sep" aria-hidden="true">|</span>
+        <button type="button" class="cc-cat-tab" data-cat="creams">
+          <span data-cc-t="cat_creams">CREAMS</span>
+        </button>
+        <span class="cc-cat-sep" aria-hidden="true">|</span>
+        <button type="button" class="cc-cat-tab" data-cat="gift-sets">
+          <span data-cc-t="cat_gift_sets">GIFT SETS</span>
+        </button>
+      </nav>
+    </div>
+
     <div class="cc-top">
-      <h1 class="cc-eyebrow">{{ collection.title | default: 'The Signature Collection' }}</h1>
+      <h1 class="cc-eyebrow" data-cc-heading>{{ collection.title | default: 'The Signature Collection' }}</h1>
       <div class="cc-tools" role="group" aria-label="Vista">
         <button type="button" class="cc-tool is-on" data-cc-view="carousel" aria-pressed="true" aria-label="Carrusel" data-cc-label="view_carousel">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="4" width="8" height="16" rx="3"/><path d="M3.5 8v8M20.5 8v8"/></svg>
@@ -291,7 +311,7 @@
 {%- endpaginate -%}
 
 {%- comment -%} Ingredient sprites (assets/ing-<name>.webp) used by the atmosphere layer {%- endcomment -%}
-{%- assign fx_names = 'ice,lime-wheel,lime-half,lemon-wheel,lemon-twist,orange-wheel,orange-peel,grapefruit-half,pineapple-wedge,peach,cranberries,mint,coffee-beans,ginger,coconut-half,agave,sugar-cubes,juniper,cherry,sea-salt,olive' | split: ',' -%}
+{%- assign fx_names = 'ice,lime-wheel,lime-half,lemon-wheel,lemon-twist,orange-wheel,orange-peel,grapefruit-half,pineapple-wedge,peach,cranberries,mint,coffee-beans,ginger,coconut-half,agave,sugar-cubes,juniper,cherry,sea-salt,olive,apple' | split: ',' -%}
 <script type="application/json" data-cc-fx-assets>
 { {% for fx_name in fx_names %}"{{ fx_name }}": {{ 'ing-' | append: fx_name | append: '.webp' | asset_url | json }}{% unless forloop.last %}, {% endunless %}{% endfor %} }
 </script>
