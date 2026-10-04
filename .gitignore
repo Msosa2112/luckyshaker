@@ -24,3 +24,9 @@ package-lock.json
 # Shopify CLI local state
 .shopify/
 node_modules
+
+# Temporary debug frames & screenshots
+**/debug_*.jpg
+**/debug_*.png
+preview/*.png
+

@@ -553,14 +553,32 @@ button {
   box-shadow: none !important;
 }
 
-.navbar.scrolled {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+.navbar.scrolled,
+.navbar.navbar--light,
+.template-collection .navbar {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
   border: none !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
   height: var(--nav-height, 80px);
+}
+
+.template-collection .navbar .nav-logo-dark,
+.navbar.navbar--light .nav-logo-dark {
+  display: block !important;
+}
+
+.template-collection .navbar .nav-logo-light,
+.navbar.navbar--light .nav-logo-light {
+  display: none !important;
+}
+
+.template-collection .navbar .nav-link,
+.navbar.navbar--light .nav-link {
+  color: #121316 !important;
+  text-shadow: none !important;
 }
 
 .nav-brand {
@@ -823,6 +841,217 @@ button {
   color: var(--text-primary);
   padding: 0.5rem;
   cursor: pointer;
+}
+
+/* ==========================================================================
+   MOBILE NAVIGATION DRAWER & RESPONSIVE NAVBAR
+   ========================================================================== */
+@media (max-width: 1024px) {
+  :root {
+    --nav-height: 64px;
+  }
+  .navbar {
+    height: 64px !important;
+    padding: 0 1.25rem !important;
+  }
+  .nav-center {
+    display: none !important;
+  }
+  .nav-menu {
+    display: none !important;
+  }
+  .nav-brand {
+    max-width: 140px !important;
+  }
+  .nav-logo-img {
+    height: 28px !important;
+    width: auto !important;
+    max-width: 135px !important;
+  }
+  .nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.55rem !important;
+  }
+  .mobile-menu-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #121316;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s var(--ease-natural), background 0.25s ease, border-color 0.25s ease;
+  }
+  .mobile-menu-btn:hover {
+    transform: scale(1.05);
+    color: var(--accent-pink, #E82B7D);
+    border-color: var(--accent-pink, #E82B7D);
+  }
+  .mobile-menu-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  .cart-toggle-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    color: #121316 !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+  }
+  .lang-switcher {
+    padding: 2px 6px !important;
+    height: 32px !important;
+  }
+  .lang-btn {
+    font-size: 0.72rem !important;
+    padding: 2px 6px !important;
+  }
+  .nav-book-btn {
+    display: none !important;
+  }
+}
+
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 19, 22, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+}
+.mobile-nav-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(85vw, 360px);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mobile-nav-drawer.is-open {
+  transform: translateX(0);
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.mobile-nav-brand img {
+  height: 30px;
+  width: auto;
+}
+.mobile-nav-close {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.03);
+  color: #121316;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.mobile-nav-close:hover {
+  background: rgba(232, 43, 125, 0.1);
+  color: var(--accent-pink, #E82B7D);
+}
+
+.mobile-nav-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mobile-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.mobile-nav-link {
+  display: block;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-ui, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #121316;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+  background: rgba(232, 43, 125, 0.08);
+  color: var(--accent-pink, #E82B7D);
+  padding-left: 1.3rem;
+}
+
+.mobile-nav-footer {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.mobile-nav-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+}
+.mobile-lang-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+.mobile-lang-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary, #666);
+}
+html.menu-locked {
+  overflow: hidden !important;
 }
 
 /* ==========================================================================

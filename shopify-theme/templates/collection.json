@@ -8,15 +8,13 @@
         "title_mojito": "MOJITO"
       }
     },
-    "main_collection": {
-      "type": "main-collection",
-      "settings": {
-        "products_per_page": 12
-      }
+    "can_carousel": {
+      "type": "can-carousel",
+      "settings": {}
     }
   },
   "order": [
     "lucky_cinematic_scroll",
-    "main_collection"
+    "can_carousel"
   ]
 }

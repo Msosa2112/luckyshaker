@@ -1669,6 +1669,67 @@ function initStickyNavbar() {
 }
 
 /* ==========================================================================
+   4b. MOBILE NAVIGATION DRAWER CONTROLLER
+   ========================================================================== */
+function initMobileMenu() {
+  var menuBtn = document.getElementById('mobile-menu-btn');
+  var drawer = document.getElementById('mobile-nav-drawer');
+  var backdrop = document.getElementById('mobile-nav-backdrop');
+  var closeBtn = document.getElementById('mobile-nav-close');
+  var navLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (!menuBtn || !drawer) return;
+
+  function openMenu() {
+    drawer.classList.add('is-open');
+    if (backdrop) backdrop.classList.add('is-open');
+    document.documentElement.classList.add('menu-locked');
+    menuBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    drawer.classList.remove('is-open');
+    if (backdrop) backdrop.classList.remove('is-open');
+    document.documentElement.classList.remove('menu-locked');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  menuBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (drawer.classList.contains('is-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeMenu();
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', function() {
+      closeMenu();
+    });
+  }
+
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      closeMenu();
+    });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+      closeMenu();
+    }
+  });
+}
+
+/* ==========================================================================
    5. DOM INITIALIZATION
    ========================================================================== */
 function initAllLuckyShaker() {
@@ -1681,6 +1742,7 @@ function initAllLuckyShaker() {
   initPrimeStoneCinematicEngine();
   initHeroCinematicScroll();
   initStickyNavbar();
+  initMobileMenu();
 }
 
 if (document.readyState === 'loading') {

@@ -1,0 +1,1298 @@
+<!doctype html><html class="js" lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Preview — Can Carousel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shopify-theme/assets/lucky-shaker.css?v=2.2">
+<script>window.LuckyShaker={routes:{cart_url:'/cart',cart_add_url:'/cart/add.js',cart_change_url:'/cart/change.js'},moneyFormat:'${{amount}}'};
+window.__adds=[];</script>
+</head><body class="template-collection">
+<header class="navbar navbar--light scrolled" id="main-nav">
+  <a href="/" class="nav-brand" aria-label="Lucky Shaker Home">
+    <img src="../shopify-theme/assets/logo_lucky_shaker_dark.svg" alt="Lucky Shaker" class="nav-logo-img nav-logo-dark" width="160" height="42" style="display:block!important">
+  </a>
+
+  <nav class="nav-center" aria-label="Navegación Principal">
+    <ul class="nav-menu">
+      <li><a href="/" class="nav-link" data-i18n="nav.events">EVENTOS</a></li>
+      <li><a href="/preview/collection.html" class="nav-link nav-shop-link active" style="color:var(--accent-pink, #E82B7D) !important" data-i18n="nav.shop">TIENDA</a></li>
+      <li><a href="/#experience" class="nav-link" data-i18n="nav.experience">NOSOTROS</a></li>
+    </ul>
+  </nav>
+
+  <div class="nav-actions">
+    <!-- Luxury Language Switcher [ ES | EN ] -->
+    <div class="lang-switcher" id="lang-switcher" aria-label="Selector de Idioma / Language">
+      <button type="button" class="lang-btn active" id="lang-btn-es" data-lang="es" onclick="if(window.LuckyShakerLang)LuckyShakerLang.setLang('es')">ES</button>
+      <span class="lang-divider">/</span>
+      <button type="button" class="lang-btn" id="lang-btn-en" data-lang="en" onclick="if(window.LuckyShakerLang)LuckyShakerLang.setLang('en')">EN</button>
+    </div>
+
+    <!-- Luxury Shopping Bag Icon Trigger -->
+    <button class="cart-toggle-btn open-cart-btn" aria-label="Ver Bolsa de Compras" id="nav-cart-trigger">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="nav-cart-icon">
+        <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+      </svg>
+      <span class="cart-badge" id="cart-badge-count">0</span>
+    </button>
+
+    <!-- Mobile Hamburger Toggle Button -->
+    <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+<aside class="mobile-nav-drawer" id="mobile-nav-drawer" aria-label="Menú Móvil">
+  <div class="mobile-nav-header">
+    <a href="/" class="mobile-nav-brand">
+      <img src="../shopify-theme/assets/logo_lucky_shaker_dark.svg" alt="Lucky Shaker" width="135" height="34">
+    </a>
+    <button type="button" class="mobile-nav-close" id="mobile-nav-close" aria-label="Cerrar Menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav-body">
+    <ul class="mobile-nav-links">
+      <li><a href="/" class="mobile-nav-link" data-i18n="nav.events">EVENTOS &amp; SERVICIOS</a></li>
+      <li><a href="/preview/collection.html" class="mobile-nav-link active" data-i18n="nav.shop">TIENDA ONLINE</a></li>
+      <li><a href="/#experience" class="mobile-nav-link" data-i18n="nav.experience">NOSOTROS &amp; EXPERIENCIA</a></li>
+      <li><a href="/#gallery" class="mobile-nav-link" data-i18n="nav.gallery">GALERÍA</a></li>
+      <li><a href="/#faq" class="mobile-nav-link" data-i18n="nav.faq">PREGUNTAS</a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <a href="/#book-event" class="btn btn-pink mobile-nav-cta">
+        <span data-i18n="nav.book_event">COTIZAR EVENTO</span>
+      </a>
+    </div>
+  </div>
+</aside>
+<main id="MainContent"><link rel="stylesheet" href="../shopify-theme/assets/can-carousel.css?v=2.2"><section class="cc" id="can-carousel" data-cc data-view="carousel" data-count="18" aria-label="The Signature Collection">
+
+    <!-- Colour wash: every product's own photo, blurred, crossfading behind the cans -->
+    <div class="cc-bg" aria-hidden="true"><img class="cc-bg-img" data-i="0" src="../preview/bg/old-fashioned.jpg" alt="" width="520" height="520"  decoding="async"><img class="cc-bg-img" data-i="1" src="../preview/bg/margarita.jpg" alt="" width="520" height="520"  decoding="async"><img class="cc-bg-img" data-i="2" src="../preview/bg/daiquiri.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="3" src="../preview/bg/gin-tonic.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="4" src="../preview/bg/paloma.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="5" src="../preview/bg/mimosa.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="6" src="../preview/bg/moscow-mule.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="7" src="../preview/bg/cosmopolitan.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="8" src="../preview/bg/sex-on-the-beach.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="9" src="../preview/bg/pina-colada.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="10" src="../preview/bg/blue-hawaii.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="11" src="../preview/bg/malibu-bay-breeze.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="12" src="../preview/bg/negroni.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="13" src="../preview/bg/manhattan.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="14" src="../preview/bg/classic-martini.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="15" src="../preview/bg/espresso-martini.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="16" src="../preview/bg/caipirinha.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="17" src="../preview/bg/mai-tai.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"></div>
+
+    <div class="cc-top">
+      <h1 class="cc-eyebrow">The Signature Collection</h1>
+      <div class="cc-tools" role="group" aria-label="Vista">
+        <button type="button" class="cc-tool is-on" data-cc-view="carousel" aria-pressed="true" aria-label="Carrusel" data-cc-label="view_carousel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="4" width="8" height="16" rx="3"/><path d="M3.5 8v8M20.5 8v8"/></svg>
+        </button>
+        <button type="button" class="cc-tool" data-cc-view="grid" aria-pressed="false" aria-label="Cuadrícula" data-cc-label="view_grid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="cc-carousel" data-cc-carousel>
+      <nav class="cc-spirits" aria-label="Spirits"><button type="button" class="cc-spirit" data-spirit="tequila" data-cc-t="sp_tequila">Tequila</button><button type="button" class="cc-spirit" data-spirit="rum" data-cc-t="sp_rum">Rum</button><button type="button" class="cc-spirit" data-spirit="gin" data-cc-t="sp_gin">Gin</button><button type="button" class="cc-spirit" data-spirit="vodka" data-cc-t="sp_vodka">Vodka</button><button type="button" class="cc-spirit" data-spirit="whiskey" data-cc-t="sp_whiskey">Whiskey</button><button type="button" class="cc-spirit" data-spirit="sparkling" data-cc-t="sp_sparkling">Sparkling</button></nav>
+
+      <div class="cc-stage" tabindex="0" role="group" aria-roledescription="carousel" aria-label="The Signature Collection">
+        <div class="cc-floor" aria-hidden="true"></div>
+        <!-- Ingredient atmosphere: sprites of each drink's ingredients float behind and in front of the cans -->
+        <div class="cc-fx cc-fx--back" data-cc-fx-back aria-hidden="true"></div>
+        <div class="cc-track"><button type="button" class="cc-can" data-i="0" data-pos="9" tabindex="-1" aria-label="Old Fashioned">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-old-fashioned.webp" alt="Old Fashioned" width="640" height="1040" draggable="false"  decoding="async">
+      </button><button type="button" class="cc-can" data-i="1" data-pos="9" tabindex="-1" aria-label="Margarita">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-margarita.webp" alt="Margarita" width="640" height="1040" draggable="false"  decoding="async">
+      </button><button type="button" class="cc-can" data-i="2" data-pos="9" tabindex="-1" aria-label="Daiquiri">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-daiquiri.webp" alt="Daiquiri" width="640" height="1040" draggable="false"  decoding="async">
+      </button><button type="button" class="cc-can" data-i="3" data-pos="9" tabindex="-1" aria-label="Gin &amp; Tonic">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-gin-tonic.webp" alt="Gin &amp; Tonic" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="4" data-pos="9" tabindex="-1" aria-label="Paloma">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-paloma.webp" alt="Paloma" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="5" data-pos="9" tabindex="-1" aria-label="Mimosa">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-mimosa.webp" alt="Mimosa" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="6" data-pos="9" tabindex="-1" aria-label="Moscow Mule">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-moscow-mule.webp" alt="Moscow Mule" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="7" data-pos="9" tabindex="-1" aria-label="Cosmopolitan">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-cosmopolitan.webp" alt="Cosmopolitan" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="8" data-pos="9" tabindex="-1" aria-label="Sex on the Beach">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-sex-on-the-beach.webp" alt="Sex on the Beach" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="9" data-pos="9" tabindex="-1" aria-label="Piña Colada">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-pina-colada.webp" alt="Piña Colada" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="10" data-pos="9" tabindex="-1" aria-label="Blue Hawaii">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-blue-hawaii.webp" alt="Blue Hawaii" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="11" data-pos="9" tabindex="-1" aria-label="Malibu Bay Breeze">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-malibu-bay-breeze.webp" alt="Malibu Bay Breeze" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="12" data-pos="9" tabindex="-1" aria-label="Negroni">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-negroni.webp" alt="Negroni" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="13" data-pos="9" tabindex="-1" aria-label="Manhattan">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-manhattan.webp" alt="Manhattan" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="14" data-pos="9" tabindex="-1" aria-label="Classic Martini">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-classic-martini.webp" alt="Classic Martini" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="15" data-pos="9" tabindex="-1" aria-label="Espresso Martini">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-espresso-martini.webp" alt="Espresso Martini" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="16" data-pos="9" tabindex="-1" aria-label="Caipirinha">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-caipirinha.webp" alt="Caipirinha" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button><button type="button" class="cc-can" data-i="17" data-pos="9" tabindex="-1" aria-label="Mai Tai">
+        <img class="cc-can-img" src="../shopify-theme/assets/can-mai-tai.webp" alt="Mai Tai" width="640" height="1040" draggable="false" loading="lazy" decoding="async">
+      </button></div>
+        <div class="cc-fx cc-fx--front" data-cc-fx-front aria-hidden="true"></div>
+        <div class="cc-fx-tip" data-cc-fx-tip aria-hidden="true"></div>
+        <button type="button" class="cc-arrow cc-arrow--prev" data-cc-prev aria-label="Anterior" data-cc-label="prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button type="button" class="cc-arrow cc-arrow--next" data-cc-next aria-label="Siguiente" data-cc-label="next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="cc-meta">
+        <div class="cc-infos"><article class="cc-info" data-i="0" data-handle="old-fashioned" data-spirit="whiskey" data-tint="#B8672E"
+        data-variant="5001" data-available="true" data-url="/products/old-fashioned"
+        data-title="Old Fashioned" data-price="$42.00"
+        data-compare=""
+        data-abv="24% ABV" data-bg="../preview/bg/old-fashioned.jpg" data-photo="../preview/photo/old-fashioned.jpg" data-can="../shopify-theme/assets/can-old-fashioned.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_whiskey">Whiskey</span><i aria-hidden="true"></i><span>24% ABV</span></p>
+        <h2 class="cc-info-title"><span>Old Fashioned</span></h2>
+        <p class="cc-info-sub">Bourbon Whiskey · Bitters · Sugar · Orange Peel</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$42.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">An uncompromising classic combining Kentucky straight bourbon, Angostura aromatic bitters, caramelized demerara sugar, and cold-expressed orange oils.</p>
+          <ul class="cc-detail-chips"><li>Bourbon Whiskey</li><li>Bitters</li><li>Sugar</li><li>Orange Peel</li></ul><p class="cc-detail-ritual">Pour over a large crystal ice sphere, garnish with fresh orange peel.</p></div>
+      </article><article class="cc-info" data-i="1" data-handle="margarita" data-spirit="tequila" data-tint="#E8D77A"
+        data-variant="5003" data-available="true" data-url="/products/margarita"
+        data-title="Margarita" data-price="$38.00"
+        data-compare=""
+        data-abv="18% ABV" data-bg="../preview/bg/margarita.jpg" data-photo="../preview/photo/margarita.jpg" data-can="../shopify-theme/assets/can-margarita.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_tequila">Tequila</span><i aria-hidden="true"></i><span>18% ABV</span></p>
+        <h2 class="cc-info-title"><span>Margarita</span></h2>
+        <p class="cc-info-sub">Tequila 100% Agave · Lima · Naranja · Agave Orgánico</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Un clásico refrescante de tequila 100% agave y cítricos frescos, con un equilibrio perfecto entre acidez vibrante y sutil dulzor.</p>
+          <ul class="cc-detail-chips"><li>Tequila 100% Agave</li><li>Lima</li><li>Naranja</li><li>Agave Orgánico</li></ul></div>
+      </article><article class="cc-info" data-i="2" data-handle="daiquiri" data-spirit="rum" data-tint="#A6D67A"
+        data-variant="5004" data-available="true" data-url="/products/daiquiri"
+        data-title="Daiquiri" data-price="$36.00"
+        data-compare=""
+        data-abv="14% ABV" data-bg="../preview/bg/daiquiri.jpg" data-photo="../preview/photo/daiquiri.jpg" data-can="../shopify-theme/assets/can-daiquiri.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_rum">Rum</span><i aria-hidden="true"></i><span>14% ABV</span></p>
+        <h2 class="cc-info-title"><span>Daiquiri</span></h2>
+        <p class="cc-info-sub">Ron Blanco · Lima · Azúcar de Caña</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$36.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Ron blanco superior, zumo de lima recién exprimido y azúcar de caña. El epítome del balance en la coctelería clásica.</p>
+          <ul class="cc-detail-chips"><li>Ron Blanco</li><li>Lima</li><li>Azúcar de Caña</li></ul></div>
+      </article><article class="cc-info" data-i="3" data-handle="gin-tonic" data-spirit="gin" data-tint="#BFE3D6"
+        data-variant="5005" data-available="true" data-url="/products/gin-tonic"
+        data-title="Gin &amp; Tonic" data-price="$38.00"
+        data-compare=""
+        data-abv="14% ABV" data-bg="../preview/bg/gin-tonic.jpg" data-photo="../preview/photo/gin-tonic.jpg" data-can="../shopify-theme/assets/can-gin-tonic.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_gin">Gin</span><i aria-hidden="true"></i><span>14% ABV</span></p>
+        <h2 class="cc-info-title"><span>Gin & Tonic</span></h2>
+        <p class="cc-info-sub">Gin Botánico · Tonic · Cítricos</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Limpio, botánico y sumamente aromático, elaborado con ginebra artesanal de enebro y toques cítricos de pomelo y lima.</p>
+          <ul class="cc-detail-chips"><li>Gin Botánico</li><li>Tonic</li><li>Cítricos</li></ul></div>
+      </article><article class="cc-info" data-i="4" data-handle="paloma" data-spirit="tequila" data-tint="#FF8E7B"
+        data-variant="5006" data-available="true" data-url="/products/paloma"
+        data-title="Paloma" data-price="$38.00"
+        data-compare=""
+        data-abv="15% ABV" data-bg="../preview/bg/paloma.jpg" data-photo="../preview/photo/paloma.jpg" data-can="../shopify-theme/assets/can-paloma.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_tequila">Tequila</span><i aria-hidden="true"></i><span>15% ABV</span></p>
+        <h2 class="cc-info-title"><span>Paloma</span></h2>
+        <p class="cc-info-sub">Tequila · Toronja · Lima · Sal Marina</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Tequila y toronja rosada se unen en un cóctel brillante, cítrico y delicadamente efervescente con un toque de sal marina.</p>
+          <ul class="cc-detail-chips"><li>Tequila</li><li>Toronja</li><li>Lima</li><li>Sal Marina</li></ul></div>
+      </article><article class="cc-info" data-i="5" data-handle="mimosa" data-spirit="sparkling" data-tint="#FFB93B"
+        data-variant="5007" data-available="true" data-url="/products/mimosa"
+        data-title="Mimosa" data-price="$34.00"
+        data-compare=""
+        data-abv="11% ABV" data-bg="../preview/bg/mimosa.jpg" data-photo="../preview/photo/mimosa.jpg" data-can="../shopify-theme/assets/can-mimosa.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_sparkling">Sparkling</span><i aria-hidden="true"></i><span>11% ABV</span></p>
+        <h2 class="cc-info-title"><span>Mimosa</span></h2>
+        <p class="cc-info-sub">Jugo de Naranja · Prosecco</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$34.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">La combinación perfecta de zumo de naranja valenciana y vino espumoso prosecco. Ligera, chispeante y festiva.</p>
+          <ul class="cc-detail-chips"><li>Jugo de Naranja</li><li>Prosecco</li></ul></div>
+      </article><article class="cc-info" data-i="6" data-handle="moscow-mule" data-spirit="vodka" data-tint="#C7D2CC"
+        data-variant="5008" data-available="true" data-url="/products/moscow-mule"
+        data-title="Moscow Mule" data-price="$38.00"
+        data-compare=""
+        data-abv="14% ABV" data-bg="../preview/bg/moscow-mule.jpg" data-photo="../preview/photo/moscow-mule.jpg" data-can="../shopify-theme/assets/can-moscow-mule.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_vodka">Vodka</span><i aria-hidden="true"></i><span>14% ABV</span></p>
+        <h2 class="cc-info-title"><span>Moscow Mule</span></h2>
+        <p class="cc-info-sub">Vodka · Ginger Beer · Lima</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Vodka ultra-purificado, ginger beer con jengibre natural y jugo de lima. Intenso, picante y vigorizante.</p>
+          <ul class="cc-detail-chips"><li>Vodka</li><li>Ginger Beer</li><li>Lima</li></ul></div>
+      </article><article class="cc-info" data-i="7" data-handle="cosmopolitan" data-spirit="vodka" data-tint="#E04B73"
+        data-variant="5009" data-available="true" data-url="/products/cosmopolitan"
+        data-title="Cosmopolitan" data-price="$38.00"
+        data-compare=""
+        data-abv="18% ABV" data-bg="../preview/bg/cosmopolitan.jpg" data-photo="../preview/photo/cosmopolitan.jpg" data-can="../shopify-theme/assets/can-cosmopolitan.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_vodka">Vodka</span><i aria-hidden="true"></i><span>18% ABV</span></p>
+        <h2 class="cc-info-title"><span>Cosmopolitan</span></h2>
+        <p class="cc-info-sub">Vodka · Cranberry · Naranja · Lima</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Elegante y vibrante. Vodka premium con notas ácidas de arándano rojo (cranberry), triple sec y lima fresca.</p>
+          <ul class="cc-detail-chips"><li>Vodka</li><li>Cranberry</li><li>Naranja</li><li>Lima</li></ul></div>
+      </article><article class="cc-info" data-i="8" data-handle="sex-on-the-beach" data-spirit="vodka" data-tint="#FF7A3D"
+        data-variant="5010" data-available="true" data-url="/products/sex-on-the-beach"
+        data-title="Sex on the Beach" data-price="$36.00"
+        data-compare=""
+        data-abv="14% ABV" data-bg="../preview/bg/sex-on-the-beach.jpg" data-photo="../preview/photo/sex-on-the-beach.jpg" data-can="../shopify-theme/assets/can-sex-on-the-beach.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_vodka">Vodka</span><i aria-hidden="true"></i><span>14% ABV</span></p>
+        <h2 class="cc-info-title"><span>Sex on the Beach</span></h2>
+        <p class="cc-info-sub">Vodka · Durazno · Naranja · Cranberry</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$36.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Frutal y seductor. Vodka infusionado con durazno aterciopelado, jugo de naranja y cranberry natural.</p>
+          <ul class="cc-detail-chips"><li>Vodka</li><li>Durazno</li><li>Naranja</li><li>Cranberry</li></ul></div>
+      </article><article class="cc-info" data-i="9" data-handle="pina-colada" data-spirit="rum" data-tint="#F3E3B5"
+        data-variant="5011" data-available="true" data-url="/products/pina-colada"
+        data-title="Piña Colada" data-price="$38.00"
+        data-compare=""
+        data-abv="15% ABV" data-bg="../preview/bg/pina-colada.jpg" data-photo="../preview/photo/pina-colada.jpg" data-can="../shopify-theme/assets/can-pina-colada.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_rum">Rum</span><i aria-hidden="true"></i><span>15% ABV</span></p>
+        <h2 class="cc-info-title"><span>Piña Colada</span></h2>
+        <p class="cc-info-sub">Ron Blanco · Piña · Crema de Coco</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Cremosa y paradisíaca. Ron caribeño, crema de coco natural y jugo de piña madura perfectamente emulsionados.</p>
+          <ul class="cc-detail-chips"><li>Ron Blanco</li><li>Piña</li><li>Crema de Coco</li></ul></div>
+      </article><article class="cc-info" data-i="10" data-handle="blue-hawaii" data-spirit="rum" data-tint="#2FA8E0"
+        data-variant="5012" data-available="true" data-url="/products/blue-hawaii"
+        data-title="Blue Hawaii" data-price="$38.00"
+        data-compare=""
+        data-abv="16% ABV" data-bg="../preview/bg/blue-hawaii.jpg" data-photo="../preview/photo/blue-hawaii.jpg" data-can="../shopify-theme/assets/can-blue-hawaii.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_rum">Rum</span><i aria-hidden="true"></i><span>16% ABV</span></p>
+        <h2 class="cc-info-title"><span>Blue Hawaii</span></h2>
+        <p class="cc-info-sub">Ron · Vodka · Blue Curaçao · Piña</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Un espectáculo visual tropical de color azul zafiro. Ron, vodka, blue curaçao cítrico y piña fresca.</p>
+          <ul class="cc-detail-chips"><li>Ron</li><li>Vodka</li><li>Blue Curaçao</li><li>Piña</li></ul></div>
+      </article><article class="cc-info" data-i="11" data-handle="malibu-bay-breeze" data-spirit="rum" data-tint="#F26B5B"
+        data-variant="5013" data-available="true" data-url="/products/malibu-bay-breeze"
+        data-title="Malibu Bay Breeze" data-price="$36.00"
+        data-compare=""
+        data-abv="13% ABV" data-bg="../preview/bg/malibu-bay-breeze.jpg" data-photo="../preview/photo/malibu-bay-breeze.jpg" data-can="../shopify-theme/assets/can-malibu-bay-breeze.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_rum">Rum</span><i aria-hidden="true"></i><span>13% ABV</span></p>
+        <h2 class="cc-info-title"><span>Malibu Bay Breeze</span></h2>
+        <p class="cc-info-sub">Malibu Rum · Piña · Cranberry</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$36.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Suave y refrescante. Ron de coco Malibu con el contraste agridulce de jugo de piña y cranberry.</p>
+          <ul class="cc-detail-chips"><li>Malibu Rum</li><li>Piña</li><li>Cranberry</li></ul></div>
+      </article><article class="cc-info" data-i="12" data-handle="negroni" data-spirit="gin" data-tint="#C42B3B"
+        data-variant="5014" data-available="false" data-url="/products/negroni"
+        data-title="Negroni" data-price="$42.00"
+        data-compare=""
+        data-abv="24% ABV" data-bg="../preview/bg/negroni.jpg" data-photo="../preview/photo/negroni.jpg" data-can="../shopify-theme/assets/can-negroni.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_gin">Gin</span><i aria-hidden="true"></i><span>24% ABV</span></p>
+        <h2 class="cc-info-title"><span>Negroni</span></h2>
+        <p class="cc-info-sub">Gin · Campari · Vermouth Rojo</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$42.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">La trinidad italiana indiscutible: ginebra seca, bitter Campari y vermouth rosso añejado en roble.</p>
+          <ul class="cc-detail-chips"><li>Gin</li><li>Campari</li><li>Vermouth Rojo</li></ul></div>
+      </article><article class="cc-info" data-i="13" data-handle="manhattan" data-spirit="whiskey" data-tint="#B5532A"
+        data-variant="5015" data-available="true" data-url="/products/manhattan"
+        data-title="Manhattan" data-price="$42.00"
+        data-compare=""
+        data-abv="24% ABV" data-bg="../preview/bg/manhattan.jpg" data-photo="../preview/photo/manhattan.jpg" data-can="../shopify-theme/assets/can-manhattan.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_whiskey">Whiskey</span><i aria-hidden="true"></i><span>24% ABV</span></p>
+        <h2 class="cc-info-title"><span>Manhattan</span></h2>
+        <p class="cc-info-sub">Rye Whiskey · Vermouth Rojo · Bitters</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$42.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Profundo, aristocrático y complejo. Rye whiskey especiado, vermouth dulce y gotas de bitters aromáticos.</p>
+          <ul class="cc-detail-chips"><li>Rye Whiskey</li><li>Vermouth Rojo</li><li>Bitters</li></ul></div>
+      </article><article class="cc-info" data-i="14" data-handle="classic-martini" data-spirit="gin" data-tint="#E6DFC2"
+        data-variant="5016" data-available="true" data-url="/products/classic-martini"
+        data-title="Classic Martini" data-price="$42.00"
+        data-compare=""
+        data-abv="26% ABV" data-bg="../preview/bg/classic-martini.jpg" data-photo="../preview/photo/classic-martini.jpg" data-can="../shopify-theme/assets/can-classic-martini.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_gin">Gin</span><i aria-hidden="true"></i><span>26% ABV</span></p>
+        <h2 class="cc-info-title"><span>Classic Martini</span></h2>
+        <p class="cc-info-sub">Gin Premium · Dry Vermouth · Limón</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$42.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">El rey de los cócteles secos. Gin botánico premium y vermouth francés dry con twist de piel de limón.</p>
+          <ul class="cc-detail-chips"><li>Gin Premium</li><li>Dry Vermouth</li><li>Limón</li></ul></div>
+      </article><article class="cc-info" data-i="15" data-handle="espresso-martini" data-spirit="vodka" data-tint="#7A4A36"
+        data-variant="5017" data-available="true" data-url="/products/espresso-martini"
+        data-title="Espresso Martini" data-price="$40.00"
+        data-compare=""
+        data-abv="20% ABV" data-bg="../preview/bg/espresso-martini.jpg" data-photo="../preview/photo/espresso-martini.jpg" data-can="../shopify-theme/assets/can-espresso-martini.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_vodka">Vodka</span><i aria-hidden="true"></i><span>20% ABV</span></p>
+        <h2 class="cc-info-title"><span>Espresso Martini</span></h2>
+        <p class="cc-info-sub">Vodka · Decaf Espresso · Coffee Liqueur · Sugar</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$40.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Intenso, oscuro y con una sedosa capa de crema. Vodka puro con café espresso descafeinado y licor de café de altura.</p>
+          <ul class="cc-detail-chips"><li>Vodka</li><li>Decaf Espresso</li><li>Coffee Liqueur</li><li>Sugar</li></ul></div>
+      </article><article class="cc-info" data-i="16" data-handle="caipirinha" data-spirit="rum" data-tint="#B9D96B"
+        data-variant="5018" data-available="true" data-url="/products/caipirinha"
+        data-title="Caipirinha" data-price="$38.00"
+        data-compare=""
+        data-abv="18% ABV" data-bg="../preview/bg/caipirinha.jpg" data-photo="../preview/photo/caipirinha.jpg" data-can="../shopify-theme/assets/can-caipirinha.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_rum">Rum</span><i aria-hidden="true"></i><span>18% ABV</span></p>
+        <h2 class="cc-info-title"><span>Caipirinha</span></h2>
+        <p class="cc-info-sub">Cachaça · Lima · Azúcar</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$38.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">El alma de Brasil. Cachaça destilada de caña fresca, limas machacadas y azúcar moreno natural.</p>
+          <ul class="cc-detail-chips"><li>Cachaça</li><li>Lima</li><li>Azúcar</li></ul></div>
+      </article><article class="cc-info" data-i="17" data-handle="mai-tai" data-spirit="rum" data-tint="#F0A13A"
+        data-variant="6000" data-available="true" data-url="/products/mai-tai"
+        data-title="Mai Tai" data-price="$40.00"
+        data-compare=""
+        data-abv="15% ABV" data-bg="../preview/bg/mai-tai.jpg" data-photo="../preview/photo/mai-tai.jpg" data-can="../shopify-theme/assets/can-mai-tai.webp" aria-hidden="true">
+        <p class="cc-info-kicker"><span data-cc-t="sp_rum">Rum</span><i aria-hidden="true"></i><span>15% ABV</span></p>
+        <h2 class="cc-info-title"><span>Mai Tai</span></h2>
+        <p class="cc-info-sub">Ron Añejo · Curaçao · Orgeat · Lima · Piña</p>
+        <div class="cc-info-cta">
+          <span class="cc-price">$40.00</span>
+          <button type="button" class="cc-more" data-cc-open tabindex="-1">
+            <span data-cc-t="more">VER MÁS</span>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="cc-detail" hidden>
+          <p class="cc-detail-desc">Ron añejo, curaçao y almendra con piña y lima. Tropical y profundo.</p>
+          <ul class="cc-detail-chips"><li>Ron Añejo</li><li>Curaçao</li><li>Orgeat</li><li>Lima</li><li>Piña</li></ul></div>
+      </article></div>
+        <div class="cc-counter" aria-hidden="true"><b data-cc-now>01</b><span>/ <em data-cc-total>18</em></span></div>
+      </div>
+      <p class="cc-live" aria-live="polite" data-cc-live></p>
+    </div>
+
+    <!-- GRID VIEW: every product of the collection, regular editorial cards -->
+    <div class="cc-gridwrap" data-cc-gridwrap>
+      <div class="cc-grid products-catalog"><article class="product-item luxury-glass-card" data-product-id="1000">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-whiskey-cream.png" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">17% ABV</span><span class="product-visual-badge bestseller-badge" data-i18n="shop.bestseller">MÁS VENDIDO</span></div>
+
+    <a href="/products/whiskey-cream" class="product-visual-link" aria-label="Whiskey Cream 750ml"><img src="../shopify-theme/assets/prod-whiskey-cream.png" alt="Whiskey Cream 750ml" class="product-img" loading="lazy" width="400" height="480"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/whiskey-cream">Whiskey Cream</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Triple-Distilled Whiskey</li><li>Roasted Cocoa</li><li>Dairy Cream</li><li>Bourbon Vanilla</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5000, 1, 'Whiskey Cream 750ml', '$38.00')" aria-label="Agregar Whiskey Cream a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1001">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-old-fashioned.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">24% ABV</span><span class="product-visual-badge bestseller-badge" data-i18n="shop.bestseller">MÁS VENDIDO</span></div>
+
+    <a href="/products/old-fashioned" class="product-visual-link" aria-label="Old Fashioned 750ml"><img src="../shopify-theme/assets/prod-old-fashioned.jpg" alt="Old Fashioned 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/old-fashioned">Old Fashioned</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Bourbon Whiskey</li><li>Bitters</li><li>Sugar</li><li>Orange Peel</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$42.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5001, 1, 'Old Fashioned 750ml', '$42.00')" aria-label="Agregar Old Fashioned a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1002">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-mojito.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">12% ABV</span><span class="product-visual-badge bestseller-badge" data-i18n="shop.bestseller">MÁS VENDIDO</span></div>
+
+    <a href="/products/mojito" class="product-visual-link" aria-label="Craft Mojito 750ml"><img src="../shopify-theme/assets/prod-mojito.jpg" alt="Craft Mojito 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/mojito">Craft Mojito</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>White Rum</li><li>Fresh Lime</li><li>Spearmint</li><li>Cane Sugar</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$36.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5002, 1, 'Craft Mojito 750ml', '$36.00')" aria-label="Agregar Craft Mojito a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1003">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-margarita.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">18% ABV</span></div>
+
+    <a href="/products/margarita" class="product-visual-link" aria-label="Margarita 750ml"><img src="../shopify-theme/assets/prod-margarita.jpg" alt="Margarita 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/margarita">Margarita</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Tequila 100% Agave</li><li>Lima</li><li>Naranja</li><li>Agave Orgánico</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5003, 1, 'Margarita 750ml', '$38.00')" aria-label="Agregar Margarita a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1004">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-daiquiri.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">14% ABV</span></div>
+
+    <a href="/products/daiquiri" class="product-visual-link" aria-label="Daiquiri 750ml"><img src="../shopify-theme/assets/prod-daiquiri.jpg" alt="Daiquiri 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/daiquiri">Daiquiri</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Ron Blanco</li><li>Lima</li><li>Azúcar de Caña</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$36.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5004, 1, 'Daiquiri 750ml', '$36.00')" aria-label="Agregar Daiquiri a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1005">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-gin-tonic.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">14% ABV</span></div>
+
+    <a href="/products/gin-tonic" class="product-visual-link" aria-label="Gin & Tonic 750ml"><img src="../shopify-theme/assets/prod-gin-tonic.jpg" alt="Gin & Tonic 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/gin-tonic">Gin & Tonic</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Gin Botánico</li><li>Tonic</li><li>Cítricos</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5005, 1, 'Gin &amp; Tonic 750ml', '$38.00')" aria-label="Agregar Gin & Tonic a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1006">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-paloma.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">15% ABV</span></div>
+
+    <a href="/products/paloma" class="product-visual-link" aria-label="Paloma 750ml"><img src="../shopify-theme/assets/prod-paloma.jpg" alt="Paloma 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/paloma">Paloma</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Tequila</li><li>Toronja</li><li>Lima</li><li>Sal Marina</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5006, 1, 'Paloma 750ml', '$38.00')" aria-label="Agregar Paloma a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1007">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-mimosa.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">11% ABV</span></div>
+
+    <a href="/products/mimosa" class="product-visual-link" aria-label="Mimosa 750ml"><img src="../shopify-theme/assets/prod-mimosa.jpg" alt="Mimosa 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/mimosa">Mimosa</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Jugo de Naranja</li><li>Prosecco</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$34.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5007, 1, 'Mimosa 750ml', '$34.00')" aria-label="Agregar Mimosa a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1008">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-moscow-mule.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">14% ABV</span></div>
+
+    <a href="/products/moscow-mule" class="product-visual-link" aria-label="Moscow Mule 750ml"><img src="../shopify-theme/assets/prod-moscow-mule.jpg" alt="Moscow Mule 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/moscow-mule">Moscow Mule</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Vodka</li><li>Ginger Beer</li><li>Lima</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5008, 1, 'Moscow Mule 750ml', '$38.00')" aria-label="Agregar Moscow Mule a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1009">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-cosmopolitan.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">18% ABV</span></div>
+
+    <a href="/products/cosmopolitan" class="product-visual-link" aria-label="Cosmopolitan 750ml"><img src="../shopify-theme/assets/prod-cosmopolitan.jpg" alt="Cosmopolitan 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/cosmopolitan">Cosmopolitan</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Vodka</li><li>Cranberry</li><li>Naranja</li><li>Lima</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5009, 1, 'Cosmopolitan 750ml', '$38.00')" aria-label="Agregar Cosmopolitan a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1010">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-sex-on-the-beach.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">14% ABV</span></div>
+
+    <a href="/products/sex-on-the-beach" class="product-visual-link" aria-label="Sex on the Beach 750ml"><img src="../shopify-theme/assets/prod-sex-on-the-beach.jpg" alt="Sex on the Beach 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/sex-on-the-beach">Sex on the Beach</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Vodka</li><li>Durazno</li><li>Naranja</li><li>Cranberry</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$36.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5010, 1, 'Sex on the Beach 750ml', '$36.00')" aria-label="Agregar Sex on the Beach a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1011">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-pina-colada.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">15% ABV</span></div>
+
+    <a href="/products/pina-colada" class="product-visual-link" aria-label="Piña Colada 750ml"><img src="../shopify-theme/assets/prod-pina-colada.jpg" alt="Piña Colada 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/pina-colada">Piña Colada</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Ron Blanco</li><li>Piña</li><li>Crema de Coco</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5011, 1, 'Piña Colada 750ml', '$38.00')" aria-label="Agregar Piña Colada a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1012">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-blue-hawaii.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">16% ABV</span></div>
+
+    <a href="/products/blue-hawaii" class="product-visual-link" aria-label="Blue Hawaii 750ml"><img src="../shopify-theme/assets/prod-blue-hawaii.jpg" alt="Blue Hawaii 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/blue-hawaii">Blue Hawaii</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Ron</li><li>Vodka</li><li>Blue Curaçao</li><li>Piña</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5012, 1, 'Blue Hawaii 750ml', '$38.00')" aria-label="Agregar Blue Hawaii a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1013">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-malibu-bay-breeze.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">13% ABV</span></div>
+
+    <a href="/products/malibu-bay-breeze" class="product-visual-link" aria-label="Malibu Bay Breeze 750ml"><img src="../shopify-theme/assets/prod-malibu-bay-breeze.jpg" alt="Malibu Bay Breeze 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/malibu-bay-breeze">Malibu Bay Breeze</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Malibu Rum</li><li>Piña</li><li>Cranberry</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$36.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5013, 1, 'Malibu Bay Breeze 750ml', '$36.00')" aria-label="Agregar Malibu Bay Breeze a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1014">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-negroni.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">24% ABV</span></div>
+
+    <a href="/products/negroni" class="product-visual-link" aria-label="Negroni 750ml"><img src="../shopify-theme/assets/prod-negroni.jpg" alt="Negroni 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/negroni">Negroni</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Gin</li><li>Campari</li><li>Vermouth Rojo</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$42.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink is-soldout" disabled>
+            <span data-i18n="shop.sold_out">AGOTADO</span>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1015">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-manhattan.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">24% ABV</span></div>
+
+    <a href="/products/manhattan" class="product-visual-link" aria-label="Manhattan 750ml"><img src="../shopify-theme/assets/prod-manhattan.jpg" alt="Manhattan 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/manhattan">Manhattan</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Rye Whiskey</li><li>Vermouth Rojo</li><li>Bitters</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$42.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5015, 1, 'Manhattan 750ml', '$42.00')" aria-label="Agregar Manhattan a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1016">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-classic-martini.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">26% ABV</span></div>
+
+    <a href="/products/classic-martini" class="product-visual-link" aria-label="Classic Martini 750ml"><img src="../shopify-theme/assets/prod-classic-martini.jpg" alt="Classic Martini 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/classic-martini">Classic Martini</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Gin Premium</li><li>Dry Vermouth</li><li>Limón</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$42.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5016, 1, 'Classic Martini 750ml', '$42.00')" aria-label="Agregar Classic Martini a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1017">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-espresso-martini.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">20% ABV</span></div>
+
+    <a href="/products/espresso-martini" class="product-visual-link" aria-label="Espresso Martini 750ml"><img src="../shopify-theme/assets/prod-espresso-martini.jpg" alt="Espresso Martini 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/espresso-martini">Espresso Martini</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Vodka</li><li>Decaf Espresso</li><li>Coffee Liqueur</li><li>Sugar</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$40.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5017, 1, 'Espresso Martini 750ml', '$40.00')" aria-label="Agregar Espresso Martini a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1018">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-caipirinha.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">18% ABV</span></div>
+
+    <a href="/products/caipirinha" class="product-visual-link" aria-label="Caipirinha 750ml"><img src="../shopify-theme/assets/prod-caipirinha.jpg" alt="Caipirinha 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/caipirinha">Caipirinha</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Cachaça</li><li>Lima</li><li>Azúcar</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$38.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5018, 1, 'Caipirinha 750ml', '$38.00')" aria-label="Agregar Caipirinha a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="2000">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-mai-tai.jpg" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">15% ABV</span></div>
+
+    <a href="/products/mai-tai" class="product-visual-link" aria-label="Mai Tai 750ml"><img src="../shopify-theme/assets/prod-mai-tai.jpg" alt="Mai Tai 750ml" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='../shopify-theme/assets/margarita.jpg';"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/mai-tai">Mai Tai</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Ron Añejo</li><li>Curaçao</li><li>Orgeat</li><li>Lima</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$40.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(6000, 1, 'Mai Tai 750ml', '$40.00')" aria-label="Agregar Mai Tai a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+</div></div>
+
+    <!-- Quick-view pop-up (same page, no navigation) -->
+    <div class="cc-modal" data-cc-modal hidden>
+      <div class="cc-modal-backdrop" data-cc-close></div>
+      <div class="cc-modal-panel" role="dialog" aria-modal="true" aria-labelledby="cc-modal-title">
+        <button type="button" class="cc-modal-close" data-cc-close aria-label="Cerrar" data-cc-label="close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="cc-modal-visual">
+          <img class="cc-modal-photo" data-cc-m-photo src="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=" alt="" width="1100" height="1100" draggable="false">
+        </div>
+        <div class="cc-modal-body">
+          <p class="cc-m-kicker"><span data-cc-m-spirit></span><i aria-hidden="true"></i><span data-cc-m-abv></span></p>
+          <h2 class="cc-m-title" id="cc-modal-title" data-cc-m-title></h2>
+          <p class="cc-m-price"><span data-cc-m-price></span> <s data-cc-m-compare></s></p>
+          <p class="cc-m-desc" data-cc-m-desc></p>
+          <div class="cc-m-block">
+            <h3 data-cc-t="ingredients">Ingredientes</h3>
+            <ul class="cc-m-chips" data-cc-m-chips></ul>
+          </div>
+          <div class="cc-m-block" data-cc-m-ritual-block hidden>
+            <h3 data-cc-t="ritual">Ritual de servicio</h3>
+            <p class="cc-m-ritual" data-cc-m-ritual></p>
+          </div>
+          <div class="cc-m-buy">
+            <div class="cc-qty" role="group" aria-label="Cantidad" data-cc-label="qty">
+              <button type="button" data-cc-qty="-1" aria-label="−">−</button>
+              <output data-cc-m-qty>1</output>
+              <button type="button" data-cc-qty="1" aria-label="+">+</button>
+            </div>
+            <button type="button" class="cc-add" data-cc-add>
+              <span data-cc-t="add">AGREGAR A LA BOLSA</span>
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </button>
+          </div>
+          <a class="cc-m-full" data-cc-m-link href="#"><span data-cc-t="full">Ver ficha completa</span> →</a>
+          <p class="cc-m-trust" data-cc-t="trust">Entrega con verificación de identidad 21+.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cc-cursor" data-cc-cursor aria-hidden="true"><span data-cc-cursor-label></span></div>
+  </section><script type="application/json" data-cc-fx-assets>
+{ "ice": "../shopify-theme/assets/ing-ice.webp", "lime-wheel": "../shopify-theme/assets/ing-lime-wheel.webp", "lime-half": "../shopify-theme/assets/ing-lime-half.webp", "lemon-wheel": "../shopify-theme/assets/ing-lemon-wheel.webp", "lemon-twist": "../shopify-theme/assets/ing-lemon-twist.webp", "orange-wheel": "../shopify-theme/assets/ing-orange-wheel.webp", "orange-peel": "../shopify-theme/assets/ing-orange-peel.webp", "grapefruit-half": "../shopify-theme/assets/ing-grapefruit-half.webp", "pineapple-wedge": "../shopify-theme/assets/ing-pineapple-wedge.webp", "peach": "../shopify-theme/assets/ing-peach.webp", "cranberries": "../shopify-theme/assets/ing-cranberries.webp", "mint": "../shopify-theme/assets/ing-mint.webp", "coffee-beans": "../shopify-theme/assets/ing-coffee-beans.webp", "ginger": "../shopify-theme/assets/ing-ginger.webp", "coconut-half": "../shopify-theme/assets/ing-coconut-half.webp", "agave": "../shopify-theme/assets/ing-agave.webp", "sugar-cubes": "../shopify-theme/assets/ing-sugar-cubes.webp", "juniper": "../shopify-theme/assets/ing-juniper.webp", "cherry": "../shopify-theme/assets/ing-cherry.webp", "sea-salt": "../shopify-theme/assets/ing-sea-salt.webp", "olive": "../shopify-theme/assets/ing-olive.webp" }
+</script>
+
+<script src="../shopify-theme/assets/can-carousel.js?v=2.2" defer="defer"></script>
+
+
+</main>
+<div id="cart-backdrop" class="cart-drawer-backdrop"></div>
+<aside id="cart-drawer" class="cart-drawer" aria-label="Bolsa de Compras">
+  <div class="cart-drawer-header">
+    <div class="cart-drawer-header-left">
+      <img src="../shopify-theme/assets/logo_lucky_shaker_dark.svg" alt="Lucky Shaker" class="cart-drawer-logo-img" width="130" height="34" style="height: 32px; width: auto; object-fit: contain;">
+      <span id="drawer-count-badge" class="cart-count-pill">0 PRODUCTOS</span>
+    </div>
+    <button id="close-cart-btn" class="close-drawer-btn" aria-label="Cerrar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Free Shipping Progress Banner -->
+  <div id="cart-shipping-banner" class="cart-shipping-banner">
+    <div class="cart-shipping-text">
+      <span id="shipping-progress-text">Agrega <strong>$80.00</strong> para <strong>Envío Express Gratis</strong></span>
+      <span id="shipping-progress-percent" style="font-weight: 700; color: var(--accent-pink);">0%</span>
+    </div>
+    <div class="cart-shipping-bar-bg">
+      <div id="shipping-progress-fill" class="cart-shipping-bar-fill" style="width: 0%;"></div>
+    </div>
+  </div>
+
+  <div id="cart-items-list" class="cart-items-container"><div class="cart-empty-message">
+        <div class="empty-cart-icon-wrap">
+          <img src="../shopify-theme/assets/logo_lucky_shaker_dark.svg" alt="Lucky Shaker" width="140" height="38" style="height: 36px; width: auto; object-fit: contain;">
+        </div>
+        <h4 class="empty-cart-title" data-i18n="cart.empty_title">TU BARRA ESTÁ VACÍA</h4>
+        <p class="empty-cart-desc" data-i18n="cart.empty_desc">Explora nuestra colección de botellas para comenzar.</p>
+        <a href="" class="empty-cart-cta">
+          <span data-i18n="cart.explore_btn">EXPLORAR CÓCTELES</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 7h12M8 2l5 5-5 5"/>
+          </svg>
+        </a>
+      </div></div>
+
+  <div class="cart-drawer-footer">
+    <div class="drawer-subtotal-row">
+      <span class="subtotal-label" data-i18n="cart.subtotal">SUBTOTAL</span>
+      <span id="drawer-subtotal" class="subtotal-amount">$0.00</span>
+    </div>
+    <p class="drawer-taxes-note" data-i18n="cart.taxes_note">Impuestos y gastos de envío calculados en la pantalla de pago.</p>
+    
+    <div class="drawer-actions">
+      <button type="button" id="checkout-btn" class="btn btn-pink btn-drawer-checkout" onclick="LuckyShakerCart.proceedToCheckout()">
+        <span data-i18n="cart.checkout">FINALIZAR COMPRA</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 7h12M8 2l5 5-5 5"/>
+        </svg>
+      </button>
+      <a href="" class="continue-shopping-link" onclick="LuckyShakerCart.close();" data-i18n="cart.continue">
+        Continuar Explorando &rarr;
+      </a>
+    </div>
+
+    <div class="cart-trust-badges">
+      <span>🔒 Pago Seguro</span>
+      <span>📦 Embalaje Protegido 21+</span>
+    </div>
+  </div>
+</aside>
+
+<!-- Toast notification for quick item add -->
+<div id="cart-toast" class="cart-toast" role="status" aria-live="polite">
+  <div class="toast-content">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+    <span id="toast-message">Cóctel añadido a tu selección</span>
+  </div>
+</div>
+
+<script src="../shopify-theme/assets/lucky-shaker.js?v=2.2" defer></script>
+<script>window.addEventListener('DOMContentLoaded',function(){ if(window.LuckyShakerCart){window.LuckyShakerCart.addItem=function(v,q,t,p){window.__adds.push([v,q,t,p]);console.log('ADD',v,q,t,p);};} });</script>
+</body></html>

@@ -43,8 +43,40 @@
       </svg>
       <span class="cart-badge" id="cart-badge-count">{{ cart.item_count }}</span>
     </button>
+
+    <!-- Mobile Hamburger Toggle Button -->
+    <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir Menú de Navegación" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+<aside class="mobile-nav-drawer" id="mobile-nav-drawer" aria-label="Menú Móvil">
+  <div class="mobile-nav-header">
+    <a href="{{ routes.root_url }}" class="mobile-nav-brand">
+      <img src="{{ 'logo_lucky_shaker_dark.svg' | asset_url }}" alt="{{ shop.name }}" width="135" height="34">
+    </a>
+    <button type="button" class="mobile-nav-close" id="mobile-nav-close" aria-label="Cerrar Menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav-body">
+    <ul class="mobile-nav-links">
+      <li><a href="#events" onclick="const e=document.getElementById('events') || document.getElementById('event-types'); if(e){ e.scrollIntoView({behavior:'smooth'}); return false; }" class="mobile-nav-link" data-i18n="nav.events">EVENTOS &amp; SERVICIOS</a></li>
+      <li><a href="{{ routes.all_products_collection_url }}" class="mobile-nav-link" data-i18n="nav.shop">TIENDA ONLINE</a></li>
+      <li><a href="#experience" onclick="const ex=document.getElementById('experience') || document.getElementById('event-experience'); if(ex){ ex.scrollIntoView({behavior:'smooth'}); return false; }" class="mobile-nav-link" data-i18n="nav.experience">NOSOTROS &amp; EXPERIENCIA</a></li>
+      <li><a href="#gallery" onclick="const g=document.getElementById('gallery') || document.getElementById('event-gallery'); if(g){ g.scrollIntoView({behavior:'smooth'}); return false; }" class="mobile-nav-link" data-i18n="nav.gallery">GALERÍA</a></li>
+      <li><a href="#faq" onclick="const f=document.getElementById('faq') || document.getElementById('event-faq'); if(f){ f.scrollIntoView({behavior:'smooth'}); return false; }" class="mobile-nav-link" data-i18n="nav.faq">PREGUNTAS</a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <a href="#book-event" class="btn btn-pink mobile-nav-cta" onclick="const b=document.getElementById('book-event'); if(b){ b.scrollIntoView({behavior:'smooth'}); return false; }">
+        <span data-i18n="nav.book_event">COTIZAR EVENTO</span>
+      </a>
+    </div>
+  </div>
+</aside>
 
 {% schema %}
 {
