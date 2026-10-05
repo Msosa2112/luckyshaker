@@ -855,7 +855,7 @@
 
     // --- CHECK FOR CUSTOM PHOTOS FROM ADMIN PANEL ---
     try {
-      const storedGallery = localStorage.getItem('lucky_custom_gallery');
+      const storedGallery = window.SafeStorage ? window.SafeStorage.getItem('lucky_custom_gallery') : (window.localStorage ? window.localStorage.getItem('lucky_custom_gallery') : null);
       if (storedGallery) {
         const customData = JSON.parse(storedGallery);
         slides.forEach(function(slide) {

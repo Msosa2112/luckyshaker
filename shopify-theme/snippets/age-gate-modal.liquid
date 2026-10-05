@@ -70,7 +70,10 @@
 
 <script>
 (function() {
-  var verified = localStorage.getItem('ls_age_verified');
+  var verified = false;
+  try {
+    verified = (window.SafeStorage && window.SafeStorage.getItem('ls_age_verified')) || (window.localStorage && window.localStorage.getItem('ls_age_verified'));
+  } catch(e) {}
   var modal = document.getElementById('age-gate-modal');
   if (!verified && modal) {
     modal.style.display = 'flex';
@@ -79,7 +82,10 @@
   var rejectBtn = document.getElementById('age-gate-reject');
   if (confirmBtn) {
     confirmBtn.addEventListener('click', function() {
-      localStorage.setItem('ls_age_verified', 'true');
+      try {
+        if (window.SafeStorage) window.SafeStorage.setItem('ls_age_verified', 'true');
+        else if (window.localStorage) window.localStorage.setItem('ls_age_verified', 'true');
+      } catch(e) {}
       if (modal) modal.style.display = 'none';
     });
   }

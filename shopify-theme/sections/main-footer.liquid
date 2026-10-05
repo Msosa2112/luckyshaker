@@ -69,9 +69,7 @@
         {%- else -%}
           <li><a href="/policies/shipping-policy" data-i18n="footer.shipping">Envíos &amp; Entregas</a></li>
           <li><a href="/policies/refund-policy" data-i18n="footer.refunds">Reembolsos &amp; Cancelaciones</a></li>
-          <li><a href="/policies/privacy-policy" data-i18n="footer.privacy">Política de Privacidad</a></li>
-          <li><a href="/policies/terms-of-service" data-i18n="footer.terms">Términos del Servicio</a></li>
-          <li><a href="/pages/admin" style="opacity: 0.55; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Panel de Administración</a></li>
+          <li><a href="#admin-panel" onclick="if(window.openLuckyAdmin){ window.openLuckyAdmin(); return false; }" style="opacity: 0.55; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Panel de Administración</a></li>
         {%- endif -%}
       </ul>
     </div>

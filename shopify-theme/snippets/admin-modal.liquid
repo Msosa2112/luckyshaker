@@ -1,0 +1,603 @@
+<!-- LUCKY SHAKER ADMIN PORTAL GLOBAL MODAL -->
+<div class="lucky-admin-overlay" id="luckyAdminModal" style="display: none;" role="dialog" aria-modal="true" aria-label="Panel de Administración">
+  <div class="admin-overlay-backdrop" onclick="closeLuckyAdmin()"></div>
+  
+  <div class="admin-modal-container">
+    <button type="button" class="admin-global-close-btn" onclick="closeLuckyAdmin()" aria-label="Cerrar Panel">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- LOGIN CONTAINER (SHOWN WHEN LOGGED OUT) -->
+    <div class="admin-login-wrapper" id="modalAdminLoginWrapper">
+      <div class="admin-login-card">
+        <div class="admin-brand-header">
+          <div class="admin-logo-circle">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h2 class="admin-login-title">Lucky Shaker Admin</h2>
+          <p class="admin-login-subtitle">Panel de Gestión de Fotografías y Eventos</p>
+        </div>
+
+        <form id="modalAdminLoginForm" class="admin-form" onsubmit="return handleModalAdminLogin(event)">
+          <div class="admin-form-group">
+            <label for="modalAdminUser" class="admin-label">Usuario</label>
+            <div class="admin-input-wrapper">
+              <svg class="admin-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+              <input type="text" id="modalAdminUser" class="admin-input" placeholder="Ingresa tu usuario" required autocomplete="username" autofocus>
+            </div>
+          </div>
+
+          <div class="admin-form-group">
+            <label for="modalAdminPass" class="admin-label">Contraseña</label>
+            <div class="admin-input-wrapper">
+              <svg class="admin-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="modalAdminPass" class="admin-input" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
+              <button type="button" class="admin-toggle-pwd" onclick="toggleModalPassword()" aria-label="Mostrar u ocultar contraseña">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="modalAdminError" class="admin-error-msg" style="display:none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Usuario o contraseña incorrectos.</span>
+          </div>
+
+          <button type="submit" class="admin-btn-primary admin-submit-btn">
+            <span>Iniciar Sesión</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- DASHBOARD CONTAINER (SHOWN WHEN LOGGED IN) -->
+    <div class="admin-dashboard-wrapper" id="modalAdminDashboardWrapper" style="display: none;">
+      <!-- Top Bar -->
+      <header class="admin-topbar">
+        <div class="admin-topbar-left">
+          <div class="admin-badge-pulse"></div>
+          <div>
+            <h3 class="admin-topbar-title">Lucky Shaker • Panel de Fotos</h3>
+            <span class="admin-user-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+              Sesión: <strong>kathyka2017</strong> (Administrador)
+            </span>
+          </div>
+        </div>
+        <div class="admin-topbar-actions">
+          <button type="button" class="admin-action-btn logout-btn" onclick="handleModalAdminLogout()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Cerrar Sesión
+          </button>
+        </div>
+      </header>
+
+      <div class="admin-content-grid">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar-header">
+            <h4>Categorías de Eventos</h4>
+            <p>Selecciona una categoría para agregar fotos</p>
+          </div>
+
+          <nav class="admin-category-list">
+            <button type="button" class="cat-nav-item active" data-cat="bodas" onclick="switchModalCategory('bodas')">
+              <span class="cat-nav-icon">💒</span>
+              <div class="cat-nav-info">
+                <span class="cat-nav-name">Bodas &amp; Recepciones</span>
+                <span class="cat-nav-count" id="mcount-bodas">0 fotos</span>
+              </div>
+            </button>
+            
+            <button type="button" class="cat-nav-item" data-cat="gender_reveal" onclick="switchModalCategory('gender_reveal')">
+              <span class="cat-nav-icon">🍼</span>
+              <div class="cat-nav-info">
+                <span class="cat-nav-name">Gender Reveal</span>
+                <span class="cat-nav-count" id="mcount-gender_reveal">0 fotos</span>
+              </div>
+            </button>
+
+            <button type="button" class="cat-nav-item" data-cat="negocios" onclick="switchModalCategory('negocios')">
+              <span class="cat-nav-icon">💼</span>
+              <div class="cat-nav-info">
+                <span class="cat-nav-name">Evento de Negocios</span>
+                <span class="cat-nav-count" id="mcount-negocios">0 fotos</span>
+              </div>
+            </button>
+
+            <button type="button" class="cat-nav-item" data-cat="fiestas" onclick="switchModalCategory('fiestas')">
+              <span class="cat-nav-icon">🎉</span>
+              <div class="cat-nav-info">
+                <span class="cat-nav-name">Fiestas Privadas</span>
+                <span class="cat-nav-count" id="mcount-fiestas">0 fotos</span>
+              </div>
+            </button>
+          </nav>
+
+          <div class="admin-tools-card">
+            <h4>Herramientas</h4>
+            <button type="button" class="tool-btn" onclick="exportModalGalleryJson()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Descargar Backup JSON
+            </button>
+            <button type="button" class="tool-btn danger" onclick="resetModalDefaultPhotos()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              Restablecer Fotos Originales
+            </button>
+          </div>
+        </aside>
+
+        <!-- Main Photo Management Area -->
+        <main class="admin-main-panel">
+          <div class="category-banner">
+            <div class="category-banner-info">
+              <span class="banner-tag">CATEGORÍA ACTIVA</span>
+              <h3 class="banner-title" id="mcurrentCatTitle">Bodas &amp; Recepciones</h3>
+              <p class="banner-desc" id="mcurrentCatDesc">Gestiona las fotos de la galería interactiva.</p>
+            </div>
+            <div class="category-banner-actions">
+              <button type="button" class="admin-btn-primary" onclick="triggerModalFileUpload()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>Subir Fotos</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Multi-photo Drag & Drop Dropzone -->
+          <div class="admin-dropzone" id="modalDropzone" onclick="triggerModalFileUpload()">
+            <input type="file" id="modalFileInput" multiple accept="image/jpeg,image/png,image/webp,image/jpg" style="display:none;" onchange="handleModalFilesSelected(event)">
+            <div class="dropzone-content">
+              <div class="dropzone-icon-pulse">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </div>
+              <h4>Arrastra y suelta tus fotos aquí</h4>
+              <p>o haz clic para seleccionar fotos desde tu dispositivo (JPG, PNG, WEBP)</p>
+              <span class="dropzone-hint">Compresión y optimización automática para máxima velocidad</span>
+            </div>
+          </div>
+
+          <div id="modalAdminNotice" class="admin-notice" style="display:none;"></div>
+
+          <div class="photos-section-header">
+            <h4 class="section-heading">
+              Fotos en esta Categoría (<span id="mcurrentCatCount">0</span>)
+            </h4>
+          </div>
+
+          <div class="admin-photos-grid" id="modalPhotosGrid"></div>
+        </main>
+      </div>
+    </div>
+
+    <!-- PHOTO EDIT SUBMODAL -->
+    <div class="admin-modal" id="modalPhotoEditModal" style="display:none;">
+      <div class="admin-modal-backdrop" onclick="closeModalEditModal()"></div>
+      <div class="admin-modal-box">
+        <div class="admin-modal-header">
+          <h3>Editar Pie de Foto</h3>
+          <button type="button" class="admin-modal-close" onclick="closeModalEditModal()">&times;</button>
+        </div>
+        <div class="admin-modal-body">
+          <div class="edit-preview-img-box">
+            <img id="modalEditPreviewImg" src="" alt="Vista previa">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label">Descripción / Pie de Foto</label>
+            <input type="text" id="modalEditCaptionInput" class="admin-input" placeholder="Ej: Copa de autor con flores comestibles">
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="tool-btn" onclick="closeModalEditModal()">Cancelar</button>
+          <button type="button" class="admin-btn-primary" onclick="saveModalPhotoEdit()">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.lucky-admin-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 2vw, 2rem);
+  box-sizing: border-box;
+}
+
+.admin-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 8, 12, 0.88);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+}
+
+.admin-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  max-height: 92vh;
+  background: #111218;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 40px rgba(232, 43, 125, 0.2);
+  overflow-y: auto;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.admin-global-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.admin-global-close-btn:hover {
+  background: rgba(232, 43, 125, 0.25);
+  border-color: #E82B7D;
+  transform: rotate(90deg);
+}
+</style>
+
+<script>
+(function() {
+  const ADMIN_USER = "kathyka2017";
+  const ADMIN_PASS = "Escorpion9030*";
+  const AUTH_KEY = "lucky_admin_session_auth";
+  const GALLERY_KEY = "lucky_custom_gallery";
+
+  let activeCat = "bodas";
+  let editingIdx = null;
+
+  const DEFAULT_DATA = {
+    bodas: {
+      categoryName: "Bodas & Recepciones",
+      categoryDesc: "Servicio integral de coctelería de lujo con cócteles personalizados para los novios.",
+      media: "{{ 'event-real-bodas.jpg' | asset_url }}",
+      gallery: [
+        { src: "{{ 'gallery-bodas-1.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-1-thumb.jpg' | asset_url }}", caption: "Copa de autor con flores comestibles y cítricos deshidratados" },
+        { src: "{{ 'gallery-bodas-2.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-2-thumb.jpg' | asset_url }}", caption: "Vuelo de degustación de shots de autor y coctelería fina" },
+        { src: "{{ 'gallery-bodas-3.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-3-thumb.jpg' | asset_url }}", caption: "Carta de coctelería personalizada para los novios" },
+        { src: "{{ 'gallery-bodas-4.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-4-thumb.jpg' | asset_url }}", caption: "Detalles de lujo y cajas de regalo para invitados" },
+        { src: "{{ 'gallery-bodas-5.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-5-thumb.jpg' | asset_url }}", caption: "Estación de cristalería tallada y servicio VIP" },
+        { src: "{{ 'gallery-bodas-6.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-6-thumb.jpg' | asset_url }}", caption: "Montaje completo de barra nupcial al atardecer" }
+      ]
+    },
+    gender_reveal: {
+      categoryName: "Gender Reveal",
+      categoryDesc: "Celebraciones mágicas con coctelería temática, mocktails sin alcohol y efecto niebla.",
+      media: "{{ 'event-real-gender-reveal.jpg' | asset_url }}",
+      gallery: [
+        { src: "{{ 'gallery-gender_reveal-1.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-1-thumb.jpg' | asset_url }}", caption: "Efecto de niebla aromática y nubes de vapor en copas" },
+        { src: "{{ 'gallery-gender_reveal-2.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-2-thumb.jpg' | asset_url }}", caption: "Servicio criogénico en vivo para el momento de la revelación" },
+        { src: "{{ 'gallery-gender_reveal-3.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-3-thumb.jpg' | asset_url }}", caption: "Cócteles de autor tematizados rosa y celeste" },
+        { src: "{{ 'gallery-gender_reveal-4.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-4-thumb.jpg' | asset_url }}", caption: "Brindis con cócteles burbujeantes para los futuros padres" },
+        { src: "{{ 'gallery-gender_reveal-5.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-5-thumb.jpg' | asset_url }}", caption: "Bebidas vírgenes (Mocktails) botánicos para invitados" },
+        { src: "{{ 'gallery-gender_reveal-6.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-6-thumb.jpg' | asset_url }}", caption: "Barra móvil pastel con iluminación decorativa" }
+      ]
+    },
+    negocios: {
+      categoryName: "Evento de Negocios",
+      categoryDesc: "Mixología profesional de alto volumen, activación de marca en barra y hospitalidad ejecutiva.",
+      media: "{{ 'event-real-negocios.jpg' | asset_url }}",
+      gallery: [
+        { src: "{{ 'gallery-negocios-1.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-1-thumb.jpg' | asset_url }}", caption: "Torre dorada con cristalería y botánicos deshidratados" },
+        { src: "{{ 'gallery-negocios-2.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-2-thumb.jpg' | asset_url }}", caption: "Estación ejecutiva con ahumado en vivo bajo campana de cristal" },
+        { src: "{{ 'gallery-negocios-3.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-3-thumb.jpg' | asset_url }}", caption: "Carta impresa de coctelería personalizada con branding" },
+        { src: "{{ 'gallery-negocios-4.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-4-thumb.jpg' | asset_url }}", caption: "Degustación guiada de destilados para ejecutivos VIP" },
+        { src: "{{ 'gallery-negocios-5.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-5-thumb.jpg' | asset_url }}", caption: "Servicio ágil de alta capacidad sin filas para galas" }
+      ]
+    },
+    fiestas: {
+      categoryName: "Fiestas Privadas",
+      categoryDesc: "Eleva cumpleaños, aniversarios y veladas exclusivas con barras móviles privadas y ambientación.",
+      media: "{{ 'event-real-fiestas.jpg' | asset_url }}",
+      gallery: [
+        { src: "{{ 'gallery-fiestas-1.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-1-thumb.jpg' | asset_url }}", caption: "Katherin y equipo liderando la barra privada" },
+        { src: "{{ 'gallery-fiestas-2.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-2-thumb.jpg' | asset_url }}", caption: "Servicio dinámico con coctelería agitada al momento" },
+        { src: "{{ 'gallery-fiestas-3.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-3-thumb.jpg' | asset_url }}", caption: "Hospitalidad cercana y ambientación de celebración VIP" },
+        { src: "{{ 'gallery-fiestas-4.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-4-thumb.jpg' | asset_url }}", caption: "Cócteles ahumados en vivo para sorprender a los invitados" },
+        { src: "{{ 'gallery-fiestas-5.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-5-thumb.jpg' | asset_url }}", caption: "Shots artesanales con sales de cítricos y flores" },
+        { src: "{{ 'gallery-fiestas-6.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-6-thumb.jpg' | asset_url }}", caption: "Celebración en terraza al aire libre sin preocupaciones" }
+      ]
+    }
+  };
+
+  function getStore() {
+    try {
+      const raw = window.SafeStorage ? window.SafeStorage.getItem(GALLERY_KEY) : null;
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
+
+  function setStore(data) {
+    try {
+      if (window.SafeStorage) window.SafeStorage.setItem(GALLERY_KEY, JSON.stringify(data));
+      showNotice("¡Fotos guardadas y sincronizadas con la tienda!", "success");
+    } catch(e) {}
+  }
+
+  window.openLuckyAdmin = function() {
+    const modal = document.getElementById("luckyAdminModal");
+    if (modal) {
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      const isAuth = window.SafeStorage ? window.SafeStorage.getSessionItem(AUTH_KEY) === "true" : false;
+      if (isAuth) {
+        renderModalDashboard();
+      } else {
+        document.getElementById("modalAdminLoginWrapper").style.display = "flex";
+        document.getElementById("modalAdminDashboardWrapper").style.display = "none";
+      }
+    }
+  };
+
+  window.closeLuckyAdmin = function() {
+    const modal = document.getElementById("luckyAdminModal");
+    if (modal) {
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+  };
+
+  window.handleModalAdminLogin = function(e) {
+    e.preventDefault();
+    const u = document.getElementById("modalAdminUser").value.trim();
+    const p = document.getElementById("modalAdminPass").value.trim();
+    const err = document.getElementById("modalAdminError");
+
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      if (window.SafeStorage) window.SafeStorage.setSessionItem(AUTH_KEY, "true");
+      err.style.display = "none";
+      renderModalDashboard();
+    } else {
+      err.style.display = "flex";
+    }
+    return false;
+  };
+
+  window.handleModalAdminLogout = function() {
+    if (window.SafeStorage) window.SafeStorage.removeSessionItem(AUTH_KEY);
+    document.getElementById("modalAdminDashboardWrapper").style.display = "none";
+    document.getElementById("modalAdminLoginWrapper").style.display = "flex";
+  };
+
+  window.toggleModalPassword = function() {
+    const p = document.getElementById("modalAdminPass");
+    p.type = p.type === "password" ? "text" : "password";
+  };
+
+  window.switchModalCategory = function(catKey) {
+    activeCat = catKey;
+    document.querySelectorAll(".cat-nav-item").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.cat === catKey);
+    });
+    renderModalPhotos();
+  };
+
+  function renderModalDashboard() {
+    document.getElementById("modalAdminLoginWrapper").style.display = "none";
+    document.getElementById("modalAdminDashboardWrapper").style.display = "block";
+    updateModalCounts();
+    renderModalPhotos();
+  }
+
+  function updateModalCounts() {
+    const data = getStore();
+    ["bodas", "gender_reveal", "negocios", "fiestas"].forEach(cat => {
+      const el = document.getElementById("mcount-" + cat);
+      if (el) {
+        const count = (data[cat] && data[cat].gallery) ? data[cat].gallery.length : 0;
+        el.textContent = count + " fotos";
+      }
+    });
+  }
+
+  function renderModalPhotos() {
+    const data = getStore();
+    const catData = data[activeCat] || { categoryName: activeCat, gallery: [] };
+
+    document.getElementById("mcurrentCatTitle").textContent = catData.categoryName;
+    document.getElementById("mcurrentCatDesc").textContent = catData.categoryDesc || "";
+    document.getElementById("mcurrentCatCount").textContent = catData.gallery ? catData.gallery.length : 0;
+
+    const grid = document.getElementById("modalPhotosGrid");
+    grid.innerHTML = "";
+
+    if (!catData.gallery || catData.gallery.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: 16px;">
+          <p style="color: rgba(255,255,255,0.5);">No hay fotos en esta categoría aún. Sube la primera arriba.</p>
+        </div>
+      `;
+      return;
+    }
+
+    catData.gallery.forEach((photo, idx) => {
+      const card = document.createElement("div");
+      card.className = "photo-card";
+      card.innerHTML = `
+        <div class="photo-thumb-box">
+          <img src="${photo.thumb || photo.src}" class="photo-thumb-img" alt="Foto ${idx + 1}" loading="lazy">
+        </div>
+        <div class="photo-card-body">
+          <p class="photo-caption">${escapeHtml(photo.caption || "Sin descripción")}</p>
+          <div class="photo-card-actions">
+            <button type="button" class="card-action-btn edit-btn" onclick="openModalPhotoEdit(${idx})" title="Editar pie de foto">
+              ✏️ Editar Texto
+            </button>
+            <button type="button" class="card-action-btn delete-btn" onclick="deleteModalPhoto(${idx})" title="Eliminar foto">
+              🗑️ Eliminar
+            </button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    updateModalCounts();
+  }
+
+  window.triggerModalFileUpload = function() {
+    document.getElementById("modalFileInput").click();
+  };
+
+  function compressImg(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+          let w = img.width, h = img.height;
+          const max = 1600;
+          if (w > h && w > max) { h = Math.round((h * max) / w); w = max; }
+          else if (h > max) { w = Math.round((w * max) / h); h = max; }
+
+          const cv = document.createElement('canvas');
+          cv.width = w; cv.height = h;
+          cv.getContext('2d').drawImage(img, 0, 0, w, h);
+          const full = cv.toDataURL('image/jpeg', 0.85);
+
+          const thumbCv = document.createElement('canvas');
+          const tw = 400, th = Math.round((h * 400) / w);
+          thumbCv.width = tw; thumbCv.height = th;
+          thumbCv.getContext('2d').drawImage(img, 0, 0, tw, th);
+          const thumb = thumbCv.toDataURL('image/jpeg', 0.8);
+
+          resolve({
+            src: full,
+            thumb: thumb,
+            caption: file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ")
+          });
+        };
+        img.onerror = reject;
+      };
+      reader.onerror = reject;
+    });
+  }
+
+  window.handleModalFilesSelected = async function(e) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    showNotice(`Procesando ${files.length} foto(s)...`, "success");
+    const data = getStore();
+    if (!data[activeCat]) data[activeCat] = { categoryName: activeCat, gallery: [] };
+
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const photo = await compressImg(files[i]);
+        data[activeCat].gallery.unshift(photo);
+      }
+      setStore(data);
+      renderModalPhotos();
+      showNotice(`¡${files.length} foto(s) agregada(s) con éxito!`, "success");
+    } catch(err) {
+      alert("Error al procesar: " + err.message);
+    }
+    e.target.value = "";
+  };
+
+  window.deleteModalPhoto = function(idx) {
+    if (!confirm("¿Deseas eliminar esta foto de la galería?")) return;
+    const data = getStore();
+    if (data[activeCat] && data[activeCat].gallery) {
+      data[activeCat].gallery.splice(idx, 1);
+      setStore(data);
+      renderModalPhotos();
+    }
+  };
+
+  window.openModalPhotoEdit = function(idx) {
+    editingIdx = idx;
+    const data = getStore();
+    const p = data[activeCat].gallery[idx];
+    document.getElementById("modalEditPreviewImg").src = p.src;
+    document.getElementById("modalEditCaptionInput").value = p.caption || "";
+    document.getElementById("modalPhotoEditModal").style.display = "flex";
+  };
+
+  window.closeModalEditModal = function() {
+    document.getElementById("modalPhotoEditModal").style.display = "none";
+    editingIdx = null;
+  };
+
+  window.saveModalPhotoEdit = function() {
+    if (editingIdx === null) return;
+    const data = getStore();
+    const newCap = document.getElementById("modalEditCaptionInput").value.trim();
+    if (data[activeCat] && data[activeCat].gallery && data[activeCat].gallery[editingIdx]) {
+      data[activeCat].gallery[editingIdx].caption = newCap;
+      setStore(data);
+      renderModalPhotos();
+      closeModalEditModal();
+    }
+  };
+
+  window.exportModalGalleryJson = function() {
+    const data = getStore();
+    const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+    const a = document.createElement('a');
+    a.href = str;
+    a.download = "lucky-shaker-gallery-backup.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+
+  window.resetModalDefaultPhotos = function() {
+    if (!confirm("¿Restablecer fotos a la galería original?")) return;
+    setStore(DEFAULT_DATA);
+    renderModalPhotos();
+  };
+
+  function showNotice(msg, type) {
+    const el = document.getElementById("modalAdminNotice");
+    if (!el) return;
+    el.textContent = msg;
+    el.className = "admin-notice " + type;
+    el.style.display = "block";
+    setTimeout(() => { el.style.display = "none"; }, 3500);
+  }
+
+  function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = t;
+    return d.innerHTML;
+  }
+
+  // Check URL hash for direct admin trigger
+  if (window.location.hash === '#admin' || window.location.hash === '#admin-panel') {
+    setTimeout(window.openLuckyAdmin, 300);
+  }
+})();
+</script>

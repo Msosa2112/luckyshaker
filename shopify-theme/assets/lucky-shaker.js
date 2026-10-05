@@ -4,6 +4,79 @@
  */
 
 /* ==========================================================================
+   SAFE STORAGE HELPER (Prevents SecurityError in Sandboxed Iframes)
+   ========================================================================== */
+window.SafeStorage = (function() {
+  var memory = {};
+  var testAvailability = function(type) {
+    try {
+      if (typeof window === 'undefined' || !window[type]) return false;
+      var s = window[type];
+      var key = '__ls_test__';
+      s.setItem(key, '1');
+      s.removeItem(key);
+      return true;
+    } catch(e) {
+      return false;
+    }
+  };
+
+  var hasLocal = testAvailability('localStorage');
+  var hasSession = testAvailability('sessionStorage');
+
+  return {
+    getItem: function(key) {
+      try {
+        if (hasLocal) return window.localStorage.getItem(key);
+      } catch(e) {}
+      return memory[key] || null;
+    },
+    setItem: function(key, val) {
+      try {
+        if (hasLocal) {
+          window.localStorage.setItem(key, String(val));
+          return;
+        }
+      } catch(e) {}
+      memory[key] = String(val);
+    },
+    removeItem: function(key) {
+      try {
+        if (hasLocal) {
+          window.localStorage.removeItem(key);
+          return;
+        }
+      } catch(e) {}
+      delete memory[key];
+    },
+    getSessionItem: function(key) {
+      try {
+        if (hasSession) return window.sessionStorage.getItem(key);
+      } catch(e) {}
+      return memory['__sess_' + key] || null;
+    },
+    setSessionItem: function(key, val) {
+      try {
+        if (hasSession) {
+          window.sessionStorage.setItem(key, String(val));
+          return;
+        }
+      } catch(e) {}
+      memory['__sess_' + key] = String(val);
+    },
+    removeSessionItem: function(key) {
+      try {
+        if (hasSession) {
+          window.sessionStorage.removeItem(key);
+          return;
+        }
+      } catch(e) {}
+      delete memory['__sess_' + key];
+    }
+  };
+})();
+
+/* ==========================================================================
    0. BILINGUAL INTERNATIONALIZATION ENGINE (ES default / EN toggle)
    ========================================================================== */
 window.LuckyShakerLang = {
@@ -525,9 +598,9 @@ window.LuckyShakerLang = {
   setLang: function(lang) {
     if (lang !== 'es' && lang !== 'en') lang = 'es';
     this.currentLang = lang;
-    try {
-      localStorage.setItem('lucky_shaker_lang', lang);
-    } catch(e) {}
+    if (window.SafeStorage) {
+      window.SafeStorage.setItem('lucky_shaker_lang', lang);
+    }
 
     document.documentElement.lang = lang;
 
@@ -569,9 +642,9 @@ window.LuckyShakerLang = {
 
   init: function() {
     var stored = 'es';
-    try {
-      stored = localStorage.getItem('lucky_shaker_lang') || 'es';
-    } catch(e) {}
+    if (window.SafeStorage) {
+      stored = window.SafeStorage.getItem('lucky_shaker_lang') || 'es';
+    }
     this.setLang(stored);
   }
 };
