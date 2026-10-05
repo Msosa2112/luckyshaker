@@ -1,5 +1,20 @@
+<style id="lucky-admin-critical-shield">
+  #luckyAdminModal,
+  .lucky-admin-overlay,
+  #modalPhotoEditModal,
+  .admin-modal {
+    display: none !important;
+  }
+  #luckyAdminModal.is-active,
+  .lucky-admin-overlay.is-active,
+  #modalPhotoEditModal.is-active,
+  .admin-modal.is-active {
+    display: flex !important;
+  }
+</style>
+
 <!-- LUCKY SHAKER ADMIN PORTAL GLOBAL MODAL -->
-<div class="lucky-admin-overlay" id="luckyAdminModal" style="display: none;" role="dialog" aria-modal="true" aria-label="Panel de Administración">
+<div class="lucky-admin-overlay" id="luckyAdminModal" role="dialog" aria-modal="true" aria-label="Panel de Administración" style="display: none !important;">
   <div class="admin-overlay-backdrop" onclick="closeLuckyAdmin()"></div>
   
   <div class="admin-modal-container">
@@ -181,7 +196,7 @@
     </div>
 
     <!-- PHOTO EDIT SUBMODAL -->
-    <div class="admin-modal" id="modalPhotoEditModal" style="display:none;">
+    <div class="admin-modal" id="modalPhotoEditModal" role="dialog" aria-modal="true" aria-label="Editar Pie de Foto" style="display: none !important;">
       <div class="admin-modal-backdrop" onclick="closeModalEditModal()"></div>
       <div class="admin-modal-box">
         <div class="admin-modal-header">
@@ -214,12 +229,18 @@
   position: fixed !important;
   inset: 0 !important;
   z-index: 999999 !important;
-  display: flex !important;
+  display: none !important;
   align-items: center !important;
   justify-content: center !important;
   padding: clamp(0.75rem, 2vw, 2rem) !important;
   box-sizing: border-box !important;
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.lucky-admin-overlay.is-active,
+.lucky-admin-overlay.active,
+.lucky-admin-overlay.is-open {
+  display: flex !important;
 }
 
 .admin-overlay-backdrop {
@@ -864,10 +885,23 @@
   position: fixed !important;
   inset: 0 !important;
   z-index: 9999999 !important;
-  display: flex !important;
+  display: none !important;
   align-items: center !important;
   justify-content: center !important;
   padding: 1.5rem !important;
+}
+
+.admin-modal.is-active,
+.admin-modal.active,
+.admin-modal.is-open {
+  display: flex !important;
+}
+
+.admin-modal-backdrop {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .admin-modal-box {
@@ -1010,7 +1044,8 @@
   window.openLuckyAdmin = function() {
     const modal = document.getElementById("luckyAdminModal");
     if (modal) {
-      modal.style.display = "flex";
+      modal.classList.add("is-active");
+      modal.style.setProperty("display", "flex", "important");
       document.body.style.overflow = "hidden";
       const isAuth = window.SafeStorage ? window.SafeStorage.getSessionItem(AUTH_KEY) === "true" : false;
       if (isAuth) {
@@ -1029,8 +1064,19 @@
   window.closeLuckyAdmin = function() {
     const modal = document.getElementById("luckyAdminModal");
     if (modal) {
-      modal.style.display = "none";
+      modal.classList.remove("is-active");
+      modal.style.setProperty("display", "none", "important");
       document.body.style.overflow = "";
+      if (window.location.hash === '#admin' || window.location.hash === '#admin-panel') {
+        try {
+          history.pushState("", document.title, window.location.pathname + window.location.search);
+        } catch(e) {}
+      }
+    }
+    const subModal = document.getElementById("modalPhotoEditModal");
+    if (subModal) {
+      subModal.classList.remove("is-active");
+      subModal.style.setProperty("display", "none", "important");
     }
   };
 
@@ -1210,11 +1256,19 @@
     const p = data[activeCat].gallery[idx];
     document.getElementById("modalEditPreviewImg").src = p.src;
     document.getElementById("modalEditCaptionInput").value = p.caption || "";
-    document.getElementById("modalPhotoEditModal").style.display = "flex";
+    const subModal = document.getElementById("modalPhotoEditModal");
+    if (subModal) {
+      subModal.classList.add("is-active");
+      subModal.style.setProperty("display", "flex", "important");
+    }
   };
 
   window.closeModalEditModal = function() {
-    document.getElementById("modalPhotoEditModal").style.display = "none";
+    const subModal = document.getElementById("modalPhotoEditModal");
+    if (subModal) {
+      subModal.classList.remove("is-active");
+      subModal.style.setProperty("display", "none", "important");
+    }
     editingIdx = null;
   };
 
@@ -1262,9 +1316,11 @@
     return d.innerHTML;
   }
 
-  // Check URL hash for direct admin trigger
-  if (window.location.hash === '#admin' || window.location.hash === '#admin-panel') {
-    setTimeout(window.openLuckyAdmin, 300);
-  }
+  // Listen for hashchange only (not on auto-page load)
+  window.addEventListener('hashchange', function() {
+    if (window.location.hash === '#admin' || window.location.hash === '#admin-panel') {
+      window.openLuckyAdmin();
+    }
+  });
 })();
 </script>

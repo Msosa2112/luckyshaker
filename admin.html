@@ -678,10 +678,14 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
+    }
+
+    .admin-modal.is-active {
+      display: flex;
     }
 
     .admin-modal-backdrop {
