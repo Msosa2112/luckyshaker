@@ -9,53 +9,447 @@
     </div>
 
     <div class="gallery-editorial-grid">
-      <!-- Item 1: Large Feature (Bodas) -->
-      <div class="gallery-item item-large">
-        <img src="{{ 'event-weddings.jpg' | asset_url }}" alt="Barra de Coctelería para Bodas Lucky Shaker" class="gallery-img" width="800" height="600" loading="lazy">
+      <!-- Item 1: Large Feature (Bodas & Montaje Principal) -->
+      <div class="gallery-item item-large" onclick="openMomentLightbox(0)" role="button" tabindex="0" title="Ver foto en tamaño completo">
+        <img src="{{ 'event-moment-2.jpg' | asset_url }}" alt="Barra de Coctelería para Bodas Lucky Shaker" class="gallery-img" width="800" height="600" loading="lazy">
         <div class="gallery-item-overlay">
-          <span class="gallery-pill" data-i18n="gallery.p1">BODAS</span>
-          <h4 data-i18n="gallery.t1">Montaje de Barra al Atardecer</h4>
+          <span class="gallery-pill">BODAS &amp; RECEPCIONES</span>
+          <h4>Montaje de Barra y Mixología al Atardecer</h4>
+          <span class="gallery-zoom-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Ver Foto
+          </span>
         </div>
       </div>
 
       <!-- Item 2: Mixologist Shake -->
-      <div class="gallery-item">
-        <img src="{{ 'event-bartender-action.jpg' | asset_url }}" alt="Mixólogo de Autor en Acción" class="gallery-img" width="600" height="500" loading="lazy">
+      <div class="gallery-item" onclick="openMomentLightbox(1)" role="button" tabindex="0" title="Ver foto en tamaño completo">
+        <img src="{{ 'event-moment-6.jpg' | asset_url }}" alt="Mixólogo de Autor en Acción" class="gallery-img" width="600" height="500" loading="lazy">
         <div class="gallery-item-overlay">
-          <span class="gallery-pill" data-i18n="gallery.p2">EL ARTE</span>
-          <h4 data-i18n="gallery.t2">Precisión y Pasión en Coctelera</h4>
+          <span class="gallery-pill">EL ARTE DEL SHAKER</span>
+          <h4>Precisión y Pasión en Coctelera</h4>
+          <span class="gallery-zoom-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Ver Foto
+          </span>
         </div>
       </div>
 
-      <!-- Item 3: Private Party Rooftop -->
-      <div class="gallery-item">
-        <img src="{{ 'event-private-party.jpg' | asset_url }}" alt="Fiesta Privada en Terraza" class="gallery-img" width="600" height="500" loading="lazy">
+      <!-- Item 3: Private Party & Celebration -->
+      <div class="gallery-item" onclick="openMomentLightbox(2)" role="button" tabindex="0" title="Ver foto en tamaño completo">
+        <img src="{{ 'event-moment-7.jpg' | asset_url }}" alt="Fiesta Privada y Celebraciones" class="gallery-img" width="600" height="500" loading="lazy">
         <div class="gallery-item-overlay">
-          <span class="gallery-pill" data-i18n="gallery.p3">EVENTOS PRIVADOS</span>
-          <h4 data-i18n="gallery.t3">Celebraciones en Terrazas</h4>
+          <span class="gallery-pill">FIESTAS PRIVADAS</span>
+          <h4>Celebraciones con Coctelería en Vivo</h4>
+          <span class="gallery-zoom-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Ver Foto
+          </span>
         </div>
       </div>
 
       <!-- Item 4: Corporate Gala Bar -->
-      <div class="gallery-item">
-        <img src="{{ 'event-corporate-gala.jpg' | asset_url }}" alt="Coctelería para Galas Corporativas" class="gallery-img" width="600" height="500" loading="lazy">
+      <div class="gallery-item" onclick="openMomentLightbox(3)" role="button" tabindex="0" title="Ver foto en tamaño completo">
+        <img src="{{ 'event-moment-9.jpg' | asset_url }}" alt="Coctelería para Galas Corporativas" class="gallery-img" width="600" height="500" loading="lazy">
         <div class="gallery-item-overlay">
-          <span class="gallery-pill" data-i18n="gallery.p4">GALAS CORPORATIVAS</span>
-          <h4 data-i18n="gallery.t4">Servicio VIP para Empresas</h4>
+          <span class="gallery-pill">EVENTOS DE NEGOCIOS</span>
+          <h4>Servicio VIP para Empresas</h4>
+          <span class="gallery-zoom-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Ver Foto
+          </span>
         </div>
       </div>
 
-      <!-- Item 5: Cocktail Pour / Bottled Reserve -->
-      <div class="gallery-item">
-        <img src="{{ 'whiskey_cream_desktop.jpg' | asset_url }}" alt="Detalles de Coctelería Lucky Shaker" class="gallery-img" width="600" height="500" loading="lazy">
+      <!-- Item 5: Cocktail Pour & Craft Garnishes -->
+      <div class="gallery-item" onclick="openMomentLightbox(4)" role="button" tabindex="0" title="Ver foto en tamaño completo">
+        <img src="{{ 'event-moment-10.jpg' | asset_url }}" alt="Detalles de Coctelería Lucky Shaker" class="gallery-img" width="600" height="500" loading="lazy">
         <div class="gallery-item-overlay">
-          <span class="gallery-pill" data-i18n="gallery.p5">COLECCIÓN RESERVA</span>
-          <h4 data-i18n="gallery.t5">Elegancia Embotellada a Mano</h4>
+          <span class="gallery-pill">COCTELERÍA DE AUTOR</span>
+          <h4>Garnishes Artesanales y Cristalería Fina</h4>
+          <span class="gallery-zoom-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Ver Foto
+          </span>
+        </div>
+      </div>
+
+      <!-- Item 6: Mobile Bar Experience -->
+      <div class="gallery-item" onclick="openMomentLightbox(5)" role="button" tabindex="0" title="Ver foto en tamaño completo">
+        <img src="{{ 'event-moment-14.jpg' | asset_url }}" alt="Ambiente Exclusivo y Momentos Inolvidables" class="gallery-img" width="600" height="500" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-pill">EXPERIENCIA PREMIUM</span>
+          <h4>Ambiente Exclusivo e Inolvidable</h4>
+          <span class="gallery-zoom-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Ver Foto
+          </span>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- MOMENTS LIGHTBOX MODAL -->
+  <div class="moments-lightbox-overlay" id="momentsLightbox" style="display: none;" role="dialog" aria-modal="true" aria-label="Visualizador de Momentos">
+    <div class="moments-lightbox-backdrop" onclick="closeMomentLightbox()"></div>
+    <div class="moments-lightbox-content">
+      <button type="button" class="moments-lightbox-close" onclick="closeMomentLightbox()" aria-label="Cerrar Visualizador">&times;</button>
+      <button type="button" class="moments-lightbox-nav prev" onclick="prevMomentLightbox()" aria-label="Foto Anterior">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="moments-lightbox-img-wrap">
+        <img id="momentsLightboxImg" src="" alt="Momento Lucky Shaker" class="moments-lightbox-img">
+      </div>
+      <button type="button" class="moments-lightbox-nav next" onclick="nextMomentLightbox()" aria-label="Siguiente Foto">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="moments-lightbox-caption">
+        <span class="moments-lightbox-tag" id="momentsLightboxTag">BODAS</span>
+        <h3 id="momentsLightboxTitle">Título del Momento</h3>
+        <span class="moments-lightbox-counter" id="momentsLightboxCounter">1 / 16</span>
+      </div>
+    </div>
+  </div>
 </section>
+
+<style>
+/* ==========================================================================
+   MOMENTS EDITORIAL & LIGHTBOX STYLES
+   ========================================================================== */
+.gallery-editorial-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-auto-rows: 290px;
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #0E0F14;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), 0 0 30px rgba(232, 43, 125, 0.2);
+  border-color: rgba(232, 43, 125, 0.4);
+}
+
+.gallery-item.item-large {
+  grid-row: span 2;
+}
+
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-item:hover .gallery-img {
+  transform: scale(1.06);
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  padding: 3rem 1.6rem 1.5rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 11, 15, 0.92) 80%, rgba(10, 11, 15, 0.98) 100%);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.gallery-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #FF5599;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+
+.gallery-item-overlay h4 {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem 0;
+  color: #FFFFFF;
+  line-height: 1.3;
+}
+
+.gallery-zoom-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.25s ease;
+}
+
+.gallery-item:hover .gallery-zoom-hint {
+  opacity: 1;
+  transform: translateY(0);
+  color: #FF5599;
+}
+
+/* Lightbox Modal */
+.moments-lightbox-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1.5rem !important;
+  box-sizing: border-box !important;
+}
+
+.moments-lightbox-overlay.is-active {
+  display: flex !important;
+}
+
+.moments-lightbox-backdrop {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(6, 7, 10, 0.94) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+}
+
+.moments-lightbox-content {
+  position: relative !important;
+  max-width: 1000px !important;
+  width: 100% !important;
+  max-height: 90vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  z-index: 2 !important;
+}
+
+.moments-lightbox-img-wrap {
+  width: 100% !important;
+  max-height: 70vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 25px 80px rgba(0,0,0,0.8), 0 0 40px rgba(232, 43, 125, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: #000000 !important;
+}
+
+.moments-lightbox-img {
+  max-width: 100% !important;
+  max-height: 70vh !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.moments-lightbox-caption {
+  width: 100% !important;
+  margin-top: 1rem !important;
+  text-align: center !important;
+  color: #FFFFFF !important;
+}
+
+.moments-lightbox-tag {
+  display: inline-block !important;
+  font-size: 0.7rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.15em !important;
+  color: #FF5599 !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.3rem !important;
+}
+
+.moments-lightbox-caption h3 {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  margin: 0 0 0.4rem 0 !important;
+  color: #FFFFFF !important;
+}
+
+.moments-lightbox-counter {
+  font-size: 0.8rem !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-weight: 600 !important;
+}
+
+.moments-lightbox-close {
+  position: absolute !important;
+  top: -3.5rem !important;
+  right: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #FFFFFF !important;
+  font-size: 1.8rem !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  transition: all 0.2s ease !important;
+}
+
+.moments-lightbox-close:hover {
+  background: rgba(232, 43, 125, 0.4) !important;
+  border-color: #E82B7D !important;
+  transform: rotate(90deg) !important;
+}
+
+.moments-lightbox-nav {
+  position: absolute !important;
+  top: 40% !important;
+  transform: translateY(-50%) !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  background: rgba(18, 20, 28, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #FFFFFF !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  z-index: 10 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.moments-lightbox-nav.prev {
+  left: -25px !important;
+}
+
+.moments-lightbox-nav.next {
+  right: -25px !important;
+}
+
+.moments-lightbox-nav:hover {
+  background: #E82B7D !important;
+  border-color: #E82B7D !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+@media (max-width: 991px) {
+  .gallery-editorial-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 240px;
+  }
+  .gallery-item.item-large {
+    grid-column: span 2;
+    grid-row: span 1;
+    height: 320px;
+  }
+  .moments-lightbox-nav.prev { left: 10px !important; }
+  .moments-lightbox-nav.next { right: 10px !important; }
+  .moments-lightbox-close { top: 10px !important; right: 10px !important; }
+}
+
+@media (max-width: 600px) {
+  .gallery-editorial-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 260px;
+  }
+  .gallery-item.item-large {
+    grid-column: span 1;
+    height: 280px;
+  }
+}
+</style>
+
+<script>
+(function() {
+  const MOMENTS = [
+    { src: "{{ 'event-moment-2.jpg' | asset_url }}", tag: "BODAS & RECEPCIONES", title: "Montaje de Barra y Mixología al Atardecer" },
+    { src: "{{ 'event-moment-6.jpg' | asset_url }}", tag: "EL ARTE DEL SHAKER", title: "Precisión y Pasión en Coctelera" },
+    { src: "{{ 'event-moment-7.jpg' | asset_url }}", tag: "FIESTAS PRIVADAS", title: "Celebraciones con Coctelería en Vivo" },
+    { src: "{{ 'event-moment-9.jpg' | asset_url }}", tag: "EVENTOS DE NEGOCIOS", title: "Servicio VIP para Empresas y Galas" },
+    { src: "{{ 'event-moment-10.jpg' | asset_url }}", tag: "COCTELERÍA DE AUTOR", title: "Garnishes Artesanales & Cristalería Fina" },
+    { src: "{{ 'event-moment-14.jpg' | asset_url }}", tag: "EXPERIENCIA PREMIUM", title: "Ambiente Exclusivo y Momentos Inolvidables" },
+    { src: "{{ 'event-moment-3.jpg' | asset_url }}", tag: "GENDER REVEAL", title: "Coctelería Temática en Tonos Rosa y Celeste" },
+    { src: "{{ 'event-moment-4.jpg' | asset_url }}", tag: "MIXOLOGÍA DE AUTOR", title: "Flores Comestibles y Decoración Artesanal" },
+    { src: "{{ 'event-moment-5.jpg' | asset_url }}", tag: "BARRAS MÓVILES", title: "Iluminación LED y Estaciones de Servicio" },
+    { src: "{{ 'event-moment-8.jpg' | asset_url }}", tag: "FIESTAS PRIVADAS", title: "Hospitalidad y Atención de Clase Mundial" },
+    { src: "{{ 'event-moment-11.jpg' | asset_url }}", tag: "EVENTOS VIP", title: "Degustación de Cocteles y Experiencia de Autor" },
+    { src: "{{ 'event-moment-12.jpg' | asset_url }}", tag: "BOTÁNICOS & DISPOSITIVOS", title: "Cítricos y Frutas Deshidratadas Artesanales" },
+    { src: "{{ 'event-moment-13.jpg' | asset_url }}", tag: "COCTELERÍA DE FIESTA", title: "Servicio Ágil y Animación de Barra" },
+    { src: "{{ 'event-moment-15.jpg' | asset_url }}", tag: "CELEBRACIÓN TOTAL", title: "Momentos Mágicos para tus Invitados" },
+    { src: "{{ 'event-moment-16.jpg' | asset_url }}", tag: "LUCKY SHAKER SUPPLY", title: "La Experiencia Completa en Cada Copa" }
+  ];
+
+  let currentIdx = 0;
+
+  window.openMomentLightbox = function(idx) {
+    currentIdx = idx % MOMENTS.length;
+    updateLightboxUI();
+    const modal = document.getElementById("momentsLightbox");
+    if (modal) {
+      modal.classList.add("is-active");
+      modal.style.setProperty("display", "flex", "important");
+      document.body.style.overflow = "hidden";
+    }
+  };
+
+  window.closeMomentLightbox = function() {
+    const modal = document.getElementById("momentsLightbox");
+    if (modal) {
+      modal.classList.remove("is-active");
+      modal.style.setProperty("display", "none", "important");
+      document.body.style.overflow = "";
+    }
+  };
+
+  window.prevMomentLightbox = function() {
+    currentIdx = (currentIdx - 1 + MOMENTS.length) % MOMENTS.length;
+    updateLightboxUI();
+  };
+
+  window.nextMomentLightbox = function() {
+    currentIdx = (currentIdx + 1) % MOMENTS.length;
+    updateLightboxUI();
+  };
+
+  function updateLightboxUI() {
+    const m = MOMENTS[currentIdx];
+    const img = document.getElementById("momentsLightboxImg");
+    const tag = document.getElementById("momentsLightboxTag");
+    const title = document.getElementById("momentsLightboxTitle");
+    const counter = document.getElementById("momentsLightboxCounter");
+
+    if (img) img.src = m.src;
+    if (tag) tag.textContent = m.tag;
+    if (title) title.textContent = m.title;
+    if (counter) counter.textContent = `${currentIdx + 1} / ${MOMENTS.length}`;
+  }
+
+  // Keyboard navigation
+  document.addEventListener("keydown", function(e) {
+    const modal = document.getElementById("momentsLightbox");
+    if (!modal || !modal.classList.contains("is-active")) return;
+    if (e.key === "Escape") closeMomentLightbox();
+    if (e.key === "ArrowLeft") prevMomentLightbox();
+    if (e.key === "ArrowRight") nextMomentLightbox();
+  });
+})();
+</script>
 
 {% schema %}
 {
@@ -87,3 +481,4 @@
   ]
 }
 {% endschema %}
+
