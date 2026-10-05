@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-admin-panel",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

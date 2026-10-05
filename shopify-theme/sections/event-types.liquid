@@ -853,6 +853,26 @@
       }
     ];
 
+    // --- CHECK FOR CUSTOM PHOTOS FROM ADMIN PANEL ---
+    try {
+      const storedGallery = localStorage.getItem('lucky_custom_gallery');
+      if (storedGallery) {
+        const customData = JSON.parse(storedGallery);
+        slides.forEach(function(slide) {
+          if (customData[slide.id]) {
+            if (Array.isArray(customData[slide.id].gallery) && customData[slide.id].gallery.length > 0) {
+              slide.gallery = customData[slide.id].gallery;
+            }
+            if (customData[slide.id].media) {
+              slide.media = customData[slide.id].media;
+            }
+          }
+        });
+      }
+    } catch(e) {
+      console.warn('Error loading custom gallery photos:', e);
+    }
+
     // --- GLOBAL STATE ---
     let currentSlideIndex = 0;
     let isTransitioning = false;
