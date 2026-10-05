@@ -17,25 +17,85 @@
       <!-- Static poster fallback -->
       <div class="slider-poster-fallback" id="sliderFallback" style="background-image: url('{{ 'event-real-bodas.jpg' | asset_url }}');"></div>
 
-      <!-- Left & Right Vertically Centered Counters -->
+      <!-- Left & Right Vertically Centered Numbers -->
       <span class="slide-number" id="slideNumber">01</span>
       <span class="slide-total" id="slideTotal">04</span>
       
-      <!-- Dead-Center Title & Description (Clickable to Booking Form) -->
-      <div class="slide-content" id="slideContent" role="button" tabindex="0" title="Cotizar este evento">
+      <!-- Dead-Center Title, Description & Floating Gallery Pill (Clickable to open Gallery) -->
+      <div class="slide-content" id="slideContent" role="button" tabindex="0" title="Toca para ver galería completa">
         <h2 class="slide-title" id="mainTitle"></h2>
         <p class="slide-description" id="mainDesc"></p>
+        
+        <div class="slide-gallery-trigger">
+          <span class="gallery-hint-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span data-i18n="types.view_gallery">TOCA PARA VER GALERÍA COMPLETA</span>
+          </span>
+        </div>
       </div>
      
       <!-- Bottom Categories Navigation Bar -->
       <nav class="slides-navigation" id="slidesNav" aria-label="Categorías de Eventos"></nav>
     </main>
   </div>
+
+  <!-- EVENT PHOTO GALLERY LIGHTBOX MODAL -->
+  <div class="event-gallery-modal" id="eventGalleryModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    
+    <div class="modal-dialog">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <span class="modal-eyebrow" id="modalEyebrow">GALERÍA EXCLUSIVA</span>
+          <h3 class="modal-title" id="modalCatTitle">Bodas &amp; Recepciones</h3>
+          <p class="modal-subtitle" id="modalCatSub" data-i18n="types.gallery_modal_sub">Momentos reales de eventos por Lucky Shaker</p>
+        </div>
+
+        <div class="modal-header-actions">
+          <a href="#book-event" class="btn btn-pink modal-quote-btn" id="modalQuoteBtn">
+            <span data-i18n="types.modal_quote_btn">COTIZAR ESTE EVENTO</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </a>
+          <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar galería">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Showcase Viewer -->
+      <div class="modal-viewer">
+        <button type="button" class="modal-nav-arrow modal-prev-btn" id="modalPrevBtn" aria-label="Foto anterior">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="modal-image-stage" id="modalImageStage">
+          <img id="modalMainImg" class="modal-main-image" src="" alt="Foto de evento Lucky Shaker">
+          <div class="modal-image-loader" id="modalImgLoader"></div>
+        </div>
+
+        <button type="button" class="modal-nav-arrow modal-next-btn" id="modalNextBtn" aria-label="Foto siguiente">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Caption & Counter Bar -->
+      <div class="modal-caption-bar">
+        <span class="modal-caption-text" id="modalCaptionText"></span>
+        <span class="modal-counter-badge" id="modalCounterBadge">01 / 06</span>
+      </div>
+
+      <!-- Bottom Filmstrip Thumbnails -->
+      <div class="modal-filmstrip-wrapper">
+        <div class="modal-filmstrip" id="modalFilmstrip"></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
 /* ==========================================================================
-   LUMINA INTERACTIVE SLIDER — PIXEL-PERFECT LUXURY REPLICATION
+   LUMINA INTERACTIVE SLIDER & PHOTO GALLERY MODAL
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
@@ -74,6 +134,7 @@
   justify-content: center;
   isolation: isolate;
   user-select: none;
+  cursor: pointer;
 }
 
 .webgl-canvas {
@@ -105,18 +166,18 @@
   opacity: 0;
 }
 
-/* Subtle dark vignette to ensure text readability while preserving full imagery */
+/* Subtle dark vignette to ensure text readability */
 .slider-wrapper::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 75%, rgba(0, 0, 0, 0.7) 100%),
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.42) 75%, rgba(0, 0, 0, 0.7) 100%),
               linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, transparent 25%, transparent 65%, rgba(0, 0, 0, 0.65) 100%);
   z-index: 2;
   pointer-events: none;
 }
 
-/* Left and Right Vertically Centered Numbers */
+/* Left and Right Numbers */
 .slide-number,
 .slide-total {
   position: absolute;
@@ -150,7 +211,6 @@
   z-index: 10;
   width: 88%;
   max-width: 860px;
-  cursor: pointer;
   padding: 1rem;
 }
 
@@ -163,6 +223,11 @@
   margin: 0 0 1.25rem 0;
   letter-spacing: -0.01em;
   text-shadow: 0 4px 28px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.slide-content:hover .slide-title {
+  transform: scale(1.02);
 }
 
 .slide-title span {
@@ -180,6 +245,39 @@
   max-width: 620px;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
   letter-spacing: 0.015em;
+}
+
+/* Floating Interactive Pill Cue */
+.slide-gallery-trigger {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-hint-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(18, 19, 24, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.45rem 1.1rem;
+  border-radius: 100px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
+}
+
+.slider-wrapper:hover .gallery-hint-pill {
+  background: rgba(232, 43, 125, 0.3);
+  border-color: rgba(232, 43, 125, 0.8);
+  box-shadow: 0 6px 24px rgba(232, 43, 125, 0.45);
+  transform: translateY(-2px);
 }
 
 /* Bottom 4 Categories Navigation */
@@ -247,6 +345,271 @@
 }
 
 /* ==========================================================================
+   EVENT PHOTO GALLERY LIGHTBOX MODAL
+   ========================================================================== */
+.event-gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+}
+
+.event-gallery-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 7, 9, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+.modal-dialog {
+  position: relative;
+  width: 92%;
+  max-width: 1200px;
+  height: 90vh;
+  max-height: 880px;
+  background: rgba(14, 15, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2;
+  transform: scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.event-gallery-modal.active .modal-dialog {
+  transform: scale(1);
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-eyebrow {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--accent-pink, #E82B7D);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.modal-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0.2rem 0 0 0;
+}
+
+.modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-quote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.modal-close-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(232, 43, 125, 0.25);
+  border-color: var(--accent-pink, #E82B7D);
+  transform: rotate(90deg);
+}
+
+/* Modal Main Image Stage */
+.modal-viewer {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.modal-image-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-main-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-main-image.switching {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.modal-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(18, 19, 24, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.25s ease;
+}
+
+.modal-nav-arrow:hover {
+  background: rgba(232, 43, 125, 0.4);
+  border-color: var(--accent-pink, #E82B7D);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.modal-prev-btn {
+  left: 1.5rem;
+}
+
+.modal-next-btn {
+  right: 1.5rem;
+}
+
+/* Caption and Counter */
+.modal-caption-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: rgba(10, 11, 15, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modal-caption-text {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.modal-counter-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-pink, #E82B7D);
+  letter-spacing: 0.1em;
+}
+
+/* Filmstrip Thumbnails */
+.modal-filmstrip-wrapper {
+  padding: 0.85rem 1.5rem 1.25rem;
+  background: rgba(10, 11, 15, 0.98);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 43, 125, 0.4) transparent;
+}
+
+.modal-filmstrip {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  min-width: min-content;
+  margin: 0 auto;
+}
+
+.filmstrip-thumb-item {
+  position: relative;
+  width: 80px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.45;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.filmstrip-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.filmstrip-thumb-item:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.filmstrip-thumb-item.active {
+  opacity: 1;
+  border-color: var(--accent-pink, #E82B7D);
+  box-shadow: 0 0 16px rgba(232, 43, 125, 0.5);
+  transform: scale(1.06);
+}
+
+/* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -256,6 +619,10 @@
   }
   .slides-navigation {
     bottom: 2rem;
+  }
+  .modal-dialog {
+    width: 95%;
+    height: 92vh;
   }
 }
 
@@ -285,6 +652,10 @@
     font-size: 0.85rem;
     line-height: 1.5;
   }
+  .gallery-hint-pill {
+    font-size: 0.62rem;
+    padding: 0.35rem 0.85rem;
+  }
   .slides-navigation {
     bottom: 1.25rem;
     left: 1.25rem;
@@ -298,6 +669,44 @@
     font-size: 0.55rem;
     letter-spacing: 0.08em;
     text-align: center;
+  }
+
+  /* Modal Responsive */
+  .modal-dialog {
+    width: 100%;
+    height: 100vh;
+    max-height: none;
+    border-radius: 0;
+    border: none;
+  }
+  .modal-header {
+    padding: 1rem 1.25rem;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+  }
+  .modal-subtitle {
+    display: none;
+  }
+  .modal-quote-btn {
+    display: none;
+  }
+  .modal-nav-arrow {
+    width: 38px;
+    height: 38px;
+  }
+  .modal-prev-btn {
+    left: 0.5rem;
+  }
+  .modal-next-btn {
+    right: 0.5rem;
+  }
+  .modal-caption-bar {
+    padding: 0.5rem 1rem;
+  }
+  .filmstrip-thumb-item {
+    width: 60px;
+    height: 44px;
   }
 }
 </style>
@@ -356,9 +765,19 @@
       }
     };
 
-    // --- 4 CATEGORIES & SLIDES DATA ---
+    // Helper: i18n lookup
+    const getI18n = (key, fallback) => {
+      if (window.LuckyShakerLang && typeof window.LuckyShakerLang.get === 'function') {
+        const val = window.LuckyShakerLang.get(key);
+        if (val && val !== key) return val;
+      }
+      return fallback;
+    };
+
+    // --- 4 CATEGORIES & EXTENDED REAL PHOTO GALLERIES ---
     const slides = [
       {
+        id: 'bodas',
         categoryKey: 'types.cat_1',
         categoryDefault: 'Bodas',
         titleKey: 'types.c1_title',
@@ -366,9 +785,18 @@
         descKey: 'types.c1_desc',
         descDefault: 'Servicio integral de coctelería de lujo con cócteles personalizados para los novios, cristalería fina y mixólogos de autor.',
         media: "{{ 'event-real-bodas.jpg' | asset_url }}",
-        formValue: 'Boda'
+        formValue: 'Boda',
+        gallery: [
+          { src: "{{ 'gallery-bodas-1.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-1-thumb.jpg' | asset_url }}", caption: "Copa de autor con flores comestibles y cítricos deshidratados" },
+          { src: "{{ 'gallery-bodas-2.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-2-thumb.jpg' | asset_url }}", caption: "Vuelo de degustación de shots de autor y coctelería fina" },
+          { src: "{{ 'gallery-bodas-3.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-3-thumb.jpg' | asset_url }}", caption: "Carta de coctelería personalizada para los novios" },
+          { src: "{{ 'gallery-bodas-4.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-4-thumb.jpg' | asset_url }}", caption: "Detalles de lujo y cajas de regalo para invitados" },
+          { src: "{{ 'gallery-bodas-5.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-5-thumb.jpg' | asset_url }}", caption: "Estación de cristalería tallada y servicio VIP" },
+          { src: "{{ 'gallery-bodas-6.jpg' | asset_url }}", thumb: "{{ 'gallery-bodas-6-thumb.jpg' | asset_url }}", caption: "Montaje completo de barra nupcial al atardecer" }
+        ]
       },
       {
+        id: 'gender_reveal',
         categoryKey: 'types.cat_2',
         categoryDefault: 'Gender Reveal',
         titleKey: 'types.c2_title',
@@ -376,9 +804,18 @@
         descKey: 'types.c2_desc',
         descDefault: 'Celebraciones mágicas con coctelería temática, mocktails de autor sin alcohol y estaciones de barra personalizadas para la revelación.',
         media: "{{ 'event-real-gender-reveal.jpg' | asset_url }}",
-        formValue: 'Gender Reveal'
+        formValue: 'Gender Reveal',
+        gallery: [
+          { src: "{{ 'gallery-gender_reveal-1.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-1-thumb.jpg' | asset_url }}", caption: "Efecto de niebla aromática y nubes de vapor en copas" },
+          { src: "{{ 'gallery-gender_reveal-2.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-2-thumb.jpg' | asset_url }}", caption: "Servicio criogénico en vivo para el momento de la revelación" },
+          { src: "{{ 'gallery-gender_reveal-3.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-3-thumb.jpg' | asset_url }}", caption: "Cócteles de autor tematizados rosa y celeste" },
+          { src: "{{ 'gallery-gender_reveal-4.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-4-thumb.jpg' | asset_url }}", caption: "Brindis con cócteles burbujeantes para los futuros padres" },
+          { src: "{{ 'gallery-gender_reveal-5.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-5-thumb.jpg' | asset_url }}", caption: "Bebidas vírgenes (Mocktails) botánicos para invitados" },
+          { src: "{{ 'gallery-gender_reveal-6.jpg' | asset_url }}", thumb: "{{ 'gallery-gender_reveal-6-thumb.jpg' | asset_url }}", caption: "Barra móvil pastel con iluminación decorativa" }
+        ]
       },
       {
+        id: 'negocios',
         categoryKey: 'types.cat_3',
         categoryDefault: 'Evento de Negocios',
         titleKey: 'types.c3_title',
@@ -386,9 +823,17 @@
         descKey: 'types.c3_desc',
         descDefault: 'Mixología profesional de alto volumen, activación de marca en barra, servicio ágil y hospitalidad ejecutiva para invitados VIP.',
         media: "{{ 'event-real-negocios.jpg' | asset_url }}",
-        formValue: 'Evento Corporativo'
+        formValue: 'Evento Corporativo',
+        gallery: [
+          { src: "{{ 'gallery-negocios-1.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-1-thumb.jpg' | asset_url }}", caption: "Torre dorada con cristalería y botánicos deshidratados" },
+          { src: "{{ 'gallery-negocios-2.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-2-thumb.jpg' | asset_url }}", caption: "Estación ejecutiva con ahumado en vivo bajo campana de cristal" },
+          { src: "{{ 'gallery-negocios-3.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-3-thumb.jpg' | asset_url }}", caption: "Carta impresa de coctelería personalizada con branding de empresa" },
+          { src: "{{ 'gallery-negocios-4.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-4-thumb.jpg' | asset_url }}", caption: "Degustación guiada de destilados para ejecutivos VIP" },
+          { src: "{{ 'gallery-negocios-5.jpg' | asset_url }}", thumb: "{{ 'gallery-negocios-5-thumb.jpg' | asset_url }}", caption: "Servicio ágil de alta capacidad sin filas para galas corporativas" }
+        ]
       },
       {
+        id: 'fiestas',
         categoryKey: 'types.cat_4',
         categoryDefault: 'Fiestas',
         titleKey: 'types.c4_title',
@@ -396,7 +841,15 @@
         descKey: 'types.c4_desc',
         descDefault: 'Eleva cumpleaños, aniversarios y veladas exclusivas con barras móviles privadas, ambientación de lujo y total tranquilidad para el anfitrión.',
         media: "{{ 'event-real-fiestas.jpg' | asset_url }}",
-        formValue: 'Fiesta Privada'
+        formValue: 'Fiesta Privada',
+        gallery: [
+          { src: "{{ 'gallery-fiestas-1.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-1-thumb.jpg' | asset_url }}", caption: "Katherin y equipo liderando la barra privada" },
+          { src: "{{ 'gallery-fiestas-2.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-2-thumb.jpg' | asset_url }}", caption: "Servicio dinámico con coctelería agitada al momento" },
+          { src: "{{ 'gallery-fiestas-3.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-3-thumb.jpg' | asset_url }}", caption: "Hospitalidad cercana y ambientación de celebración VIP" },
+          { src: "{{ 'gallery-fiestas-4.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-4-thumb.jpg' | asset_url }}", caption: "Cócteles ahumados en vivo para sorprender a los invitados" },
+          { src: "{{ 'gallery-fiestas-5.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-5-thumb.jpg' | asset_url }}", caption: "Shots artesanales con sales de cítricos y flores" },
+          { src: "{{ 'gallery-fiestas-6.jpg' | asset_url }}", thumb: "{{ 'gallery-fiestas-6-thumb.jpg' | asset_url }}", caption: "Celebración en terraza al aire libre sin preocupaciones" }
+        ]
       }
     ];
 
@@ -410,18 +863,13 @@
     let progressAnimation = null;
     let sliderEnabled = false;
 
+    // Modal state
+    let activeModalCategory = 0;
+    let activeModalPhotoIdx = 0;
+
     const SLIDE_DURATION = () => SLIDER_CONFIG.settings.autoSlideSpeed;
     const PROGRESS_UPDATE_INTERVAL = 50;
     const TRANSITION_DURATION = () => SLIDER_CONFIG.settings.transitionDuration;
-
-    // Helper: i18n lookup
-    const getI18n = (key, fallback) => {
-      if (window.LuckyShakerLang && typeof window.LuckyShakerLang.get === 'function') {
-        const val = window.LuckyShakerLang.get(key);
-        if (val && val !== key) return val;
-      }
-      return fallback;
-    };
 
     // --- SHADERS ---
     const vertexShader = `
@@ -499,7 +947,6 @@
       const titleEl = document.getElementById('mainTitle');
       const descEl = document.getElementById('mainDesc');
       if (titleEl && descEl && window.gsap) {
-        // Universal animate out (fade up)
         gsap.to(titleEl.children, { y: -20, opacity: 0, duration: 0.5, stagger: 0.02, ease: "power2.in" });
         gsap.to(descEl, { y: -10, opacity: 0, duration: 0.4, ease: "power2.in" });
 
@@ -513,22 +960,22 @@
 
           const children = titleEl.children;
           switch (idx) {
-            case 0: // Bodas: Stagger Up
+            case 0:
               gsap.set(children, { y: 20 });
               gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.03, ease: "power3.out" });
               gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" });
               break;
-            case 1: // Gender Reveal: Stagger Down
+            case 1:
               gsap.set(children, { y: -20 });
               gsap.to(children, { y: 0, opacity: 1, duration: 0.8, stagger: 0.03, ease: "back.out(1.7)" });
               gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" });
               break;
-            case 2: // Evento de Negocios: Blur Reveal
+            case 2:
               gsap.set(children, { filter: "blur(10px)", scale: 1.5, y: 0 });
               gsap.to(children, { filter: "blur(0px)", scale: 1, opacity: 1, duration: 1, stagger: { amount: 0.5, from: "random" }, ease: "power2.out" });
               gsap.to(descEl, { y: 0, opacity: 1, duration: 1, delay: 0.3, ease: "power2.out" });
               break;
-            case 3: // Fiestas: Scale In
+            case 3:
               gsap.set(children, { scale: 0, y: 0 });
               gsap.to(children, { scale: 1, opacity: 1, duration: 0.6, stagger: 0.05, ease: "back.out(1.5)" });
               gsap.to(descEl, { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out" });
@@ -782,21 +1229,159 @@
       }
     }
 
-    // Click on slide content smooth scrolls to booking form
+    // =========================================================================
+    // EVENT PHOTO GALLERY MODAL ENGINE
+    // =========================================================================
+    const modal = document.getElementById('eventGalleryModal');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalCatTitle = document.getElementById('modalCatTitle');
+    const modalQuoteBtn = document.getElementById('modalQuoteBtn');
+    const modalMainImg = document.getElementById('modalMainImg');
+    const modalCaptionText = document.getElementById('modalCaptionText');
+    const modalCounterBadge = document.getElementById('modalCounterBadge');
+    const modalFilmstrip = document.getElementById('modalFilmstrip');
+    const modalPrevBtn = document.getElementById('modalPrevBtn');
+    const modalNextBtn = document.getElementById('modalNextBtn');
+
+    const renderModalPhoto = (idx) => {
+      const cat = slides[activeModalCategory];
+      if (!cat || !cat.gallery || !cat.gallery[idx]) return;
+
+      activeModalPhotoIdx = idx;
+      const photo = cat.gallery[idx];
+
+      modalMainImg.classList.add('switching');
+      setTimeout(() => {
+        modalMainImg.src = photo.src;
+        modalMainImg.alt = photo.caption || cat.titleDefault;
+        modalCaptionText.textContent = photo.caption || `${getI18n(cat.titleKey, cat.titleDefault)} - Lucky Shaker`;
+        modalCounterBadge.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(cat.gallery.length).padStart(2, '0')}`;
+        modalMainImg.classList.remove('switching');
+
+        // Update active thumb
+        document.querySelectorAll('.filmstrip-thumb-item').forEach((th, ti) => {
+          th.classList.toggle('active', ti === idx);
+        });
+      }, 150);
+    };
+
+    const openGalleryModal = (catIndex) => {
+      activeModalCategory = catIndex;
+      const cat = slides[catIndex];
+      if (!cat || !cat.gallery || cat.gallery.length === 0) return;
+
+      stopAutoSlideTimer();
+
+      modalCatTitle.textContent = getI18n(cat.titleKey, cat.titleDefault);
+
+      // Setup quote button
+      if (modalQuoteBtn) {
+        modalQuoteBtn.onclick = (e) => {
+          e.preventDefault();
+          closeGalleryModal();
+          const formSection = document.getElementById('book-event');
+          if (formSection) {
+            formSection.scrollIntoView({ behavior: 'smooth' });
+            const sel = document.getElementById('inquiry-event-type');
+            if (sel) sel.value = cat.formValue;
+          }
+        };
+      }
+
+      // Populate filmstrip
+      modalFilmstrip.innerHTML = '';
+      cat.gallery.forEach((gItem, gIdx) => {
+        const thumbDiv = document.createElement('div');
+        thumbDiv.className = `filmstrip-thumb-item${gIdx === 0 ? ' active' : ''}`;
+        thumbDiv.innerHTML = `<img src="${gItem.thumb || gItem.src}" alt="${gItem.caption}" loading="lazy">`;
+        thumbDiv.addEventListener('click', (e) => {
+          e.stopPropagation();
+          renderModalPhoto(gIdx);
+        });
+        modalFilmstrip.appendChild(thumbDiv);
+      });
+
+      renderModalPhoto(0);
+
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeGalleryModal = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      safeStartTimer(300);
+    };
+
+    const modalNextPhoto = () => {
+      const cat = slides[activeModalCategory];
+      if (!cat || !cat.gallery) return;
+      const nextIdx = (activeModalPhotoIdx + 1) % cat.gallery.length;
+      renderModalPhoto(nextIdx);
+    };
+
+    const modalPrevPhoto = () => {
+      const cat = slides[activeModalCategory];
+      if (!cat || !cat.gallery) return;
+      const prevIdx = (activeModalPhotoIdx - 1 + cat.gallery.length) % cat.gallery.length;
+      renderModalPhoto(prevIdx);
+    };
+
+    // Modal Listeners
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeGalleryModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeGalleryModal);
+    if (modalNextBtn) modalNextBtn.addEventListener('click', (e) => { e.stopPropagation(); modalNextPhoto(); });
+    if (modalPrevBtn) modalPrevBtn.addEventListener('click', (e) => { e.stopPropagation(); modalPrevPhoto(); });
+
+    // Open gallery when clicking the slide content or whole slider
     if (contentEl) {
-      contentEl.addEventListener('click', () => {
-        const formSection = document.getElementById('book-event');
-        if (formSection) {
-          formSection.scrollIntoView({ behavior: 'smooth' });
-          const sel = document.getElementById('inquiry-event-type');
-          if (sel) sel.value = slides[currentSlideIndex].formValue;
-        }
+      contentEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openGalleryModal(currentSlideIndex);
       });
       contentEl.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
-          contentEl.click();
+          e.preventDefault();
+          openGalleryModal(currentSlideIndex);
         }
       });
+    }
+
+    wrapper.addEventListener('click', (e) => {
+      // If click was not on nav buttons
+      if (!e.target.closest('.slides-navigation')) {
+        openGalleryModal(currentSlideIndex);
+      }
+    });
+
+    // Keyboard controls for modal
+    document.addEventListener('keydown', (e) => {
+      if (modal.classList.contains('active')) {
+        if (e.key === 'Escape') closeGalleryModal();
+        if (e.key === 'ArrowRight') modalNextPhoto();
+        if (e.key === 'ArrowLeft') modalPrevPhoto();
+      }
+    });
+
+    // Touch swipe for modal image viewer
+    let modalTouchStartX = 0;
+    const modalViewer = document.querySelector('.modal-viewer');
+    if (modalViewer) {
+      modalViewer.addEventListener('touchstart', (e) => {
+        modalTouchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      modalViewer.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const diff = modalTouchStartX - touchEndX;
+        if (Math.abs(diff) > 40) {
+          if (diff > 0) modalNextPhoto();
+          else modalPrevPhoto();
+        }
+      }, { passive: true });
     }
 
     await initRenderer();

@@ -68,6 +68,9 @@ window.LuckyShakerLang = {
       'types.c4_title': 'Fiestas Privadas & VIP',
       'types.c4_desc': 'Eleva cumpleaños, aniversarios y veladas exclusivas con barras móviles privadas, ambientación de lujo y total tranquilidad para el anfitrión.',
       'types.quote_btn': 'SOLICITAR COTIZACIÓN',
+      'types.view_gallery': 'VER GALERÍA DE FOTOS',
+      'types.gallery_modal_sub': 'Momentos reales de eventos por Lucky Shaker',
+      'types.modal_quote_btn': 'COTIZAR ESTE EVENTO',
 
       // Experience
       'exp.eyebrow': 'MÁS QUE UNA BARRA',
@@ -317,6 +320,9 @@ window.LuckyShakerLang = {
       'types.c4_title': 'Private Parties & VIP',
       'types.c4_desc': 'Elevate milestone birthdays, anniversaries, and exclusive gatherings with private cocktail bars, craft menus, and effortless hosting.',
       'types.quote_btn': 'REQUEST A QUOTE',
+      'types.view_gallery': 'VIEW PHOTO GALLERY',
+      'types.gallery_modal_sub': 'Real event moments captured by Lucky Shaker',
+      'types.modal_quote_btn': 'BOOK THIS EVENT',
 
       // Experience
       'exp.eyebrow': 'MORE THAN A BAR',
