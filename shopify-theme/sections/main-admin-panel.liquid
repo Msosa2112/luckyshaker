@@ -184,7 +184,6 @@
           <h3 class="section-heading">
             Fotos en esta Categoría (<span id="currentCatCount">0</span>)
           </h3>
-          <span class="photos-instruction">Las fotos marcadas como "Portada" son la imagen principal del carrusel.</span>
         </div>
 
         <div class="admin-photos-grid" id="adminPhotosGrid">
@@ -1168,28 +1167,21 @@
     }
 
     catData.gallery.forEach((photo, idx) => {
-      const isCover = catData.media === photo.src;
       const card = document.createElement("div");
-      card.className = "photo-card" + (isCover ? " is-cover" : "");
+      card.className = "photo-card";
       card.innerHTML = `
         <div class="photo-thumb-box">
           <img src="${photo.thumb || photo.src}" class="photo-thumb-img" alt="Foto ${idx + 1}" loading="lazy">
-          ${isCover ? '<span class="cover-badge">PORTADA PRINCIPAL</span>' : ''}
         </div>
         <div class="photo-card-body">
           <p class="photo-caption">${escapeHtml(photo.caption || "Sin descripción")}</p>
           <div class="photo-card-actions">
-            <button type="button" class="card-action-btn set-cover-btn ${isCover ? 'active' : ''}" onclick="setCategoryCover(${idx})">
-              ⭐ ${isCover ? 'Portada Actual' : 'Hacer Portada'}
+            <button type="button" class="card-action-btn edit-btn" onclick="openEditModal(${idx})" title="Editar pie de foto">
+              ✏️ Editar Texto
             </button>
-            <div style="display: flex; gap: 0.35rem;">
-              <button type="button" class="card-action-btn" onclick="openEditModal(${idx})" title="Editar pie de foto">
-                ✏️
-              </button>
-              <button type="button" class="card-action-btn delete-btn" onclick="deletePhoto(${idx})" title="Eliminar foto">
-                🗑️
-              </button>
-            </div>
+            <button type="button" class="card-action-btn delete-btn" onclick="deletePhoto(${idx})" title="Eliminar foto">
+              🗑️ Eliminar
+            </button>
           </div>
         </div>
       `;
@@ -1274,10 +1266,6 @@
       for (let i = 0; i < files.length; i++) {
         const photoObj = await compressImage(files[i]);
         data[activeCategory].gallery.unshift(photoObj);
-        // If no cover set, set this one
-        if (!data[activeCategory].media) {
-          data[activeCategory].media = photoObj.src;
-        }
       }
 
       saveGalleryData(data);
@@ -1318,24 +1306,11 @@
     }, false);
   }
 
-  window.setCategoryCover = function(idx) {
-    const data = getGalleryData();
-    if (data[activeCategory] && data[activeCategory].gallery && data[activeCategory].gallery[idx]) {
-      data[activeCategory].media = data[activeCategory].gallery[idx].src;
-      saveGalleryData(data);
-      renderCategoryPhotos();
-    }
-  };
-
   window.deletePhoto = function(idx) {
     if (!confirm("¿Estás seguro de que deseas eliminar esta foto de la galería?")) return;
     const data = getGalleryData();
     if (data[activeCategory] && data[activeCategory].gallery) {
-      const removed = data[activeCategory].gallery.splice(idx, 1)[0];
-      // If was cover, set first available or empty
-      if (data[activeCategory].media === removed.src) {
-        data[activeCategory].media = data[activeCategory].gallery.length > 0 ? data[activeCategory].gallery[0].src : "";
-      }
+      data[activeCategory].gallery.splice(idx, 1);
       saveGalleryData(data);
       renderCategoryPhotos();
     }
