@@ -8449,6 +8449,44 @@ details[open] .accordion-chevron {
   margin-top: 0.5rem !important;
 }
 
+/* ==========================================================================
+   PRICING VISIBILITY OVERRIDE (HIDDEN PER USER REQUEST)
+   ========================================================================== */
+.product-price-box,
+.product-price-amount,
+.product-compare-price,
+.pdp-price-block,
+.pdp-price-main,
+.pdp-price,
+.pdp-compare-price,
+.product-price,
+.price,
+.card-price,
+.cc-price,
+.cc-m-price,
+.exp-price,
+.exp-price-tag,
+[data-price],
+.product-meta-row .product-price {
+  display: none !important;
+}
+
+.product-card-footer {
+  display: flex !important;
+  justify-content: stretch !important;
+  width: 100% !important;
+}
+
+.product-action-box {
+  width: 100% !important;
+}
+
+.product-action-box .btn,
+.product-action-box .add-to-bag-btn {
+  width: 100% !important;
+  justify-content: center !important;
+}
+
 
 
 
