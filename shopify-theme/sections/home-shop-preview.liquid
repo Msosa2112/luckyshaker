@@ -15,8 +15,16 @@
       {%- endif -%}
 
       {%- if shop_collection.products.size > 0 -%}
-        {%- for product in shop_collection.products limit: 3 -%}
-          {% render 'product-card', product: product %}
+        {%- comment -%} Show Fruits first, then cans/creams {%- endcomment -%}
+        {%- for product in shop_collection.products -%}
+          {%- if product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits' or product.tags contains 'frutas' or product.title contains 'Fruta' or product.title contains 'Manzana' or product.title contains 'Piña' or product.title contains 'Naranja' or product.title contains 'Limón' or product.handle contains 'manzana' or product.handle contains 'pina' -%}
+            {% render 'product-card', product: product %}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- for product in shop_collection.products -%}
+          {%- unless product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits' or product.tags contains 'frutas' or product.title contains 'Fruta' or product.title contains 'Manzana' or product.title contains 'Piña' or product.title contains 'Naranja' or product.title contains 'Limón' or product.handle contains 'manzana' or product.handle contains 'pina' -%}
+            {% render 'product-card', product: product %}
+          {%- endunless -%}
         {%- endfor -%}
       {%- else -%}
         <!-- Botella 1: Whiskey Cream -->

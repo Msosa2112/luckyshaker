@@ -1152,9 +1152,9 @@ window.LuckyShakerPDP = {
       if (formatProp) formatProp.value = 'Botella ' + this.state.wcSize + 'ml (' + (this.state.wcEdition === 'custom' ? 'Personalizada' : 'Estándar') + ')';
       if (typeProp) typeProp.value = 'Crema de Whiskey de Autor (17% ABV)';
     } else if (this.state.isFruit) {
-      price = '$9.99';
+      price = '$8.75';
       sublabel = '(Paquete 60g)';
-      btnText = 'AGREGAR A LA BOLSA • $9.99';
+      btnText = 'AGREGAR A LA BOLSA • $8.75';
       if (formatProp) formatProp.value = 'Paquete Individual 60g';
       if (typeProp) typeProp.value = 'Frutas Deshidratadas Botánicas';
     } else {
@@ -2077,6 +2077,41 @@ function initMobileMenu() {
 /* ==========================================================================
    5. DOM INITIALIZATION
    ========================================================================== */
+function initCatalogFilters() {
+  var filterButtons = document.querySelectorAll('.filter-pills .filter-btn');
+  if (!filterButtons.length) return;
+
+  filterButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var filter = this.getAttribute('data-filter');
+      filterButtons.forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+
+      var cards = document.querySelectorAll('#catalog-grid .luxury-glass-card, #catalog-grid .product-item');
+      cards.forEach(function(card) {
+        if (filter === 'all') {
+          card.style.display = '';
+          return;
+        }
+        var text = card.textContent.toLowerCase();
+        var isFruit = text.indexOf('fruta') !== -1 || text.indexOf('60 gram') !== -1 || text.indexOf('manzana') !== -1 || text.indexOf('piña') !== -1 || text.indexOf('disecad') !== -1;
+        var isCream = text.indexOf('crema') !== -1 || text.indexOf('whiskey cream') !== -1;
+        var isCocktail = !isFruit && !isCream;
+
+        if (filter === 'fruits' && isFruit) {
+          card.style.display = '';
+        } else if (filter === 'creams' && isCream) {
+          card.style.display = '';
+        } else if (filter === 'cocktails' && isCocktail) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
 function initAllLuckyShaker() {
   if (window.LuckyShakerLang && typeof window.LuckyShakerLang.init === 'function') {
     window.LuckyShakerLang.init();
@@ -2087,6 +2122,7 @@ function initAllLuckyShaker() {
   if (window.LuckyShakerPDP && typeof window.LuckyShakerPDP.init === 'function') {
     window.LuckyShakerPDP.init();
   }
+  initCatalogFilters();
   initPrimeStoneCinematicEngine();
   initHeroCinematicScroll();
   initStickyNavbar();

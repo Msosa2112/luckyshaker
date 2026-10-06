@@ -115,7 +115,7 @@
         </div>
       {%- elsif is_fruit -%}
         <div class="price-format-pill">
-          <span class="price-amount">$9.99</span>
+          <span class="price-amount">$8.75</span>
           <span class="price-detail">Paquete 60g</span>
         </div>
       {%- else -%}
@@ -138,7 +138,7 @@
             if is_cream
               assign default_add_price = '$35.00'
             elsif is_fruit
-              assign default_add_price = '$9.99'
+              assign default_add_price = '$8.75'
             endif
           -%}
           <button type="button" class="btn btn-luxury-pink add-to-bag-btn" style="width: 100%; justify-content: center;" onclick="LuckyShakerCart.addItem({{ product.selected_or_first_available_variant.id }}, 1, '{{ product.title | escape }}', '{{ default_add_price }}')" aria-label="Agregar {{ clean_title }} a la Bolsa">
