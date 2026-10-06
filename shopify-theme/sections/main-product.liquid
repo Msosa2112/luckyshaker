@@ -67,50 +67,165 @@
         <span class="pdp-rating-count" data-i18n="pdp.reviews_count">(+180 Reseñas Verificadas)</span>
       </div>
 
-      <div class="pdp-price-block">
-        {% comment %} Price temporarily hidden per user request {% endcomment %}
-        {%- if false -%}
-        <div class="pdp-price-main">
-          <span id="pdp-price-display" class="pdp-price">{{ product.selected_or_first_available_variant.price | money }}</span>
-          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
-            <span class="pdp-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-          {%- endif -%}
+      {%- liquid
+        assign is_cream = false
+        assign is_fruit = false
+        assign is_can = true
+
+        if product.handle == 'whiskey-cream' or product.type contains 'Crema'
+          assign is_cream = true
+          assign is_can = false
+        elsif product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits'
+          assign is_fruit = true
+          assign is_can = false
+        endif
+      -%}
+
+      <!-- Promo Callout (Gift with Purchase) -->
+      <div class="pdp-promo-gwp-callout">
+        <div class="gwp-icon-badge">🎁</div>
+        <div class="gwp-text-wrap">
+          <strong>¡REGALO EXCLUSIVO CON TU COMPRA!</strong>
+          <span>Lleva <strong>1 Botella de Crema de Whiskey 100ml GRATIS</strong> al comprar cualquier combinación de 2 o más productos.</span>
         </div>
-        {%- endif -%}
+      </div>
+
+      <div class="pdp-price-block">
+        <div class="pdp-price-main">
+          <span id="pdp-price-display" class="pdp-price">
+            {%- if is_cream -%}
+              $35.00
+            {%- elsif is_fruit -%}
+              $9.99
+            {%- else -%}
+              $35.99
+            {%- endif -%}
+          </span>
+          <span class="pdp-price-detail-label" id="pdp-price-sublabel">
+            {%- if is_cream -%}
+              (Botella 750ml • Etiqueta Estándar)
+            {%- elsif is_fruit -%}
+              (Paquete 60g)
+            {%- else -%}
+              (Pack de 6 Latas • 355ml c/u)
+            {%- endif -%}
+          </span>
+        </div>
         <div class="pdp-shipping-badge">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          <span data-i18n="pdp.free_shipping">Envío Express Gratis +21 en órdenes de $80+</span>
+          <span data-i18n="pdp.free_shipping">Envío Express Gratis en compras de $80+</span>
         </div>
       </div>
 
       <!-- Clean Narrative Description -->
       <div class="pdp-description-content">
-        {{ product.description | default: '<p>Elaborado a mano con licores artesanales, botánicos frescos y cero conservantes artificiales. Perfectamente equilibrado para disfrutar de inmediato sobre hielo cristalino.</p>' }}
+        {{ product.description | default: '<p>Elaborado artesanalmente con botánicos frescos, destilados premium y cero conservantes artificiales. Listo para servir bien frío.</p>' }}
       </div>
 
-      <!-- Dynamic Product Form -->
+      <!-- Dynamic Interactive Product Form -->
       {%- form 'product', product, id: 'pdp-product-form', class: 'pdp-form-wrap' -%}
         <input type="hidden" name="id" id="selected-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="properties[Formato]" id="pdp-selected-format" value="Pack de 6 Latas">
+        <input type="hidden" name="properties[Tipo]" id="pdp-selected-type" value="Cóctel con Alcohol">
+        <input type="hidden" name="properties[Etiqueta Personalizada]" id="pdp-custom-label-prop" value="">
 
-        {%- if product.variants.size > 1 -%}
-          <div class="pdp-variants-section">
-            <div class="pdp-variant-label">
-              <span data-i18n="pdp.select_format">SELECCIONAR PRESENTACIÓN:</span>
-              <span id="selected-variant-name" class="variant-active-name">{{ product.selected_or_first_available_variant.title }}</span>
+        {%- if is_cream -%}
+          <!-- WHISKEY CREAM CONFIGURATOR (Size + Custom Label) -->
+          <div class="pdp-config-section">
+            <label class="pdp-config-label">1. SELECCIONA EL TAMAÑO:</label>
+            <div class="pdp-pill-options-grid">
+              <button type="button" class="pdp-config-pill active" data-wc-size="750" onclick="LuckyShakerPDP.selectWcSize('750', this)">
+                <span class="pill-title">750 ML</span>
+                <span class="pill-price">$35.00</span>
+              </button>
+              <button type="button" class="pdp-config-pill" data-wc-size="375" onclick="LuckyShakerPDP.selectWcSize('375', this)">
+                <span class="pill-title">375 ML</span>
+                <span class="pill-price">$18.99</span>
+              </button>
             </div>
-            <div class="variant-options-grid">
-              {%- for variant in product.variants -%}
-                <div class="variant-option-card{% if forloop.first %} active{% endif %}" onclick="LuckyShakerPDP.selectVariant({{ variant.id }}, '{{ variant.price | money }}', this)">
-                  <div class="variant-card-title">{{ variant.title }}</div>
-                  <div class="variant-card-subtitle">{{ variant.price | money }}</div>
-                </div>
-              {%- endfor -%}
+
+            <label class="pdp-config-label" style="margin-top: 1.25rem;">2. EDICIÓN DE ETIQUETA:</label>
+            <div class="pdp-pill-options-grid">
+              <button type="button" class="pdp-config-pill active" data-wc-edition="stock" onclick="LuckyShakerPDP.selectWcEdition('stock', this)">
+                <span class="pill-title">Etiqueta Stock</span>
+                <span class="pill-badge-mini">Original</span>
+              </button>
+              <button type="button" class="pdp-config-pill" data-wc-edition="custom" onclick="LuckyShakerPDP.selectWcEdition('custom', this)">
+                <span class="pill-title">Personalizada</span>
+                <span class="pill-badge-mini" id="wc-custom-price-badge">+$10.00</span>
+              </button>
+            </div>
+
+            <div id="pdp-custom-label-wrap" class="pdp-custom-input-box" style="display:none; margin-top: 1rem;">
+              <label for="pdp-custom-label-input" class="pdp-sublabel">Texto para tu etiqueta personalizada:</label>
+              <input type="text" id="pdp-custom-label-input" class="pdp-text-input" placeholder="Ej: Boda Carlos &amp; Sofía / Para Katherin con amor" maxlength="60" oninput="LuckyShakerPDP.updateCustomLabel(this.value)">
+              <span class="input-hint">Grabado e impreso en acabado dorado de alta fidelidad</span>
+            </div>
+          </div>
+
+        {%- elsif is_fruit -%}
+          <!-- DEHYDRATED FRUIT PACK (60g) -->
+          <div class="pdp-config-section">
+            <label class="pdp-config-label">PRESENTACIÓN:</label>
+            <div class="pdp-pill-options-grid">
+              <div class="pdp-config-pill active">
+                <span class="pill-title">Paquete Individual 60g</span>
+                <span class="pill-price">$9.99</span>
+              </div>
+            </div>
+          </div>
+
+        {%- else -%}
+          <!-- COCKTAIL / MOCKTAIL CAN CONFIGURATOR (Pack 6 / 12 + Mocktail + Single/Mixed) -->
+          <div class="pdp-config-section">
+            {%- if product.handle != 'old-fashioned' -%}
+              <label class="pdp-config-label">1. TIPO DE BEBIDA (LATA 355ML):</label>
+              <div class="pdp-pill-options-grid">
+                <button type="button" class="pdp-config-pill active" data-drink-type="cocktail" onclick="LuckyShakerPDP.selectDrinkType('cocktail', this)">
+                  <span class="pill-title">🍸 Cóctel con Alcohol</span>
+                  <span class="pill-badge-mini">16% ABV</span>
+                </button>
+                <button type="button" class="pdp-config-pill" data-drink-type="mocktail" onclick="LuckyShakerPDP.selectDrinkType('mocktail', this)">
+                  <span class="pill-title">🌱 Mocktail Sin Alcohol</span>
+                  <span class="pill-badge-mini">0.0% Alcohol</span>
+                </button>
+              </div>
+            {%- else -%}
+              <div class="pdp-old-fashioned-note">
+                <span>🥃 <strong>Old Fashioned</strong> disponible exclusivamente en versión con alcohol (Kentucky Bourbon).</span>
+              </div>
+            {%- endif -%}
+
+            <label class="pdp-config-label" style="margin-top: 1.25rem;">2. FORMATO DE COMBO (MÍNIMO 6 LATAS):</label>
+            <div class="pdp-pill-options-grid">
+              <button type="button" class="pdp-config-pill active" data-pack-size="6" onclick="LuckyShakerPDP.selectPackSize(6, this)">
+                <span class="pill-title">Pack de 6 Latas</span>
+                <span class="pill-price" id="pdp-pack6-price">$35.99</span>
+                <span class="pill-unit-calc">($6.00 / lata)</span>
+              </button>
+              <button type="button" class="pdp-config-pill" data-pack-size="12" onclick="LuckyShakerPDP.selectPackSize(12, this)">
+                <span class="pill-title">Combo 12 Latas</span>
+                <span class="pill-price" id="pdp-pack12-price">$69.99</span>
+                <span class="pill-unit-calc">($5.83 / lata • Mejor Valor)</span>
+              </button>
+            </div>
+
+            <label class="pdp-config-label" style="margin-top: 1.25rem;">3. SELECCIÓN DE SABOR:</label>
+            <div class="pdp-pill-options-grid">
+              <button type="button" class="pdp-config-pill active" data-flavor-mode="single" onclick="LuckyShakerPDP.selectFlavorMode('single', this)">
+                <span class="pill-title">Sabor Único</span>
+                <span class="pill-unit-calc">{{ clean_title }}</span>
+              </button>
+              <button type="button" class="pdp-config-pill" data-flavor-mode="mixed" onclick="LuckyShakerPDP.selectFlavorMode('mixed', this)">
+                <span class="pill-title">Surtido Mixto</span>
+                <span class="pill-unit-calc">Mix &amp; Match Variado</span>
+              </button>
             </div>
           </div>
         {%- endif -%}
 
         <!-- Tactile Liquid Stepper + Add to Bag Bar -->
-        <div class="pdp-action-row">
+        <div class="pdp-action-row" style="margin-top: 1.5rem;">
           <div class="pdp-qty-pill">
             <button type="button" class="pdp-qty-btn minus" onclick="LuckyShakerPDP.adjustQty(-1)" aria-label="Disminuir cantidad">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -121,8 +236,16 @@
             </button>
           </div>
 
-          <button type="submit" id="pdp-submit-btn" class="pdp-cta-add">
-            <span id="pdp-btn-label" data-i18n="pdp.add_to_bag">AGREGAR A LA BOLSA &bull; {{ product.selected_or_first_available_variant.price | money }}</span>
+          <button type="button" id="pdp-submit-btn" class="pdp-cta-add" onclick="LuckyShakerPDP.handleAddToCart()">
+            <span id="pdp-btn-label" data-i18n="pdp.add_to_bag">
+              {%- if is_cream -%}
+                AGREGAR A LA BOLSA &bull; $35.00
+              {%- elsif is_fruit -%}
+                AGREGAR A LA BOLSA &bull; $9.99
+              {%- else -%}
+                AGREGAR PACK DE 6 &bull; $35.99
+              {%- endif -%}
+            </span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"/>
               <polyline points="12 5 19 12 12 19"/>

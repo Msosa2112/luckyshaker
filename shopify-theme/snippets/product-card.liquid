@@ -58,10 +58,34 @@
 
   <!-- Compact Editorial Details Area -->
   <div class="product-details">
+    {%- liquid
+      assign is_cream = false
+      assign is_fruit = false
+      assign is_can = true
+
+      if product.handle == 'whiskey-cream' or product.type contains 'Crema'
+        assign is_cream = true
+        assign is_can = false
+      elsif product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits'
+        assign is_fruit = true
+        assign is_can = false
+      endif
+    -%}
+
     <div class="product-eyebrow-row">
-      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
-      <span class="product-dot-sep">•</span>
-      <span class="product-vol-label">750 ML</span>
+      {%- if is_cream -%}
+        <span class="product-category-label">CREMA DE AUTOR</span>
+        <span class="product-dot-sep">•</span>
+        <span class="product-vol-label">750ML &bull; 375ML</span>
+      {%- elsif is_fruit -%}
+        <span class="product-category-label">FRUTAS DISECADAS</span>
+        <span class="product-dot-sep">•</span>
+        <span class="product-vol-label">60 GRAMOS</span>
+      {%- else -%}
+        <span class="product-category-label">CÓCTEL ARTESANAL</span>
+        <span class="product-dot-sep">•</span>
+        <span class="product-vol-label">LATA 355 ML</span>
+      {%- endif -%}
     </div>
 
     <h3 class="product-name">
@@ -79,24 +103,45 @@
     {%- elsif product.description != blank -%}
       <p class="product-tasting-notes">{{ product.description | strip_html | truncatewords: 8 }}</p>
     {%- else -%}
-      <p class="product-tasting-notes" data-i18n="shop.default_notes">Cóctel artesanal de lujo listo para servir</p>
+      <p class="product-tasting-notes" data-i18n="shop.default_notes">Cóctel artesanal de autor listo para disfrutar</p>
     {%- endif -%}
+
+    <!-- Card Format & Pricing Summary -->
+    <div class="product-pricing-summary">
+      {%- if is_cream -%}
+        <div class="price-format-pill">
+          <span class="price-amount">$35.00</span>
+          <span class="price-detail">750ml / 375ml $18.99</span>
+        </div>
+      {%- elsif is_fruit -%}
+        <div class="price-format-pill">
+          <span class="price-amount">$9.99</span>
+          <span class="price-detail">Paquete 60g</span>
+        </div>
+      {%- else -%}
+        <div class="price-format-pill">
+          <span class="price-amount">$35.99</span>
+          <span class="price-detail">Pack de 6 Latas (355ml c/u)</span>
+        </div>
+        {%- if product.handle != 'old-fashioned' -%}
+          <span class="mocktail-avail-badge" title="Disponible versión sin alcohol por $29.99 el pack">Mocktail Sin Alcohol $29.99</span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
 
     <!-- Product Card Footer (Add to Bag Action) -->
     <div class="product-card-footer">
-      {% comment %} Price temporarily hidden as requested {% endcomment %}
-      {%- if false -%}
-      <div class="product-price-box">
-        <span class="product-price-amount">{{ product.price | money }}</span>
-        {%- if product.compare_at_price > product.price -%}
-          <span class="product-compare-price">{{ product.compare_at_price | money }}</span>
-        {%- endif -%}
-      </div>
-      {%- endif -%}
-
       <div class="product-action-box" style="width: 100%;">
         {%- if product.available -%}
-          <button type="button" class="btn btn-luxury-pink add-to-bag-btn" style="width: 100%; justify-content: center;" onclick="LuckyShakerCart.addItem({{ product.selected_or_first_available_variant.id }}, 1, '{{ product.title | escape }}', '')" aria-label="Agregar {{ clean_title }} a la Bolsa">
+          {%- liquid
+            assign default_add_price = '$35.99'
+            if is_cream
+              assign default_add_price = '$35.00'
+            elsif is_fruit
+              assign default_add_price = '$9.99'
+            endif
+          -%}
+          <button type="button" class="btn btn-luxury-pink add-to-bag-btn" style="width: 100%; justify-content: center;" onclick="LuckyShakerCart.addItem({{ product.selected_or_first_available_variant.id }}, 1, '{{ product.title | escape }}', '{{ default_add_price }}')" aria-label="Agregar {{ clean_title }} a la Bolsa">
             <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
             <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 7h12M8 2l5 5-5 5"/>

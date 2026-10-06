@@ -4081,25 +4081,401 @@ button {
 }
 
 /* ==========================================================================
-   PRICING VISIBILITY OVERRIDE (HIDDEN PER USER REQUEST)
+   LUXURY PRICING & PRODUCT CATALOG CONFIGURATION SYSTEM
    ========================================================================== */
-.product-price-box,
-.product-price-amount,
-.product-compare-price,
-.pdp-price-block,
-.pdp-price-main,
-.pdp-price,
-.pdp-compare-price,
-.product-price,
-.price,
-.card-price,
-.cc-price,
-.cc-m-price,
-.exp-price,
-.exp-price-tag,
-[data-price],
-.product-meta-row .product-price {
-  display: none !important;
+.product-pricing-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.price-format-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  background: rgba(232, 43, 125, 0.06);
+  border: 1px solid rgba(232, 43, 125, 0.15);
+  border-radius: 999px;
+  padding: 5px 14px;
+  width: fit-content;
+}
+
+.price-format-pill .price-amount {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.price-format-pill .price-detail {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4B5563;
+}
+
+.mocktail-avail-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #059669;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 999px;
+  padding: 3px 10px;
+  width: fit-content;
+}
+
+/* PDP Promo Callout (Gift with Purchase) */
+.pdp-promo-gwp-callout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(232, 43, 125, 0.08) 0%, rgba(244, 114, 182, 0.12) 100%);
+  border: 1px solid rgba(232, 43, 125, 0.25);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin: 1.25rem 0 1rem;
+  box-shadow: 0 4px 15px rgba(232, 43, 125, 0.06);
+}
+
+.gwp-icon-badge {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gwp-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gwp-text-wrap strong {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #E82B7D;
+  text-transform: uppercase;
+}
+
+.gwp-text-wrap span {
+  font-size: 0.85rem;
+  color: #374151;
+  line-height: 1.35;
+}
+
+/* PDP Dynamic Configurator Pills */
+.pdp-config-section {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.pdp-config-label {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6B7280;
+  margin-bottom: 0.5rem;
+}
+
+.pdp-pill-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.pdp-config-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 14px;
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  position: relative;
+}
+
+.pdp-config-pill:hover {
+  border-color: #E82B7D;
+  background: rgba(232, 43, 125, 0.02);
+  transform: translateY(-1px);
+}
+
+.pdp-config-pill.active {
+  border-color: #E82B7D;
+  background: rgba(232, 43, 125, 0.06);
+  box-shadow: 0 0 0 1px #E82B7D, 0 4px 12px rgba(232, 43, 125, 0.12);
+}
+
+.pdp-config-pill .pill-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.pdp-config-pill .pill-price {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #E82B7D;
+  margin-top: 2px;
+}
+
+.pdp-config-pill .pill-unit-calc {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #6B7280;
+  margin-top: 2px;
+}
+
+.pdp-config-pill .pill-badge-mini {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #059669;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 3px;
+}
+
+.pdp-old-fashioned-note {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  color: #92400E;
+}
+
+.pdp-custom-input-box {
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.pdp-sublabel {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.pdp-text-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #FFFFFF;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.pdp-text-input:focus {
+  border-color: #E82B7D;
+  box-shadow: 0 0 0 3px rgba(232, 43, 125, 0.12);
+}
+
+.input-hint {
+  display: block;
+  font-size: 0.72rem;
+  color: #9CA3AF;
+  margin-top: 4px;
+}
+
+/* PDP Main Price Display & Sublabel */
+.pdp-price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 1.25rem 0;
+}
+
+.pdp-price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pdp-price {
+  font-family: 'Cinzel', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.02em;
+}
+
+.pdp-price-detail-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.pdp-shipping-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #059669;
+}
+
+/* Cart Drawer GWP Progress & Free Gift Row */
+.cart-gwp-banner {
+  background: linear-gradient(135deg, rgba(232, 43, 125, 0.06) 0%, rgba(244, 114, 182, 0.08) 100%);
+  border-bottom: 1px solid rgba(232, 43, 125, 0.12);
+  padding: 10px 16px;
+  transition: all 0.3s ease;
+}
+
+.cart-gwp-banner.unlocked {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(52, 211, 153, 0.12) 100%);
+  border-bottom-color: rgba(16, 185, 129, 0.25);
+}
+
+.cart-gwp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.cart-gwp-header .gwp-badge-icon {
+  font-size: 1.1rem;
+}
+
+.cart-gwp-header .gwp-percent {
+  font-weight: 700;
+  color: #E82B7D;
+  font-size: 0.78rem;
+}
+
+.gwp-unlocked-tag {
+  color: #059669;
+  font-weight: 700;
+  font-size: 0.72rem;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.cart-gwp-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cart-gwp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #E82B7D 0%, #F472B6 100%);
+  border-radius: 999px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-gwp-banner.unlocked .cart-gwp-bar-fill {
+  background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+}
+
+.cart-gwp-gift-row {
+  background: linear-gradient(135deg, rgba(232, 43, 125, 0.03) 0%, rgba(244, 114, 182, 0.05) 100%) !important;
+  border: 1px solid rgba(232, 43, 125, 0.2) !important;
+  border-radius: 12px !important;
+  margin: 8px 0 !important;
+  position: relative;
+}
+
+.gwp-gift-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: #10B981;
+  color: #FFFFFF;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+.gwp-item-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #E82B7D;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.gwp-item-status {
+  font-size: 0.72rem;
+  color: #059669;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.free-price .gwp-original-price {
+  text-decoration: line-through;
+  color: #9CA3AF;
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+.free-price .gwp-free-label {
+  color: #10B981;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* Announcement Top Bar */
+.announcement-bar-gwp {
+  background: linear-gradient(90deg, #111827 0%, #1F2937 100%);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.announcement-bar-gwp strong {
+  color: #F472B6;
+  font-weight: 700;
 }
 
 .product-card-footer {

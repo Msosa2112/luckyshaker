@@ -906,6 +906,39 @@ window.LuckyShakerCart = {
       }
     }
 
+    // GWP (Gift with Purchase) 100ml Crema Promo Logic
+    var gwpText = document.getElementById('gwp-progress-text');
+    var gwpPercent = document.getElementById('gwp-progress-percent');
+    var gwpFill = document.getElementById('gwp-progress-fill');
+    var gwpBanner = document.getElementById('cart-gwp-banner');
+    
+    var totalItemsCount = cart.items ? cart.items.reduce(function(sum, it) { return sum + it.quantity; }, 0) : 0;
+
+    if (gwpText && gwpFill) {
+      if (totalItemsCount >= 2) {
+        if (gwpBanner) gwpBanner.classList.add('unlocked');
+        gwpText.innerHTML = lang === 'es'
+          ? '🎉 <strong>¡Regalo Desbloqueado!</strong> 1x <strong>Crema de Whiskey 100ml GRATIS</strong> añadida a tu orden.'
+          : '🎉 <strong>Gift Unlocked!</strong> 1x <strong>Whiskey Cream 100ml FREE</strong> added to your bar.';
+        if (gwpPercent) gwpPercent.innerHTML = '<span class="gwp-unlocked-tag">✓ DESBLOQUEADO</span>';
+        gwpFill.style.width = '100%';
+      } else if (totalItemsCount === 1) {
+        if (gwpBanner) gwpBanner.classList.remove('unlocked');
+        gwpText.innerHTML = lang === 'es'
+          ? 'Agrega <strong>1 producto más</strong> para recibir <strong>1 Crema de Whiskey 100ml GRATIS</strong> 🎁'
+          : 'Add <strong>1 more item</strong> to unlock your <strong>FREE Whiskey Cream 100ml Bottle</strong> 🎁';
+        if (gwpPercent) gwpPercent.textContent = '1/2';
+        gwpFill.style.width = '50%';
+      } else {
+        if (gwpBanner) gwpBanner.classList.remove('unlocked');
+        gwpText.innerHTML = lang === 'es'
+          ? 'Agrega <strong>2 productos</strong> para recibir <strong>1 Crema de Whiskey 100ml GRATIS</strong>'
+          : 'Buy any <strong>2 items</strong> & get <strong>1 FREE Whiskey Cream 100ml Bottle</strong>';
+        if (gwpPercent) gwpPercent.textContent = '0/2';
+        gwpFill.style.width = '0%';
+      }
+    }
+
     if (!this.itemsList) return;
 
     if (cart.item_count === 0) {
@@ -964,6 +997,34 @@ window.LuckyShakerCart = {
         '</div>';
     });
 
+    // If unlocked GWP, inject Free 100ml Crema Gift Item
+    if (totalItemsCount >= 2) {
+      var giftTitle = lang === 'es' ? 'Crema de Whiskey de Autor' : 'Signature Whiskey Cream';
+      var giftSub = lang === 'es' ? 'Miniatura 100ml • Botella de Cristal' : '100ml Miniature Glass Bottle';
+      var giftStatus = lang === 'es' ? '✓ Desbloqueado por comprar 2+ productos' : '✓ Unlocked with purchase of 2+ items';
+      var freeBadge = lang === 'es' ? 'GRATIS' : 'FREE';
+
+      html += 
+        '<div class="cart-item-row cart-gwp-gift-row">' +
+          '<div class="cart-item-img-wrap">' +
+            '<img src="/cdn/shop/t/4/assets/prod-whiskey-cream.png?v=1" alt="Regalo Crema de Whiskey" class="cart-item-img" onerror="this.onerror=null; this.src=\'/cdn/shop/t/4/assets/lucky_shaker_glass_icon.png\';" width="68" height="80">' +
+            '<span class="gwp-gift-badge">' + freeBadge + '</span>' +
+          '</div>' +
+          '<div class="cart-item-info">' +
+            '<div class="gwp-item-tag">🎁 ' + (lang === 'es' ? 'REGALO DE CORTESÍA' : 'COMPLIMENTARY GIFT') + '</div>' +
+            '<h5>' + giftTitle + '</h5>' +
+            '<div class="item-vol">' + giftSub + '</div>' +
+            '<div class="gwp-item-status">' + giftStatus + '</div>' +
+          '</div>' +
+          '<div class="cart-item-right">' +
+            '<div class="cart-item-price free-price">' +
+              '<span class="gwp-original-price">$12.00</span> ' +
+              '<span class="gwp-free-label">' + freeBadge + ' ($0.00)</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
     this.itemsList.innerHTML = html;
   },
 
@@ -973,16 +1034,183 @@ window.LuckyShakerCart = {
 };
 
 /* ==========================================================================
-   2. PDP VARIANT & QUANTITY CONTROLLER
+   2. PDP VARIANT & ADVANCED CONFIGURATOR CONTROLLER
    ========================================================================== */
 window.LuckyShakerPDP = {
+  state: {
+    drinkType: 'cocktail',   // 'cocktail' | 'mocktail'
+    packSize: 6,             // 6 | 12
+    flavorMode: 'single',    // 'single' | 'mixed'
+    wcSize: '750',           // '750' | '375'
+    wcEdition: 'stock',      // 'stock' | 'custom'
+    customLabel: '',
+    isCream: false,
+    isFruit: false,
+    isCan: true
+  },
+
+  init: function() {
+    var titleEl = document.querySelector('.pdp-title');
+    var title = titleEl ? titleEl.textContent.toLowerCase() : '';
+    if (title.indexOf('crema') !== -1 || title.indexOf('whiskey cream') !== -1) {
+      this.state.isCream = true;
+      this.state.isCan = false;
+    } else if (title.indexOf('fruta') !== -1 || title.indexOf('dry') !== -1 || title.indexOf('manzana') !== -1 || title.indexOf('piña') !== -1) {
+      this.state.isFruit = true;
+      this.state.isCan = false;
+    }
+    this.recalculate();
+  },
+
+  selectDrinkType: function(type, el) {
+    this.state.drinkType = type;
+    document.querySelectorAll('[data-drink-type]').forEach(function(b) { b.classList.remove('active'); });
+    if (el) el.classList.add('active');
+
+    // Update pack prices in buttons
+    var pack6Price = document.getElementById('pdp-pack6-price');
+    var pack12Price = document.getElementById('pdp-pack12-price');
+    if (type === 'mocktail') {
+      if (pack6Price) pack6Price.textContent = '$29.99';
+      if (pack12Price) pack12Price.textContent = '$57.99';
+    } else {
+      if (pack6Price) pack6Price.textContent = '$35.99';
+      if (pack12Price) pack12Price.textContent = '$69.99';
+    }
+    this.recalculate();
+  },
+
+  selectPackSize: function(size, el) {
+    this.state.packSize = parseInt(size, 10) || 6;
+    document.querySelectorAll('[data-pack-size]').forEach(function(b) { b.classList.remove('active'); });
+    if (el) el.classList.add('active');
+    this.recalculate();
+  },
+
+  selectFlavorMode: function(mode, el) {
+    this.state.flavorMode = mode;
+    document.querySelectorAll('[data-flavor-mode]').forEach(function(b) { b.classList.remove('active'); });
+    if (el) el.classList.add('active');
+    this.recalculate();
+  },
+
+  selectWcSize: function(size, el) {
+    this.state.wcSize = String(size);
+    document.querySelectorAll('[data-wc-size]').forEach(function(b) { b.classList.remove('active'); });
+    if (el) el.classList.add('active');
+
+    // Update custom label price badge
+    var customBadge = document.getElementById('wc-custom-price-badge');
+    if (customBadge) {
+      customBadge.textContent = this.state.wcSize === '750' ? '+$10.00 ($45.00)' : '+$6.00 ($24.99)';
+    }
+    this.recalculate();
+  },
+
+  selectWcEdition: function(edition, el) {
+    this.state.wcEdition = edition;
+    document.querySelectorAll('[data-wc-edition]').forEach(function(b) { b.classList.remove('active'); });
+    if (el) el.classList.add('active');
+
+    var customWrap = document.getElementById('pdp-custom-label-wrap');
+    if (customWrap) {
+      customWrap.style.display = edition === 'custom' ? 'block' : 'none';
+      if (edition === 'custom') {
+        var input = document.getElementById('pdp-custom-label-input');
+        if (input) input.focus();
+      }
+    }
+    this.recalculate();
+  },
+
+  updateCustomLabel: function(val) {
+    this.state.customLabel = val || '';
+    var hidden = document.getElementById('pdp-custom-label-prop');
+    if (hidden) hidden.value = this.state.customLabel;
+  },
+
+  recalculate: function() {
+    var priceDisplay = document.getElementById('pdp-price-display');
+    var sublabelDisplay = document.getElementById('pdp-price-sublabel');
+    var btnLabel = document.getElementById('pdp-btn-label');
+    var formatProp = document.getElementById('pdp-selected-format');
+    var typeProp = document.getElementById('pdp-selected-type');
+
+    var price = '$35.99';
+    var sublabel = '(Pack de 6 Latas • 355ml c/u)';
+    var btnText = 'AGREGAR PACK DE 6 • $35.99';
+
+    if (this.state.isCream) {
+      if (this.state.wcSize === '750') {
+        price = this.state.wcEdition === 'custom' ? '$45.00' : '$35.00';
+        sublabel = this.state.wcEdition === 'custom' ? '(Botella 750ml • Etiqueta Personalizada)' : '(Botella 750ml • Etiqueta Estándar)';
+      } else {
+        price = this.state.wcEdition === 'custom' ? '$24.99' : '$18.99';
+        sublabel = this.state.wcEdition === 'custom' ? '(Botella 375ml • Etiqueta Personalizada)' : '(Botella 375ml • Etiqueta Estándar)';
+      }
+      btnText = 'AGREGAR A LA BOLSA • ' + price;
+      if (formatProp) formatProp.value = 'Botella ' + this.state.wcSize + 'ml (' + (this.state.wcEdition === 'custom' ? 'Personalizada' : 'Estándar') + ')';
+      if (typeProp) typeProp.value = 'Crema de Whiskey de Autor (17% ABV)';
+    } else if (this.state.isFruit) {
+      price = '$9.99';
+      sublabel = '(Paquete 60g)';
+      btnText = 'AGREGAR A LA BOLSA • $9.99';
+      if (formatProp) formatProp.value = 'Paquete Individual 60g';
+      if (typeProp) typeProp.value = 'Frutas Deshidratadas Botánicas';
+    } else {
+      // Cans (Cocktail / Mocktail)
+      var isMocktail = this.state.drinkType === 'mocktail';
+      if (this.state.packSize === 12) {
+        price = isMocktail ? '$57.99' : '$69.99';
+        sublabel = isMocktail ? '(Combo 12 Mocktails • 355ml c/u • $4.83 / lata)' : '(Combo 12 Latas • 355ml c/u • $5.83 / lata)';
+        btnText = 'AGREGAR COMBO 12 • ' + price;
+        if (formatProp) formatProp.value = 'Combo de 12 Latas (355ml c/u) • ' + (this.state.flavorMode === 'mixed' ? 'Surtido Mixto' : 'Sabor Único');
+      } else {
+        price = isMocktail ? '$29.99' : '$35.99';
+        sublabel = isMocktail ? '(Pack de 6 Mocktails • 355ml c/u • $5.00 / lata)' : '(Pack de 6 Latas • 355ml c/u • $6.00 / lata)';
+        btnText = 'AGREGAR PACK DE 6 • ' + price;
+        if (formatProp) formatProp.value = 'Pack de 6 Latas (355ml c/u) • ' + (this.state.flavorMode === 'mixed' ? 'Surtido Mixto' : 'Sabor Único');
+      }
+      if (typeProp) typeProp.value = isMocktail ? 'Mocktail Sin Alcohol (0.0% ABV)' : 'Cóctel con Alcohol (16% ABV)';
+    }
+
+    if (priceDisplay) priceDisplay.textContent = price;
+    if (sublabelDisplay) sublabelDisplay.textContent = sublabel;
+    if (btnLabel) btnLabel.textContent = btnText;
+  },
+
+  handleAddToCart: function() {
+    var variantInput = document.getElementById('selected-variant-id');
+    var variantId = variantInput ? variantInput.value : '';
+    var qtyInput = document.getElementById('pdp-qty-input');
+    var qty = qtyInput ? (parseInt(qtyInput.value, 10) || 1) : 1;
+    var titleEl = document.querySelector('.pdp-title');
+    var baseTitle = titleEl ? titleEl.textContent.trim() : 'Cóctel Lucky Shaker';
+    var priceEl = document.getElementById('pdp-price-display');
+    var currentPrice = priceEl ? priceEl.textContent.trim() : '$35.99';
+
+    var finalTitle = baseTitle;
+    if (this.state.isCream) {
+      finalTitle += ' (' + this.state.wcSize + 'ml - ' + (this.state.wcEdition === 'custom' ? 'Personalizada' : 'Estándar') + ')';
+    } else if (this.state.isFruit) {
+      finalTitle += ' (60g)';
+    } else {
+      var drinkLabel = this.state.drinkType === 'mocktail' ? 'Mocktail Sin Alcohol' : 'Cóctel';
+      var packLabel = this.state.packSize === 12 ? 'Combo 12 Latas' : 'Pack 6 Latas';
+      var flavorLabel = this.state.flavorMode === 'mixed' ? 'Mixto' : 'Sabor Único';
+      finalTitle += ' (' + packLabel + ' • ' + drinkLabel + ' • ' + flavorLabel + ')';
+    }
+
+    LuckyShakerCart.addItem(variantId, qty, finalTitle, currentPrice);
+  },
+
   selectVariant: function(variantId, priceFormatted, el) {
     var input = document.getElementById('selected-variant-id');
     if (input) input.value = variantId;
     var priceDisplay = document.getElementById('pdp-price-display');
     if (priceDisplay) priceDisplay.textContent = priceFormatted;
     var btnLabel = document.getElementById('pdp-btn-label');
-    if (btnLabel) btnLabel.textContent = 'ADD TO BAG \u2022 ' + priceFormatted;
+    if (btnLabel) btnLabel.textContent = 'AGREGAR A LA BOLSA \u2022 ' + priceFormatted;
 
     document.querySelectorAll('.variant-option-card, .pdp-format-card').forEach(function(c) {
       c.classList.remove('active');
@@ -1855,6 +2083,9 @@ function initAllLuckyShaker() {
   }
   if (window.LuckyShakerCart && typeof window.LuckyShakerCart.init === 'function') {
     window.LuckyShakerCart.init();
+  }
+  if (window.LuckyShakerPDP && typeof window.LuckyShakerPDP.init === 'function') {
+    window.LuckyShakerPDP.init();
   }
   initPrimeStoneCinematicEngine();
   initHeroCinematicScroll();
