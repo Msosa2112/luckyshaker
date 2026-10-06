@@ -98,7 +98,7 @@
             {%- elsif is_fruit -%}
               $8.75
             {%- else -%}
-              $35.99
+              $36.00
             {%- endif -%}
           </span>
           <span class="pdp-price-detail-label" id="pdp-price-sublabel">
@@ -107,7 +107,7 @@
             {%- elsif is_fruit -%}
               (Paquete 60g)
             {%- else -%}
-              (Pack de 6 Latas • 355ml c/u)
+              (Combo de 6 Latas • 355ml • $6.00 c/u)
             {%- endif -%}
           </span>
         </div>
@@ -125,8 +125,9 @@
       <!-- Dynamic Interactive Product Form -->
       {%- form 'product', product, id: 'pdp-product-form', class: 'pdp-form-wrap' -%}
         <input type="hidden" name="id" id="selected-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
-        <input type="hidden" name="properties[Formato]" id="pdp-selected-format" value="Pack de 6 Latas">
+        <input type="hidden" name="properties[Formato]" id="pdp-selected-format" value="Combo de 6 Latas (355ml)">
         <input type="hidden" name="properties[Tipo]" id="pdp-selected-type" value="Cóctel con Alcohol">
+        <input type="hidden" name="properties[Sabor]" id="pdp-selected-flavor" value="6 de este sabor (Sabor Único)">
         <input type="hidden" name="properties[Etiqueta Personalizada]" id="pdp-custom-label-prop" value="">
 
         {%- if is_cream -%}
@@ -176,7 +177,7 @@
           </div>
 
         {%- else -%}
-          <!-- COCKTAIL / MOCKTAIL CAN CONFIGURATOR (Pack 6 / 12 + Mocktail + Single/Mixed) -->
+          <!-- COCKTAIL / MOCKTAIL CAN CONFIGURATOR (Combo 6 / 12 + Mocktail + Single/Mixed) -->
           <div class="pdp-config-section">
             {%- if product.handle != 'old-fashioned' -%}
               <label class="pdp-config-label">1. TIPO DE BEBIDA (LATA 355ML):</label>
@@ -199,21 +200,21 @@
             <label class="pdp-config-label" style="margin-top: 1.25rem;">2. FORMATO DE COMBO (MÍNIMO 6 LATAS):</label>
             <div class="pdp-pill-options-grid">
               <button type="button" class="pdp-config-pill active" data-pack-size="6" onclick="LuckyShakerPDP.selectPackSize(6, this)">
-                <span class="pill-title">Pack de 6 Latas</span>
-                <span class="pill-price" id="pdp-pack6-price">$35.99</span>
+                <span class="pill-title">Combo 6 Latas</span>
+                <span class="pill-price" id="pdp-pack6-price">$36.00</span>
                 <span class="pill-unit-calc">($6.00 / lata)</span>
               </button>
               <button type="button" class="pdp-config-pill" data-pack-size="12" onclick="LuckyShakerPDP.selectPackSize(12, this)">
                 <span class="pill-title">Combo 12 Latas</span>
-                <span class="pill-price" id="pdp-pack12-price">$69.99</span>
-                <span class="pill-unit-calc">($5.83 / lata • Mejor Valor)</span>
+                <span class="pill-price" id="pdp-pack12-price">$72.00</span>
+                <span class="pill-unit-calc">($6.00 / lata)</span>
               </button>
             </div>
 
-            <label class="pdp-config-label" style="margin-top: 1.25rem;">3. SELECCIÓN DE SABOR:</label>
+            <label class="pdp-config-label" style="margin-top: 1.25rem;">3. SELECCIÓN DE SABORES:</label>
             <div class="pdp-pill-options-grid">
               <button type="button" class="pdp-config-pill active" data-flavor-mode="single" onclick="LuckyShakerPDP.selectFlavorMode('single', this)">
-                <span class="pill-title">Sabor Único</span>
+                <span class="pill-title" id="pdp-flavor-single-title">6 de este sabor</span>
                 <span class="pill-unit-calc">{{ clean_title }}</span>
               </button>
               <button type="button" class="pdp-config-pill" data-flavor-mode="mixed" onclick="LuckyShakerPDP.selectFlavorMode('mixed', this)">
@@ -243,7 +244,7 @@
               {%- elsif is_fruit -%}
                 AGREGAR A LA BOLSA &bull; $8.75
               {%- else -%}
-                AGREGAR PACK DE 6 &bull; $35.99
+                AGREGAR COMBO DE 6 &bull; $36.00
               {%- endif -%}
             </span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">

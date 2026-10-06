@@ -120,11 +120,11 @@
         </div>
       {%- else -%}
         <div class="price-format-pill">
-          <span class="price-amount">$35.99</span>
-          <span class="price-detail">Pack de 6 Latas (355ml c/u)</span>
+          <span class="price-amount">$36.00</span>
+          <span class="price-detail">Combo 6 Latas ($6.00 c/u)</span>
         </div>
         {%- if product.handle != 'old-fashioned' -%}
-          <span class="mocktail-avail-badge" title="Disponible versión sin alcohol por $29.99 el pack">Mocktail Sin Alcohol $29.99</span>
+          <span class="mocktail-avail-badge" title="Disponible versión sin alcohol por $30.00 el pack">Mocktail Sin Alcohol $30.00 (Combo 6)</span>
         {%- endif -%}
       {%- endif -%}
     </div>
@@ -134,7 +134,7 @@
       <div class="product-action-box" style="width: 100%;">
         {%- if product.available -%}
           {%- liquid
-            assign default_add_price = '$35.99'
+            assign default_add_price = '$36.00'
             if is_cream
               assign default_add_price = '$35.00'
             elsif is_fruit

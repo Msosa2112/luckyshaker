@@ -147,14 +147,14 @@
     {%- capture info_piece -%}
       <article class="cc-info" data-i="{{ idx }}" data-handle="{{ product.handle }}" data-spirit="{{ spirit }}" data-tint="{{ tint }}"
         data-variant="{{ variant.id }}" data-available="{{ product.available }}" data-url="{{ product.url }}"
-        data-title="{{ clean_title | escape }}" data-price="{{ product.price | money | escape }}"
-        data-compare="{% if product.compare_at_price > product.price %}{{ product.compare_at_price | money | escape }}{% endif %}"
+        data-title="{{ clean_title | escape }}" data-price="$36.00"
+        data-compare=""
         data-abv="{{ abv_val | escape }}" data-bg="{{ bg_src }}" data-photo="{{ photo_src }}" data-can="{{ can_src }}" aria-hidden="true">
         <p class="cc-info-kicker"><span data-cc-t="sp_{{ spirit }}">{{ spirit | capitalize }}</span><i aria-hidden="true"></i><span>{{ abv_val }}</span></p>
         <h2 class="cc-info-title"><span>{{ clean_title }}</span></h2>
         <p class="cc-info-sub">{{ ing_line | default: desc_line | replace: ',', ' ·' }}</p>
         <div class="cc-info-cta">
-          <span class="cc-price">{{ product.price | money }}{% if product.compare_at_price > product.price %} <s>{{ product.compare_at_price | money }}</s>{% endif %}</span>
+          <span class="cc-price">$36.00 <span style="font-size: 0.75rem; color: var(--cc-ink-3); font-weight: 500;">(Combo 6 Latas)</span></span>
           <button type="button" class="cc-more" data-cc-open tabindex="-1">
             <span data-cc-t="more">VER MÁS</span>
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
@@ -285,6 +285,35 @@
           <p class="cc-m-kicker"><span data-cc-m-spirit></span><i aria-hidden="true"></i><span data-cc-m-abv></span></p>
           <h2 class="cc-m-title" id="cc-modal-title" data-cc-m-title></h2>
           <p class="cc-m-price"><span data-cc-m-price></span> <s data-cc-m-compare></s></p>
+          <p class="cc-m-sublabel" data-cc-m-sublabel style="font-size: 0.82rem; color: #6B7280; font-weight: 600; margin-top: -0.4rem; margin-bottom: 0.75rem;"></p>
+
+          <!-- Interactive Options Box for Cocktails in Modal -->
+          <div class="cc-modal-cocktail-options" data-cc-cocktail-opts style="display:none; margin: 0.75rem 0 1rem; padding: 12px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.07); border-radius: 12px;">
+            <div data-cc-opt-type-wrap style="margin-bottom: 0.6rem;">
+              <span style="display:block; font-size:0.72rem; font-weight:700; text-transform:uppercase; color:#6B7280; margin-bottom:4px;">1. Tipo de Bebida:</span>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                <button type="button" class="cc-cfg-btn active" data-cfg-type="cocktail" style="padding:6px; border-radius:8px; border:1.5px solid #E82B7D; background:rgba(232,43,125,0.06); font-size:0.78rem; font-weight:700; cursor:pointer;">🍸 Con Alcohol</button>
+                <button type="button" class="cc-cfg-btn" data-cfg-type="mocktail" style="padding:6px; border-radius:8px; border:1.5px solid #E5E7EB; background:#FFF; font-size:0.78rem; font-weight:700; cursor:pointer;">🌱 Sin Alcohol ($30)</button>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 0.6rem;">
+              <span style="display:block; font-size:0.72rem; font-weight:700; text-transform:uppercase; color:#6B7280; margin-bottom:4px;">2. Formato Combo:</span>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                <button type="button" class="cc-cfg-btn active" data-cfg-pack="6" style="padding:6px; border-radius:8px; border:1.5px solid #E82B7D; background:rgba(232,43,125,0.06); font-size:0.78rem; font-weight:700; cursor:pointer;">Combo 6 ($36.00)</button>
+                <button type="button" class="cc-cfg-btn" data-cfg-pack="12" style="padding:6px; border-radius:8px; border:1.5px solid #E5E7EB; background:#FFF; font-size:0.78rem; font-weight:700; cursor:pointer;">Combo 12 ($72.00)</button>
+              </div>
+            </div>
+
+            <div>
+              <span style="display:block; font-size:0.72rem; font-weight:700; text-transform:uppercase; color:#6B7280; margin-bottom:4px;">3. Selección de Sabor:</span>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                <button type="button" class="cc-cfg-btn active" data-cfg-flavor="single" style="padding:6px; border-radius:8px; border:1.5px solid #E82B7D; background:rgba(232,43,125,0.06); font-size:0.78rem; font-weight:700; cursor:pointer;">6 de este sabor</button>
+                <button type="button" class="cc-cfg-btn" data-cfg-flavor="mixed" style="padding:6px; border-radius:8px; border:1.5px solid #E5E7EB; background:#FFF; font-size:0.78rem; font-weight:700; cursor:pointer;">Surtido Mixto</button>
+              </div>
+            </div>
+          </div>
+
           <p class="cc-m-desc" data-cc-m-desc></p>
           <div class="cc-m-block">
             <h3 data-cc-t="ingredients">Ingredientes</h3>

@@ -1071,11 +1071,11 @@ window.LuckyShakerPDP = {
     var pack6Price = document.getElementById('pdp-pack6-price');
     var pack12Price = document.getElementById('pdp-pack12-price');
     if (type === 'mocktail') {
-      if (pack6Price) pack6Price.textContent = '$29.99';
-      if (pack12Price) pack12Price.textContent = '$57.99';
+      if (pack6Price) pack6Price.textContent = '$30.00';
+      if (pack12Price) pack12Price.textContent = '$60.00';
     } else {
-      if (pack6Price) pack6Price.textContent = '$35.99';
-      if (pack12Price) pack12Price.textContent = '$69.99';
+      if (pack6Price) pack6Price.textContent = '$36.00';
+      if (pack12Price) pack12Price.textContent = '$72.00';
     }
     this.recalculate();
   },
@@ -1084,6 +1084,11 @@ window.LuckyShakerPDP = {
     this.state.packSize = parseInt(size, 10) || 6;
     document.querySelectorAll('[data-pack-size]').forEach(function(b) { b.classList.remove('active'); });
     if (el) el.classList.add('active');
+    
+    var singleFlavorTitle = document.getElementById('pdp-flavor-single-title');
+    if (singleFlavorTitle) {
+      singleFlavorTitle.textContent = this.state.packSize + ' de este sabor';
+    }
     this.recalculate();
   },
 
@@ -1135,10 +1140,11 @@ window.LuckyShakerPDP = {
     var btnLabel = document.getElementById('pdp-btn-label');
     var formatProp = document.getElementById('pdp-selected-format');
     var typeProp = document.getElementById('pdp-selected-type');
+    var flavorProp = document.getElementById('pdp-selected-flavor');
 
-    var price = '$35.99';
-    var sublabel = '(Pack de 6 Latas • 355ml c/u)';
-    var btnText = 'AGREGAR PACK DE 6 • $35.99';
+    var price = '$36.00';
+    var sublabel = '(Combo de 6 Latas • 355ml • $6.00 c/u)';
+    var btnText = 'AGREGAR COMBO DE 6 • $36.00';
 
     if (this.state.isCream) {
       if (this.state.wcSize === '750') {
@@ -1160,18 +1166,20 @@ window.LuckyShakerPDP = {
     } else {
       // Cans (Cocktail / Mocktail)
       var isMocktail = this.state.drinkType === 'mocktail';
+      var flavorDesc = this.state.flavorMode === 'mixed' ? 'Surtido Mixto' : (this.state.packSize + ' de este sabor');
       if (this.state.packSize === 12) {
-        price = isMocktail ? '$57.99' : '$69.99';
-        sublabel = isMocktail ? '(Combo 12 Mocktails • 355ml c/u • $4.83 / lata)' : '(Combo 12 Latas • 355ml c/u • $5.83 / lata)';
+        price = isMocktail ? '$60.00' : '$72.00';
+        sublabel = isMocktail ? '(Combo 12 Mocktails • 355ml • $5.00 / lata)' : '(Combo 12 Latas • 355ml • $6.00 / lata)';
         btnText = 'AGREGAR COMBO 12 • ' + price;
-        if (formatProp) formatProp.value = 'Combo de 12 Latas (355ml c/u) • ' + (this.state.flavorMode === 'mixed' ? 'Surtido Mixto' : 'Sabor Único');
+        if (formatProp) formatProp.value = 'Combo de 12 Latas (355ml c/u) • ' + flavorDesc;
       } else {
-        price = isMocktail ? '$29.99' : '$35.99';
-        sublabel = isMocktail ? '(Pack de 6 Mocktails • 355ml c/u • $5.00 / lata)' : '(Pack de 6 Latas • 355ml c/u • $6.00 / lata)';
-        btnText = 'AGREGAR PACK DE 6 • ' + price;
-        if (formatProp) formatProp.value = 'Pack de 6 Latas (355ml c/u) • ' + (this.state.flavorMode === 'mixed' ? 'Surtido Mixto' : 'Sabor Único');
+        price = isMocktail ? '$30.00' : '$36.00';
+        sublabel = isMocktail ? '(Combo de 6 Mocktails • 355ml • $5.00 / lata)' : '(Combo de 6 Latas • 355ml • $6.00 / lata)';
+        btnText = 'AGREGAR COMBO DE 6 • ' + price;
+        if (formatProp) formatProp.value = 'Combo de 6 Latas (355ml c/u) • ' + flavorDesc;
       }
       if (typeProp) typeProp.value = isMocktail ? 'Mocktail Sin Alcohol (0.0% ABV)' : 'Cóctel con Alcohol (16% ABV)';
+      if (flavorProp) flavorProp.value = flavorDesc;
     }
 
     if (priceDisplay) priceDisplay.textContent = price;
@@ -1187,7 +1195,7 @@ window.LuckyShakerPDP = {
     var titleEl = document.querySelector('.pdp-title');
     var baseTitle = titleEl ? titleEl.textContent.trim() : 'Cóctel Lucky Shaker';
     var priceEl = document.getElementById('pdp-price-display');
-    var currentPrice = priceEl ? priceEl.textContent.trim() : '$35.99';
+    var currentPrice = priceEl ? priceEl.textContent.trim() : '$36.00';
 
     var finalTitle = baseTitle;
     if (this.state.isCream) {
@@ -1196,8 +1204,8 @@ window.LuckyShakerPDP = {
       finalTitle += ' (60g)';
     } else {
       var drinkLabel = this.state.drinkType === 'mocktail' ? 'Mocktail Sin Alcohol' : 'Cóctel';
-      var packLabel = this.state.packSize === 12 ? 'Combo 12 Latas' : 'Pack 6 Latas';
-      var flavorLabel = this.state.flavorMode === 'mixed' ? 'Mixto' : 'Sabor Único';
+      var packLabel = 'Combo ' + this.state.packSize + ' Latas';
+      var flavorLabel = this.state.flavorMode === 'mixed' ? 'Surtido Mixto' : (this.state.packSize + ' de este sabor');
       finalTitle += ' (' + packLabel + ' • ' + drinkLabel + ' • ' + flavorLabel + ')';
     }
 

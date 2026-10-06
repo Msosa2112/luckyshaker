@@ -1001,8 +1001,60 @@
     var qty = 1;
     var opener = null;
     var modalOpen = false;
+    var modalCfg = {
+      drinkType: 'cocktail',
+      packSize: 6,
+      flavorMode: 'single'
+    };
 
     function q(sel) { return modal ? modal.querySelector(sel) : null; }
+
+    function updateModalPrice() {
+      var it = items[a];
+      if (!it) return;
+      var d = it.info.dataset;
+      var prEl = q('[data-cc-m-price]');
+      var subEl = q('[data-cc-m-sublabel]');
+      var optBox = q('[data-cc-cocktail-opts]');
+      var isCocktail = currentCat === 'cocktails';
+
+      if (!isCocktail) {
+        if (optBox) optBox.style.display = 'none';
+        if (prEl) prEl.textContent = d.price;
+        if (subEl) subEl.textContent = currentCat === 'dry-fruits' ? 'Paquete Individual 60g' : '';
+        return;
+      }
+
+      if (optBox) optBox.style.display = 'block';
+
+      // Hide mocktail toggle if old-fashioned
+      var typeWrap = q('[data-cc-opt-type-wrap]');
+      if (typeWrap) {
+        typeWrap.style.display = d.handle === 'old-fashioned' ? 'none' : 'block';
+        if (d.handle === 'old-fashioned') modalCfg.drinkType = 'cocktail';
+      }
+
+      var isMocktail = modalCfg.drinkType === 'mocktail';
+      var price = '$36.00';
+      var sublabel = '(Combo de 6 Latas • $6.00 c/u)';
+
+      if (modalCfg.packSize === 12) {
+        price = isMocktail ? '$60.00' : '$72.00';
+        sublabel = isMocktail ? '(Combo de 12 Mocktails • $5.00 / lata)' : '(Combo de 12 Latas • $6.00 / lata)';
+      } else {
+        price = isMocktail ? '$30.00' : '$36.00';
+        sublabel = isMocktail ? '(Combo de 6 Mocktails • $5.00 / lata)' : '(Combo de 6 Latas • $6.00 / lata)';
+      }
+
+      if (prEl) prEl.textContent = price;
+      if (subEl) subEl.textContent = sublabel;
+
+      // Update button single flavor text
+      var btnFlavorSingle = modal.querySelector('[data-cfg-flavor="single"]');
+      if (btnFlavorSingle) {
+        btnFlavorSingle.textContent = modalCfg.packSize + ' de este sabor';
+      }
+    }
 
     function fillModal(it) {
       if (!modal || !it) return;
@@ -1017,6 +1069,33 @@
       if (prEl) prEl.textContent = d.price;
       var cmpEl = q('[data-cc-m-compare]');
       if (cmpEl) cmpEl.textContent = d.compare || '';
+
+      // Reset modal config
+      modalCfg = {
+        drinkType: 'cocktail',
+        packSize: 6,
+        flavorMode: 'single'
+      };
+
+      if (modal) {
+        modal.querySelectorAll('[data-cfg-type]').forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-cfg-type') === 'cocktail');
+          b.style.borderColor = b.getAttribute('data-cfg-type') === 'cocktail' ? '#E82B7D' : '#E5E7EB';
+          b.style.background = b.getAttribute('data-cfg-type') === 'cocktail' ? 'rgba(232,43,125,0.06)' : '#FFF';
+        });
+        modal.querySelectorAll('[data-cfg-pack]').forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-cfg-pack') === '6');
+          b.style.borderColor = b.getAttribute('data-cfg-pack') === '6' ? '#E82B7D' : '#E5E7EB';
+          b.style.background = b.getAttribute('data-cfg-pack') === '6' ? 'rgba(232,43,125,0.06)' : '#FFF';
+        });
+        modal.querySelectorAll('[data-cfg-flavor]').forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-cfg-flavor') === 'single');
+          b.style.borderColor = b.getAttribute('data-cfg-flavor') === 'single' ? '#E82B7D' : '#E5E7EB';
+          b.style.background = b.getAttribute('data-cfg-flavor') === 'single' ? 'rgba(232,43,125,0.06)' : '#FFF';
+        });
+      }
+
+      updateModalPrice();
 
       var descEl = it.info.querySelector('.cc-detail-desc');
       var mDesc = q('[data-cc-m-desc]');
@@ -1091,13 +1170,54 @@
     if (modal) {
       modal.addEventListener('click', function (e) {
         if (e.target.closest('[data-cc-close]')) closeModal();
+
+        // Option: Drink Type
+        var typeBtn = e.target.closest('[data-cfg-type]');
+        if (typeBtn) {
+          modalCfg.drinkType = typeBtn.getAttribute('data-cfg-type');
+          modal.querySelectorAll('[data-cfg-type]').forEach(function (b) {
+            var active = b === typeBtn;
+            b.classList.toggle('active', active);
+            b.style.borderColor = active ? '#E82B7D' : '#E5E7EB';
+            b.style.background = active ? 'rgba(232,43,125,0.06)' : '#FFF';
+          });
+          updateModalPrice();
+        }
+
+        // Option: Pack Size
+        var packBtn = e.target.closest('[data-cfg-pack]');
+        if (packBtn) {
+          modalCfg.packSize = parseInt(packBtn.getAttribute('data-cfg-pack'), 10) || 6;
+          modal.querySelectorAll('[data-cfg-pack]').forEach(function (b) {
+            var active = b === packBtn;
+            b.classList.toggle('active', active);
+            b.style.borderColor = active ? '#E82B7D' : '#E5E7EB';
+            b.style.background = active ? 'rgba(232,43,125,0.06)' : '#FFF';
+          });
+          updateModalPrice();
+        }
+
+        // Option: Flavor Mode
+        var flavorBtn = e.target.closest('[data-cfg-flavor]');
+        if (flavorBtn) {
+          modalCfg.flavorMode = flavorBtn.getAttribute('data-cfg-flavor');
+          modal.querySelectorAll('[data-cfg-flavor]').forEach(function (b) {
+            var active = b === flavorBtn;
+            b.classList.toggle('active', active);
+            b.style.borderColor = active ? '#E82B7D' : '#E5E7EB';
+            b.style.background = active ? 'rgba(232,43,125,0.06)' : '#FFF';
+          });
+          updateModalPrice();
+        }
       });
+
       [].forEach.call(modal.querySelectorAll('[data-cc-qty]'), function (b) {
         b.addEventListener('click', function () {
           qty = Math.max(1, Math.min(12, qty + parseInt(b.getAttribute('data-cc-qty'), 10)));
           if (qtyOut) qtyOut.textContent = qty;
         });
       });
+
       if (addBtn) {
         addBtn.addEventListener('click', function () {
           var it = items[a];
@@ -1105,10 +1225,23 @@
           var d = it.info.dataset;
           var span = addBtn.querySelector('span');
           if (span) span.textContent = T('added');
+
+          var finalTitle = d.title;
+          var finalPrice = d.price;
+
+          if (currentCat === 'cocktails') {
+            var packLabel = 'Combo ' + modalCfg.packSize + ' Latas';
+            var drinkLabel = modalCfg.drinkType === 'mocktail' ? 'Mocktail Sin Alcohol' : 'Cóctel';
+            var flavorLabel = modalCfg.flavorMode === 'mixed' ? 'Surtido Mixto' : (modalCfg.packSize + ' de este sabor');
+            finalTitle = d.title + ' (' + packLabel + ' • ' + drinkLabel + ' • ' + flavorLabel + ')';
+            var prEl = q('[data-cc-m-price]');
+            if (prEl) finalPrice = prEl.textContent;
+          }
+
           setTimeout(function () {
             closeModal();
             if (window.LuckyShakerCart && typeof window.LuckyShakerCart.addItem === 'function') {
-              window.LuckyShakerCart.addItem(d.variant || d.handle, qty, d.title, d.price);
+              window.LuckyShakerCart.addItem(d.variant || d.handle, qty, finalTitle, finalPrice);
             }
             if (span) span.textContent = T('add');
           }, 450);
