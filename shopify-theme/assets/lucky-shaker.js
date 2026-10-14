@@ -766,7 +766,7 @@ window.LuckyShakerCart = {
 
   showToast: function(msg) {
     if (!this.toast) return;
-    var textEl = document.getElementById('toast-text');
+    var textEl = document.getElementById('toast-text') || document.getElementById('toast-message');
     if (textEl && msg) textEl.textContent = msg;
 
     this.toast.classList.add('active');
@@ -781,6 +781,13 @@ window.LuckyShakerCart = {
     var self = this;
     quantity = quantity || 1;
 
+    // A non-numeric id is a product handle (e.g. 'naranja-dry'): resolve it to a real variant id first.
+    if (variantId && !/^\d+$/.test(String(variantId))) {
+      return this.addItemByHandle(String(variantId), quantity, title, price);
+    }
+
+    var lang = window.LuckyShakerLang?.currentLang || 'es';
+
     fetch(window.LuckyShaker?.routes?.cart_add_url || '/cart/add.js', {
       method: 'POST',
       headers: {
@@ -793,32 +800,43 @@ window.LuckyShakerCart = {
       })
     })
     .then(function(res) {
-      return res.json();
+      return res.json().then(function(data) {
+        if (!res.ok || data.status) {
+          throw new Error(data.description || data.message || 'Cart add failed');
+        }
+        return data;
+      });
     })
     .then(function(item) {
       self.refreshCart(true);
-      var lang = window.LuckyShakerLang?.currentLang || 'es';
       var addedText = lang === 'es' ? 'Agregado a la bolsa' : 'Added to bag';
       self.showToast((title || item.title || 'Cóctel') + ' • ' + addedText);
     })
     .catch(function(err) {
-      console.warn('Shopify Cart Add Fallback:', err);
-      self.showToast('Agregado a la bolsa');
-      self.open();
+      console.error('Cart add failed:', err);
+      self.showToast(lang === 'es'
+        ? 'No se pudo agregar este producto. Intenta de nuevo.'
+        : 'Could not add this item. Please try again.');
     });
   },
 
   addItemByHandle: function(handle, qty, fallbackTitle, fallbackPrice) {
     var self = this;
     fetch('/products/' + handle + '.js')
-      .then(function(res) { return res.json(); })
-      .then(function(product) {
-        var variantId = product.variants[0].id;
-        self.addItem(variantId, qty || 1, product.title);
+      .then(function(res) {
+        if (!res.ok) throw new Error('Product not found: ' + handle);
+        return res.json();
       })
-      .catch(function() {
-        self.showToast('Agregado ' + fallbackTitle + ' a la bolsa');
-        self.open();
+      .then(function(product) {
+        var variant = product.variants.filter(function(v) { return v.available; })[0] || product.variants[0];
+        self.addItem(variant.id, qty || 1, fallbackTitle || product.title);
+      })
+      .catch(function(err) {
+        console.error('Add by handle failed:', err);
+        var lang = window.LuckyShakerLang?.currentLang || 'es';
+        self.showToast(lang === 'es'
+          ? 'Este producto aún no está disponible en la tienda.'
+          : 'This product is not available in the store yet.');
       });
   },
 
@@ -906,38 +924,7 @@ window.LuckyShakerCart = {
       }
     }
 
-    // GWP (Gift with Purchase) 100ml Crema Promo Logic
-    var gwpText = document.getElementById('gwp-progress-text');
-    var gwpPercent = document.getElementById('gwp-progress-percent');
-    var gwpFill = document.getElementById('gwp-progress-fill');
-    var gwpBanner = document.getElementById('cart-gwp-banner');
-    
-    var totalItemsCount = cart.items ? cart.items.reduce(function(sum, it) { return sum + it.quantity; }, 0) : 0;
 
-    if (gwpText && gwpFill) {
-      if (totalItemsCount >= 2) {
-        if (gwpBanner) gwpBanner.classList.add('unlocked');
-        gwpText.innerHTML = lang === 'es'
-          ? '🎉 <strong>¡Regalo Desbloqueado!</strong> 1x <strong>Crema de Whiskey 100ml GRATIS</strong> añadida a tu orden.'
-          : '🎉 <strong>Gift Unlocked!</strong> 1x <strong>Whiskey Cream 100ml FREE</strong> added to your bar.';
-        if (gwpPercent) gwpPercent.innerHTML = '<span class="gwp-unlocked-tag">✓ DESBLOQUEADO</span>';
-        gwpFill.style.width = '100%';
-      } else if (totalItemsCount === 1) {
-        if (gwpBanner) gwpBanner.classList.remove('unlocked');
-        gwpText.innerHTML = lang === 'es'
-          ? 'Agrega <strong>1 producto más</strong> para recibir <strong>1 Crema de Whiskey 100ml GRATIS</strong> 🎁'
-          : 'Add <strong>1 more item</strong> to unlock your <strong>FREE Whiskey Cream 100ml Bottle</strong> 🎁';
-        if (gwpPercent) gwpPercent.textContent = '1/2';
-        gwpFill.style.width = '50%';
-      } else {
-        if (gwpBanner) gwpBanner.classList.remove('unlocked');
-        gwpText.innerHTML = lang === 'es'
-          ? 'Agrega <strong>2 productos</strong> para recibir <strong>1 Crema de Whiskey 100ml GRATIS</strong>'
-          : 'Buy any <strong>2 items</strong> & get <strong>1 FREE Whiskey Cream 100ml Bottle</strong>';
-        if (gwpPercent) gwpPercent.textContent = '0/2';
-        gwpFill.style.width = '0%';
-      }
-    }
 
     if (!this.itemsList) return;
 
@@ -997,34 +984,7 @@ window.LuckyShakerCart = {
         '</div>';
     });
 
-    // If unlocked GWP, inject Free 100ml Crema Gift Item
-    if (totalItemsCount >= 2) {
-      var giftTitle = lang === 'es' ? 'Crema de Whiskey de Autor' : 'Signature Whiskey Cream';
-      var giftSub = lang === 'es' ? 'Miniatura 100ml • Botella de Cristal' : '100ml Miniature Glass Bottle';
-      var giftStatus = lang === 'es' ? '✓ Desbloqueado por comprar 2+ productos' : '✓ Unlocked with purchase of 2+ items';
-      var freeBadge = lang === 'es' ? 'GRATIS' : 'FREE';
-
-      html += 
-        '<div class="cart-item-row cart-gwp-gift-row">' +
-          '<div class="cart-item-img-wrap">' +
-            '<img src="/cdn/shop/t/4/assets/prod-whiskey-cream.png?v=1" alt="Regalo Crema de Whiskey" class="cart-item-img" onerror="this.onerror=null; this.src=\'/cdn/shop/t/4/assets/lucky_shaker_glass_icon.png\';" width="68" height="80">' +
-            '<span class="gwp-gift-badge">' + freeBadge + '</span>' +
-          '</div>' +
-          '<div class="cart-item-info">' +
-            '<div class="gwp-item-tag">🎁 ' + (lang === 'es' ? 'REGALO DE CORTESÍA' : 'COMPLIMENTARY GIFT') + '</div>' +
-            '<h5>' + giftTitle + '</h5>' +
-            '<div class="item-vol">' + giftSub + '</div>' +
-            '<div class="gwp-item-status">' + giftStatus + '</div>' +
-          '</div>' +
-          '<div class="cart-item-right">' +
-            '<div class="cart-item-price free-price">' +
-              '<span class="gwp-original-price">$12.00</span> ' +
-              '<span class="gwp-free-label">' + freeBadge + ' ($0.00)</span>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
-    }
-
+    // Promotions & GWP disabled
     this.itemsList.innerHTML = html;
   },
 
@@ -1071,11 +1031,11 @@ window.LuckyShakerPDP = {
     var pack6Price = document.getElementById('pdp-pack6-price');
     var pack12Price = document.getElementById('pdp-pack12-price');
     if (type === 'mocktail') {
-      if (pack6Price) pack6Price.textContent = '$30.00';
-      if (pack12Price) pack12Price.textContent = '$60.00';
+      if (pack6Price) pack6Price.textContent = '$69.99';
+      if (pack12Price) pack12Price.textContent = '$139.99';
     } else {
-      if (pack6Price) pack6Price.textContent = '$36.00';
-      if (pack12Price) pack12Price.textContent = '$72.00';
+      if (pack6Price) pack6Price.textContent = '$83.99';
+      if (pack12Price) pack12Price.textContent = '$167.99';
     }
     this.recalculate();
   },
@@ -1107,7 +1067,7 @@ window.LuckyShakerPDP = {
     // Update custom label price badge
     var customBadge = document.getElementById('wc-custom-price-badge');
     if (customBadge) {
-      customBadge.textContent = this.state.wcSize === '750' ? '+$10.00 ($45.00)' : '+$6.00 ($24.99)';
+      customBadge.textContent = this.state.wcSize === '750' ? '+$10.00 ($50.00)' : '+$6.00 ($24.99)';
     }
     this.recalculate();
   },
@@ -1142,13 +1102,13 @@ window.LuckyShakerPDP = {
     var typeProp = document.getElementById('pdp-selected-type');
     var flavorProp = document.getElementById('pdp-selected-flavor');
 
-    var price = '$36.00';
-    var sublabel = '(Combo de 6 Latas • 355ml • $6.00 c/u)';
-    var btnText = 'AGREGAR COMBO DE 6 • $36.00';
+    var price = '$83.99';
+    var sublabel = '(Por lata • Combo de 6 Latas: $83.99)';
+    var btnText = 'AGREGAR COMBO DE 6 • $83.99';
 
     if (this.state.isCream) {
       if (this.state.wcSize === '750') {
-        price = this.state.wcEdition === 'custom' ? '$45.00' : '$35.00';
+        price = this.state.wcEdition === 'custom' ? '$50.00' : '$40.00';
         sublabel = this.state.wcEdition === 'custom' ? '(Botella 750ml • Etiqueta Personalizada)' : '(Botella 750ml • Etiqueta Estándar)';
       } else {
         price = this.state.wcEdition === 'custom' ? '$24.99' : '$18.99';
@@ -1168,13 +1128,13 @@ window.LuckyShakerPDP = {
       var isMocktail = this.state.drinkType === 'mocktail';
       var flavorDesc = this.state.flavorMode === 'mixed' ? 'Surtido Mixto' : (this.state.packSize + ' de este sabor');
       if (this.state.packSize === 12) {
-        price = isMocktail ? '$60.00' : '$72.00';
-        sublabel = isMocktail ? '(Combo 12 Mocktails • 355ml • $5.00 / lata)' : '(Combo 12 Latas • 355ml • $6.00 / lata)';
+        price = isMocktail ? '$139.99' : '$167.99';
+        sublabel = isMocktail ? '(Combo 12 Mocktails • 355ml • $11.66 / lata)' : '(Combo 12 Latas • 355ml • $13.99 / lata)';
         btnText = 'AGREGAR COMBO 12 • ' + price;
         if (formatProp) formatProp.value = 'Combo de 12 Latas (355ml c/u) • ' + flavorDesc;
       } else {
-        price = isMocktail ? '$30.00' : '$36.00';
-        sublabel = isMocktail ? '(Combo de 6 Mocktails • 355ml • $5.00 / lata)' : '(Combo de 6 Latas • 355ml • $6.00 / lata)';
+        price = isMocktail ? '$69.99' : '$83.99';
+        sublabel = isMocktail ? '(Combo de 6 Mocktails • 355ml • $11.66 / lata)' : '(Combo de 6 Latas • 355ml • $13.99 / lata)';
         btnText = 'AGREGAR COMBO DE 6 • ' + price;
         if (formatProp) formatProp.value = 'Combo de 6 Latas (355ml c/u) • ' + flavorDesc;
       }

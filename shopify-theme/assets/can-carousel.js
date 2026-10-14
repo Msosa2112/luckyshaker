@@ -14,10 +14,22 @@
       trust: 'Entrega con verificación de identidad 21+.', view: 'VER',
       cat_cocktails: 'CÓCTELES', cat_dry_fruits: 'FRUTOS DESHIDRATADOS', cat_dry_fruits_short: 'FRUTOS',
       cat_creams: 'CREMAS', cat_gift_sets: 'SETS DE REGALO', cat_gift_sets_short: 'REGALOS',
-      tag_soon: 'PRÓXIMAMENTE', tag_soon_short: 'PRONTO',
+      tag_soon: 'PRÓXIMAMENTE', tag_soon_short: 'PRÓXIMAMENTE',
       sp_tequila: 'Tequila', sp_rum: 'Ron', sp_gin: 'Gin', sp_vodka: 'Vodka', sp_whiskey: 'Whiskey', sp_sparkling: 'Espumoso',
       sp_lemon: 'Limón', sp_manzana: 'Manzana', sp_naranja: 'Naranja', sp_pina: 'Piña',
       sp_creams: 'Cremas', sp_gift_sets: 'Sets de Regalo',
+      unit_cocktails: 'Por lata (Combo 6)',
+      badge_cocktails: 'Combo de 6 Latas',
+      note_cocktails: 'Presentación en Combo de 6 • $83.99 ($13.99 / lata)',
+      unit_dry_fruits: 'Paquete Individual',
+      badge_dry_fruits: 'Bolsa 60g',
+      note_dry_fruits: '100% Fruta Natural Deshidratada',
+      unit_creams: 'Botella 750ml',
+      badge_creams: 'Botella 750ml',
+      note_creams: 'Crema Artesanal de Autor',
+      unit_gift_sets: 'Set de Regalo',
+      badge_gift_sets: 'Set Premium',
+      note_gift_sets: 'Estuche de Lujo con Accesorios',
       default_desc: 'Producto artesanal de autor, calidad premium lista para disfrutar.',
       view_carousel: 'Carrusel', view_grid: 'Cuadrícula', prev: 'Anterior', next: 'Siguiente', close: 'Cerrar', qty: 'Cantidad'
     },
@@ -27,10 +39,22 @@
       trust: 'Delivery requires 21+ ID verification.', view: 'VIEW',
       cat_cocktails: 'COCKTAILS', cat_dry_fruits: 'DRY FRUITS', cat_dry_fruits_short: 'FRUITS',
       cat_creams: 'CREAMS', cat_gift_sets: 'GIFT SETS', cat_gift_sets_short: 'GIFTS',
-      tag_soon: 'COMING SOON', tag_soon_short: 'SOON',
+      tag_soon: 'COMING SOON', tag_soon_short: 'COMING SOON',
       sp_tequila: 'Tequila', sp_rum: 'Rum', sp_gin: 'Gin', sp_vodka: 'Vodka', sp_whiskey: 'Whiskey', sp_sparkling: 'Sparkling',
       sp_lemon: 'Lemon', sp_manzana: 'Apple', sp_naranja: 'Orange', sp_pina: 'Pineapple',
       sp_creams: 'Creams', sp_gift_sets: 'Gift Sets',
+      unit_cocktails: 'Per can (6-Pack)',
+      badge_cocktails: '6-Can Combo Pack',
+      note_cocktails: '6-Can Combo Pack • $83.99 ($13.99 / can)',
+      unit_dry_fruits: 'Individual Pack',
+      badge_dry_fruits: '60g Pouch',
+      note_dry_fruits: '100% Natural Dried Fruit',
+      unit_creams: '750ml Bottle',
+      badge_creams: '750ml Bottle',
+      note_creams: 'Artisanal Craft Cream',
+      unit_gift_sets: 'Gift Set',
+      badge_gift_sets: 'Premium Set',
+      note_gift_sets: 'Luxury Box with Accessories',
       default_desc: 'Craft artisanal signature product, ready to enjoy.',
       view_carousel: 'Carousel', view_grid: 'Grid', prev: 'Previous', next: 'Next', close: 'Close', qty: 'Quantity'
     }
@@ -45,7 +69,10 @@
       'coffee-beans': 'Café', ginger: 'Jengibre', 'coconut-half': 'Coco', agave: 'Agave',
       'sugar-cubes': 'Azúcar', juniper: 'Enebro', cherry: 'Cereza', 'sea-salt': 'Sal marina',
       olive: 'Aceituna', ice: 'Hielo', 'blue-curacao': 'Blue Curaçao',
-      apple: 'Manzana Deshidratada', 'apple-half': 'Mitad de Manzana', 'apple-peel': 'Twist de Manzana', 'apple-whole': 'Manzana Roja'
+      apple: 'Manzana Deshidratada', 'apple-half': 'Mitad de Manzana', 'apple-peel': 'Twist de Manzana', 'apple-whole': 'Manzana Roja',
+      cinnamon: 'Canela en Rama', canela: 'Canela en Rama',
+      vanilla: 'Vainilla Bourbon', vainilla: 'Vainilla Bourbon',
+      cocoa: 'Cacao Tostado', cacao: 'Cacao Tostado'
     },
     en: {
       'lime-wheel': 'Lime', 'lime-half': 'Lime', 'lemon-wheel': 'Lemon', 'lemon-twist': 'Lemon twist',
@@ -55,7 +82,10 @@
       'coffee-beans': 'Coffee', ginger: 'Ginger', 'coconut-half': 'Coconut', agave: 'Agave',
       'sugar-cubes': 'Sugar', juniper: 'Juniper', cherry: 'Cherry', 'sea-salt': 'Sea salt',
       olive: 'Olive', ice: 'Ice', 'blue-curacao': 'Blue Curaçao',
-      apple: 'Dried Apple', 'apple-half': 'Apple Half', 'apple-peel': 'Apple Twist', 'apple-whole': 'Fresh Whole Apple'
+      apple: 'Dried Apple', 'apple-half': 'Apple Half', 'apple-peel': 'Apple Twist', 'apple-whole': 'Fresh Whole Apple',
+      cinnamon: 'Cinnamon Stick', canela: 'Cinnamon Stick',
+      vanilla: 'Bourbon Vanilla', vainilla: 'Bourbon Vanilla',
+      cocoa: 'Roasted Cocoa', cacao: 'Roasted Cocoa'
     }
   };
 
@@ -79,7 +109,8 @@
     'old-fashioned': ['orange-peel', 'sugar-cubes', 'cherry', 'ice', 'orange-wheel', 'ice', 'orange-peel'],
     mimosa: ['orange-wheel', 'orange-peel', 'orange-wheel', 'orange-peel', 'orange-wheel', 'fizz'],
     mojito: ['lime-wheel', 'mint', 'sugar-cubes', 'lime-half', 'mint', 'ice'],
-    'whiskey-cream': ['coffee-beans', 'sugar-cubes', 'coffee-beans', 'sugar-cubes', 'ice'],
+    'whiskey-cream': ['vanilla', 'cinnamon', 'sugar-cubes', 'ice', 'cinnamon', 'vanilla', 'ice'],
+    'chocolate-cream': ['cocoa', 'cinnamon', 'sugar-cubes', 'ice', 'cinnamon', 'cocoa', 'ice'],
     'lemon-dry': ['lemon-wheel', 'lemon-twist', 'lemon-wheel', 'lemon-twist', 'lemon-wheel', 'lemon-twist'],
     'manzana-dry': ['apple-half', 'apple-peel', 'apple-whole', 'apple', 'apple-half', 'apple-peel', 'apple'],
     'naranja-dry': ['orange-wheel', 'orange-peel', 'orange-wheel', 'orange-peel', 'orange-wheel', 'orange-peel'],
@@ -91,7 +122,8 @@
     'lime-wheel': 1, 'lime-half': 1, 'lemon-wheel': 1, 'lemon-twist': 0.95, 'orange-wheel': 1.05, 'orange-peel': 1.05,
     'grapefruit-half': 1.1, 'pineapple-wedge': 1.15, 'pineapple-dry': 1.1, 'pineapple-twist': 1.2, 'pineapple-whole': 1.3, peach: 1.15, cranberries: 0.85, mint: 1, 'coffee-beans': 0.85,
     ginger: 1.1, 'coconut-half': 1.2, agave: 1.05, 'sugar-cubes': 0.85, juniper: 0.95, cherry: 0.85, 'sea-salt': 0.9,
-    olive: 1.05, ice: 0.95, 'blue-wheel': 1.05, apple: 1.15, 'apple-half': 1.2, 'apple-peel': 1.2, 'apple-whole': 1.25
+    olive: 1.05, ice: 0.95, 'blue-wheel': 1.05, apple: 1.15, 'apple-half': 1.2, 'apple-peel': 1.2, 'apple-whole': 1.25,
+    cinnamon: 1.15, canela: 1.15, vanilla: 1.15, vainilla: 1.15, cocoa: 1.1, cacao: 1.1
   };
 
   var FX_SLOTS = [
@@ -189,10 +221,10 @@
     },
     creams: {
       key: 'creams',
-      sidebarOrder: ['whiskey_cream'],
+      sidebarOrder: ['whiskey_cream', 'chocolate_cream'],
       sidebarLabels: {
-        es: { whiskey_cream: 'Whiskey Cream' },
-        en: { whiskey_cream: 'Whiskey Cream' }
+        es: { whiskey_cream: 'Whiskey Cream', chocolate_cream: 'Chocolate Cream' },
+        en: { whiskey_cream: 'Whiskey Cream', chocolate_cream: 'Chocolate Cream' }
       },
       items: [
         {
@@ -201,14 +233,31 @@
           title: 'WHISKEY CREAM',
           sub: 'Crema artesanal de whiskey irlandés, vainilla de Madagascar y notas de cacao tostado.',
           desc: 'Un blend aterciopelado elaborado con auténtico whiskey añejado, crema fresca de pastoreo, vainilla pura de Madagascar y un toque de cacao selecto. Suavidad incomparable lista para servir en frío.',
-          price: '$35.00',
+          price: '$40.00',
           compare: '',
-          abv: 'CREMAS • PRÓXIMAMENTE',
-          tint: '#C8B195',
+          abv: 'CREMAS • 750 ML',
+          tint: '#DBC4B2',
           can: 'can-whiskey-cream.webp',
-          chips: ['Whiskey añejo', 'Crema fresca', 'Vainilla Bourbon', 'Cacao tostado'],
+          photo: 'prod-whiskey-cream.png',
+          chips: ['Whiskey añejo', 'Crema fresca', 'Vainilla Bourbon', 'Canela en rama'],
           ritual: 'Servir muy frío sobre una roca de hielo grande en vaso tumbler o junto a café specialty.',
-          recipe: ['coffee-beans', 'sugar-cubes', 'coffee-beans', 'sugar-cubes', 'ice']
+          recipe: ['vanilla', 'cinnamon', 'sugar-cubes', 'ice', 'cinnamon', 'vanilla', 'ice']
+        },
+        {
+          handle: 'chocolate-cream',
+          spirit: 'chocolate_cream',
+          title: 'CHOCOLATE CREAM',
+          sub: 'Crema artesanal de chocolate belga, whiskey añejo y suave crema de leche.',
+          desc: 'Elaborada con auténtico chocolate amargo de Bélgica, whiskey seleccionado de roble americano y crema láctea sedosa. Un equilibrio voluptuoso entre intensidad de cacao y calidez de destilado.',
+          price: '$40.00',
+          compare: '',
+          abv: 'CREMAS • 750 ML',
+          tint: '#A46A56',
+          can: 'can-chocolate-cream.webp',
+          photo: 'prod-chocolate-cream.png',
+          chips: ['Chocolate Belga', 'Cacao puro', 'Whiskey añejo', 'Canela en rama'],
+          ritual: 'Servir muy frío con hielo en copa coupe o sobre postres y café de especialidad.',
+          recipe: ['cocoa', 'cinnamon', 'sugar-cubes', 'ice', 'cinnamon', 'cocoa', 'ice']
         }
       ]
     },
@@ -229,9 +278,10 @@
           price: '$89.00',
           compare: '$99.00',
           abv: 'SETS • PRÓXIMAMENTE',
-          tint: '#E82B7D',
-          can: 'pkg-lemon-dry.webp',
-          chips: ['4 Latas de autor', 'Jigger de acero', 'Fruto disecado', 'Packaging de lujo'],
+          tint: '#D7B974',
+          can: 'pkg-signature-box-black.webp',
+          photo: 'prod-signature-box-black.png',
+          chips: ['4 Cócteles de autor', 'Jigger de acero', 'Fruto disecado', 'Packaging de lujo'],
           ritual: 'Perfecto para obsequios corporativos o celebraciones especiales en casa. Listo para regalar.',
           recipe: ['cherry', 'orange-wheel', 'lemon-twist', 'olive', 'ice']
         }
@@ -296,11 +346,12 @@
     var cocktailsHarvested = initialInfos.map(function (info, k) {
       var canImg = initialCans[k] ? initialCans[k].querySelector('img') : null;
       var bgImg = initialBgs[k];
+      var priceFinal = '$13.99';
       return {
         handle: info.getAttribute('data-handle'),
         spirit: info.getAttribute('data-spirit') || 'rum',
         title: info.getAttribute('data-title'),
-        price: info.getAttribute('data-price'),
+        price: priceFinal,
         compare: info.getAttribute('data-compare') || '',
         abv: info.getAttribute('data-abv') || '',
         tint: info.getAttribute('data-tint') || '#d9dbe3',
@@ -330,6 +381,7 @@
     function buildCategory(catKey, targetIndex) {
       var catData = CATEGORIES[catKey] || CATEGORIES.cocktails;
       currentCat = catKey;
+      root.setAttribute('data-category', catKey);
 
       // Update category tabs active state
       catTabs.forEach(function (tab) {
@@ -371,9 +423,11 @@
         var d = m.data;
 
         // 1. Can / Pouch button
+        var isBox = (d.handle && d.handle.indexOf('box') !== -1) || catKey === 'gift-sets';
         var canBtn = document.createElement('button');
         canBtn.type = 'button';
-        canBtn.className = 'cc-can';
+        canBtn.className = 'cc-can' + (isBox ? ' is-box' : '');
+        canBtn.setAttribute('data-handle', d.handle || '');
         canBtn.setAttribute('data-i', idx);
         canBtn.setAttribute('data-pos', '9');
         canBtn.tabIndex = -1;
@@ -427,17 +481,40 @@
         var spName = (catData.sidebarLabels[lang()] && catData.sidebarLabels[lang()][d.spirit]) || d.spirit.toUpperCase();
         var chipsHtml = (d.chips || []).map(function (c) { return '<li>' + c + '</li>'; }).join('');
 
+        var catKeyNorm = (currentCat || 'cocktails').replace(/-/g, '_');
+        var unitKey = 'unit_' + catKeyNorm;
+        var badgeKey = 'badge_' + catKeyNorm;
+        var noteKey = 'note_' + catKeyNorm;
+
+        var unitText = T(unitKey) || (currentCat === 'cocktails' ? 'Por lata (Combo 6)' : '');
+        var badgeText = T(badgeKey) || (currentCat === 'cocktails' ? 'Combo de 6 Latas' : '');
+        var noteText = T(noteKey) || (currentCat === 'cocktails' ? 'Presentación en Combo de 6 • $83.99 ($13.99 / lata)' : '');
+
+        var priceVal = d.price;
+        if (currentCat === 'cocktails') {
+          priceVal = '$13.99';
+        }
+
         infoArt.innerHTML =
           '<p class="cc-info-kicker"><span data-cc-sp>' + spName + '</span><i aria-hidden="true"></i><span>' + (d.abv || '') + '</span></p>' +
           '<h2 class="cc-info-title"><span>' + d.title + '</span></h2>' +
           '<p class="cc-info-sub">' + (d.sub || d.desc) + '</p>' +
           '<div class="cc-info-cta">' +
-            '<span class="cc-price">' + d.price + (d.compare ? ' <s>' + d.compare + '</s>' : '') + '</span>' +
+            '<div class="cc-price-col">' +
+              '<div class="cc-price-main">' +
+                '<span class="cc-price">' + priceVal + (d.compare ? ' <s>' + d.compare + '</s>' : '') + '</span>' +
+              '</div>' +
+              '<span class="cc-price-unit" data-cc-t="' + unitKey + '">' + unitText + '</span>' +
+            '</div>' +
             '<button type="button" class="cc-more" data-cc-open tabindex="-1">' +
               '<span data-cc-t="more">' + T('more') + '</span>' +
               '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>' +
             '</button>' +
           '</div>' +
+          '<p class="cc-info-note">' +
+            '<span class="cc-note-badge" data-cc-t="' + badgeKey + '">' + badgeText + '</span>' +
+            '<span class="cc-note-text" data-cc-t="' + noteKey + '">' + noteText + '</span>' +
+          '</p>' +
           '<div class="cc-detail" hidden>' +
             '<p class="cc-detail-desc">' + (d.desc || d.sub) + '</p>' +
             '<ul class="cc-detail-chips">' + chipsHtml + '</ul>' +
@@ -1035,25 +1112,31 @@
       }
 
       var isMocktail = modalCfg.drinkType === 'mocktail';
-      var price = '$36.00';
-      var sublabel = '(Combo de 6 Latas • $6.00 c/u)';
+      var price = '$83.99';
+      var sublabel = '(Combo de 6 Latas • $83.99 • $13.99 c/u)';
 
       if (modalCfg.packSize === 12) {
-        price = isMocktail ? '$60.00' : '$72.00';
-        sublabel = isMocktail ? '(Combo de 12 Mocktails • $5.00 / lata)' : '(Combo de 12 Latas • $6.00 / lata)';
+        price = isMocktail ? '$139.99' : '$167.99';
+        sublabel = isMocktail ? '(Combo de 12 Mocktails • $139.99 • $11.66 / lata)' : '(Combo de 12 Latas • $167.99 • $13.99 / lata)';
       } else {
-        price = isMocktail ? '$30.00' : '$36.00';
-        sublabel = isMocktail ? '(Combo de 6 Mocktails • $5.00 / lata)' : '(Combo de 6 Latas • $6.00 / lata)';
+        price = isMocktail ? '$69.99' : '$83.99';
+        sublabel = isMocktail ? '(Combo de 6 Mocktails • $69.99 • $11.66 / lata)' : '(Combo de 6 Latas • $83.99 • $13.99 / lata)';
       }
 
       if (prEl) prEl.textContent = price;
       if (subEl) subEl.textContent = sublabel;
 
-      // Update button single flavor text
+      // Update button single flavor text & pack prices
       var btnFlavorSingle = modal.querySelector('[data-cfg-flavor="single"]');
       if (btnFlavorSingle) {
         btnFlavorSingle.textContent = modalCfg.packSize + ' de este sabor';
       }
+      var btnPack6 = modal.querySelector('[data-cfg-pack="6"]');
+      if (btnPack6) btnPack6.textContent = isMocktail ? 'Combo 6 ($69.99)' : 'Combo 6 ($83.99)';
+      var btnPack12 = modal.querySelector('[data-cfg-pack="12"]');
+      if (btnPack12) btnPack12.textContent = isMocktail ? 'Combo 12 ($139.99)' : 'Combo 12 ($167.99)';
+      var btnMocktail = modal.querySelector('[data-cfg-type="mocktail"]');
+      if (btnMocktail) btnMocktail.textContent = '🌱 Sin Alcohol ($69.99)';
     }
 
     function fillModal(it) {
@@ -1122,9 +1205,9 @@
         mPhoto.onerror = function () {
           mPhoto.onerror = null;
           mPhoto.classList.add('is-can');
-          mPhoto.src = d.can;
+          mPhoto.src = getAssetUrl(d.can);
         };
-        mPhoto.src = d.photo || d.bg || d.can;
+        mPhoto.src = getAssetUrl(d.photo || d.bg || d.can);
         mPhoto.alt = d.title;
       }
 

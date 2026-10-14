@@ -147,19 +147,28 @@
     {%- capture info_piece -%}
       <article class="cc-info" data-i="{{ idx }}" data-handle="{{ product.handle }}" data-spirit="{{ spirit }}" data-tint="{{ tint }}"
         data-variant="{{ variant.id }}" data-available="{{ product.available }}" data-url="{{ product.url }}"
-        data-title="{{ clean_title | escape }}" data-price="$36.00"
+        data-title="{{ clean_title | escape }}" data-price="$13.99"
         data-compare=""
         data-abv="{{ abv_val | escape }}" data-bg="{{ bg_src }}" data-photo="{{ photo_src }}" data-can="{{ can_src }}" aria-hidden="true">
         <p class="cc-info-kicker"><span data-cc-t="sp_{{ spirit }}">{{ spirit | capitalize }}</span><i aria-hidden="true"></i><span>{{ abv_val }}</span></p>
         <h2 class="cc-info-title"><span>{{ clean_title }}</span></h2>
         <p class="cc-info-sub">{{ ing_line | default: desc_line | replace: ',', ' ·' }}</p>
         <div class="cc-info-cta">
-          <span class="cc-price">$36.00 <span style="font-size: 0.75rem; color: var(--cc-ink-3); font-weight: 500;">(Combo 6 Latas)</span></span>
+          <div class="cc-price-col">
+            <div class="cc-price-main">
+              <span class="cc-price">$13.99</span>
+            </div>
+            <span class="cc-price-unit" data-cc-t="unit_cocktails">Por lata (Combo 6)</span>
+          </div>
           <button type="button" class="cc-more" data-cc-open tabindex="-1">
             <span data-cc-t="more">VER MÁS</span>
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
           </button>
         </div>
+        <p class="cc-info-note">
+          <span class="cc-note-badge" data-cc-t="badge_cocktails">Combo de 6 Latas</span>
+          <span class="cc-note-text" data-cc-t="note_cocktails">Presentación en Combo de 6 • $83.99 ($13.99 / lata)</span>
+        </p>
         <div class="cc-detail" hidden>
           <p class="cc-detail-desc">{{ desc_line | escape }}</p>
           <ul class="cc-detail-chips">
@@ -200,15 +209,12 @@
         <span class="cc-cat-sep" aria-hidden="true">•</span>
         <button type="button" class="cc-cat-tab" data-cat="creams">
           <span class="cc-cat-label" data-cc-t="cat_creams">CREMAS</span>
-          <span class="cc-cat-tag cc-cat-tag--desktop" data-cc-t="tag_soon">PRÓXIMAMENTE</span>
-          <span class="cc-cat-tag cc-cat-tag--mobile" data-cc-t="tag_soon_short">PRONTO</span>
         </button>
         <span class="cc-cat-sep" aria-hidden="true">•</span>
         <button type="button" class="cc-cat-tab" data-cat="gift-sets">
           <span class="cc-cat-label cc-cat-label--desktop" data-cc-t="cat_gift_sets">SETS DE REGALO</span>
           <span class="cc-cat-label cc-cat-label--mobile" data-cc-t="cat_gift_sets_short">REGALOS</span>
-          <span class="cc-cat-tag cc-cat-tag--desktop" data-cc-t="tag_soon">PRÓXIMAMENTE</span>
-          <span class="cc-cat-tag cc-cat-tag--mobile" data-cc-t="tag_soon_short">PRONTO</span>
+          <span class="cc-cat-tag" data-cc-t="tag_soon">PRÓXIMAMENTE</span>
         </button>
       </nav>
     </div>
@@ -293,15 +299,15 @@
               <span style="display:block; font-size:0.72rem; font-weight:700; text-transform:uppercase; color:#6B7280; margin-bottom:4px;">1. Tipo de Bebida:</span>
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                 <button type="button" class="cc-cfg-btn active" data-cfg-type="cocktail" style="padding:6px; border-radius:8px; border:1.5px solid #E82B7D; background:rgba(232,43,125,0.06); font-size:0.78rem; font-weight:700; cursor:pointer;">🍸 Con Alcohol</button>
-                <button type="button" class="cc-cfg-btn" data-cfg-type="mocktail" style="padding:6px; border-radius:8px; border:1.5px solid #E5E7EB; background:#FFF; font-size:0.78rem; font-weight:700; cursor:pointer;">🌱 Sin Alcohol ($30)</button>
+                <button type="button" class="cc-cfg-btn" data-cfg-type="mocktail" style="padding:6px; border-radius:8px; border:1.5px solid #E5E7EB; background:#FFF; font-size:0.78rem; font-weight:700; cursor:pointer;">🌱 Sin Alcohol ($69.99)</button>
               </div>
             </div>
 
             <div style="margin-bottom: 0.6rem;">
               <span style="display:block; font-size:0.72rem; font-weight:700; text-transform:uppercase; color:#6B7280; margin-bottom:4px;">2. Formato Combo:</span>
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                <button type="button" class="cc-cfg-btn active" data-cfg-pack="6" style="padding:6px; border-radius:8px; border:1.5px solid #E82B7D; background:rgba(232,43,125,0.06); font-size:0.78rem; font-weight:700; cursor:pointer;">Combo 6 ($36.00)</button>
-                <button type="button" class="cc-cfg-btn" data-cfg-pack="12" style="padding:6px; border-radius:8px; border:1.5px solid #E5E7EB; background:#FFF; font-size:0.78rem; font-weight:700; cursor:pointer;">Combo 12 ($72.00)</button>
+                <button type="button" class="cc-cfg-btn active" data-cfg-pack="6" style="padding:6px; border-radius:8px; border:1.5px solid #E82B7D; background:rgba(232,43,125,0.06); font-size:0.78rem; font-weight:700; cursor:pointer;">Combo 6 ($83.99)</button>
+                <button type="button" class="cc-cfg-btn" data-cfg-pack="12" style="padding:6px; border-radius:8px; border:1.5px solid #E5E7EB; background:#FFF; font-size:0.78rem; font-weight:700; cursor:pointer;">Combo 12 ($167.99)</button>
               </div>
             </div>
 
@@ -345,10 +351,22 @@
 
 {%- endpaginate -%}
 
-{%- comment -%} Ingredient sprites (assets/ing-<name>.webp) used by the atmosphere layer {%- endcomment -%}
-{%- assign fx_names = 'ice,lime-wheel,lime-half,lemon-wheel,lemon-twist,orange-wheel,orange-peel,grapefruit-half,pineapple-wedge,pineapple-dry,pineapple-twist,pineapple-whole,peach,cranberries,mint,coffee-beans,ginger,coconut-half,agave,sugar-cubes,juniper,cherry,sea-salt,olive,apple,apple-half,apple-peel,apple-whole' | split: ',' -%}
+{%- comment -%} Ingredient sprites and category assets with direct Shopify CDN URLs {%- endcomment -%}
+{%- assign fx_names = 'ice,lime-wheel,lime-half,lemon-wheel,lemon-twist,orange-wheel,orange-peel,grapefruit-half,pineapple-wedge,pineapple-dry,pineapple-twist,pineapple-whole,peach,cranberries,mint,coffee-beans,ginger,coconut-half,agave,sugar-cubes,juniper,cherry,sea-salt,olive,apple,apple-half,apple-peel,apple-whole,cinnamon,canela,vanilla,vainilla,cocoa,cacao' | split: ',' -%}
 <script type="application/json" data-cc-fx-assets>
-{ {% for fx_name in fx_names %}"{{ fx_name }}": {{ 'ing-' | append: fx_name | append: '.webp' | asset_url | json }}{% unless forloop.last %}, {% endunless %}{% endfor %} }
+{
+  {% for fx_name in fx_names %}"{{ fx_name }}": {{ 'ing-' | append: fx_name | append: '.webp' | asset_url | json }}, {% endfor %}
+  "pkg-signature-box.webp": {{ 'pkg-signature-box-black.webp' | asset_url | json }},
+  "pkg-signature-box-black.webp": {{ 'pkg-signature-box-black.webp' | asset_url | json }},
+  "can-signature-box.webp": {{ 'can-signature-box-black.webp' | asset_url | json }},
+  "can-signature-box-black.webp": {{ 'can-signature-box-black.webp' | asset_url | json }},
+  "prod-signature-box.png": {{ 'prod-signature-box-black.png' | asset_url | json }},
+  "prod-signature-box-black.png": {{ 'prod-signature-box-black.png' | asset_url | json }},
+  "can-whiskey-cream.webp": {{ 'can-whiskey-cream.webp' | asset_url | json }},
+  "can-chocolate-cream.webp": {{ 'can-chocolate-cream.webp' | asset_url | json }},
+  "prod-whiskey-cream.png": {{ 'prod-whiskey-cream.png' | asset_url | json }},
+  "prod-chocolate-cream.png": {{ 'prod-chocolate-cream.png' | asset_url | json }}
+}
 </script>
 
 <script src="{{ 'can-carousel.js' | asset_url }}" defer="defer"></script>

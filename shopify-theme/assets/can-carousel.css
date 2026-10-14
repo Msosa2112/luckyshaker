@@ -390,6 +390,33 @@
 .cc-can[data-pos='-9'] { --x: calc(var(--cc-gap) * -3); --y: -90px; --r: -36deg; --s: 0.2; --o: 0; --b: 14px; z-index: 0; pointer-events: none; }
 .cc-can[data-pos='9']  { --x: calc(var(--cc-gap) * 3); --y: -90px; --r: 32deg; --s: 0.2; --o: 0; --b: 14px; z-index: 0; pointer-events: none; }
 
+/* Gift Box size enhancement: 25% larger than standard can, elegant stately presentation */
+.cc-can.is-box,
+.cc-can[data-handle*='box'] {
+  --box-scale: 1.25;
+}
+.cc-can.is-box[data-pos='0'],
+.cc-can[data-handle*='box'][data-pos='0'] {
+  --s: 1.25;
+  --r: -4deg;
+  --x: 0px;
+  --y: 0px;
+}
+.cc-can.is-box[data-pos='-1'],
+.cc-can[data-handle*='box'][data-pos='-1'] {
+  --s: 0.75;
+  --r: -14deg;
+}
+.cc-can.is-box[data-pos='1'],
+.cc-can[data-handle*='box'][data-pos='1'] {
+  --s: 0.75;
+  --r: 12deg;
+}
+[data-category="gift-sets"] .cc-floor {
+  width: calc(var(--cc-can-h) * 0.85);
+  height: calc(var(--cc-can-h) * 0.1);
+}
+
 /* while the quick-view is open the hero can lives in the modal */
 .cc.is-modal .cc-can[data-pos='0'] { opacity: 0 !important; transition: opacity 0s, transform 1s var(--cc-ease), filter 0.8s ease; }
 
@@ -530,6 +557,78 @@
   color: var(--cc-ink);
 }
 .cc-price s { margin-left: 0.4rem; font-size: 0.95rem; font-weight: 500; color: var(--cc-ink-3); }
+
+.cc-price-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  line-height: 1.15;
+}
+
+.cc-price-main {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.cc-price-unit {
+  display: block;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--cc-ink-3, #717786);
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+.cc-info-note {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.85rem 0 0;
+  padding: 0.38rem 0.95rem;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(232, 43, 125, 0.2);
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--cc-ink-2, #3c4150);
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.7s var(--cc-ease);
+  pointer-events: auto;
+}
+
+.cc-info.is-active .cc-info-note {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.32s;
+}
+
+.cc-note-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.16rem 0.58rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 74, 154, 0.15) 0%, rgba(232, 43, 125, 0.12) 100%);
+  color: var(--cc-pink, #e82b7d);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cc-note-text {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--cc-ink-2, #4b5563);
+}
 
 .cc-more,
 .cc-add {
@@ -1131,6 +1230,10 @@
   .cc-eyebrow::before { width: 16px; margin-right: 0.5rem; }
   .cc-info-title { font-size: clamp(1.9rem, 9vw, 2.8rem); }
   .cc-info-cta { gap: 0.8rem; }
+  .cc-price-col { align-items: center; text-align: center; }
+  .cc-info-note { max-width: 92vw; font-size: 0.7rem; padding: 0.3rem 0.75rem; gap: 0.35rem; margin-top: 0.65rem; }
+  .cc-note-badge { font-size: 0.62rem; padding: 0.12rem 0.45rem; }
+  .cc-note-text { font-size: 0.68rem; }
   .cc-more { padding: 0.85rem 1.3rem; }
 
   .cc-modal { align-items: end; padding: 0; }
@@ -1186,4 +1289,4 @@
     display: inline-flex !important;
   }
 }
-
+/* v2.7 - black signature box scaled 25% larger */

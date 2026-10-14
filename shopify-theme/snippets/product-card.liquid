@@ -28,6 +28,10 @@
   {%- assign card_img_src = product.featured_image | image_url: width: 800 -%}
 {%- elsif product.handle == 'whiskey-cream' -%}
   {%- assign card_img_src = 'prod-whiskey-cream.png' | asset_url -%}
+{%- elsif product.handle == 'chocolate-cream' -%}
+  {%- assign card_img_src = 'prod-chocolate-cream.png' | asset_url -%}
+{%- elsif product.handle == 'signature-box' or product.handle contains 'box' or product.handle contains 'regalo' or product.handle contains 'gift' -%}
+  {%- assign card_img_src = 'prod-signature-box-black.png' | asset_url -%}
 {%- else -%}
   {%- assign fallback_img = 'prod-' | append: product.handle | append: '.jpg' -%}
   {%- assign card_img_src = fallback_img | asset_url -%}
@@ -47,7 +51,7 @@
     <a href="{{ product.url }}" class="product-visual-link" aria-label="{{ product.title }}">
       {%- if product.featured_image -%}
         <img src="{{ card_img_src }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
-      {%- elsif product.handle == 'whiskey-cream' -%}
+      {%- elsif product.handle contains 'cream' or product.handle contains 'box' or product.handle contains 'regalo' or product.handle contains 'gift' -%}
         <img src="{{ card_img_src }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480">
       {%- else -%}
         <img src="{{ card_img_src }}" alt="{{ product.title }}" class="product-img" loading="lazy" width="400" height="480" onerror="this.onerror=null; this.src='{{ 'margarita.jpg' | asset_url }}';">
@@ -61,13 +65,17 @@
     {%- liquid
       assign is_cream = false
       assign is_fruit = false
+      assign is_gift = false
       assign is_can = true
 
-      if product.handle == 'whiskey-cream' or product.type contains 'Crema'
+      if product.handle contains 'cream' or product.type contains 'Crema'
         assign is_cream = true
         assign is_can = false
       elsif product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits'
         assign is_fruit = true
+        assign is_can = false
+      elsif product.handle contains 'box' or product.type contains 'Regalo' or product.tags contains 'gift-sets'
+        assign is_gift = true
         assign is_can = false
       endif
     -%}
@@ -110,7 +118,7 @@
     <div class="product-pricing-summary">
       {%- if is_cream -%}
         <div class="price-format-pill">
-          <span class="price-amount">$35.00</span>
+          <span class="price-amount">$40.00</span>
           <span class="price-detail">750ml / 375ml $18.99</span>
         </div>
       {%- elsif is_fruit -%}
@@ -120,11 +128,11 @@
         </div>
       {%- else -%}
         <div class="price-format-pill">
-          <span class="price-amount">$36.00</span>
-          <span class="price-detail">Combo 6 Latas ($6.00 c/u)</span>
+          <span class="price-amount">$13.99</span>
+          <span class="price-detail">Combo 6: $83.99 ($13.99 c/u)</span>
         </div>
         {%- if product.handle != 'old-fashioned' -%}
-          <span class="mocktail-avail-badge" title="Disponible versión sin alcohol por $30.00 el pack">Mocktail Sin Alcohol $30.00 (Combo 6)</span>
+          <span class="mocktail-avail-badge" title="Disponible versión sin alcohol por $69.99 el pack">Mocktail Sin Alcohol $69.99 (Combo 6)</span>
         {%- endif -%}
       {%- endif -%}
     </div>
@@ -134,9 +142,9 @@
       <div class="product-action-box" style="width: 100%;">
         {%- if product.available -%}
           {%- liquid
-            assign default_add_price = '$36.00'
+            assign default_add_price = '$83.99'
             if is_cream
-              assign default_add_price = '$35.00'
+              assign default_add_price = '$40.00'
             elsif is_fruit
               assign default_add_price = '$8.75'
             endif

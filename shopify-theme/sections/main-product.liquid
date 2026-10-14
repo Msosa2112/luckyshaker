@@ -30,6 +30,10 @@
           <img id="pdp-active-img" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title }}" class="pdp-main-image" width="600" height="600">
         {%- elsif product.handle == 'whiskey-cream' -%}
           <img id="pdp-active-img" src="{{ 'prod-whiskey-cream.png' | asset_url }}" alt="{{ product.title }}" class="pdp-main-image" width="600" height="600">
+        {%- elsif product.handle == 'chocolate-cream' -%}
+          <img id="pdp-active-img" src="{{ 'prod-chocolate-cream.png' | asset_url }}" alt="{{ product.title }}" class="pdp-main-image" width="600" height="600">
+        {%- elsif product.handle == 'signature-box' or product.handle contains 'box' or product.handle contains 'regalo' or product.handle contains 'gift' -%}
+          <img id="pdp-active-img" src="{{ 'prod-signature-box-black.png' | asset_url }}" alt="{{ product.title }}" class="pdp-main-image" width="600" height="600">
         {%- else -%}
           {%- assign fallback_img = 'prod-' | append: product.handle | append: '.jpg' -%}
           <img id="pdp-active-img" src="{{ fallback_img | asset_url }}" alt="{{ product.title }}" class="pdp-main-image" width="600" height="600" onerror="this.onerror=null; this.src='{{ 'margarita.jpg' | asset_url }}';">
@@ -72,33 +76,27 @@
         assign is_fruit = false
         assign is_can = true
 
-        if product.handle == 'whiskey-cream' or product.type contains 'Crema'
+        if product.handle contains 'cream' or product.type contains 'Crema'
           assign is_cream = true
           assign is_can = false
         elsif product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits'
           assign is_fruit = true
           assign is_can = false
+        elsif product.handle contains 'box' or product.type contains 'Regalo' or product.tags contains 'gift-sets'
+          assign is_gift = true
+          assign is_can = false
         endif
       -%}
-
-      <!-- Promo Callout (Gift with Purchase) -->
-      <div class="pdp-promo-gwp-callout">
-        <div class="gwp-icon-badge">🎁</div>
-        <div class="gwp-text-wrap">
-          <strong>¡REGALO EXCLUSIVO CON TU COMPRA!</strong>
-          <span>Lleva <strong>1 Botella de Crema de Whiskey 100ml GRATIS</strong> al comprar cualquier combinación de 2 o más productos.</span>
-        </div>
-      </div>
 
       <div class="pdp-price-block">
         <div class="pdp-price-main">
           <span id="pdp-price-display" class="pdp-price">
             {%- if is_cream -%}
-              $35.00
+              $40.00
             {%- elsif is_fruit -%}
               $8.75
             {%- else -%}
-              $36.00
+              $13.99
             {%- endif -%}
           </span>
           <span class="pdp-price-detail-label" id="pdp-price-sublabel">
@@ -107,13 +105,9 @@
             {%- elsif is_fruit -%}
               (Paquete 60g)
             {%- else -%}
-              (Combo de 6 Latas • 355ml • $6.00 c/u)
+              (Por lata • Combo de 6 Latas: $83.99)
             {%- endif -%}
           </span>
-        </div>
-        <div class="pdp-shipping-badge">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          <span data-i18n="pdp.free_shipping">Envío Express Gratis en compras de $80+</span>
         </div>
       </div>
 
@@ -137,7 +131,7 @@
             <div class="pdp-pill-options-grid">
               <button type="button" class="pdp-config-pill active" data-wc-size="750" onclick="LuckyShakerPDP.selectWcSize('750', this)">
                 <span class="pill-title">750 ML</span>
-                <span class="pill-price">$35.00</span>
+                <span class="pill-price">$40.00</span>
               </button>
               <button type="button" class="pdp-config-pill" data-wc-size="375" onclick="LuckyShakerPDP.selectWcSize('375', this)">
                 <span class="pill-title">375 ML</span>
@@ -201,13 +195,13 @@
             <div class="pdp-pill-options-grid">
               <button type="button" class="pdp-config-pill active" data-pack-size="6" onclick="LuckyShakerPDP.selectPackSize(6, this)">
                 <span class="pill-title">Combo 6 Latas</span>
-                <span class="pill-price" id="pdp-pack6-price">$36.00</span>
-                <span class="pill-unit-calc">($6.00 / lata)</span>
+                <span class="pill-price" id="pdp-pack6-price">$83.99</span>
+                <span class="pill-unit-calc">($13.99 / lata)</span>
               </button>
               <button type="button" class="pdp-config-pill" data-pack-size="12" onclick="LuckyShakerPDP.selectPackSize(12, this)">
                 <span class="pill-title">Combo 12 Latas</span>
-                <span class="pill-price" id="pdp-pack12-price">$72.00</span>
-                <span class="pill-unit-calc">($6.00 / lata)</span>
+                <span class="pill-price" id="pdp-pack12-price">$167.99</span>
+                <span class="pill-unit-calc">($13.99 / lata)</span>
               </button>
             </div>
 
@@ -240,11 +234,11 @@
           <button type="button" id="pdp-submit-btn" class="pdp-cta-add" onclick="LuckyShakerPDP.handleAddToCart()">
             <span id="pdp-btn-label" data-i18n="pdp.add_to_bag">
               {%- if is_cream -%}
-                AGREGAR A LA BOLSA &bull; $35.00
+                AGREGAR A LA BOLSA &bull; $40.00
               {%- elsif is_fruit -%}
                 AGREGAR A LA BOLSA &bull; $8.75
               {%- else -%}
-                AGREGAR COMBO DE 6 &bull; $36.00
+                AGREGAR COMBO DE 6 &bull; $83.99
               {%- endif -%}
             </span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">

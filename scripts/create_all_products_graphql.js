@@ -41,10 +41,18 @@ const products = [
   {
     title: 'Whiskey Cream 750ml',
     handle: 'whiskey-cream',
-    price: '38.00',
+    price: '40.00',
     sku: 'LS-WC-750',
     tags: ['Reserve Collection', 'Best Seller', 'Whiskey', '750ml', 'Featured'],
     description: '<p>Triple-distilled aged whiskey matured in charred American oak, blended with Venezuelan roasted cocoa and pure velvet dairy cream. Hand-batched and sealed in glass.</p><ul><li><strong>ABV:</strong> 17% Alc / Vol</li><li><strong>Volume:</strong> 750 ML (6–8 Servings)</li><li><strong>Ingredients:</strong> Triple-Distilled Whiskey, Roasted Cocoa, Dairy Cream, Bourbon Vanilla</li><li><strong>Serving Ritual:</strong> Shake vigorously with ice, strain into a chilled coupe or rocks glass.</li></ul>'
+  },
+  {
+    title: 'Chocolate Cream 750ml',
+    handle: 'chocolate-cream',
+    price: '40.00',
+    sku: 'LS-CC-750',
+    tags: ['Reserve Collection', 'Best Seller', 'Chocolate', '750ml', 'Featured'],
+    description: '<p>Rich Belgian dark chocolate blended with aged American oak whiskey, Madagascar bourbon vanilla, and pure velvet dairy cream. Artisanal hand-batched luxury liqueur.</p><ul><li><strong>ABV:</strong> 17% Alc / Vol</li><li><strong>Volume:</strong> 750 ML (6–8 Servings)</li><li><strong>Ingredients:</strong> Belgian Chocolate, Aged Whiskey, Velvet Dairy Cream, Bourbon Vanilla</li><li><strong>Serving Ritual:</strong> Serve ice cold in a chilled coupe glass or poured over specialty espresso.</li></ul>'
   },
   {
     title: 'Old Fashioned 750ml',

@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Preview — Can Carousel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shopify-theme/assets/lucky-shaker.css?v=2.2">
-<script>window.LuckyShaker={routes:{cart_url:'/cart',cart_add_url:'/cart/add.js',cart_change_url:'/cart/change.js'},moneyFormat:'${{amount}}'};
+<script>window.LuckyShaker={routes:{cart_url:'/cart',cart_add_url:'/cart/add.js',cart_change_url:'/cart/change.js'},moneyFormat:'${{amount}}',assetUrlTemplate:'../shopify-theme/assets/frame-PLACEHOLDER.webp'};
 window.__adds=[];</script>
 </head><body class="template-collection">
 <header class="navbar navbar--light scrolled" id="main-nav">
@@ -67,7 +67,7 @@ window.__adds=[];</script>
     </div>
   </div>
 </aside>
-<main id="MainContent"><link rel="stylesheet" href="../shopify-theme/assets/can-carousel.css?v=2.2"><section class="cc" id="can-carousel" data-cc data-view="carousel" data-count="18" aria-label="The Signature Collection">
+<main id="MainContent"><link rel="stylesheet" href="../shopify-theme/assets/can-carousel.css?v=2.3"><section class="cc" id="can-carousel" data-cc data-view="carousel" data-count="18" aria-label="The Signature Collection">
 
     <!-- Colour wash: every product's own photo, blurred, crossfading behind the cans -->
     <div class="cc-bg" aria-hidden="true"><img class="cc-bg-img" data-i="0" src="../preview/bg/old-fashioned.jpg" alt="" width="520" height="520"  decoding="async"><img class="cc-bg-img" data-i="1" src="../preview/bg/margarita.jpg" alt="" width="520" height="520"  decoding="async"><img class="cc-bg-img" data-i="2" src="../preview/bg/daiquiri.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="3" src="../preview/bg/gin-tonic.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="4" src="../preview/bg/paloma.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="5" src="../preview/bg/mimosa.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="6" src="../preview/bg/moscow-mule.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="7" src="../preview/bg/cosmopolitan.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="8" src="../preview/bg/sex-on-the-beach.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="9" src="../preview/bg/pina-colada.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="10" src="../preview/bg/blue-hawaii.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="11" src="../preview/bg/malibu-bay-breeze.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="12" src="../preview/bg/negroni.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="13" src="../preview/bg/manhattan.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="14" src="../preview/bg/classic-martini.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="15" src="../preview/bg/espresso-martini.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="16" src="../preview/bg/caipirinha.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"><img class="cc-bg-img" data-i="17" src="../preview/bg/mai-tai.jpg" alt="" width="520" height="520" loading="lazy" decoding="async"></div>
@@ -85,15 +85,12 @@ window.__adds=[];</script>
         <span class="cc-cat-sep" aria-hidden="true">•</span>
         <button type="button" class="cc-cat-tab" data-cat="creams">
           <span class="cc-cat-label" data-cc-t="cat_creams">CREMAS</span>
-          <span class="cc-cat-tag cc-cat-tag--desktop" data-cc-t="tag_soon">PRÓXIMAMENTE</span>
-          <span class="cc-cat-tag cc-cat-tag--mobile" data-cc-t="tag_soon_short">PRONTO</span>
         </button>
         <span class="cc-cat-sep" aria-hidden="true">•</span>
         <button type="button" class="cc-cat-tab" data-cat="gift-sets">
           <span class="cc-cat-label cc-cat-label--desktop" data-cc-t="cat_gift_sets">SETS DE REGALO</span>
           <span class="cc-cat-label cc-cat-label--mobile" data-cc-t="cat_gift_sets_short">REGALOS</span>
-          <span class="cc-cat-tag cc-cat-tag--desktop" data-cc-t="tag_soon">PRÓXIMAMENTE</span>
-          <span class="cc-cat-tag cc-cat-tag--mobile" data-cc-t="tag_soon_short">PRONTO</span>
+          <span class="cc-cat-tag" data-cc-t="tag_soon">PRÓXIMAMENTE</span>
         </button>
       </nav>
     </div>
@@ -347,19 +344,28 @@ window.__adds=[];</script>
           <ul class="cc-detail-chips"><li>Ron Blanco</li><li>Piña</li><li>Crema de Coco</li></ul></div>
       </article><article class="cc-info" data-i="10" data-handle="blue-hawaii" data-spirit="rum" data-tint="#2FA8E0"
         data-variant="5012" data-available="true" data-url="/products/blue-hawaii"
-        data-title="Blue Hawaii" data-price="$38.00"
+        data-title="Blue Hawaii" data-price="$13.99"
         data-compare=""
         data-abv="16% ABV" data-bg="../preview/bg/blue-hawaii.jpg" data-photo="../preview/photo/blue-hawaii.jpg" data-can="../shopify-theme/assets/can-blue-hawaii.webp" aria-hidden="true">
         <p class="cc-info-kicker"><span data-cc-t="sp_rum">Rum</span><i aria-hidden="true"></i><span>16% ABV</span></p>
         <h2 class="cc-info-title"><span>Blue Hawaii</span></h2>
         <p class="cc-info-sub">Ron · Vodka · Blue Curaçao · Piña</p>
         <div class="cc-info-cta">
-          <span class="cc-price">$38.00</span>
+          <div class="cc-price-col">
+            <div class="cc-price-main">
+              <span class="cc-price">$13.99</span>
+            </div>
+            <span class="cc-price-unit" data-cc-t="unit_cocktails">Por lata (Combo 6)</span>
+          </div>
           <button type="button" class="cc-more" data-cc-open tabindex="-1">
             <span data-cc-t="more">VER MÁS</span>
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
           </button>
         </div>
+        <p class="cc-info-note">
+          <span class="cc-note-badge" data-cc-t="badge_cocktails">Combo de 6 Latas</span>
+          <span class="cc-note-text" data-cc-t="note_cocktails">Presentación en Combo de 6 • $83.99 ($13.99 / lata)</span>
+        </p>
         <div class="cc-detail" hidden>
           <p class="cc-detail-desc">Un espectáculo visual tropical de color azul zafiro. Ron, vodka, blue curaçao cítrico y piña fresca.</p>
           <ul class="cc-detail-chips"><li>Ron</li><li>Vodka</li><li>Blue Curaçao</li><li>Piña</li></ul></div>
@@ -521,9 +527,79 @@ window.__adds=[];</script>
     </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Triple-Distilled Whiskey</li><li>Roasted Cocoa</li><li>Dairy Cream</li><li>Bourbon Vanilla</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
     <div class="product-card-footer">
       <div class="product-price-box">
-        <span class="product-price-amount">$38.00</span></div>
+        <span class="product-price-amount">$40.00</span></div>
 
-      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5000, 1, 'Whiskey Cream 750ml', '$38.00')" aria-label="Agregar Whiskey Cream a la Bolsa">
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5000, 1, 'Whiskey Cream 750ml', '$40.00')" aria-label="Agregar Whiskey Cream a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1000b">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-chocolate-cream.png" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">17% ABV</span><span class="product-visual-badge bestseller-badge" data-i18n="shop.bestseller">MÁS VENDIDO</span></div>
+
+    <a href="/products/chocolate-cream" class="product-visual-link" aria-label="Chocolate Cream 750ml"><img src="../shopify-theme/assets/prod-chocolate-cream.png" alt="Chocolate Cream 750ml" class="product-img" loading="lazy" width="400" height="480"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label" data-i18n="shop.craft_cocktail">CÓCTEL DE AUTOR</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">750 ML</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/chocolate-cream">Chocolate Cream</a>
+    </h3><ul class="product-notes-chips" aria-label="Ingredientes"><li>Belgian Dark Chocolate</li><li>Aged Whiskey</li><li>Velvet Dairy Cream</li><li>Bourbon Vanilla</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$40.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem(5001, 1, 'Chocolate Cream 750ml', '$40.00')" aria-label="Agregar Chocolate Cream a la Bolsa">
+            <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
+            <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 7h12M8 2l5 5-5 5"/>
+            </svg>
+          </button></div>
+    </div>
+  </div>
+</article>
+<article class="product-item luxury-glass-card" data-product-id="1000c">
+  <img class="product-ambient" src="../shopify-theme/assets/prod-signature-box.png" alt="" aria-hidden="true" loading="lazy" width="40" height="48">
+  <!-- Product Image Container -->
+  <div class="product-visual-box">
+    <div class="product-badge-group">
+      <span class="product-visual-badge glass-badge">SET PREMIUM</span><span class="product-visual-badge bestseller-badge">EDICIÓN ESPECIAL</span></div>
+
+    <a href="/products/signature-box" class="product-visual-link" aria-label="Signature Gift Box"><img src="../shopify-theme/assets/prod-signature-box-black.png" alt="Signature Gift Box" class="product-img" loading="lazy" width="400" height="480"></a>
+    <span class="product-glare" aria-hidden="true"></span>
+  </div>
+
+  <!-- Compact Editorial Details Area -->
+  <div class="product-details">
+    <div class="product-eyebrow-row">
+      <span class="product-category-label">SET DE REGALO</span>
+      <span class="product-dot-sep">•</span>
+      <span class="product-vol-label">4 CÓCTELES + JIGGER</span>
+    </div>
+
+    <h3 class="product-name">
+      <a href="/products/signature-box">Signature Gift Box</a>
+    </h3><ul class="product-notes-chips" aria-label="Contenido"><li>4 Cócteles Signature</li><li>Jigger Grabado</li><li>Fruto Disecado</li><li>Packaging de Lujo</li></ul><!-- Compact Side-by-Side Footer (Price on Left, Button on Right) -->
+    <div class="product-card-footer">
+      <div class="product-price-box">
+        <span class="product-price-amount">$89.00</span></div>
+
+      <div class="product-action-box"><button type="button" class="btn btn-luxury-pink add-to-bag-btn" onclick="LuckyShakerCart.addItem('5002b', 1, 'Signature Gift Box', '$89.00')" aria-label="Agregar Signature Gift Box a la Bolsa">
             <span data-i18n="shop.add_bag">AGREGAR A LA BOLSA</span>
             <svg class="btn-arrow" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -1238,10 +1314,10 @@ window.__adds=[];</script>
 
     <div class="cc-cursor" data-cc-cursor aria-hidden="true"><span data-cc-cursor-label></span></div>
   </section><script type="application/json" data-cc-fx-assets>
-{ "ice": "../shopify-theme/assets/ing-ice.webp", "lime-wheel": "../shopify-theme/assets/ing-lime-wheel.webp", "lime-half": "../shopify-theme/assets/ing-lime-half.webp", "lemon-wheel": "../shopify-theme/assets/ing-lemon-wheel.webp", "lemon-twist": "../shopify-theme/assets/ing-lemon-twist.webp", "orange-wheel": "../shopify-theme/assets/ing-orange-wheel.webp", "orange-peel": "../shopify-theme/assets/ing-orange-peel.webp", "grapefruit-half": "../shopify-theme/assets/ing-grapefruit-half.webp", "pineapple-wedge": "../shopify-theme/assets/ing-pineapple-wedge.webp", "pineapple-dry": "../shopify-theme/assets/ing-pineapple-dry.webp", "pineapple-twist": "../shopify-theme/assets/ing-pineapple-twist.webp", "pineapple-whole": "../shopify-theme/assets/ing-pineapple-whole.webp", "peach": "../shopify-theme/assets/ing-peach.webp", "cranberries": "../shopify-theme/assets/ing-cranberries.webp", "mint": "../shopify-theme/assets/ing-mint.webp", "coffee-beans": "../shopify-theme/assets/ing-coffee-beans.webp", "ginger": "../shopify-theme/assets/ing-ginger.webp", "coconut-half": "../shopify-theme/assets/ing-coconut-half.webp", "agave": "../shopify-theme/assets/ing-agave.webp", "sugar-cubes": "../shopify-theme/assets/ing-sugar-cubes.webp", "juniper": "../shopify-theme/assets/ing-juniper.webp", "cherry": "../shopify-theme/assets/ing-cherry.webp", "sea-salt": "../shopify-theme/assets/ing-sea-salt.webp", "olive": "../shopify-theme/assets/ing-olive.webp", "apple": "../shopify-theme/assets/ing-apple.webp", "apple-half": "../shopify-theme/assets/ing-apple-half.webp", "apple-peel": "../shopify-theme/assets/ing-apple-peel.webp", "apple-whole": "../shopify-theme/assets/ing-apple-whole.webp" }
+{ "ice": "../shopify-theme/assets/ing-ice.webp", "lime-wheel": "../shopify-theme/assets/ing-lime-wheel.webp", "lime-half": "../shopify-theme/assets/ing-lime-half.webp", "lemon-wheel": "../shopify-theme/assets/ing-lemon-wheel.webp", "lemon-twist": "../shopify-theme/assets/ing-lemon-twist.webp", "orange-wheel": "../shopify-theme/assets/ing-orange-wheel.webp", "orange-peel": "../shopify-theme/assets/ing-orange-peel.webp", "grapefruit-half": "../shopify-theme/assets/ing-grapefruit-half.webp", "pineapple-wedge": "../shopify-theme/assets/ing-pineapple-wedge.webp", "pineapple-dry": "../shopify-theme/assets/ing-pineapple-dry.webp", "pineapple-twist": "../shopify-theme/assets/ing-pineapple-twist.webp", "pineapple-whole": "../shopify-theme/assets/ing-pineapple-whole.webp", "peach": "../shopify-theme/assets/ing-peach.webp", "cranberries": "../shopify-theme/assets/ing-cranberries.webp", "mint": "../shopify-theme/assets/ing-mint.webp", "coffee-beans": "../shopify-theme/assets/ing-coffee-beans.webp", "ginger": "../shopify-theme/assets/ing-ginger.webp", "coconut-half": "../shopify-theme/assets/ing-coconut-half.webp", "agave": "../shopify-theme/assets/ing-agave.webp", "sugar-cubes": "../shopify-theme/assets/ing-sugar-cubes.webp", "juniper": "../shopify-theme/assets/ing-juniper.webp", "cherry": "../shopify-theme/assets/ing-cherry.webp", "sea-salt": "../shopify-theme/assets/ing-sea-salt.webp", "olive": "../shopify-theme/assets/ing-olive.webp", "apple": "../shopify-theme/assets/ing-apple.webp", "apple-half": "../shopify-theme/assets/ing-apple-half.webp", "apple-peel": "../shopify-theme/assets/ing-apple-peel.webp", "apple-whole": "../shopify-theme/assets/ing-apple-whole.webp", "cinnamon": "../shopify-theme/assets/ing-cinnamon.webp", "canela": "../shopify-theme/assets/ing-canela.webp", "vanilla": "../shopify-theme/assets/ing-vanilla.webp", "vainilla": "../shopify-theme/assets/ing-vainilla.webp", "cocoa": "../shopify-theme/assets/ing-cocoa.webp", "cacao": "../shopify-theme/assets/ing-cacao.webp", "pkg-signature-box.webp": "../shopify-theme/assets/pkg-signature-box-black.webp", "pkg-signature-box-black.webp": "../shopify-theme/assets/pkg-signature-box-black.webp", "can-signature-box.webp": "../shopify-theme/assets/can-signature-box-black.webp", "can-signature-box-black.webp": "../shopify-theme/assets/can-signature-box-black.webp", "prod-signature-box.png": "../shopify-theme/assets/prod-signature-box-black.png", "prod-signature-box-black.png": "../shopify-theme/assets/prod-signature-box-black.png" }
 </script>
 
-<script src="../shopify-theme/assets/can-carousel.js?v=2.2" defer="defer"></script>
+<script src="../shopify-theme/assets/can-carousel.js?v=2.6" defer="defer"></script>
 
 
 </main>
