@@ -267,6 +267,7 @@
     <div class="cc-gridwrap" data-cc-gridwrap>
       <div class="cc-grid products-catalog">
         {%- for product in collection.products -%}
+          {%- if product.handle == 'prueba' -%}{%- continue -%}{%- endif -%}
           {% render 'product-card', product: product %}
         {%- else -%}
           <p class="cc-empty">No cocktails found in this collection.</p>
@@ -356,6 +357,14 @@
 <script type="application/json" data-cc-fx-assets>
 {
   {% for fx_name in fx_names %}"{{ fx_name }}": {{ 'ing-' | append: fx_name | append: '.webp' | asset_url | json }}, {% endfor %}
+  "pkg-naranja-dry.webp": {{ 'pkg-naranja-dry.webp' | asset_url | json }},
+  "pkg-pina-dry.webp": {{ 'pkg-pina-dry.webp' | asset_url | json }},
+  "pkg-manzana-dry.webp": {{ 'pkg-manzana-dry.webp' | asset_url | json }},
+  "pkg-lemon-dry.webp": {{ 'pkg-lemon-dry.webp' | asset_url | json }},
+  "can-naranja-dry.webp": {{ 'can-naranja-dry.webp' | asset_url | json }},
+  "can-pina-dry.webp": {{ 'can-pina-dry.webp' | asset_url | json }},
+  "can-manzana-dry.webp": {{ 'can-manzana-dry.webp' | asset_url | json }},
+  "can-lemon-dry.webp": {{ 'can-lemon-dry.webp' | asset_url | json }},
   "pkg-signature-box.webp": {{ 'pkg-signature-box-black.webp' | asset_url | json }},
   "pkg-signature-box-black.webp": {{ 'pkg-signature-box-black.webp' | asset_url | json }},
   "can-signature-box.webp": {{ 'can-signature-box-black.webp' | asset_url | json }},

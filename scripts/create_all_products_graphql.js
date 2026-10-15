@@ -197,6 +197,46 @@ const products = [
     sku: 'LS-DM-750',
     tags: ['Gin', 'Dry', '750ml', 'Reserve'],
     description: '<p>El epítome de la sofisticación. Gin destilado de enebro con sutiles gotas de vermouth dry francés y twist de limón.</p><ul><li><strong>ABV:</strong> 28% Alc / Vol</li><li><strong>Volume:</strong> 750 ML</li><li><strong>Ingredients:</strong> London Dry Gin, Dry Vermouth, Aceites de Limón</li></ul>'
+  },
+  {
+    title: 'Naranja Deshidratada 60g',
+    handle: 'naranja-dry',
+    price: '8.75',
+    sku: 'LS-DRY-NAR-60',
+    tags: ['Dry Fruit', 'Garnish', 'Citrus', 'Naranja', '100% Natural'],
+    description: '<p>Rodajas de naranja Valencia 100% natural, deshidratadas lentamente a baja temperatura para preservar su aroma cítrico, color vibrante y aceites esenciales. Sin azúcares añadidos ni conservantes.</p><ul><li><strong>Peso Neto:</strong> 60g (15–20 rodajas aprox.)</li><li><strong>Ingredientes:</strong> 100% Naranja Valencia Natural</li><li><strong>Maridaje Ideal:</strong> Old Fashioned, Negroni, Aperol Spritz, Sangría y Gin & Tonic.</li></ul>'
+  },
+  {
+    title: 'Piña Deshidratada 60g',
+    handle: 'pina-dry',
+    price: '8.75',
+    sku: 'LS-DRY-PIN-60',
+    tags: ['Dry Fruit', 'Garnish', 'Tropical', 'Pina', '100% Natural'],
+    description: '<p>Medias lunas y flores de piña dorada tropical deshidratadas artesanalmente. Dulzor caramelizado natural y textura crujiente-aromática que transforma cualquier cóctel.</p><ul><li><strong>Peso Neto:</strong> 60g (12–16 piezas aprox.)</li><li><strong>Ingredientes:</strong> 100% Piña Tropical Seleccionada</li><li><strong>Maridaje Ideal:</strong> Piña Colada, Mai Tai, Daiquiri, Margarita y Mezcal.</li></ul>'
+  },
+  {
+    title: 'Manzana Deshidratada 60g',
+    handle: 'manzana-dry',
+    price: '8.75',
+    sku: 'LS-DRY-MAN-60',
+    tags: ['Dry Fruit', 'Garnish', 'Apple', 'Manzana', '100% Natural'],
+    description: '<p>Finas láminas de manzana seleccionada con sutiles notas otoñales y dulzor equilibrado. Aporta una presentación elegante y un aroma delicado en copa.</p><ul><li><strong>Peso Neto:</strong> 60g (15–20 rodajas aprox.)</li><li><strong>Ingredientes:</strong> 100% Manzana Roja y Verde Natural</li><li><strong>Maridaje Ideal:</strong> Gin & Tonic Botánico, Whiskey Sour, Bourbon, Sidra y Vino Blanco.</li></ul>'
+  },
+  {
+    title: 'Limón & Lima Deshidratada 60g',
+    handle: 'lemon-dry',
+    price: '8.75',
+    sku: 'LS-DRY-LEM-60',
+    tags: ['Dry Fruit', 'Garnish', 'Citrus', 'Lemon', '100% Natural'],
+    description: '<p>Mix cítrico de rodajas de limón amarillo y lima persa deshidratadas a baja temperatura. Acidez aromática intensa y frescura visual para alta coctelería.</p><ul><li><strong>Peso Neto:</strong> 60g (18–22 rodajas aprox.)</li><li><strong>Ingredientes:</strong> 100% Limón Eureka y Lima Persa</li><li><strong>Maridaje Ideal:</strong> Margarita, Mojito, Moscow Mule, Cuba Libre, Gin & Tonic y Paloma.</li></ul>'
+  },
+  {
+    title: 'The Signature Reserve Gift Box',
+    handle: 'signature-box',
+    price: '89.00',
+    sku: 'LS-BOX-SIG-01',
+    tags: ['Gift Set', 'Reserve Collection', 'Box', 'Luxury', 'Featured'],
+    description: '<p>Nuestra caja de regalo insignia en acabado negro mate de lujo con herrajes dorados. Incluye 1 botella de 750ml de nuestra Reserva de Crema Artesanal (a elegir entre Whiskey Cream o Chocolate Cream), 2 copas de cristal tallado de degustación, posavasos de cuero y tarjeta de dedicatoria personalizada.</p><ul><li><strong>Contenido:</strong> 1 Botella 750ml + 2 Vasos de Cristal + Estuche Rígido Magnético</li><li><strong>Edición:</strong> Colección Limitada para Regalo</li></ul>'
   }
 ];
 

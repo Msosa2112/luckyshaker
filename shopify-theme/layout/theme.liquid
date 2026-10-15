@@ -49,7 +49,40 @@
         moneyFormat: {{ shop.money_format | json }},
         shopDomain: {{ shop.domain | json }},
         permanentDomain: {{ shop.permanent_domain | json }},
-        assetUrlTemplate: {{ 'lucky-shaker.css' | asset_url | json }}.replace('lucky-shaker.css', 'frame-PLACEHOLDER.webp')
+        logoDarkUrl: {{ 'logo_lucky_shaker_dark.svg' | asset_url | json }},
+        faviconUrl: {{ 'favicon.svg' | asset_url | json }},
+        assetUrlTemplate: {{ 'lucky-shaker.css' | asset_url | json }}.replace('lucky-shaker.css', 'frame-PLACEHOLDER.webp'),
+        productImages: {
+          'whiskey-cream': {{ 'can-whiskey-cream.webp' | asset_url | json }},
+          'chocolate-cream': {{ 'can-chocolate-cream.webp' | asset_url | json }},
+          'signature-box': {{ 'pkg-signature-box-black.webp' | asset_url | json }},
+          'naranja-dry': {{ 'pkg-naranja-dry.webp' | asset_url | json }},
+          'pina-dry': {{ 'pkg-pina-dry.webp' | asset_url | json }},
+          'manzana-dry': {{ 'pkg-manzana-dry.webp' | asset_url | json }},
+          'lemon-dry': {{ 'pkg-lemon-dry.webp' | asset_url | json }},
+          'old-fashioned': {{ 'can-old-fashioned.webp' | asset_url | json }},
+          'mojito': {{ 'mojito.jpg' | asset_url | json }},
+          'margarita': {{ 'can-margarita.webp' | asset_url | json }},
+          'daiquiri': {{ 'can-daiquiri.webp' | asset_url | json }},
+          'gin-tonic': {{ 'can-gin-tonic.webp' | asset_url | json }},
+          'paloma': {{ 'can-paloma.webp' | asset_url | json }},
+          'mimosa': {{ 'can-mimosa.webp' | asset_url | json }},
+          'moscow-mule': {{ 'can-moscow-mule.webp' | asset_url | json }},
+          'cosmopolitan': {{ 'can-cosmopolitan.webp' | asset_url | json }},
+          'sex-on-the-beach': {{ 'can-sex-on-the-beach.webp' | asset_url | json }},
+          'pina-colada': {{ 'can-pina-colada.webp' | asset_url | json }},
+          'blue-hawaii': {{ 'can-blue-hawaii.webp' | asset_url | json }},
+          'malibu-bay-breeze': {{ 'can-malibu-bay-breeze.webp' | asset_url | json }},
+          'mai-tai': {{ 'can-mai-tai.webp' | asset_url | json }},
+          'aperol-spritz': {{ 'prod-aperol-spritz.jpg' | asset_url | json }},
+          'negroni': {{ 'can-negroni.webp' | asset_url | json }},
+          'manhattan': {{ 'can-manhattan.webp' | asset_url | json }},
+          'boulevardier': {{ 'prod-boulevardier.jpg' | asset_url | json }},
+          'classic-martini': {{ 'can-classic-martini.webp' | asset_url | json }},
+          'dry-martini': {{ 'prod-dry-martini.jpg' | asset_url | json }},
+          'espresso-martini': {{ 'can-espresso-martini.webp' | asset_url | json }},
+          'caipirinha': {{ 'can-caipirinha.webp' | asset_url | json }}
+        }
       };
     </script>
   </head>

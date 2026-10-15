@@ -765,8 +765,12 @@ window.LuckyShakerCart = {
   },
 
   showToast: function(msg) {
+    if (!this.toast) {
+      var allToasts = document.querySelectorAll('#cart-toast, .toast-notification');
+      this.toast = allToasts.length ? allToasts[allToasts.length - 1] : null;
+    }
     if (!this.toast) return;
-    var textEl = document.getElementById('toast-text') || document.getElementById('toast-message');
+    var textEl = this.toast.querySelector('#toast-text, #toast-message, .toast-message') || document.getElementById('toast-text') || document.getElementById('toast-message');
     if (textEl && msg) textEl.textContent = msg;
 
     this.toast.classList.add('active');
@@ -777,27 +781,188 @@ window.LuckyShakerCart = {
     }, 2800);
   },
 
-  addItem: function(variantId, quantity, title, price) {
+  parsePriceCents: function(priceStr) {
+    if (!priceStr) return 0;
+    var cleaned = String(priceStr).replace(/[^0-9.]/g, '');
+    var num = parseFloat(cleaned);
+    return isNaN(num) ? 0 : Math.round(num * 100);
+  },
+
+  resolveAssetUrl: function(fn) {
+    if (!fn) return '';
+    if (fn.indexOf('/') === 0 || fn.indexOf('http') === 0) return fn;
+    try {
+      var fxJson = document.querySelector('[data-cc-fx-assets]');
+      if (fxJson) {
+        var fxMap = JSON.parse(fxJson.textContent);
+        if (fxMap[fn]) return fxMap[fn];
+      }
+    } catch (e) {}
+    var tmpl = window.LuckyShaker && window.LuckyShaker.assetUrlTemplate;
+    if (tmpl) return tmpl.replace('frame-PLACEHOLDER.webp', fn);
+    return '/assets/' + fn;
+  },
+
+  inferHandleFromTitle: function(titleStr) {
+    if (!titleStr) return '';
+    var t = String(titleStr).toLowerCase()
+      .replace(/750\s*ml/g, '')
+      .replace(/375\s*ml/g, '')
+      .replace(/60\s*g/g, '')
+      .replace(/craft\s+/g, '')
+      .trim();
+    if (t.indexOf('naranja') !== -1) return 'naranja-dry';
+    if (t.indexOf('piña deshidratada') !== -1 || t.indexOf('pina deshidratada') !== -1) return 'pina-dry';
+    if (t.indexOf('manzana') !== -1) return 'manzana-dry';
+    if (t.indexOf('limón') !== -1 || t.indexOf('limon') !== -1 || t.indexOf('lemon') !== -1) return 'lemon-dry';
+    if (t.indexOf('chocolate cream') !== -1 || t.indexOf('crema de chocolate') !== -1) return 'chocolate-cream';
+    if (t.indexOf('whiskey cream') !== -1 || t.indexOf('crema de whiskey') !== -1) return 'whiskey-cream';
+    if (t.indexOf('signature') !== -1 || t.indexOf('gift box') !== -1 || t.indexOf('caja') !== -1) return 'signature-box';
+    if (t.indexOf('gin') !== -1 && t.indexOf('tonic') !== -1) return 'gin-tonic';
+    if (t.indexOf('piña colada') !== -1 || t.indexOf('pina colada') !== -1) return 'pina-colada';
+    if (t.indexOf('sex on the beach') !== -1) return 'sex-on-the-beach';
+    if (t.indexOf('moscow mule') !== -1) return 'moscow-mule';
+    if (t.indexOf('blue hawaii') !== -1) return 'blue-hawaii';
+    if (t.indexOf('malibu') !== -1) return 'malibu-bay-breeze';
+    if (t.indexOf('espresso martini') !== -1 || t.indexOf('expresso martini') !== -1) return 'espresso-martini';
+    if (t.indexOf('classic martini') !== -1) return 'classic-martini';
+    if (t.indexOf('dry martini') !== -1) return 'dry-martini';
+    if (t.indexOf('old fashioned') !== -1) return 'old-fashioned';
+    if (t.indexOf('aperol') !== -1) return 'aperol-spritz';
+    if (t.indexOf('mai tai') !== -1) return 'mai-tai';
+    var slug = t.split('(')[0].trim()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    return slug;
+  },
+
+  resolveProductImage: function(item, displayTitle) {
+    var props = (item && item.properties) || {};
+    if (props._custom_image) {
+      return this.resolveAssetUrl(props._custom_image);
+    }
+    var map = (window.LuckyShaker && window.LuckyShaker.productImages) || {};
+    var handle = props._custom_handle || (item && item.handle) || '';
+    if (handle && handle !== 'prueba' && map[handle]) {
+      return map[handle];
+    }
+    var inferred = this.inferHandleFromTitle(displayTitle || (item && item.product_title) || '');
+    if (inferred && map[inferred]) {
+      return map[inferred];
+    }
+    if (item && item.image && item.handle !== 'prueba') {
+      return item.image;
+    }
+    var fallbackHandle = (handle && handle !== 'prueba') ? handle : (inferred || 'margarita');
+    if (fallbackHandle.indexOf('-dry') !== -1) {
+      return this.resolveAssetUrl('pkg-' + fallbackHandle + '.webp');
+    }
+    if (fallbackHandle === 'signature-box') {
+      return this.resolveAssetUrl('pkg-signature-box-black.webp');
+    }
+    if (fallbackHandle === 'mojito') {
+      return this.resolveAssetUrl('mojito.jpg');
+    }
+    return this.resolveAssetUrl('can-' + fallbackHandle + '.webp');
+  },
+
+  getFallbackCarrierVariant: function() {
+    var self = this;
+    if (this._carrierVariantId) return Promise.resolve(this._carrierVariantId);
+    return fetch('/products/whiskey-cream.js')
+      .then(function(r) {
+        if (!r.ok) throw new Error('whiskey-cream not found');
+        return r.json();
+      })
+      .then(function(p) {
+        var v = (p.variants || []).filter(function(x) { return x.available; })[0] || (p.variants && p.variants[0]);
+        if (v && v.id) {
+          self._carrierVariantId = v.id;
+          return v.id;
+        }
+        throw new Error('no variant');
+      })
+      .catch(function() {
+        return fetch('/products.json?limit=10')
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            var prods = (data && data.products) || [];
+            for (var i = 0; i < prods.length; i++) {
+              if (prods[i].handle === 'prueba') continue;
+              var v = (prods[i].variants || [])[0];
+              if (v && v.id) {
+                self._carrierVariantId = v.id;
+                return v.id;
+              }
+            }
+            if (prods[0] && prods[0].variants && prods[0].variants[0]) {
+              self._carrierVariantId = prods[0].variants[0].id;
+              return self._carrierVariantId;
+            }
+            return 50557265313866;
+          });
+      });
+  },
+
+  addItem: function(variantId, quantity, title, price, extraMeta) {
     var self = this;
     quantity = quantity || 1;
+    extraMeta = extraMeta || {};
 
     // A non-numeric id is a product handle (e.g. 'naranja-dry'): resolve it to a real variant id first.
     if (variantId && !/^\d+$/.test(String(variantId))) {
-      return this.addItemByHandle(String(variantId), quantity, title, price);
+      extraMeta.handle = extraMeta.handle || String(variantId);
+      return this.addItemByHandle(String(variantId), quantity, title, price, extraMeta);
     }
 
     var lang = window.LuckyShakerLang?.currentLang || 'es';
+    var rawTitle = title || '';
+    var cleanTitle = rawTitle;
+    var subText = extraMeta.subtitle || '';
 
-    fetch(window.LuckyShaker?.routes?.cart_add_url || '/cart/add.js', {
+    var parenIdx = rawTitle.indexOf(' (');
+    if (parenIdx !== -1 && rawTitle.charAt(rawTitle.length - 1) === ')') {
+      cleanTitle = rawTitle.slice(0, parenIdx).trim();
+      if (!subText) {
+        subText = rawTitle.slice(parenIdx + 2, -1).trim();
+      }
+    }
+
+    var effHandle = extraMeta.handle || this.inferHandleFromTitle(cleanTitle);
+    var resolvedImg = extraMeta.image
+      ? this.resolveAssetUrl(extraMeta.image)
+      : this.resolveProductImage({ handle: effHandle, properties: {} }, cleanTitle);
+
+    var priceCents = this.parsePriceCents(price);
+    var properties = {};
+    if (cleanTitle) properties._custom_title = cleanTitle;
+    if (subText) {
+      properties._custom_sub = subText;
+      properties['Presentación'] = subText;
+    }
+    if (priceCents > 0) properties._custom_price_cents = String(priceCents);
+    if (resolvedImg) properties._custom_image = resolvedImg;
+    if (effHandle) {
+      properties._custom_handle = effHandle;
+      properties['Producto'] = cleanTitle + (price ? ' (' + price + ')' : '');
+    }
+
+    var payload = {
+      id: Number(variantId),
+      quantity: quantity
+    };
+    if (Object.keys(properties).length > 0) {
+      payload.properties = properties;
+    }
+
+    return fetch(window.LuckyShaker?.routes?.cart_add_url || '/cart/add.js', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        id: variantId,
-        quantity: quantity
-      })
+      body: JSON.stringify(payload)
     })
     .then(function(res) {
       return res.json().then(function(data) {
@@ -810,33 +975,52 @@ window.LuckyShakerCart = {
     .then(function(item) {
       self.refreshCart(true);
       var addedText = lang === 'es' ? 'Agregado a la bolsa' : 'Added to bag';
-      self.showToast((title || item.title || 'Cóctel') + ' • ' + addedText);
+      self.showToast((cleanTitle || item.title || 'Cóctel') + ' • ' + addedText);
+      return item;
     })
     .catch(function(err) {
       console.error('Cart add failed:', err);
       self.showToast(lang === 'es'
         ? 'No se pudo agregar este producto. Intenta de nuevo.'
         : 'Could not add this item. Please try again.');
+      throw err;
     });
   },
 
-  addItemByHandle: function(handle, qty, fallbackTitle, fallbackPrice) {
+  addItemByHandle: function(handle, qty, fallbackTitle, fallbackPrice, extraMeta) {
     var self = this;
-    fetch('/products/' + handle + '.js')
+    extraMeta = extraMeta || {};
+    extraMeta.handle = handle;
+
+    var defaultCatalogMeta = {
+      'naranja-dry': { title: 'Naranja Deshidratada', price: '$8.75', sub: 'Paquete 60g • 100% Natural', img: 'pkg-naranja-dry.webp' },
+      'pina-dry': { title: 'Piña Deshidratada', price: '$8.75', sub: 'Paquete 60g • 100% Natural', img: 'pkg-pina-dry.webp' },
+      'manzana-dry': { title: 'Manzana Deshidratada', price: '$8.75', sub: 'Paquete 60g • 100% Natural', img: 'pkg-manzana-dry.webp' },
+      'lemon-dry': { title: 'Limón Deshidratado', price: '$8.75', sub: 'Paquete 60g • 100% Natural', img: 'pkg-lemon-dry.webp' },
+      'whiskey-cream': { title: 'Whiskey Cream', price: '$40.00', sub: 'Botella 750ml • Crema de Autor', img: 'can-whiskey-cream.webp' },
+      'chocolate-cream': { title: 'Chocolate Cream', price: '$40.00', sub: 'Botella 750ml • Crema de Autor', img: 'can-chocolate-cream.webp' },
+      'signature-box': { title: 'Signature Gift Box', price: '$89.00', sub: 'Edición Limitada • Estuche de Colección', img: 'pkg-signature-box-black.webp' }
+    };
+    var catMeta = defaultCatalogMeta[handle] || {};
+    var resolvedTitle = fallbackTitle || catMeta.title || handle;
+    var resolvedPrice = fallbackPrice || catMeta.price || '';
+    if (!extraMeta.subtitle && catMeta.sub) extraMeta.subtitle = catMeta.sub;
+    if (!extraMeta.image && catMeta.img) extraMeta.image = catMeta.img;
+
+    return fetch('/products/' + handle + '.js')
       .then(function(res) {
         if (!res.ok) throw new Error('Product not found: ' + handle);
         return res.json();
       })
       .then(function(product) {
         var variant = product.variants.filter(function(v) { return v.available; })[0] || product.variants[0];
-        self.addItem(variant.id, qty || 1, fallbackTitle || product.title);
+        return self.addItem(variant.id, qty || 1, resolvedTitle || product.title, resolvedPrice, extraMeta);
       })
-      .catch(function(err) {
-        console.error('Add by handle failed:', err);
-        var lang = window.LuckyShakerLang?.currentLang || 'es';
-        self.showToast(lang === 'es'
-          ? 'Este producto aún no está disponible en la tienda.'
-          : 'This product is not available in the store yet.');
+      .catch(function() {
+        // Fallback: use active carrier variant with unique line-item properties so non-created catalog items add & display cleanly
+        return self.getFallbackCarrierVariant().then(function(carrierVariantId) {
+          return self.addItem(carrierVariantId, qty || 1, resolvedTitle, resolvedPrice, extraMeta);
+        });
       });
   },
 
@@ -891,8 +1075,27 @@ window.LuckyShakerCart = {
       }
     }
 
+    var checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+      checkoutBtn.style.opacity = cart.item_count === 0 ? '0.5' : '1';
+    }
+
+    var computedTotalCents = 0;
+    if (cart.items && cart.items.length > 0) {
+      cart.items.forEach(function(it) {
+        var customCents = it.properties && it.properties._custom_price_cents ? parseInt(it.properties._custom_price_cents, 10) : 0;
+        if (customCents > 0) {
+          computedTotalCents += customCents * it.quantity;
+        } else {
+          computedTotalCents += it.final_line_price;
+        }
+      });
+    } else {
+      computedTotalCents = cart.total_price || 0;
+    }
+
     if (this.subtotalEl) {
-      this.subtotalEl.textContent = this.formatMoney(cart.total_price);
+      this.subtotalEl.textContent = this.formatMoney(computedTotalCents);
     }
 
     var shippingText = document.getElementById('shipping-progress-text');
@@ -901,46 +1104,52 @@ window.LuckyShakerCart = {
     var thresholdCents = 8000;
 
     if (shippingText && shippingFill) {
-      if (cart.total_price === 0) {
+      if (computedTotalCents === 0) {
         shippingText.innerHTML = lang === 'es'
           ? 'Agrega <strong>$80.00</strong> para <strong>Envío Express Gratis</strong>'
           : 'Spend <strong>$80.00</strong> for <strong>Free Express Shipping</strong>';
         if (shippingPercent) shippingPercent.textContent = '0%';
         shippingFill.style.width = '0%';
-      } else if (cart.total_price < thresholdCents) {
-        var remaining = (thresholdCents - cart.total_price) / 100;
-        var pct = Math.min(100, Math.round((cart.total_price / thresholdCents) * 100));
+      } else if (computedTotalCents < thresholdCents) {
+        var remaining = (thresholdCents - computedTotalCents) / 100;
+        var pct = Math.min(100, Math.round((computedTotalCents / thresholdCents) * 100));
         shippingText.innerHTML = lang === 'es'
-          ? 'Agrega <strong>$' + remaining.toFixed(2) + '</strong> más para <strong>Envío Express Gratis</strong> 🍸'
-          : 'Add <strong>$' + remaining.toFixed(2) + '</strong> more for <strong>Free Express Shipping</strong> 🍸';
+          ? 'Agrega <strong>$' + remaining.toFixed(2) + '</strong> más para <strong>Envío Express Gratis</strong>'
+          : 'Add <strong>$' + remaining.toFixed(2) + '</strong> more for <strong>Free Express Shipping</strong>';
         if (shippingPercent) shippingPercent.textContent = pct + '%';
         shippingFill.style.width = pct + '%';
       } else {
         shippingText.innerHTML = lang === 'es'
-          ? '🎉 <strong>¡Envío Express de Cortesía Desbloqueado!</strong>'
-          : '🎉 <strong>Complimentary Express Shipping Unlocked!</strong>';
+          ? '<strong>¡Envío Express de Cortesía Desbloqueado!</strong>'
+          : '<strong>Complimentary Express Shipping Unlocked!</strong>';
         if (shippingPercent) shippingPercent.textContent = '100%';
         shippingFill.style.width = '100%';
       }
     }
 
-
-
     if (!this.itemsList) return;
 
     if (cart.item_count === 0) {
       var emptyTitle = lang === 'es' ? 'TU BARRA ESTÁ VACÍA' : 'YOUR BAR IS EMPTY';
-      var emptyDesc = lang === 'es' ? 'Explora nuestra colección de botellas para comenzar.' : 'Explore our signature ready-to-pour craft cocktails to curate your collection.';
+      var emptyDesc = lang === 'es' ? 'Explora nuestra colección de cócteles artesanales para comenzar.' : 'Explore our signature ready-to-pour craft cocktails to curate your collection.';
       var exploreBtn = lang === 'es' ? 'EXPLORAR CÓCTELES' : 'EXPLORE COCKTAILS';
 
       this.itemsList.innerHTML = 
         '<div class="cart-empty-message">' +
           '<div class="empty-cart-icon-wrap">' +
-            '<img src="{{ "favicon.svg" | asset_url }}" alt="Lucky Shaker" width="42" height="42">' +
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="4400 50 4550 4050" width="42" height="42" aria-hidden="true">' +
+              '<g fill="#E82B7D">' +
+                '<path d="M5733.72 1636.54c0.3,-0.46 290.21,-713.23 84.88,-786.73 -233.86,-83.72 -140.39,599.09 -92.58,767.29l7.69 19.45z"/>' +
+                '<path d="M5456.91 2008.31c-23.44,-365.64 -583.22,-797.13 -734.43,-666.92 -145.59,125.37 188.86,215.5 357.98,316.89 195.61,117.27 340.78,330.79 376.45,350.03z"/>' +
+                '<path d="M5483.52 1563.03c22.98,-201.09 -142.62,-627.8 -224.26,-771.76 -385.89,-680.43 -757.33,-377.55 -547.15,-222.79 48.81,35.94 97.18,65.89 145.31,102.24 495.55,374.18 536.9,751.89 626.1,892.32z"/>' +
+                '<path d="M7748.99 1724.65c101.93,-100.53 359.18,-653.46 641.03,-980.35 130.09,-150.88 167.74,-170.27 260.33,-275.51 48.03,-54.59 393.26,-279.62 226.41,-420.49 -414.57,-350.02 -1063.5,1304.82 -1127.77,1676.36z"/>' +
+                '<path d="M8271.51 1588.59c-171.01,584.61 -1596.35,1287.54 -2416.69,890.59 -54.62,-26.43 -118.14,-77.51 -159.19,-86.23 191.56,565.4 1612.1,495.77 2442.41,-406.29 -38.36,217.15 -419.57,737.81 -558.74,918.65 -228.99,297.54 -470.58,498.5 -749.62,748.25 -692.19,-606.18 -886.51,-729.41 -1457.11,-1421.18 -38.47,-46.15 4.55,-24.08 -50.68,-43.35 26.85,154.24 193.79,403.68 272,522.93 205.53,313.4 1046.43,1146.17 1199.02,1221.98 41.6,-16.64 551.94,-455.53 593.97,-505.89 85.76,-102.8 77.15,-65.62 137.31,-137.64 171.33,-205.1 194.22,-215.84 367.33,-458.5 238.78,-334.72 580.18,-1113.62 558.96,-1648.53l-273.07 339.05c-796.94,1003.27 -2656.32,817.16 -2184.46,305.3 341.39,-370.33 1586.44,-626.42 1724.64,-726.92 -231.49,-52.73 -1442.91,192.92 -1798.52,611.91 -578.62,681.72 790.43,978.67 1926.9,248.92 235.69,-151.34 366.6,-328.21 425.54,-373.05z"/>' +
+              '</g>' +
+            '</svg>' +
           '</div>' +
           '<h4 class="empty-cart-title">' + emptyTitle + '</h4>' +
           '<p class="empty-cart-desc">' + emptyDesc + '</p>' +
-          '<a href="/collections/all" class="empty-cart-cta">' +
+          '<a href="/collections/all" class="empty-cart-cta" onclick="LuckyShakerCart.close(); if(document.getElementById(\'can-carousel\')){event.preventDefault();document.getElementById(\'can-carousel\').scrollIntoView({behavior:\'smooth\'});}">' +
             '<span>' + exploreBtn + '</span>' +
             '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7h12M8 2l5 5-5 5"/></svg>' +
           '</a>' +
@@ -953,9 +1162,14 @@ window.LuckyShakerCart = {
     var defaultVol = lang === 'es' ? '750ml • Listo para Servir' : '750ml • Ready to Pour';
 
     cart.items.forEach(function(item) {
-      var imgHtml = item.image 
-        ? '<img src="' + item.image + '" alt="' + item.title + '" class="cart-item-img" width="68" height="80">'
-        : '<div class="cart-item-img" style="background: rgba(0,0,0,0.03);"></div>';
+      var props = item.properties || {};
+      var displayTitle = props._custom_title || item.product_title;
+      var displaySub = props._custom_sub || item.variant_title || defaultVol;
+      var displayImg = self.resolveProductImage(item, displayTitle);
+      var customCents = props._custom_price_cents ? parseInt(props._custom_price_cents, 10) : 0;
+      var linePriceCents = customCents > 0 ? (customCents * item.quantity) : item.final_line_price;
+
+      var imgHtml = '<img src="' + displayImg + '" alt="' + displayTitle + '" class="cart-item-img" width="68" height="80" loading="lazy">';
 
       html += 
         '<div class="cart-item-row" data-line-item-key="' + item.key + '">' +
@@ -963,8 +1177,8 @@ window.LuckyShakerCart = {
             imgHtml +
           '</div>' +
           '<div class="cart-item-info">' +
-            '<h5>' + item.product_title + '</h5>' +
-            '<div class="item-vol">' + (item.variant_title || defaultVol) + '</div>' +
+            '<h5>' + displayTitle + '</h5>' +
+            '<div class="item-vol">' + displaySub + '</div>' +
             '<div class="cart-item-actions">' +
               '<div class="cart-item-qty">' +
                 '<button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity(\'' + item.key + '\', ' + (item.quantity - 1) + ')" aria-label="Decrease quantity">&minus;</button>' +
@@ -979,7 +1193,7 @@ window.LuckyShakerCart = {
             '</div>' +
           '</div>' +
           '<div class="cart-item-right">' +
-            '<div class="cart-item-price">' + self.formatMoney(item.final_line_price) + '</div>' +
+            '<div class="cart-item-price">' + self.formatMoney(linePriceCents) + '</div>' +
           '</div>' +
         '</div>';
     });
@@ -1654,10 +1868,10 @@ function initHeroCinematicScroll() {
   allHeroVideos.forEach(function(v) {
     v.muted = true;
     v.playsInline = true;
+    v.setAttribute('playsinline', '');
+    v.setAttribute('webkit-playsinline', '');
     v.pause();
     v.preload = 'auto';
-    // NOTE: do not seek here. Seeking while the file is still loading can leave
-    // the element with seekable = [0,0], which makes every later scrub a no-op.
     v.__healTries = 0;
   });
 
@@ -1669,6 +1883,46 @@ function initHeroCinematicScroll() {
     return isMobile() ? (videoMobile || videoDesktop) : (videoDesktop || videoMobile);
   }
 
+  // Lock stable viewport height on mobile so iOS Safari toolbar collapse/expand
+  // never causes the sticky hero or scroll progress to jump vertically mid-swipe.
+  var lockedVw = window.innerWidth;
+  var lockedVh = window.innerHeight;
+
+  function syncLockedViewport(force) {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    if (force || !isMobile() || Math.abs(w - lockedVw) > 24) {
+      lockedVw = w;
+      lockedVh = h;
+      heroSection.style.setProperty('--hero-vh', lockedVh + 'px');
+      stickyViewport.style.setProperty('--hero-vh', lockedVh + 'px');
+    }
+  }
+  syncLockedViewport(true);
+
+  // Prime iOS WebKit hardware video decoder on first touch so scrubbing is instant
+  var decoderPrimed = false;
+  function primeActiveVideoDecoder() {
+    if (decoderPrimed) return;
+    var v = getActiveVideo();
+    if (!v) return;
+    decoderPrimed = true;
+    try {
+      var playPromise = v.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.then(function() {
+          v.pause();
+          if (typeof v.__pendingTime === 'number') {
+            try { v.currentTime = v.__pendingTime; } catch (e) {}
+          }
+        }).catch(function() {});
+      } else {
+        v.pause();
+      }
+    } catch (e) {}
+  }
+  window.addEventListener('touchstart', primeActiveVideoDecoder, { passive: true, once: true });
+
   function isVideoSeekable(video) {
     try {
       return video.seekable && video.seekable.length > 0 &&
@@ -1678,8 +1932,6 @@ function initHeroCinematicScroll() {
     }
   }
 
-  // Self-heal: if the browser left the video in an unseekable state, reload it once
-  // and re-apply the pending target time as soon as data is available.
   function healVideo(video) {
     if (video.__healing || video.__healTries >= 4) return;
     video.__healing = true;
@@ -1696,14 +1948,11 @@ function initHeroCinematicScroll() {
     setTimeout(function() { video.__healing = false; }, 6000);
   }
 
+  // Use exact currentTime assignment (both desktop & mobile videos are encoded with
+  // 100% All-Intra keyframes -g 1 -bf 0, so currentTime seeks to the exact frame
+  // without fastSeek's coarse keyframe snapping).
   function performSeek(video, time) {
     video.__isSeeking = true;
-    if ('fastSeek' in video) {
-      try {
-        video.fastSeek(time);
-        return;
-      } catch (e) {}
-    }
     try {
       video.currentTime = time;
     } catch (e) {
@@ -1726,13 +1975,13 @@ function initHeroCinematicScroll() {
       video.__hasSeekListener = true;
       video.addEventListener('seeked', function() {
         video.__isSeeking = false;
-        if (typeof video.__pendingTime === 'number' && Math.abs(video.currentTime - video.__pendingTime) > 0.015) {
+        if (typeof video.__pendingTime === 'number' && Math.abs(video.currentTime - video.__pendingTime) > 0.012) {
           performSeek(video, video.__pendingTime);
         }
       });
     }
 
-    if (Math.abs(video.currentTime - clamped) > 0.015) {
+    if (Math.abs(video.currentTime - clamped) > 0.012) {
       if (!video.__isSeeking) {
         performSeek(video, clamped);
       }
@@ -1741,21 +1990,115 @@ function initHeroCinematicScroll() {
 
   var targetProgress = 0;
   var currentProgress = 0;
+  var lastRawProgress = 0;
   var isLoopActive = false;
-  var HERO_SMOOTHING_FACTOR = 0.09;
+
+  // Final-Frame Stop Gate state:
+  // Stops scroll inertia at the final frame (p = STOP_PROGRESS) so the user can
+  // see and tap "COTIZAR TU EVENTO" / "TIENDA ONLINE", and only continues into
+  // the next section when the user initiates a new downward scroll gesture.
+  var VIDEO_END = 0.74;
+  var FINAL_STAGE_START = 0.69;
+  var FINAL_STAGE_FULL = 0.75;
+  var STOP_PROGRESS = 0.78;
+  var isLatchedAtFinalFrame = false;
+  var finalFrameStopReleased = false;
+  var latchedAtTime = 0;
+  var newTouchStartedSinceLatch = false;
+  var latchTouchStartY = 0;
+  var lastWheelEventTime = 0;
+
+  function getScrollMetrics() {
+    var vh = isMobile() ? lockedVh : window.innerHeight;
+    var sectionTop = heroSection.offsetTop;
+    var scrollDistance = Math.max(1, heroSection.offsetHeight - vh);
+    return {
+      vh: vh,
+      sectionTop: sectionTop,
+      scrollDistance: scrollDistance,
+      stopScrollY: sectionTop + scrollDistance * STOP_PROGRESS
+    };
+  }
 
   function computeHeroScrollProgress() {
-    var rect = heroSection.getBoundingClientRect();
-    var scrollDistance = heroSection.offsetHeight - window.innerHeight;
-    if (scrollDistance <= 0) return 0;
-    var raw = -rect.top / scrollDistance;
+    var metrics = getScrollMetrics();
+    var scrolled = window.scrollY - metrics.sectionTop;
+    var raw = scrolled / metrics.scrollDistance;
     return Math.max(0, Math.min(1, raw));
   }
 
-  function onScrollOrResize() {
-    var newTarget = computeHeroScrollProgress();
-    if (Math.abs(newTarget - targetProgress) > 0.0001) {
-      targetProgress = newTarget;
+  // Listen for a fresh touch or wheel gesture after the final-frame stop has latched
+  window.addEventListener('touchstart', function(e) {
+    if (isLatchedAtFinalFrame && e.touches && e.touches.length > 0) {
+      newTouchStartedSinceLatch = true;
+      latchTouchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchmove', function(e) {
+    if (isLatchedAtFinalFrame && newTouchStartedSinceLatch && e.touches && e.touches.length > 0) {
+      var deltaY = latchTouchStartY - e.touches[0].clientY;
+      if (deltaY > 6) {
+        // User initiated a new downward swipe after stopping at the final frame
+        isLatchedAtFinalFrame = false;
+        finalFrameStopReleased = true;
+      }
+    }
+  }, { passive: true });
+
+  window.addEventListener('wheel', function(e) {
+    var now = Date.now();
+    var gap = now - lastWheelEventTime;
+    lastWheelEventTime = now;
+    if (isLatchedAtFinalFrame && e.deltaY > 0) {
+      if (gap > 160 || (now - latchedAtTime) > 520) {
+        isLatchedAtFinalFrame = false;
+        finalFrameStopReleased = true;
+      }
+    }
+  }, { passive: true });
+
+  window.addEventListener('keydown', function(e) {
+    if (isLatchedAtFinalFrame && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ')) {
+      isLatchedAtFinalFrame = false;
+      finalFrameStopReleased = true;
+    }
+  }, { passive: true });
+
+  function onScroll() {
+    var metrics = getScrollMetrics();
+    var raw = computeHeroScrollProgress();
+
+    // Re-arm the stop gate whenever the user scrolls back up into the hero video
+    if (raw < 0.58) {
+      isLatchedAtFinalFrame = false;
+      finalFrameStopReleased = false;
+      newTouchStartedSinceLatch = false;
+    }
+
+    // Engage the Final-Frame Stop Gate when crossing STOP_PROGRESS downward
+    if (!finalFrameStopReleased && raw >= STOP_PROGRESS && lastRawProgress < STOP_PROGRESS && lastRawProgress > 0.05) {
+      isLatchedAtFinalFrame = true;
+      latchedAtTime = Date.now();
+      newTouchStartedSinceLatch = false;
+    }
+
+    if (isLatchedAtFinalFrame) {
+      if (newTouchStartedSinceLatch && window.scrollY > metrics.stopScrollY + 8) {
+        // Released by a fresh touch scroll
+        isLatchedAtFinalFrame = false;
+        finalFrameStopReleased = true;
+      } else if (window.scrollY > metrics.stopScrollY) {
+        // Clamp scroll position at the final frame to halt momentum scrolling
+        window.scrollTo(0, Math.round(metrics.stopScrollY));
+        raw = STOP_PROGRESS;
+      }
+    }
+
+    lastRawProgress = raw;
+
+    if (Math.abs(raw - targetProgress) > 0.0001) {
+      targetProgress = raw;
       if (!isLoopActive) {
         isLoopActive = true;
         requestAnimationFrame(renderHeroLoop);
@@ -1763,13 +2106,25 @@ function initHeroCinematicScroll() {
     }
   }
 
-  window.addEventListener('scroll', onScrollOrResize, { passive: true });
-  window.addEventListener('resize', onScrollOrResize, { passive: true });
+  function onResize() {
+    syncLockedViewport(false);
+    onScroll();
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize, { passive: true });
+  window.addEventListener('orientationchange', function() {
+    setTimeout(function() {
+      syncLockedViewport(true);
+      onScroll();
+    }, 150);
+  }, { passive: true });
 
   function renderHeroLoop() {
+    var smoothing = isMobile() ? 0.22 : 0.14;
     var diff = targetProgress - currentProgress;
-    if (Math.abs(diff) > 0.0001) {
-      currentProgress += diff * HERO_SMOOTHING_FACTOR;
+    if (Math.abs(diff) > 0.0002) {
+      currentProgress += diff * smoothing;
       applyHeroCinematicTransformation(currentProgress);
       requestAnimationFrame(renderHeroLoop);
     } else {
@@ -1782,9 +2137,7 @@ function initHeroCinematicScroll() {
   var heroOverlay = document.querySelector('.event-hero-overlay');
 
   function applyHeroCinematicTransformation(p) {
-    // 1. Scrub video: develops smoothly almost to the very end of the scroll (p = 0.97)
-    // Allows full slow-motion ingredients, shaking, pouring, ice, shaker bounce, and bloom to play out!
-    var VIDEO_END = 0.97;
+    // 1. Scrub video: develops smoothly from p = 0.00 to VIDEO_END (0.74)
     var video = getActiveVideo();
     if (video && video.duration) {
       var maxTime = Math.max(0, video.duration - 0.02);
@@ -1803,96 +2156,97 @@ function initHeroCinematicScroll() {
       heroFinalStamp.style.transform = 'scale(' + scale + ')';
     }
 
-    // 3. EDITORIAL TITLE CHOREOGRAPHY (Solo early mid-scroll, completely gone before mixology pour)
-    // - Phase 1 (0.00 -> 0.06): Pure clean video. Title hidden.
-    // - Phase 2 (0.06 -> 0.16): Title fades in solo ("HAZ QUE TU EVENTO SEA MÁS LUCKY.")
-    // - Phase 3 (0.16 -> 0.36): Title stays fully visible alone in center.
-    // - Phase 4 (0.36 -> 0.46): Title dissolves / fades out cleanly.
-    // - Phase 5 (0.46 -> 0.93): Title completely gone. Video plays completely uninterrupted!
+    // 3. EDITORIAL TITLE CHOREOGRAPHY (Solo early mid-scroll, gone before main mixology climax)
+    // - Phase 1 (0.00 -> 0.05): Pure clean video. Title hidden.
+    // - Phase 2 (0.05 -> 0.14): Title fades in solo ("HAZ QUE TU EVENTO SEA MÁS LUCKY.")
+    // - Phase 3 (0.14 -> 0.30): Title stays fully visible alone in center.
+    // - Phase 4 (0.30 -> 0.38): Title dissolves out cleanly.
+    // - Phase 5 (0.38 -> 0.69): Uninterrupted mixology pour, shake, and bloom!
     if (heroTitleStage) {
-      if (p < 0.06) {
+      if (p < 0.05) {
         heroTitleStage.style.opacity = '0';
-        heroTitleStage.style.transform = 'translate(-50%, calc(-50% + 35px)) scale(0.96)';
+        heroTitleStage.style.transform = 'translate3d(-50%, calc(-50% + 35px), 0) scale(0.96)';
         heroTitleStage.style.pointerEvents = 'none';
-      } else if (p < 0.16) {
-        var inNorm = (p - 0.06) / 0.10; // 0 -> 1
+      } else if (p < 0.14) {
+        var inNorm = (p - 0.05) / 0.09;
         var yIn = (1 - inNorm) * 35;
         var sIn = 0.96 + inNorm * 0.04;
         heroTitleStage.style.opacity = inNorm.toFixed(3);
-        heroTitleStage.style.transform = 'translate(-50%, calc(-50% + ' + yIn.toFixed(1) + 'px)) scale(' + sIn.toFixed(3) + ')';
+        heroTitleStage.style.transform = 'translate3d(-50%, calc(-50% + ' + yIn.toFixed(1) + 'px), 0) scale(' + sIn.toFixed(3) + ')';
         heroTitleStage.style.pointerEvents = 'none';
-      } else if (p <= 0.36) {
+      } else if (p <= 0.30) {
         heroTitleStage.style.opacity = '1';
-        heroTitleStage.style.transform = 'translate(-50%, -50%) scale(1)';
+        heroTitleStage.style.transform = 'translate3d(-50%, -50%, 0) scale(1)';
         heroTitleStage.style.pointerEvents = 'none';
-      } else if (p <= 0.46) {
-        var outNorm = (p - 0.36) / 0.10; // 0 -> 1
+      } else if (p <= 0.38) {
+        var outNorm = (p - 0.30) / 0.08;
         var yOut = -outNorm * 35;
         var sOut = 1.0 - outNorm * 0.04;
         var opOut = (1 - outNorm).toFixed(3);
         heroTitleStage.style.opacity = opOut;
-        heroTitleStage.style.transform = 'translate(-50%, calc(-50% + ' + yOut.toFixed(1) + 'px)) scale(' + sOut.toFixed(3) + ')';
+        heroTitleStage.style.transform = 'translate3d(-50%, calc(-50% + ' + yOut.toFixed(1) + 'px), 0) scale(' + sOut.toFixed(3) + ')';
         heroTitleStage.style.pointerEvents = 'none';
       } else {
         heroTitleStage.style.opacity = '0';
-        heroTitleStage.style.transform = 'translate(-50%, calc(-50% - 35px)) scale(0.96)';
+        heroTitleStage.style.transform = 'translate3d(-50%, calc(-50% - 35px), 0) scale(0.96)';
         heroTitleStage.style.pointerEvents = 'none';
       }
     }
 
     // 4. ACTIONS & CONVERSION GROUP CHOREOGRAPHY (Buttons, Subtitle, Trust Bar)
-    // - Phase 1 to 3 (0.00 -> 0.93): STRICTLY HIDDEN! Full video animation plays out.
-    // - Phase 4 (0.93 -> 0.97): Smooth entrance as video reaches its final climax.
-    // - Phase 5 (0.97 -> 1.00): REST & INTERACTION HOLD ZONE. Fully visible, interactive.
+    // - 0.00 -> 0.69: Strictly hidden while video plays out
+    // - 0.69 -> 0.75: Smooth entrance as video lands on its final frame
+    // - 0.75 -> 1.00: Pinned Final-Frame Stop & Hold Zone (buttons 100% interactive)
+    var stageSpan = FINAL_STAGE_FULL - FINAL_STAGE_START;
     if (heroActionsStage) {
-      if (p < 0.93) {
+      if (p < FINAL_STAGE_START) {
         heroActionsStage.style.opacity = '0';
-        heroActionsStage.style.transform = 'translateX(-50%) translateY(35px)';
+        heroActionsStage.style.transform = 'translate3d(-50%, 32px, 0)';
         heroActionsStage.style.pointerEvents = 'none';
-      } else if (p < 0.97) {
-        var actNorm = (p - 0.93) / 0.04; // 0 -> 1
-        var actY = (1 - actNorm) * 35;
+      } else if (p < FINAL_STAGE_FULL) {
+        var actNorm = (p - FINAL_STAGE_START) / stageSpan;
+        var actY = (1 - actNorm) * 32;
         heroActionsStage.style.opacity = actNorm.toFixed(3);
-        heroActionsStage.style.transform = 'translateX(-50%) translateY(' + actY.toFixed(1) + 'px)';
-        heroActionsStage.style.pointerEvents = actNorm > 0.5 ? 'auto' : 'none';
+        heroActionsStage.style.transform = 'translate3d(-50%, ' + actY.toFixed(1) + 'px, 0)';
+        heroActionsStage.style.pointerEvents = actNorm > 0.35 ? 'auto' : 'none';
       } else {
         heroActionsStage.style.opacity = '1';
-        heroActionsStage.style.transform = 'translateX(-50%) translateY(0px)';
+        heroActionsStage.style.transform = 'translate3d(-50%, 0px, 0)';
         heroActionsStage.style.pointerEvents = 'auto';
       }
     }
 
     // 4a. Final-frame choreography hooks (CSS staggers children when .is-in is present)
-    var finalIn = p >= 0.93;
+    var finalIn = p >= FINAL_STAGE_START;
     if (heroActionsStage) heroActionsStage.classList.toggle('is-in', finalIn);
     if (heroLogoStage) heroLogoStage.classList.toggle('is-in', finalIn);
 
-    // 4b. Vector SVG Logo Stage (Crisp brand seal over clean background at very end)
+    // 4b. Vector SVG Logo Stage (Crisp brand seal over clean background at final frame)
     if (heroLogoStage) {
-      if (p < 0.93) {
+      if (p < FINAL_STAGE_START) {
         heroLogoStage.style.opacity = '0';
-        heroLogoStage.style.transform = 'translate(-50%, calc(-50% + 22px)) scale(0.95)';
+        heroLogoStage.style.transform = 'translate3d(-50%, calc(-50% + 22px), 0) scale(0.95)';
         heroLogoStage.style.pointerEvents = 'none';
-      } else if (p < 0.97) {
-        var logoNorm = (p - 0.93) / 0.04; // 0 -> 1
+      } else if (p < FINAL_STAGE_FULL) {
+        var logoNorm = (p - FINAL_STAGE_START) / stageSpan;
         var logoY = (1 - logoNorm) * 22;
         var logoScale = 0.95 + logoNorm * 0.05;
         heroLogoStage.style.opacity = logoNorm.toFixed(3);
-        heroLogoStage.style.transform = 'translate(-50%, calc(-50% + ' + logoY.toFixed(1) + 'px)) scale(' + logoScale.toFixed(3) + ')';
+        heroLogoStage.style.transform = 'translate3d(-50%, calc(-50% + ' + logoY.toFixed(1) + 'px), 0) scale(' + logoScale.toFixed(3) + ')';
         heroLogoStage.style.pointerEvents = 'none';
       } else {
         heroLogoStage.style.opacity = '1';
-        heroLogoStage.style.transform = 'translate(-50%, -50%) scale(1)';
+        heroLogoStage.style.transform = 'translate3d(-50%, -50%, 0) scale(1)';
         heroLogoStage.style.pointerEvents = 'none';
       }
     }
 
     // 4c. Master Final Frame Hero Stamp (Locks crystal-clear clean photo as permanent Hero)
     if (heroFinalStamp) {
-      if (p < 0.93) {
+      if (p < FINAL_STAGE_START) {
         heroFinalStamp.style.opacity = '0';
-      } else if (p < 0.97) {
-        var stampNorm = (p - 0.93) / 0.04; // 0 -> 1 cross-fade
+      } else if (p < FINAL_STAGE_FULL) {
+        var stampNorm = (p - FINAL_STAGE_START) / stageSpan;
         heroFinalStamp.style.opacity = stampNorm.toFixed(3);
       } else {
         heroFinalStamp.style.opacity = '1';
@@ -1912,20 +2266,20 @@ function initHeroCinematicScroll() {
 
     // 5. Dynamic Overlay Modulation
     if (heroOverlay) {
-      if (p < 0.08) {
+      if (p < 0.05) {
         heroOverlay.style.opacity = '0.15';
-      } else if (p < 0.20) {
-        var ovIn = 0.15 + ((p - 0.08) / 0.12) * 0.38;
+      } else if (p < 0.14) {
+        var ovIn = 0.15 + ((p - 0.05) / 0.09) * 0.38;
         heroOverlay.style.opacity = ovIn.toFixed(3);
-      } else if (p <= 0.44) {
+      } else if (p <= 0.30) {
         heroOverlay.style.opacity = '0.53';
-      } else if (p <= 0.56) {
-        var ovOut = 0.53 - ((p - 0.44) / 0.12) * 0.38;
+      } else if (p <= 0.38) {
+        var ovOut = 0.53 - ((p - 0.30) / 0.08) * 0.38;
         heroOverlay.style.opacity = ovOut.toFixed(3);
-      } else if (p <= 0.82) {
+      } else if (p <= 0.66) {
         heroOverlay.style.opacity = '0.15';
       } else {
-        var ovLogo = 0.15 + Math.min(1, (p - 0.82) / 0.06) * 0.10;
+        var ovLogo = 0.15 + Math.min(1, (p - 0.66) / 0.08) * 0.14;
         heroOverlay.style.opacity = ovLogo.toFixed(3);
       }
     }
@@ -1940,14 +2294,15 @@ function initHeroCinematicScroll() {
       }
     }
 
-    // 7. Timeline Progress line
+    // 7. Timeline Progress line (fills 100% when reaching the final frame stop)
     if (progressFill) {
-      progressFill.style.width = (p * 100).toFixed(1) + '%';
+      var barNorm = Math.min(1, p / STOP_PROGRESS);
+      progressFill.style.width = (barNorm * 100).toFixed(1) + '%';
     }
   }
 
   // Initial prime
-  onScrollOrResize();
+  onScroll();
   applyHeroCinematicTransformation(0);
 }
 

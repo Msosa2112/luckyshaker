@@ -36,6 +36,7 @@
     {%- paginate collection.products by section.settings.products_per_page -%}
       {%- comment -%} 1. Render All Dehydrated Fruits First {%- endcomment -%}
       {%- for product in collection.products -%}
+        {%- if product.handle == 'prueba' -%}{%- continue -%}{%- endif -%}
         {%- if product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits' or product.tags contains 'frutas' or product.title contains 'Fruta' or product.title contains 'Manzana' or product.title contains 'Piña' or product.title contains 'Naranja' or product.title contains 'Limón' or product.handle contains 'manzana' or product.handle contains 'pina' -%}
           {% render 'product-card', product: product %}
         {%- endif -%}
@@ -43,6 +44,7 @@
 
       {%- comment -%} 2. Render All Other Products (Creams & Cocktail Cans) {%- endcomment -%}
       {%- for product in collection.products -%}
+        {%- if product.handle == 'prueba' -%}{%- continue -%}{%- endif -%}
         {%- unless product.handle contains 'dry' or product.type contains 'Fruta' or product.tags contains 'dry-fruits' or product.tags contains 'frutas' or product.title contains 'Fruta' or product.title contains 'Manzana' or product.title contains 'Piña' or product.title contains 'Naranja' or product.title contains 'Limón' or product.handle contains 'manzana' or product.handle contains 'pina' -%}
           {% render 'product-card', product: product %}
         {%- endunless -%}

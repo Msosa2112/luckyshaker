@@ -755,6 +755,7 @@
   display: grid;
   place-items: center;
   padding: clamp(0.6rem, 3vw, 2.5rem);
+  overscroll-behavior: contain;
 }
 .cc-modal[hidden] { display: none; }
 .cc-modal-backdrop {
@@ -765,6 +766,7 @@
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   opacity: 0;
   transition: opacity 0.6s ease;
+  touch-action: none;
 }
 .cc-modal.is-open .cc-modal-backdrop { opacity: 1; }
 
@@ -775,8 +777,9 @@
   width: min(1060px, 100%);
   max-height: min(680px, calc(100dvh - 1.2rem));
   overflow: hidden;
+  overscroll-behavior: contain;
   border-radius: 30px;
-  background: rgba(252, 252, 254, 0.92);
+  background: rgba(252, 252, 254, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 50px 120px -30px rgba(15, 16, 21, 0.6), inset 0 1px 0 #fff;
   opacity: 0;
@@ -789,15 +792,16 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: 5;
+  z-index: 30;
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(18, 19, 22, 0.08);
+  border: 1px solid rgba(18, 19, 22, 0.12);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   color: var(--cc-ink);
+  box-shadow: 0 4px 14px rgba(15, 16, 21, 0.14);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: transform 0.45s var(--cc-spring), background 0.3s ease, color 0.3s ease;
@@ -838,8 +842,10 @@
 .cc-modal-body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: clamp(1.6rem, 3.6vw, 3rem);
 }
 .cc-m-kicker {
@@ -950,7 +956,11 @@
 .cc-m-full:hover { color: var(--cc-pink); border-color: var(--cc-pink); }
 .cc-m-trust { margin: 1rem 0 0; font-size: 0.72rem; color: var(--cc-ink-3); }
 
-.cc-lock { overflow: hidden !important; }
+html.cc-lock,
+body.cc-lock {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
 
 /* ---------- Ingredient atmosphere ----------
    Sprites of each drink's ingredients float behind (.cc-fx--back) and in front
@@ -1224,30 +1234,78 @@
 }
 
 @media (max-width: 760px) {
+  .cc {
+    padding-top: 64px;
+    --cc-can-h: clamp(190px, 29dvh, 255px);
+  }
+  .cc-top { padding-top: 0.45rem; }
+  .cc-spirits {
+    justify-content: space-between;
+    gap: 0.35rem;
+    padding: 0.45rem 0.65rem 0.15rem;
+  }
+  .cc-spirit {
+    font-size: clamp(0.74rem, 3.1vw, 0.92rem);
+    letter-spacing: 0.02em;
+  }
+  .cc-stage {
+    height: calc(var(--cc-can-h) + 34px);
+    margin-top: 0;
+  }
   .cc-fx-p:nth-child(n + 7) { display: none; }
   .cc-bub:nth-child(n + 9) { display: none; }
   .cc-eyebrow { font-size: 0.62rem; letter-spacing: 0.2em; }
   .cc-eyebrow::before { width: 16px; margin-right: 0.5rem; }
-  .cc-info-title { font-size: clamp(1.9rem, 9vw, 2.8rem); }
-  .cc-info-cta { gap: 0.8rem; }
+  .cc-info-kicker { margin-bottom: 0.25rem; font-size: 0.62rem; }
+  .cc-info-title { font-size: clamp(1.65rem, 7.6vw, 2.35rem); }
+  .cc-info-sub {
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    max-width: 92vw;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cc-info-cta { gap: 0.8rem; margin-top: 0.75rem; }
   .cc-price-col { align-items: center; text-align: center; }
-  .cc-info-note { max-width: 92vw; font-size: 0.7rem; padding: 0.3rem 0.75rem; gap: 0.35rem; margin-top: 0.65rem; }
+  .cc-info-note { max-width: 92vw; font-size: 0.7rem; padding: 0.28rem 0.75rem; gap: 0.35rem; margin-top: 0.5rem; }
   .cc-note-badge { font-size: 0.62rem; padding: 0.12rem 0.45rem; }
   .cc-note-text { font-size: 0.68rem; }
-  .cc-more { padding: 0.85rem 1.3rem; }
+  .cc-more { padding: 0.8rem 1.3rem; }
+  .cc-counter { margin-top: 0.75rem; }
+  .cc-meta { padding-bottom: 1.6rem; }
 
   .cc-modal { align-items: end; padding: 0; }
   .cc-modal-panel {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    max-height: 94dvh;
+    max-height: 92dvh;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     border-radius: 26px 26px 0 0;
     transform: translateY(100%);
   }
-  .cc-modal-visual { min-height: 0; height: min(100vw, 46vh); }
-  .cc-modal-body { overflow: visible; padding: 1.4rem 1.3rem 2rem; }
+  .cc-modal-close {
+    position: sticky;
+    top: 0.85rem;
+    right: 0.85rem;
+    align-self: flex-end;
+    margin: 0.85rem 0.85rem -58px auto;
+    flex-shrink: 0;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 18px rgba(15, 16, 21, 0.24);
+  }
+  .cc-modal-visual {
+    min-height: 0;
+    height: min(74vw, 34dvh);
+    flex-shrink: 0;
+  }
+  .cc-modal-body { overflow: visible; padding: 1.25rem 1.25rem 2.2rem; }
   .cc-m-buy { flex-direction: row; }
   .cc-add { padding: 0 1rem; font-size: 0.66rem; letter-spacing: 0.12em; white-space: nowrap; }
   .cc-add svg { display: none; }

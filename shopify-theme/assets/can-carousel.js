@@ -165,9 +165,10 @@
           desc: 'Rodajas doradas de naranja dulce deshidratada, con borde caramelizado y pulpa translúcida. Aporta una nota cítrica dulce y elegancia visual insuperable a cualquier cóctel clásico o contemporáneo.',
           price: '$8.75',
           compare: '',
-          abv: 'NARANJA • 100% NATURAL',
+          abv: '100% NATURAL • 60G',
           tint: '#F0A13A',
           can: 'pkg-naranja-dry.webp',
+          photo: 'pkg-naranja-dry.webp',
           chips: ['Naranja dulce', 'Cítricos maduros', 'Aceites concentrados', 'Garnish premium'],
           ritual: 'Sumergir en cócteles con vermouth o amargos para potenciar los aromas cítricos de la madera.',
           recipe: ['orange-wheel', 'orange-peel', 'orange-wheel', 'orange-peel', 'orange-wheel', 'orange-peel']
@@ -180,9 +181,10 @@
           desc: 'Láminas deshidratadas de piña miel de alta calidad, con notas dulces y acidez balanceada. Ideal para cócteles tropicales, Mai Tai, Piña Colada y presentaciones de coctelería tiki.',
           price: '$8.75',
           compare: '',
-          abv: 'PIÑA • 100% NATURAL',
+          abv: '100% NATURAL • 60G',
           tint: '#F3E3B5',
           can: 'pkg-pina-dry.webp',
+          photo: 'pkg-pina-dry.webp',
           chips: ['Piña madura seleccionada', 'Corte artesanal', '100% Fruta real', 'Sin azúcar añadida'],
           ritual: 'Acompañar cócteles tiki, rones añejos o mocktails para un toque exótico y aromático.',
           recipe: ['pineapple-wedge', 'pineapple-twist', 'pineapple-whole', 'pineapple-dry', 'pineapple-wedge', 'pineapple-twist', 'pineapple-dry']
@@ -195,9 +197,10 @@
           desc: 'Láminas de manzana seleccionada con corte central en estrella, deshidratadas para lograr una textura crujiente y aroma sutilmente acaramelado. Diseñadas para complementar coctelería con whiskey, ron o infusiones botánicas.',
           price: '$8.75',
           compare: '',
-          abv: 'MANZANA • 100% NATURAL',
+          abv: '100% NATURAL • 60G',
           tint: '#D9A765',
           can: 'pkg-manzana-dry.webp',
+          photo: 'pkg-manzana-dry.webp',
           chips: ['Manzana seleccionada', 'Corte estrella', 'Twist artesanal', '100% Natural sin azúcar'],
           ritual: 'Flotar 1 lámina sobre cócteles aromáticos como Manhattan, Old Fashioned o té frío botánico.',
           recipe: ['apple-half', 'apple-peel', 'apple-whole', 'apple', 'apple-half', 'apple-peel', 'apple']
@@ -210,9 +213,10 @@
           desc: 'Rodajas de limón amarillo 100% natural deshidratado artesanalmente a baja temperatura para preservar al máximo sus aceites esenciales, aroma y color dorado vibrante. Perfecto para realzar Gin Tonic, Margaritas y destilados finos.',
           price: '$8.75',
           compare: '',
-          abv: 'LIMÓN • 100% NATURAL',
+          abv: '100% NATURAL • 60G',
           tint: '#E8D77A',
           can: 'pkg-lemon-dry.webp',
+          photo: 'pkg-lemon-dry.webp',
           chips: ['Limón amarillo', 'Piel cítrica', '100% Natural', 'Sin azúcar añadida'],
           ritual: 'Colocar 1 rodaja en tu copa con hielo antes de servir tu cóctel favorito para liberar aceites esenciales.',
           recipe: ['lemon-wheel', 'lemon-twist', 'lemon-wheel', 'lemon-twist', 'lemon-wheel', 'lemon-twist']
@@ -235,10 +239,12 @@
           desc: 'Un blend aterciopelado elaborado con auténtico whiskey añejado, crema fresca de pastoreo, vainilla pura de Madagascar y un toque de cacao selecto. Suavidad incomparable lista para servir en frío.',
           price: '$40.00',
           compare: '',
-          abv: 'CREMAS • 750 ML',
+          abv: '17% ABV • 750 ML',
           tint: '#DBC4B2',
           can: 'can-whiskey-cream.webp',
           photo: 'prod-whiskey-cream.png',
+          url: '/products/whiskey-cream',
+          variant: '50557265313866',
           chips: ['Whiskey añejo', 'Crema fresca', 'Vainilla Bourbon', 'Canela en rama'],
           ritual: 'Servir muy frío sobre una roca de hielo grande en vaso tumbler o junto a café specialty.',
           recipe: ['vanilla', 'cinnamon', 'sugar-cubes', 'ice', 'cinnamon', 'vanilla', 'ice']
@@ -251,7 +257,7 @@
           desc: 'Elaborada con auténtico chocolate amargo de Bélgica, whiskey seleccionado de roble americano y crema láctea sedosa. Un equilibrio voluptuoso entre intensidad de cacao y calidez de destilado.',
           price: '$40.00',
           compare: '',
-          abv: 'CREMAS • 750 ML',
+          abv: '17% ABV • 750 ML',
           tint: '#A46A56',
           can: 'can-chocolate-cream.webp',
           photo: 'prod-chocolate-cream.png',
@@ -277,7 +283,7 @@
           desc: 'La experiencia de barra móvil Lucky Shaker en un estuche de colección de edición limitada. Incluye cuatro cócteles signature de 750ml, jigger de acero inoxidable grabado, selección de cítricos deshidratados y guía de servicio.',
           price: '$89.00',
           compare: '$99.00',
-          abv: 'SETS • PRÓXIMAMENTE',
+          abv: 'EDICIÓN LIMITADA',
           tint: '#D7B974',
           can: 'pkg-signature-box-black.webp',
           photo: 'prod-signature-box-black.png',
@@ -1212,7 +1218,12 @@
       }
 
       var link = q('[data-cc-m-link]');
-      if (link) link.setAttribute('href', d.url || '#');
+      if (link) {
+        var hasValidUrl = d.url && d.url !== '#';
+        link.hidden = !hasValidUrl;
+        link.style.display = hasValidUrl ? '' : 'none';
+        link.setAttribute('href', hasValidUrl ? d.url : '#');
+      }
 
       qty = 1;
       if (qtyOut) qtyOut.textContent = '1';
@@ -1234,7 +1245,13 @@
       fillModal(items[a]);
       modal.hidden = false;
       document.documentElement.classList.add('cc-lock');
-      if (panel) void panel.offsetWidth;
+      document.body.classList.add('cc-lock');
+      if (panel) {
+        panel.scrollTop = 0;
+        var mBody = panel.querySelector('.cc-modal-body');
+        if (mBody) mBody.scrollTop = 0;
+        void panel.offsetWidth;
+      }
       requestAnimationFrame(function () { modal.classList.add('is-open'); });
       if (closeBtn) closeBtn.focus({ preventScroll: true });
     }
@@ -1246,11 +1263,41 @@
       setTimeout(function () {
         modal.hidden = true;
         document.documentElement.classList.remove('cc-lock');
+        document.body.classList.remove('cc-lock');
         if (opener && opener.focus) { try { opener.focus({ preventScroll: true }); } catch (e) { } }
       }, reduced ? 0 : 450);
     }
 
     if (modal) {
+      // Prevent iOS Safari background scroll when swiping on the backdrop
+      var mBackdrop = modal.querySelector('.cc-modal-backdrop');
+      if (mBackdrop) {
+        mBackdrop.addEventListener('touchmove', function (e) {
+          e.preventDefault();
+        }, { passive: false });
+      }
+
+      // Support iOS native swipe-down-to-close when at top of modal sheet
+      if (panel) {
+        var mTouchStartY = 0;
+        var mTouchStartX = 0;
+        var mCanPullClose = false;
+        panel.addEventListener('touchstart', function (e) {
+          if (!e.touches || !e.touches[0]) return;
+          mTouchStartY = e.touches[0].clientY;
+          mTouchStartX = e.touches[0].clientX;
+          mCanPullClose = panel.scrollTop <= 2;
+        }, { passive: true });
+        panel.addEventListener('touchend', function (e) {
+          if (!mCanPullClose || !e.changedTouches || !e.changedTouches[0]) return;
+          var dy = e.changedTouches[0].clientY - mTouchStartY;
+          var dx = e.changedTouches[0].clientX - mTouchStartX;
+          if (panel.scrollTop <= 2 && dy > 75 && Math.abs(dy) > Math.abs(dx) * 1.4) {
+            closeModal();
+          }
+        }, { passive: true });
+      }
+
       modal.addEventListener('click', function (e) {
         if (e.target.closest('[data-cc-close]')) closeModal();
 
@@ -1311,20 +1358,31 @@
 
           var finalTitle = d.title;
           var finalPrice = d.price;
+          var extraMeta = {
+            handle: d.handle || '',
+            image: d.photo || d.can || d.bg || ''
+          };
 
           if (currentCat === 'cocktails') {
             var packLabel = 'Combo ' + modalCfg.packSize + ' Latas';
             var drinkLabel = modalCfg.drinkType === 'mocktail' ? 'Mocktail Sin Alcohol' : 'Cóctel';
             var flavorLabel = modalCfg.flavorMode === 'mixed' ? 'Surtido Mixto' : (modalCfg.packSize + ' de este sabor');
-            finalTitle = d.title + ' (' + packLabel + ' • ' + drinkLabel + ' • ' + flavorLabel + ')';
+            extraMeta.subtitle = packLabel + ' • ' + drinkLabel + ' • ' + flavorLabel;
+            finalTitle = d.title + ' (' + extraMeta.subtitle + ')';
             var prEl = q('[data-cc-m-price]');
             if (prEl) finalPrice = prEl.textContent;
+          } else if (currentCat === 'dry-fruits') {
+            extraMeta.subtitle = 'Paquete 60g • 100% Natural';
+          } else if (currentCat === 'creams') {
+            extraMeta.subtitle = 'Botella 750ml • Crema de Autor (17% ABV)';
+          } else if (currentCat === 'gift-sets') {
+            extraMeta.subtitle = 'Edición Limitada • Estuche de Colección';
           }
 
           setTimeout(function () {
             closeModal();
             if (window.LuckyShakerCart && typeof window.LuckyShakerCart.addItem === 'function') {
-              window.LuckyShakerCart.addItem(d.variant || d.handle, qty, finalTitle, finalPrice);
+              window.LuckyShakerCart.addItem(d.variant || d.handle, qty, finalTitle, finalPrice, extraMeta);
             }
             if (span) span.textContent = T('add');
           }, 450);

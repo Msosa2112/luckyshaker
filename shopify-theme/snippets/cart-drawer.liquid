@@ -13,17 +13,45 @@
     </button>
   </div>
 
-
+  <!-- Free Shipping Progress Banner -->
+  <div class="cart-shipping-banner">
+    <div class="cart-shipping-text">
+      <span id="shipping-progress-text">
+        {%- if cart.total_price == 0 -%}
+          Agrega <strong>$80.00</strong> para <strong>Envío Express Gratis</strong>
+        {%- elsif cart.total_price < 8000 -%}
+          {%- assign rem_cents = 8000 | minus: cart.total_price -%}
+          Agrega <strong>{{ rem_cents | money }}</strong> más para <strong>Envío Express Gratis</strong>
+        {%- else -%}
+          <strong>¡Envío Express de Cortesía Desbloqueado!</strong>
+        {%- endif -%}
+      </span>
+      <span id="shipping-progress-percent" style="font-weight:700; color:var(--accent-pink, #E82B7D);">
+        {%- if cart.total_price >= 8000 -%}100%{%- else -%}{{ cart.total_price | times: 100 | divided_by: 8000 }}%{%- endif -%}
+      </span>
+    </div>
+    <div class="cart-shipping-bar-bg">
+      <div id="shipping-progress-fill" class="cart-shipping-bar-fill" style="width: {% if cart.total_price >= 8000 %}100%{% else %}{{ cart.total_price | times: 100 | divided_by: 8000 }}%{% endif %};"></div>
+    </div>
+  </div>
 
   <div id="cart-items-list" class="cart-items-container">
     {%- if cart.item_count == 0 -%}
       <div class="cart-empty-message">
         <div class="empty-cart-icon-wrap">
-          <img src="{{ 'logo_lucky_shaker_dark.svg' | asset_url }}" alt="{{ shop.name }}" width="140" height="38" style="height: 36px; width: auto; object-fit: contain;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="4400 50 4550 4050" width="42" height="42" aria-hidden="true">
+            <g fill="#E82B7D">
+              <path d="M5733.72 1636.54c0.3,-0.46 290.21,-713.23 84.88,-786.73 -233.86,-83.72 -140.39,599.09 -92.58,767.29l7.69 19.45z"/>
+              <path d="M5456.91 2008.31c-23.44,-365.64 -583.22,-797.13 -734.43,-666.92 -145.59,125.37 188.86,215.5 357.98,316.89 195.61,117.27 340.78,330.79 376.45,350.03z"/>
+              <path d="M5483.52 1563.03c22.98,-201.09 -142.62,-627.8 -224.26,-771.76 -385.89,-680.43 -757.33,-377.55 -547.15,-222.79 48.81,35.94 97.18,65.89 145.31,102.24 495.55,374.18 536.9,751.89 626.1,892.32z"/>
+              <path d="M7748.99 1724.65c101.93,-100.53 359.18,-653.46 641.03,-980.35 130.09,-150.88 167.74,-170.27 260.33,-275.51 48.03,-54.59 393.26,-279.62 226.41,-420.49 -414.57,-350.02 -1063.5,1304.82 -1127.77,1676.36z"/>
+              <path d="M8271.51 1588.59c-171.01,584.61 -1596.35,1287.54 -2416.69,890.59 -54.62,-26.43 -118.14,-77.51 -159.19,-86.23 191.56,565.4 1612.1,495.77 2442.41,-406.29 -38.36,217.15 -419.57,737.81 -558.74,918.65 -228.99,297.54 -470.58,498.5 -749.62,748.25 -692.19,-606.18 -886.51,-729.41 -1457.11,-1421.18 -38.47,-46.15 4.55,-24.08 -50.68,-43.35 26.85,154.24 193.79,403.68 272,522.93 205.53,313.4 1046.43,1146.17 1199.02,1221.98 41.6,-16.64 551.94,-455.53 593.97,-505.89 85.76,-102.8 77.15,-65.62 137.31,-137.64 171.33,-205.1 194.22,-215.84 367.33,-458.5 238.78,-334.72 580.18,-1113.62 558.96,-1648.53l-273.07 339.05c-796.94,1003.27 -2656.32,817.16 -2184.46,305.3 341.39,-370.33 1586.44,-626.42 1724.64,-726.92 -231.49,-52.73 -1442.91,192.92 -1798.52,611.91 -578.62,681.72 790.43,978.67 1926.9,248.92 235.69,-151.34 366.6,-328.21 425.54,-373.05z"/>
+            </g>
+          </svg>
         </div>
         <h4 class="empty-cart-title" data-i18n="cart.empty_title">TU BARRA ESTÁ VACÍA</h4>
-        <p class="empty-cart-desc" data-i18n="cart.empty_desc">Explora nuestra colección de botellas para comenzar.</p>
-        <a href="{{ routes.all_products_collection_url }}" class="empty-cart-cta">
+        <p class="empty-cart-desc" data-i18n="cart.empty_desc">Explora nuestra colección de cócteles artesanales para comenzar.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="empty-cart-cta" onclick="LuckyShakerCart.close(); if(document.getElementById('can-carousel')){event.preventDefault();document.getElementById('can-carousel').scrollIntoView({behavior:'smooth'});}">
           <span data-i18n="cart.explore_btn">EXPLORAR CÓCTELES</span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M1 7h12M8 2l5 5-5 5"/>
@@ -32,62 +60,87 @@
       </div>
     {%- else -%}
       {%- for item in cart.items -%}
+        {%- liquid
+          assign custom_title = item.properties['_custom_title'] | default: item.product.title
+          assign custom_sub = item.properties['_custom_sub'] | default: item.variant.title | default: '750ml • Listo para Servir'
+          assign custom_img = item.properties['_custom_image']
+          assign eff_handle = item.properties['_custom_handle'] | default: item.product.handle
+          if custom_img == blank
+            if item.image and item.product.handle != 'prueba'
+              assign custom_img = item.image | image_url: width: 160
+            elsif eff_handle == 'mojito'
+              assign custom_img = 'mojito.jpg' | asset_url
+            elsif eff_handle == 'signature-box'
+              assign custom_img = 'pkg-signature-box-black.webp' | asset_url
+            elsif eff_handle contains '-dry'
+              assign pkg_file = 'pkg-' | append: eff_handle | append: '.webp'
+              assign custom_img = pkg_file | asset_url
+            else
+              assign can_file = 'can-' | append: eff_handle | append: '.webp'
+              assign custom_img = can_file | asset_url
+            endif
+          endif
+        -%}
         <div class="cart-item-row" data-line-item-key="{{ item.key }}">
           <div class="cart-item-img-wrap">
-            {%- if item.image -%}
-              <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title }}" class="cart-item-img" width="68" height="80">
-            {%- else -%}
-              <div class="cart-item-img" style="background: rgba(0,0,0,0.03);"></div>
-            {%- endif -%}
+            <img src="{{ custom_img }}" alt="{{ custom_title | escape }}" class="cart-item-img" width="68" height="80" loading="lazy">
           </div>
           <div class="cart-item-info">
-            <h5>{{ item.product.title }}</h5>
-            <div class="item-vol">{{ item.variant.title | default: '750ml • Listo para Servir' }}</div>
+            <h5>{{ custom_title }}</h5>
+            <div class="item-vol">{{ custom_sub }}</div>
             <div class="cart-item-actions">
               <div class="cart-item-qty">
                 <button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', {{ item.quantity | minus: 1 }})" aria-label="Disminuir cantidad">&minus;</button>
-                <span class="qty-num">{{ item.quantity }}</span>
+                <span class="qty-count qty-num">{{ item.quantity }}</span>
                 <button type="button" class="qty-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', {{ item.quantity | plus: 1 }})" aria-label="Aumentar cantidad">&plus;</button>
               </div>
-              <div class="item-price">{{ item.final_line_price | money }}</div>
+              <button type="button" class="cart-item-remove-btn remove-item-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', 0)" aria-label="Eliminar producto" title="Eliminar">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
             </div>
           </div>
-          <button type="button" class="remove-item-btn" onclick="LuckyShakerCart.changeQuantity('{{ item.key }}', 0)" aria-label="Eliminar producto">&times;</button>
+          <div class="cart-item-right">
+            <div class="cart-item-price item-price">{{ item.final_line_price | money }}</div>
+          </div>
         </div>
       {%- endfor -%}
     {%- endif -%}
   </div>
 
   <div class="cart-drawer-footer">
-    <div class="drawer-subtotal-row">
+    <div class="cart-subtotal-row drawer-subtotal-row">
       <span class="subtotal-label" data-i18n="cart.subtotal">SUBTOTAL</span>
-      <span id="drawer-subtotal" class="subtotal-amount">{{ cart.total_price | money }}</span>
+      <span id="drawer-subtotal" class="subtotal-val subtotal-amount">{{ cart.total_price | money }}</span>
     </div>
-    <p class="drawer-taxes-note" data-i18n="cart.taxes_note">Impuestos y gastos de envío calculados en la pantalla de pago.</p>
+    <p class="cart-shipping-note drawer-taxes-note" data-i18n="cart.taxes_note">Impuestos y gastos de envío calculados en la pantalla de pago.</p>
     
-    <div class="drawer-actions">
+    <div class="cart-drawer-ctas drawer-actions">
       <button type="button" id="checkout-btn" class="btn btn-pink btn-drawer-checkout" onclick="LuckyShakerCart.proceedToCheckout()">
         <span data-i18n="cart.checkout">FINALIZAR COMPRA</span>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M1 7h12M8 2l5 5-5 5"/>
         </svg>
       </button>
-      <a href="{{ routes.all_products_collection_url }}" class="continue-shopping-link" onclick="LuckyShakerCart.close();" data-i18n="cart.continue">
-        Continuar Explorando &rarr;
+      <a href="{{ routes.all_products_collection_url }}" class="btn-drawer-view-cart continue-shopping-link" onclick="LuckyShakerCart.close(); if(document.getElementById('can-carousel')){event.preventDefault();document.getElementById('can-carousel').scrollIntoView({behavior:'smooth'});}" data-i18n="cart.continue">
+        <span>CONTINUAR EXPLORANDO</span>
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-left: 0.4rem;">
+          <path d="M1 7h12M8 2l5 5-5 5"/>
+        </svg>
       </a>
     </div>
 
-    <div class="cart-trust-badges">
-      <span>🔒 Pago Seguro</span>
-      <span>📦 Embalaje Protegido 21+</span>
+    <div class="cart-drawer-trust-pills cart-trust-badges">
+      <span class="cart-trust-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Pago 100% Seguro</span>
+      </span>
+      <span class="cart-trust-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>Embalaje Protegido 21+</span>
+      </span>
     </div>
   </div>
 </aside>
 
-<!-- Toast notification for quick item add -->
-<div id="cart-toast" class="cart-toast" role="status" aria-live="polite">
-  <div class="toast-content">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-    <span id="toast-message">Cóctel añadido a tu selección</span>
-  </div>
-</div>

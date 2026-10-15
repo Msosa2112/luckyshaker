@@ -84,31 +84,41 @@ function uploadFileToStagedTarget(target, filePath, mimeType) {
 }
 
 const map = {
-  'whiskey-cream': { path: 'renders/lucky_shaker_perspective_3_4.png', mime: 'image/png' },
-  'old-fashioned': { path: 'Media/cocteles/Old Fashioned.jpg', mime: 'image/jpeg' },
-  'mojito': { path: 'Media/cocteles/Mojito_cocktail_product_catalog_…_4K_20260927012856.jpg', mime: 'image/jpeg' },
-  'margarita': { path: 'Media/cocteles/Margarita.jpg', mime: 'image/jpeg' },
-  'daiquiri': { path: 'Media/cocteles/Daiquiri.jpg', mime: 'image/jpeg' },
-  'gin-tonic': { path: 'Media/cocteles/Gin & tonic.jpg', mime: 'image/jpeg' },
-  'paloma': { path: 'Media/cocteles/Paloma.jpg', mime: 'image/jpeg' },
-  'mimosa': { path: 'Media/cocteles/Mimosa.jpg', mime: 'image/jpeg' },
-  'moscow-mule': { path: 'Media/cocteles/Moscow Mule.jpg', mime: 'image/jpeg' },
-  'cosmopolitan': { path: 'Media/cocteles/Cosmopolitan.jpg', mime: 'image/jpeg' },
-  'sex-on-the-beach': { path: 'Media/cocteles/Sex on the Beach.jpg', mime: 'image/jpeg' },
-  'pina-colada': { path: 'Media/cocteles/Piña Colada.jpg', mime: 'image/jpeg' },
-  'blue-hawaii': { path: 'Media/cocteles/Blue Hawaii.jpg', mime: 'image/jpeg' },
-  'malibu-bay-breeze': { path: 'Media/cocteles/Malibu By Breeze.jpg', mime: 'image/jpeg' },
-  'mai-tai': { path: 'Media/cocteles/Mai Tai.jpg', mime: 'image/jpeg' },
-  'aperol-spritz': { path: 'Media/cocteles/Caipiriña.jpg', mime: 'image/jpeg' },
-  'negroni': { path: 'Media/cocteles/Negroni.jpg', mime: 'image/jpeg' },
-  'boulevardier': { path: 'Media/cocteles/Manhattan.jpg', mime: 'image/jpeg' },
-  'dry-martini': { path: 'Media/cocteles/Espresso Martini.jpg', mime: 'image/jpeg' }
+  'whiskey-cream': { path: 'shopify-theme/assets/lucky_shaker_perspective_3_4.png', mime: 'image/png' },
+  'chocolate-cream': { path: 'shopify-theme/assets/chocolate_bottle_2.webp', mime: 'image/webp' },
+  'old-fashioned': { path: 'shopify-theme/assets/cocktail_old_fashioned.webp', mime: 'image/webp' },
+  'mojito': { path: 'shopify-theme/assets/cocktail_mojito.webp', mime: 'image/webp' },
+  'margarita': { path: 'shopify-theme/assets/cocktail_margarita.webp', mime: 'image/webp' },
+  'daiquiri': { path: 'shopify-theme/assets/cocktail_daiquiri.webp', mime: 'image/webp' },
+  'gin-tonic': { path: 'shopify-theme/assets/cocktail_gin_tonic.webp', mime: 'image/webp' },
+  'paloma': { path: 'shopify-theme/assets/cocktail_paloma.webp', mime: 'image/webp' },
+  'mimosa': { path: 'shopify-theme/assets/cocktail_mimosa.webp', mime: 'image/webp' },
+  'moscow-mule': { path: 'shopify-theme/assets/cocktail_moscow_mule.webp', mime: 'image/webp' },
+  'cosmopolitan': { path: 'shopify-theme/assets/cocktail_cosmopolitan.webp', mime: 'image/webp' },
+  'sex-on-the-beach': { path: 'shopify-theme/assets/cocktail_sex_on_the_beach.webp', mime: 'image/webp' },
+  'pina-colada': { path: 'shopify-theme/assets/cocktail_pina_colada.webp', mime: 'image/webp' },
+  'blue-hawaii': { path: 'shopify-theme/assets/cocktail_blue_hawaii.webp', mime: 'image/webp' },
+  'malibu-bay-breeze': { path: 'shopify-theme/assets/cocktail_malibu_bay_breeze.webp', mime: 'image/webp' },
+  'negroni': { path: 'shopify-theme/assets/cocktail_negroni.webp', mime: 'image/webp' },
+  'manhattan': { path: 'shopify-theme/assets/cocktail_manhattan.webp', mime: 'image/webp' },
+  'classic-martini': { path: 'shopify-theme/assets/cocktail_classic_martini.webp', mime: 'image/webp' },
+  'espresso-martini': { path: 'shopify-theme/assets/cocktail_espresso_martini.webp', mime: 'image/webp' },
+  'caipirinha': { path: 'shopify-theme/assets/cocktail_caipirinha.webp', mime: 'image/webp' },
+  'naranja-dry': { path: 'shopify-theme/assets/dry_naranja_1.webp', mime: 'image/webp' },
+  'pina-dry': { path: 'shopify-theme/assets/dry_pina_1.webp', mime: 'image/webp' },
+  'manzana-dry': { path: 'shopify-theme/assets/dry_manzana_1.webp', mime: 'image/webp' },
+  'lemon-dry': { path: 'shopify-theme/assets/dry_lemon_1.webp', mime: 'image/webp' },
+  'signature-box': { path: 'shopify-theme/assets/box_gift_1.webp', mime: 'image/webp' },
+  'mai-tai': { path: 'shopify-theme/assets/cocktail_pina_colada.webp', mime: 'image/webp' },
+  'aperol-spritz': { path: 'shopify-theme/assets/cocktail_caipirinha.webp', mime: 'image/webp' },
+  'boulevardier': { path: 'shopify-theme/assets/cocktail_manhattan.webp', mime: 'image/webp' },
+  'dry-martini': { path: 'shopify-theme/assets/cocktail_classic_martini.webp', mime: 'image/webp' }
 };
 
 async function uploadAllImages() {
   console.log('🖼️ Iniciando carga masiva de fotos a los productos de Shopify...\n');
 
-  const query = '{ products(first: 25) { edges { node { id handle title } } } }';
+  const query = '{ products(first: 50) { edges { node { id handle title } } } }';
   const res = await runGraphQL(query);
   const products = res.data.products.edges;
 
