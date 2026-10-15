@@ -109,6 +109,150 @@
     {%- endif -%}
   </div>
 
+  <style>
+    #cart-drawer .cart-drawer-footer {
+      padding: 1.25rem 1.5rem 1.35rem !important;
+      border-top: 1px solid rgba(18, 19, 22, 0.08) !important;
+      background: rgba(255, 255, 255, 0.96) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+      box-shadow: 0 -12px 32px rgba(18, 19, 22, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+    }
+    #cart-drawer .cart-subtotal-row,
+    #cart-drawer .drawer-subtotal-row {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: baseline !important;
+      width: 100% !important;
+      margin: 0 0 0.25rem 0 !important;
+      padding: 0 !important;
+    }
+    #cart-drawer .subtotal-label {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 0.72rem !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase !important;
+      font-weight: 700 !important;
+      color: #6B7280 !important;
+    }
+    #cart-drawer .subtotal-val,
+    #cart-drawer .subtotal-amount {
+      font-family: 'Cinzel', 'Playfair Display', serif !important;
+      font-size: 1.5rem !important;
+      color: #121316 !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.01em !important;
+      line-height: 1.1 !important;
+    }
+    #cart-drawer .cart-shipping-note,
+    #cart-drawer .drawer-taxes-note {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 0.72rem !important;
+      line-height: 1.4 !important;
+      color: #8A8F9E !important;
+      margin: 0 0 0.95rem 0 !important;
+      text-align: left !important;
+    }
+    #cart-drawer .cart-drawer-ctas,
+    #cart-drawer .drawer-actions {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.55rem !important;
+      margin: 0 0 0.9rem 0 !important;
+      width: 100% !important;
+    }
+    #cart-drawer .btn-drawer-checkout {
+      width: 100% !important;
+      min-height: 50px !important;
+      padding: 0.88rem 1.4rem !important;
+      background: linear-gradient(135deg, #FF3888 0%, #E82B7D 55%, #C81E68 100%) !important;
+      color: #FFFFFF !important;
+      font-family: 'Cinzel', 'Plus Jakarta Sans', sans-serif !important;
+      font-size: 0.8rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.15em !important;
+      text-transform: uppercase !important;
+      border: none !important;
+      border-radius: 14px !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.6rem !important;
+      box-shadow: 0 10px 24px -6px rgba(232, 43, 125, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+      transition: all 0.22s cubic-bezier(0.25, 1, 0.5, 1) !important;
+      text-decoration: none !important;
+    }
+    #cart-drawer .btn-drawer-checkout:hover {
+      background: linear-gradient(135deg, #FF4A9A 0%, #D91E6E 100%) !important;
+      box-shadow: 0 14px 28px -6px rgba(232, 43, 125, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+      transform: translateY(-1px) !important;
+    }
+    #cart-drawer .btn-drawer-view-cart,
+    #cart-drawer .continue-shopping-link {
+      width: 100% !important;
+      min-height: 42px !important;
+      padding: 0.65rem 1.15rem !important;
+      background: rgba(18, 19, 22, 0.035) !important;
+      color: #121316 !important;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 0.71rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.13em !important;
+      text-transform: uppercase !important;
+      text-decoration: none !important;
+      border: 1px solid rgba(18, 19, 22, 0.1) !important;
+      border-radius: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.45rem !important;
+      transition: all 0.2s ease !important;
+      box-sizing: border-box !important;
+    }
+    #cart-drawer .btn-drawer-view-cart:hover,
+    #cart-drawer .continue-shopping-link:hover {
+      border-color: #E82B7D !important;
+      color: #E82B7D !important;
+      background: rgba(232, 43, 125, 0.05) !important;
+    }
+    #cart-drawer .cart-drawer-trust-pills,
+    #cart-drawer .cart-trust-badges {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.5rem !important;
+      padding-top: 0.75rem !important;
+      border-top: 1px solid rgba(18, 19, 22, 0.06) !important;
+      width: 100% !important;
+    }
+    #cart-drawer .cart-trust-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.4rem !important;
+      padding: 0.42rem 0.55rem !important;
+      background: rgba(18, 19, 22, 0.025) !important;
+      border: 1px solid rgba(18, 19, 22, 0.06) !important;
+      border-radius: 10px !important;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-size: 0.67rem !important;
+      color: #484C58 !important;
+      letter-spacing: 0.02em !important;
+      font-weight: 600 !important;
+      white-space: nowrap !important;
+    }
+    #cart-drawer .cart-trust-pill svg {
+      width: 13px !important;
+      height: 13px !important;
+      color: #E82B7D !important;
+      stroke: #E82B7D !important;
+      flex-shrink: 0 !important;
+    }
+  </style>
+
   <div class="cart-drawer-footer">
     <div class="cart-subtotal-row drawer-subtotal-row">
       <span class="subtotal-label" data-i18n="cart.subtotal">SUBTOTAL</span>
@@ -123,9 +267,9 @@
           <path d="M1 7h12M8 2l5 5-5 5"/>
         </svg>
       </button>
-      <a href="{{ routes.all_products_collection_url }}" class="btn-drawer-view-cart continue-shopping-link" onclick="LuckyShakerCart.close(); if(document.getElementById('can-carousel')){event.preventDefault();document.getElementById('can-carousel').scrollIntoView({behavior:'smooth'});}" data-i18n="cart.continue">
-        <span>CONTINUAR EXPLORANDO</span>
-        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-left: 0.4rem;">
+      <a href="{{ routes.all_products_collection_url }}" class="btn-drawer-view-cart continue-shopping-link" onclick="LuckyShakerCart.close(); if(document.getElementById('can-carousel')){event.preventDefault();document.getElementById('can-carousel').scrollIntoView({behavior:'smooth'});}">
+        <span data-i18n="cart.continue">CONTINUAR EXPLORANDO</span>
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M1 7h12M8 2l5 5-5 5"/>
         </svg>
       </a>
@@ -133,14 +277,15 @@
 
     <div class="cart-drawer-trust-pills cart-trust-badges">
       <span class="cart-trust-pill">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <span>Pago 100% Seguro</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span data-i18n="cart.trust_secure">Pago 100% Seguro</span>
       </span>
       <span class="cart-trust-pill">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-        <span>Embalaje Protegido 21+</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#E82B7D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span data-i18n="cart.trust_21">Envío Protegido 21+</span>
       </span>
     </div>
   </div>
 </aside>
+
 
