@@ -6706,7 +6706,7 @@ details[open] .accordion-chevron {
 .event-hero-section {
   position: relative;
   height: 360vh;
-  height: calc(var(--hero-vh, 100svh) * 3.6);
+  height: 360lvh;
   background: #0E0F14;
   color: #FFFFFF;
 }
@@ -6717,8 +6717,8 @@ details[open] .accordion-chevron {
   left: 0;
   width: 100%;
   height: 100vh;
-  height: 100svh;
-  height: var(--hero-vh, 100svh);
+  height: 100dvh;
+  min-height: 100svh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -6730,7 +6730,12 @@ details[open] .accordion-chevron {
 
 .event-hero-media-wrap {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  min-height: 100%;
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
@@ -7741,12 +7746,24 @@ details[open] .accordion-chevron {
 @media (max-width: 768px) {
   .event-hero-section {
     height: 360vh !important;
-    height: calc(var(--hero-vh, 100svh) * 3.6) !important;
+    height: 360lvh !important;
   }
 
   .event-hero-sticky-viewport {
-    height: 100svh !important;
-    height: var(--hero-vh, 100svh) !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100svh;
+  }
+
+  .event-hero-media-wrap,
+  .event-hero-video,
+  .event-hero-final-stamp {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh !important;
+    height: 100lvh !important;
+    min-height: 100%;
   }
 
   .hero-video-desktop {

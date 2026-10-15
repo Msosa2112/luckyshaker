@@ -1887,19 +1887,21 @@ function initHeroCinematicScroll() {
     return isMobile() ? (videoMobile || videoDesktop) : (videoDesktop || videoMobile);
   }
 
-  // Lock stable viewport height on mobile so iOS Safari toolbar collapse/expand
-  // never causes the sticky hero or scroll progress to jump vertically mid-swipe.
+  // Use CSS 100dvh for the sticky viewport (zero bottom gap when mobile URL bar hides)
+  // and CSS 360lvh / 100lvh for the section & video (zero vertical jump mid-swipe).
   var lockedVw = window.innerWidth;
   var lockedVh = window.innerHeight;
 
   function syncLockedViewport(force) {
     var w = window.innerWidth;
     var h = window.innerHeight;
+    heroSection.style.removeProperty('--hero-vh');
+    stickyViewport.style.removeProperty('--hero-vh');
     if (force || !isMobile() || Math.abs(w - lockedVw) > 24) {
       lockedVw = w;
       lockedVh = h;
-      heroSection.style.setProperty('--hero-vh', lockedVh + 'px');
-      stickyViewport.style.setProperty('--hero-vh', lockedVh + 'px');
+    } else if (h > lockedVh) {
+      lockedVh = h;
     }
   }
   syncLockedViewport(true);
@@ -2013,11 +2015,12 @@ function initHeroCinematicScroll() {
   var lastWheelEventTime = 0;
 
   function getScrollMetrics() {
-    var vh = isMobile() ? lockedVh : window.innerHeight;
+    var totalHeight = heroSection.offsetHeight;
+    var lvh = Math.round(totalHeight / 3.6) || Math.max(lockedVh, window.innerHeight);
     var sectionTop = heroSection.offsetTop;
-    var scrollDistance = Math.max(1, heroSection.offsetHeight - vh);
+    var scrollDistance = Math.max(1, totalHeight - lvh);
     return {
-      vh: vh,
+      vh: lvh,
       sectionTop: sectionTop,
       scrollDistance: scrollDistance,
       stopScrollY: sectionTop + scrollDistance * STOP_PROGRESS
