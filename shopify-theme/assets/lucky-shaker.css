@@ -6703,22 +6703,30 @@ details[open] .accordion-chevron {
 /* --------------------------------------------------------------------------
    1. EVENT HERO SECTION
    -------------------------------------------------------------------------- */
-.event-hero-section {
-  position: relative;
-  height: 360vh;
-  height: 360lvh;
-  background: #0E0F14;
-  color: #FFFFFF;
+html.hero-scroll-locked,
+html.hero-scroll-locked body {
+  overflow: hidden !important;
+  overscroll-behavior-y: none !important;
 }
 
-.event-hero-sticky-viewport {
-  position: sticky;
-  top: 0;
-  left: 0;
+.event-hero-section {
+  position: relative;
   width: 100%;
   height: 100vh;
   height: 100dvh;
   min-height: 100svh;
+  overflow: hidden;
+  background: #0E0F14;
+  color: #FFFFFF;
+  touch-action: pan-y;
+}
+
+.event-hero-sticky-viewport {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -6730,11 +6738,9 @@ details[open] .accordion-chevron {
 
 .event-hero-media-wrap {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 100vh;
-  height: 100lvh;
+  height: 100%;
   min-height: 100%;
   z-index: 1;
   overflow: hidden;
@@ -7745,25 +7751,27 @@ details[open] .accordion-chevron {
 
 @media (max-width: 768px) {
   .event-hero-section {
-    height: 360vh !important;
-    height: 360lvh !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100svh !important;
   }
 
   .event-hero-sticky-viewport {
-    height: 100vh !important;
-    height: 100dvh !important;
-    min-height: 100svh;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
   }
 
   .event-hero-media-wrap,
   .event-hero-video,
   .event-hero-final-stamp {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh !important;
-    height: 100lvh !important;
-    min-height: 100%;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
   }
 
   .hero-video-desktop {

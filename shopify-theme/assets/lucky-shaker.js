@@ -1887,24 +1887,9 @@ function initHeroCinematicScroll() {
     return isMobile() ? (videoMobile || videoDesktop) : (videoDesktop || videoMobile);
   }
 
-  // Use CSS 100dvh for the sticky viewport (zero bottom gap when mobile URL bar hides)
-  // and CSS 360lvh / 100lvh for the section & video (zero vertical jump mid-swipe).
-  var lockedVw = window.innerWidth;
-  var lockedVh = window.innerHeight;
-
-  function syncLockedViewport(force) {
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-    heroSection.style.removeProperty('--hero-vh');
-    stickyViewport.style.removeProperty('--hero-vh');
-    if (force || !isMobile() || Math.abs(w - lockedVw) > 24) {
-      lockedVw = w;
-      lockedVh = h;
-    } else if (h > lockedVh) {
-      lockedVh = h;
-    }
-  }
-  syncLockedViewport(true);
+  // Clean any legacy inline viewport variable
+  heroSection.style.removeProperty('--hero-vh');
+  stickyViewport.style.removeProperty('--hero-vh');
 
   // Prime iOS WebKit hardware video decoder on first touch so scrubbing is instant
   var decoderPrimed = false;
@@ -1954,9 +1939,6 @@ function initHeroCinematicScroll() {
     setTimeout(function() { video.__healing = false; }, 6000);
   }
 
-  // Use exact currentTime assignment (both desktop & mobile videos are encoded with
-  // 100% All-Intra keyframes -g 1 -bf 0, so currentTime seeks to the exact frame
-  // without fastSeek's coarse keyframe snapping).
   function performSeek(video, time) {
     video.__isSeeking = true;
     try {
@@ -1994,143 +1976,246 @@ function initHeroCinematicScroll() {
     }
   }
 
+  // =========================================================================
+  // TWO-PHASE EXCLUSIVE HERO SCROLL ENGINE
+  // Phase 1 (heroLocked = true): Page scroll is 100% locked at top=0. Touch/wheel
+  //   gestures exclusively scrub the video (0.00 -> 1.00) with smooth inertia and
+  //   come to a complete stop at the final frame (p = 1.00) with the CTA buttons.
+  // Phase 2 (heroLocked = false): Only when already stopped at the final frame and
+  //   the user initiates a NEW downward scroll gesture does the page unlock.
+  // =========================================================================
+  var VIDEO_END = 0.92;
+  var FINAL_STAGE_START = 0.85;
+  var FINAL_STAGE_FULL = 0.96;
+
   var targetProgress = 0;
   var currentProgress = 0;
-  var lastRawProgress = 0;
+  var touchVelocity = 0;
+  var touchActive = false;
   var isLoopActive = false;
+  var heroLocked = true;
 
-  // Final-Frame Stop Gate state:
-  // Stops scroll inertia at the final frame (p = STOP_PROGRESS) so the user can
-  // see and tap "COTIZAR TU EVENTO" / "TIENDA ONLINE", and only continues into
-  // the next section when the user initiates a new downward scroll gesture.
-  var VIDEO_END = 0.74;
-  var FINAL_STAGE_START = 0.69;
-  var FINAL_STAGE_FULL = 0.75;
-  var STOP_PROGRESS = 0.78;
-  var isLatchedAtFinalFrame = false;
-  var finalFrameStopReleased = false;
-  var latchedAtTime = 0;
-  var newTouchStartedSinceLatch = false;
-  var latchTouchStartY = 0;
-  var lastWheelEventTime = 0;
+  var touchStartY = 0;
+  var lastTouchY = 0;
+  var lastTouchTime = 0;
+  var gestureStartedAtFinalFrame = false;
 
-  function getScrollMetrics() {
-    var totalHeight = heroSection.offsetHeight;
-    var lvh = Math.round(totalHeight / 3.6) || Math.max(lockedVh, window.innerHeight);
-    var sectionTop = heroSection.offsetTop;
-    var scrollDistance = Math.max(1, totalHeight - lvh);
-    return {
-      vh: lvh,
-      sectionTop: sectionTop,
-      scrollDistance: scrollDistance,
-      stopScrollY: sectionTop + scrollDistance * STOP_PROGRESS
-    };
-  }
+  var lastWheelTime = 0;
+  var reachedFinalAtTime = 0;
+  var wheelPausedSinceFinal = false;
 
-  function computeHeroScrollProgress() {
-    var metrics = getScrollMetrics();
-    var scrolled = window.scrollY - metrics.sectionTop;
-    var raw = scrolled / metrics.scrollDistance;
-    return Math.max(0, Math.min(1, raw));
-  }
-
-  // Listen for a fresh touch or wheel gesture after the final-frame stop has latched
-  window.addEventListener('touchstart', function(e) {
-    if (isLatchedAtFinalFrame && e.touches && e.touches.length > 0) {
-      newTouchStartedSinceLatch = true;
-      latchTouchStartY = e.touches[0].clientY;
+  function setHeroLocked(locked) {
+    heroLocked = locked;
+    if (locked) {
+      document.documentElement.classList.add('hero-scroll-locked');
+      if (window.scrollY > 0) {
+        window.scrollTo(0, 0);
+      }
+    } else {
+      document.documentElement.classList.remove('hero-scroll-locked');
     }
+  }
+
+  window.__unlockLuckyHero = function() {
+    touchVelocity = 0;
+    targetProgress = 1;
+    currentProgress = 1;
+    setHeroLocked(false);
+    applyHeroCinematicTransformation(1);
+  };
+
+  // Unlock automatically if user clicks any anchor link in navbar, mobile menu, or hero
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function() {
+      window.__unlockLuckyHero();
+    });
+  });
+
+  function isOverlayInteraction(target) {
+    if (!target || !target.closest) return false;
+    if (target.closest('#cart-drawer, #mobile-nav-drawer, .age-gate-modal, .lucky-admin-overlay, .admin-modal')) {
+      return true;
+    }
+    if (document.documentElement.classList.contains('menu-locked')) {
+      return true;
+    }
+    var cartDrawer = document.getElementById('cart-drawer');
+    if (cartDrawer && cartDrawer.classList.contains('open')) {
+      return true;
+    }
+    return false;
+  }
+
+  function startRenderLoop() {
+    if (!isLoopActive) {
+      isLoopActive = true;
+      requestAnimationFrame(renderHeroLoop);
+    }
+  }
+
+  // Touch Handlers (Mobile & Tablet)
+  window.addEventListener('touchstart', function(e) {
+    if (!e.touches || e.touches.length === 0) return;
+    if (isOverlayInteraction(e.target)) return;
+
+    var y = e.touches[0].clientY;
+    touchActive = true;
+    touchStartY = y;
+    lastTouchY = y;
+    lastTouchTime = performance.now();
+    touchVelocity = 0;
+    gestureStartedAtFinalFrame = (targetProgress >= 0.995 && currentProgress >= 0.92);
   }, { passive: true });
 
   window.addEventListener('touchmove', function(e) {
-    if (isLatchedAtFinalFrame && newTouchStartedSinceLatch && e.touches && e.touches.length > 0) {
-      var deltaY = latchTouchStartY - e.touches[0].clientY;
-      if (deltaY > 6) {
-        // User initiated a new downward swipe after stopping at the final frame
-        isLatchedAtFinalFrame = false;
-        finalFrameStopReleased = true;
+    if (!touchActive || !e.touches || e.touches.length === 0) return;
+    if (isOverlayInteraction(e.target)) return;
+
+    var y = e.touches[0].clientY;
+    var now = performance.now();
+    var dy = lastTouchY - y; // > 0 when swiping finger up (scrolling down)
+    var totalDy = touchStartY - y;
+    var dt = Math.max(8, Math.min(60, now - lastTouchTime));
+    lastTouchY = y;
+    lastTouchTime = now;
+
+    if (!heroLocked) {
+      // If user scrolled back to the very top of the page and pulls down, re-engage Hero
+      if (window.scrollY <= 3 && dy < -4) {
+        setHeroLocked(true);
+        gestureStartedAtFinalFrame = false;
+        if (e.cancelable) e.preventDefault();
+      } else {
+        return;
       }
     }
-  }, { passive: true });
 
+    // Hero is locked: check if we were ALREADY stopped at the final frame and user is swiping down
+    if (gestureStartedAtFinalFrame && totalDy > 10 && dy > 0) {
+      window.__unlockLuckyHero();
+      return;
+    }
+
+    // Exclusive Video Scrubbing (Page does NOT move a single pixel)
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    if (dy < -3) {
+      gestureStartedAtFinalFrame = false;
+    }
+
+    var dragSpan = Math.max(680, window.innerHeight * 1.05);
+    var deltaP = dy / dragSpan;
+    targetProgress = Math.max(0, Math.min(1, targetProgress + deltaP));
+
+    var instVel = (deltaP / dt) * 16.67;
+    touchVelocity = touchVelocity * 0.45 + instVel * 0.55;
+
+    startRenderLoop();
+  }, { passive: false });
+
+  function onTouchEnd() {
+    touchActive = false;
+    if (heroLocked && Math.abs(touchVelocity) > 0.0005) {
+      startRenderLoop();
+    }
+  }
+  window.addEventListener('touchend', onTouchEnd, { passive: true });
+  window.addEventListener('touchcancel', onTouchEnd, { passive: true });
+
+  // Wheel Handler (Desktop Trackpad & Mouse Wheel)
   window.addEventListener('wheel', function(e) {
+    if (isOverlayInteraction(e.target)) return;
+
     var now = Date.now();
-    var gap = now - lastWheelEventTime;
-    lastWheelEventTime = now;
-    if (isLatchedAtFinalFrame && e.deltaY > 0) {
-      if (gap > 160 || (now - latchedAtTime) > 520) {
-        isLatchedAtFinalFrame = false;
-        finalFrameStopReleased = true;
+    var gap = now - lastWheelTime;
+    lastWheelTime = now;
+
+    if (!heroLocked) {
+      if (window.scrollY <= 3 && e.deltaY < 0) {
+        setHeroLocked(true);
+        wheelPausedSinceFinal = false;
+        if (e.cancelable) e.preventDefault();
+      } else {
+        return;
       }
     }
-  }, { passive: true });
 
+    if (targetProgress >= 0.995 && gap > 180) {
+      wheelPausedSinceFinal = true;
+    }
+
+    if (targetProgress >= 0.995 && currentProgress >= 0.92 && e.deltaY > 0) {
+      if (wheelPausedSinceFinal || (now - reachedFinalAtTime) > 550) {
+        window.__unlockLuckyHero();
+        return;
+      }
+    }
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
+    var prevTarget = targetProgress;
+    var clampedDelta = Math.max(-140, Math.min(140, e.deltaY));
+    targetProgress = Math.max(0, Math.min(1, targetProgress + clampedDelta / 1150));
+
+    if (targetProgress >= 0.995 && prevTarget < 0.995) {
+      reachedFinalAtTime = now;
+      wheelPausedSinceFinal = false;
+    } else if (targetProgress < 0.98) {
+      wheelPausedSinceFinal = false;
+    }
+
+    startRenderLoop();
+  }, { passive: false });
+
+  // Keyboard support (ArrowDown / ArrowUp / Space / PageDown)
   window.addEventListener('keydown', function(e) {
-    if (isLatchedAtFinalFrame && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ')) {
-      isLatchedAtFinalFrame = false;
-      finalFrameStopReleased = true;
-    }
-  }, { passive: true });
+    if (isOverlayInteraction(e.target)) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT')) return;
 
-  function onScroll() {
-    var metrics = getScrollMetrics();
-    var raw = computeHeroScrollProgress();
-
-    // Re-arm the stop gate whenever the user scrolls back up into the hero video
-    if (raw < 0.58) {
-      isLatchedAtFinalFrame = false;
-      finalFrameStopReleased = false;
-      newTouchStartedSinceLatch = false;
-    }
-
-    // Engage the Final-Frame Stop Gate when crossing STOP_PROGRESS downward
-    if (!finalFrameStopReleased && raw >= STOP_PROGRESS && lastRawProgress < STOP_PROGRESS && lastRawProgress > 0.05) {
-      isLatchedAtFinalFrame = true;
-      latchedAtTime = Date.now();
-      newTouchStartedSinceLatch = false;
-    }
-
-    if (isLatchedAtFinalFrame) {
-      if (newTouchStartedSinceLatch && window.scrollY > metrics.stopScrollY + 8) {
-        // Released by a fresh touch scroll
-        isLatchedAtFinalFrame = false;
-        finalFrameStopReleased = true;
-      } else if (window.scrollY > metrics.stopScrollY) {
-        // Clamp scroll position at the final frame to halt momentum scrolling
-        window.scrollTo(0, Math.round(metrics.stopScrollY));
-        raw = STOP_PROGRESS;
+    if (heroLocked) {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        if (targetProgress >= 0.995 && currentProgress >= 0.92) {
+          window.__unlockLuckyHero();
+        } else {
+          e.preventDefault();
+          targetProgress = Math.min(1, targetProgress + 0.25);
+          reachedFinalAtTime = Date.now();
+          startRenderLoop();
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        targetProgress = Math.max(0, targetProgress - 0.25);
+        startRenderLoop();
       }
     }
+  });
 
-    lastRawProgress = raw;
-
-    if (Math.abs(raw - targetProgress) > 0.0001) {
-      targetProgress = raw;
-      if (!isLoopActive) {
-        isLoopActive = true;
-        requestAnimationFrame(renderHeroLoop);
-      }
+  // Keep scroll at 0 while locked, or re-arm if user scrolls back to top
+  window.addEventListener('scroll', function() {
+    if (heroLocked && window.scrollY > 0) {
+      window.scrollTo(0, 0);
     }
-  }
-
-  function onResize() {
-    syncLockedViewport(false);
-    onScroll();
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onResize, { passive: true });
-  window.addEventListener('orientationchange', function() {
-    setTimeout(function() {
-      syncLockedViewport(true);
-      onScroll();
-    }, 150);
   }, { passive: true });
 
   function renderHeroLoop() {
-    var smoothing = isMobile() ? 0.22 : 0.14;
+    // Apply touch momentum when finger is lifted in Phase 1
+    if (!touchActive && heroLocked && Math.abs(touchVelocity) > 0.0003) {
+      targetProgress = Math.max(0, Math.min(1, targetProgress + touchVelocity));
+      touchVelocity *= 0.91;
+      if (targetProgress <= 0 || targetProgress >= 1) {
+        touchVelocity = 0;
+      }
+    } else if (!touchActive) {
+      touchVelocity = 0;
+    }
+
+    var smoothing = isMobile() ? 0.24 : 0.16;
     var diff = targetProgress - currentProgress;
-    if (Math.abs(diff) > 0.0002) {
+    if (Math.abs(diff) > 0.0003 || Math.abs(touchVelocity) > 0.0003) {
       currentProgress += diff * smoothing;
       applyHeroCinematicTransformation(currentProgress);
       requestAnimationFrame(renderHeroLoop);
@@ -2144,7 +2229,7 @@ function initHeroCinematicScroll() {
   var heroOverlay = document.querySelector('.event-hero-overlay');
 
   function applyHeroCinematicTransformation(p) {
-    // 1. Scrub video: develops smoothly from p = 0.00 to VIDEO_END (0.74)
+    // 1. Scrub video: develops smoothly from p = 0.00 to VIDEO_END (0.92)
     var video = getActiveVideo();
     if (video && video.duration) {
       var maxTime = Math.max(0, video.duration - 0.02);
@@ -2164,29 +2249,24 @@ function initHeroCinematicScroll() {
     }
 
     // 3. EDITORIAL TITLE CHOREOGRAPHY (Solo early mid-scroll, gone before main mixology climax)
-    // - Phase 1 (0.00 -> 0.05): Pure clean video. Title hidden.
-    // - Phase 2 (0.05 -> 0.14): Title fades in solo ("HAZ QUE TU EVENTO SEA MÁS LUCKY.")
-    // - Phase 3 (0.14 -> 0.30): Title stays fully visible alone in center.
-    // - Phase 4 (0.30 -> 0.38): Title dissolves out cleanly.
-    // - Phase 5 (0.38 -> 0.69): Uninterrupted mixology pour, shake, and bloom!
     if (heroTitleStage) {
-      if (p < 0.05) {
+      if (p < 0.06) {
         heroTitleStage.style.opacity = '0';
         heroTitleStage.style.transform = 'translate3d(-50%, calc(-50% + 35px), 0) scale(0.96)';
         heroTitleStage.style.pointerEvents = 'none';
-      } else if (p < 0.14) {
-        var inNorm = (p - 0.05) / 0.09;
+      } else if (p < 0.17) {
+        var inNorm = (p - 0.06) / 0.11;
         var yIn = (1 - inNorm) * 35;
         var sIn = 0.96 + inNorm * 0.04;
         heroTitleStage.style.opacity = inNorm.toFixed(3);
         heroTitleStage.style.transform = 'translate3d(-50%, calc(-50% + ' + yIn.toFixed(1) + 'px), 0) scale(' + sIn.toFixed(3) + ')';
         heroTitleStage.style.pointerEvents = 'none';
-      } else if (p <= 0.30) {
+      } else if (p <= 0.38) {
         heroTitleStage.style.opacity = '1';
         heroTitleStage.style.transform = 'translate3d(-50%, -50%, 0) scale(1)';
         heroTitleStage.style.pointerEvents = 'none';
-      } else if (p <= 0.38) {
-        var outNorm = (p - 0.30) / 0.08;
+      } else if (p <= 0.48) {
+        var outNorm = (p - 0.38) / 0.10;
         var yOut = -outNorm * 35;
         var sOut = 1.0 - outNorm * 0.04;
         var opOut = (1 - outNorm).toFixed(3);
@@ -2201,9 +2281,6 @@ function initHeroCinematicScroll() {
     }
 
     // 4. ACTIONS & CONVERSION GROUP CHOREOGRAPHY (Buttons, Subtitle, Trust Bar)
-    // - 0.00 -> 0.69: Strictly hidden while video plays out
-    // - 0.69 -> 0.75: Smooth entrance as video lands on its final frame
-    // - 0.75 -> 1.00: Pinned Final-Frame Stop & Hold Zone (buttons 100% interactive)
     var stageSpan = FINAL_STAGE_FULL - FINAL_STAGE_START;
     if (heroActionsStage) {
       if (p < FINAL_STAGE_START) {
@@ -2273,20 +2350,20 @@ function initHeroCinematicScroll() {
 
     // 5. Dynamic Overlay Modulation
     if (heroOverlay) {
-      if (p < 0.05) {
+      if (p < 0.06) {
         heroOverlay.style.opacity = '0.15';
-      } else if (p < 0.14) {
-        var ovIn = 0.15 + ((p - 0.05) / 0.09) * 0.38;
+      } else if (p < 0.17) {
+        var ovIn = 0.15 + ((p - 0.06) / 0.11) * 0.38;
         heroOverlay.style.opacity = ovIn.toFixed(3);
-      } else if (p <= 0.30) {
-        heroOverlay.style.opacity = '0.53';
       } else if (p <= 0.38) {
-        var ovOut = 0.53 - ((p - 0.30) / 0.08) * 0.38;
+        heroOverlay.style.opacity = '0.53';
+      } else if (p <= 0.48) {
+        var ovOut = 0.53 - ((p - 0.38) / 0.10) * 0.38;
         heroOverlay.style.opacity = ovOut.toFixed(3);
-      } else if (p <= 0.66) {
+      } else if (p <= 0.82) {
         heroOverlay.style.opacity = '0.15';
       } else {
-        var ovLogo = 0.15 + Math.min(1, (p - 0.66) / 0.08) * 0.14;
+        var ovLogo = 0.15 + Math.min(1, (p - 0.82) / 0.10) * 0.14;
         heroOverlay.style.opacity = ovLogo.toFixed(3);
       }
     }
@@ -2303,14 +2380,22 @@ function initHeroCinematicScroll() {
 
     // 7. Timeline Progress line (fills 100% when reaching the final frame stop)
     if (progressFill) {
-      var barNorm = Math.min(1, p / STOP_PROGRESS);
-      progressFill.style.width = (barNorm * 100).toFixed(1) + '%';
+      progressFill.style.width = (Math.min(1, p) * 100).toFixed(1) + '%';
     }
   }
 
-  // Initial prime
-  onScroll();
-  applyHeroCinematicTransformation(0);
+  // Initial state: if page reloaded while already scrolled down, start unlocked at final frame
+  if (window.scrollY > 15) {
+    targetProgress = 1;
+    currentProgress = 1;
+    setHeroLocked(false);
+    applyHeroCinematicTransformation(1);
+  } else {
+    targetProgress = 0;
+    currentProgress = 0;
+    setHeroLocked(true);
+    applyHeroCinematicTransformation(0);
+  }
 }
 
 /* ==========================================================================
